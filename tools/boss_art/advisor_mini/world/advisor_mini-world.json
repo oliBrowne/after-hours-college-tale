@@ -1,0 +1,78 @@
+{
+ "world_height": 51,
+ "battle_height": 77,
+ "cells": {
+  "advisor_mini-world-0.png": {
+   "size": [
+    56,
+    53
+   ],
+   "foot": [
+    28,
+    52
+   ],
+   "height": 51,
+   "battle_cell": 0
+  },
+  "advisor_mini-world-1.png": {
+   "size": [
+    56,
+    53
+   ],
+   "foot": [
+    28,
+    52
+   ],
+   "height": 51,
+   "battle_cell": 1
+  },
+  "advisor_mini-world-2.png": {
+   "size": [
+    56,
+    53
+   ],
+   "foot": [
+    28,
+    52
+   ],
+   "height": 51,
+   "battle_cell": 2
+  },
+  "advisor_mini-world-3.png": {
+   "size": [
+    56,
+    53
+   ],
+   "foot": [
+    28,
+    52
+   ],
+   "height": 51,
+   "battle_cell": 3
+  },
+  "advisor_mini-world-4.png": {
+   "size": [
+    56,
+    53
+   ],
+   "foot": [
+    27,
+    52
+   ],
+   "height": 51,
+   "battle_cell": 4
+  },
+  "advisor_mini-world-5.png": {
+   "size": [
+    56,
+    53
+   ],
+   "foot": [
+    28,
+    52
+   ],
+   "height": 51,
+   "battle_cell": 5
+  }
+ }
+}
