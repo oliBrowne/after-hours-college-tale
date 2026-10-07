@@ -1554,6 +1554,7 @@ func start_phase() -> void:
 	var tick: int = int(bar_marker.get("music_tick", 0))
 	pattern = NativeFinalEncounter.create(boss_id,int(checkpoint.seed)+int(battle.turn),boss_stage,tick) if boss_id in NativeFinalEncounter.IDS else NativeCampusEncounter.create(boss_id,int(checkpoint.seed)+int(battle.turn),boss_stage,tick) if boss_id in NativeChapterTwo.BOSSES else NativeNewEncounter.create(boss_id, int(checkpoint.seed) + int(battle.turn), boss_stage, tick) if boss_id in NativeCampaign.EXPANSION_BOSSES else EncounterDirector.create("flyer" if boss_id.is_empty() else boss_id, int(checkpoint.seed) + int(battle.turn), boss_stage, tick)
 	if DodgeBox.handles(boss_id): pattern = DodgeBox.create(boss_id, int(checkpoint.seed) + int(battle.turn), boss_stage, tick, boss_rounds, DodgeBox.beat_ticks_for(float(audio.music_metadata().get("bpm", 120.0))))
+	if pattern.get("engine", "") == "box": pattern.references = LinkedOut.accepted_ids(state.flags)
 	if boss_id in NativeFinalEncounter.IDS:
 		pattern.revision=battle.get("val_revision","") if boss_id=="val" else battle.get("revision","");pattern.rejected=battle.get("rejected",[]).duplicate()
 	pattern.wardTicks = (270 if PartyGrowth.has_perk(state.flags, "lantern_wick") else 180) if battle.get("ward", false) else 0

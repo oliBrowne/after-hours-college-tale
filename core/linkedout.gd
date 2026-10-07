@@ -58,6 +58,10 @@ static func pending(flags: Dictionary) -> Array:
 static func viewed_only(flags: Dictionary) -> Array:
 	return PEOPLE.filter(func(p: Dictionary) -> bool: return p.has("need") and str(flags.get(str(p.flag), "")) not in ["", str(p.need)])
 
+## The ids Jules can name as references (Val's interview skips a question when its person vouches).
+static func accepted_ids(flags: Dictionary) -> Array:
+	return accepted(flags).map(func(p: Dictionary) -> String: return str(p.id))
+
 static func bonus(flags: Dictionary, stat: String) -> int:
 	var total: int = 0
 	for p: Dictionary in accepted(flags):

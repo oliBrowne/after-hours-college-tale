@@ -11,6 +11,7 @@ func _init() -> void:
 	_test_growth()
 	_test_feed()
 	_test_saves()
+	_test_references()
 	print("LinkedOut: %d checks, %d failures" % [checks, failures])
 	quit(0 if failures == 0 else 1)
 
@@ -106,3 +107,22 @@ func _test_saves() -> void:
 	for p: Dictionary in LinkedOut.PEOPLE: LinkedOut.accept(state.flags, str(p.id))
 	state.flags.li_seen = str(LinkedOut.accepted(state.flags).size())
 	_check(NativeSaveService.validate_state(state), "A fully connected save validates")
+
+## Val's behavioural questions: a vouching connection skips its question.
+func _test_references() -> void:
+	var D: GDScript = load("res://core/dodge_box.gd")
+	_check(LinkedOut.accepted_ids({"walt_resolution": "peaceful", "li_walt": "yes"}) == ["walt"], "References are the accepted ids")
+	var voices: Dictionary = {}
+	for refs: Array in [[], ["walt", "encore", "cone", "rook"]]:
+		var p: Dictionary = D.create("val", 1234, 0, 0, 2, 30)
+		p.references = refs
+		var vouched: Dictionary = {}
+		var projectiles: int = 0
+		while not p.done:
+			D.step(p, Vector2.ZERO, false, 1.0, false, false, false)
+			if "VOUCHES FOR YOU" in str(p.banner): vouched[str(p.banner)] = true
+			if int(p.clock) > int(p.leadIn) + 560: projectiles = maxi(projectiles, p.bullets.size())
+		voices[refs.size()] = [vouched.size(), projectiles]
+	_check(int(voices[0][0]) == 0, "Without references nobody vouches")
+	_check(int(voices[4][0]) == 4, "Four references: four people vouch (%s)" % str(voices[4][0]))
+	_check(int(voices[4][1]) == 0, "Once every question is vouched for, the box is empty at the end")

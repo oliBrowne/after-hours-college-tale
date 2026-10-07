@@ -55,6 +55,10 @@ const CALLS: Array[String] = ["JULES NAVARRO.", "IMANI BELL.", "WALT.", "THE WHO
 ## beats: "TELL ME ABOUT A TIME..." then the rest.
 const REPRISE_ASK: String = "TELL ME ABOUT A TIME..."
 const REPRISES: Array[String] = ["...YOU WEATHERED A STORM.", "...YOU STOLE THE SHOW.", "...YOU PICKED ONE ROUTE.", "...YOU WORKED LAST CALL."]
+## LinkedOut references: a question whose person Jules is connected with is skipped, that person vouches
+## instead (main.gd puts the accepted ids in s.references). Same order as REPRISES.
+const VOUCHERS: Array[String] = ["walt", "encore", "cone", "rook"]
+const VOUCHES: Array[String] = ["WALT VOUCHES FOR YOU.", "ENCORE VOUCHES FOR YOU.", "LANCE VOUCHES FOR YOU.", "ROOK VOUCHES FOR YOU."]
 const BUZZWORDS: Array[String] = ["SYNERGY", "SELF-STARTER", "PASSIONATE", "DETAIL-ORIENTED", "TEAM PLAYER"]
 const FUTURES: Array[String] = ["CEO", "GRAD SCHOOL", "FOUNDER", "INFLUENCER", "BURNOUT"]
 const HINTS: Dictionary = {
@@ -364,6 +368,14 @@ static func _reprise(s: Dictionary, t: int) -> void:
 	var seg: int = mini(3, t / 140)
 	var local: int = t - seg * 140
 	var h: Vector2 = D.half(s)
+	if VOUCHERS[seg] in s.get("references", []):
+		if local == 0:
+			s.wind = Vector2.ZERO
+			s.rigs = []
+			s.reprise = seg
+			D.banner(s, "REFERENCE CHECK.", 28)
+		if local == 28: D.banner(s, VOUCHES[seg], 60)
+		return
 	if local == 0: D.banner(s, REPRISE_ASK, 28)
 	if local == 28: D.banner(s, REPRISES[seg], 46)
 	if local == 0:
