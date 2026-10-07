@@ -520,6 +520,7 @@ func world_tick(delta: float) -> void:
 	state.x = player.position.x
 	state.y = player.position.y
 	NativeJakerson.world_step(self,moved)
+	if NativeSideQuests.tick(self): return
 	if NativeRandomFights.step(self, moved): return
 	if pointer_goal != Vector2.INF:
 		pointer_stall = pointer_stall + 1 if moved < 0.05 and axis.length_squared() > 0 else 0
@@ -683,6 +684,7 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 				if state.flags.flyer_resolution == "forceful": npc.modulate = Color("b5827b")
 			world.add_child(npc); world_npcs.append(npc)
 	NativeRoomScenes.reset()
+	NativeSideQuests.on_enter(self, id)
 	NativeJakerson.on_enter(self, id)
 	NativeSpatialProp.room_left = float(camera.limit_left); NativeSpatialProp.room_size = Vector2(float(camera.limit_right), float(camera.limit_bottom))
 	NativeSpatialProp.watch = [player, pip] + followers + world_npcs
@@ -772,6 +774,7 @@ func interact(object: Dictionary) -> void:
 	if NativeCampaign.handle(self, object): return
 	if NativeSideBosses.handle(self, object): return
 	if NativeShops.handle(self, object): return
+	if NativeSideQuests.handle(self, object): return
 	if object.kind == "save" and not str(object.id) in ["lamp", "farrand_lamp"]:
 		rest_menu(); return
 	if object.kind in ["battle", "challenge"] and not state.flags.get("walt_joined", false):

@@ -20,6 +20,9 @@ extends RefCounted
 ##   ["wait", ticks]
 ##   ["leave", actor]                      a spawned actor walks off-screen through its last door
 ##   ["call", callable]                     runs callable(game) once
+##   ["prop", name, texture path, point]   a picture (not a person) standing at a point, removed at the end
+##   ["slide", name, point, speed]         a prop glides in a straight line to a point
+##   ["hide", room object id] / ["show", room object id]   an NPC leaves or rejoins the room view
 ## Lines may use {move}, {run} and {confirm} for the player's own key names.
 
 const WALK: float = 1.2
@@ -38,6 +41,7 @@ static func due(g: Node) -> String:
 	# Not tied to its scene flag: it replays until Imani has joined, so it can never be lost.
 	if room == "U03" and f.get("mixer_returned", false) and not f.get("imani_joined", false): return "imani_booth"
 	if room == "N01" and f.get("chapter1_complete", false) and not f.get("library_pass", false) and not f.get("scene_nell_pencil", false): return "nell_pencil"
+	if room == "H01" and f.get("chapter1_complete", false) and not f.has("tanner_resolution") and not f.get("scene_tanner_couch", false): return "tanner_couch"
 	if room == "E01" and not f.has("eric_resolution") and not f.get("scene_eric_lobby", false): return "eric_lobby"
 	if room == "F01" and not f.get("chapter1_complete", false) and not f.get("scene_val_chairs", false): return "val_chairs"
 	if room == "O01" and f.get("chapter2_complete", false) and not f.get("rook_confessed", false) and not f.get("scene_todd_audit", false): return "todd_audit"
@@ -129,7 +133,21 @@ static func steps(id: String) -> Array:
 					["Walt", "Reserve more chairs. Same words as the loudspeaker in Norlin.", "neutral"]]],
 				["face", "mags", "jules"],
 				["say", [["Mags", "Whatever's in Macky has a lot of chairs and no closing time. I saved you a cup for after.", "warm"]]]]
+		"tanner_couch":
+			# The Hill: the brothers carry Tanner in on his couch from the west end of College Ave and set him down.
+			return [["hide", "tanner"], ["prop", "couch", "res://assets/art/entrance/tanner.png", Vector2(-60, 400)], ["wait", 20],
+				["slide", "couch", Vector2(200, 400), 2.2], ["jules", Vector2(200, 400)],
+				["say", [["Tanner", "BROTHERS! Present arms! ...Chairs! Present chairs!", "warm"],
+					["Jules", "Is that a couch? With a person on it?", "neutral"]]],
+				["slide", "couch", Vector2(470, 400), 1.6],
+				["say", [["Tanner", "Set me down. Gently. Gently. There. The Hill has a new landmark.", "warm"]]],
+				["call", func(game: Node) -> void: NativeRoomScenes.drop_prop("couch")], ["show", "tanner"], ["jules", Vector2(470, 446)],
+				["say", [["Tanner", "Bro. BRO. A senior! On a Thursday! You have no idea how rare that is. Come here, come here.", "warm"]]]]
 	return []
+
+static func drop_prop(name: String) -> void:
+	var node: Variant = run.get("props", {}).get(name)
+	if node != null and is_instance_valid(node): (node as Node).queue_free()
 
 ## Called at the top of world_tick. True while a scene holds the world still.
 static func step(g: Node) -> bool:
@@ -164,6 +182,26 @@ static func _do(g: Node, s: Array) -> bool:
 			sprite.set_meta("base", Vector2(s[3])); sprite.position = Vector2(s[3]); sprite.set_meta("door", Vector2(s[3]))
 			_pose(sprite, "idle_down")
 			actors[str(s[1])] = sprite; run.spawned.append(sprite)
+		"prop":
+			var picture := Sprite2D.new()
+			picture.texture = load(str(s[2])) as Texture2D
+			picture.centered = true
+			picture.offset = Vector2(0, -picture.texture.get_height() * 0.5)
+			picture.position = Vector2(s[3]); picture.z_index = g.player.z_index
+			g.world.add_child(picture)
+			if not run.has("props"): run.props = {}
+			run.props[str(s[1])] = picture
+		"slide":
+			var thing: Variant = run.get("props", {}).get(str(s[1]))
+			if thing == null or not is_instance_valid(thing): return true
+			var node2d: Node2D = thing
+			var rest: Vector2 = Vector2(s[2]) - node2d.position
+			if rest.length() <= float(s[3]): node2d.position = Vector2(s[2]); return true
+			node2d.position += rest.normalized() * float(s[3])
+			return false
+		"hide", "show":
+			for npc2: AnimatedSprite2D in g.world_npcs:
+				if str(npc2.get_meta("id", "")) == str(s[1]): npc2.visible = str(s[0]) == "show"
 		"borrow":
 			for npc: AnimatedSprite2D in g.world_npcs:
 				if str(npc.get_meta("id", "")) == str(s[2]):
@@ -223,6 +261,10 @@ static func _lines(g: Node, lines: Array) -> Array:
 	return kept
 
 static func _finish(g: Node) -> void:
+	for thing: Variant in run.get("props", {}).values():
+		if is_instance_valid(thing): (thing as Node).queue_free()
+	for npc: AnimatedSprite2D in g.world_npcs:
+		if str(npc.get_meta("id", "")) == "tanner": npc.visible = true
 	for sprite: Variant in run.spawned:
 		if is_instance_valid(sprite):
 			g.world_npcs.erase(sprite); (sprite as Node).queue_free()

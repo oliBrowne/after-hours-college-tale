@@ -12,6 +12,7 @@ func _init() -> void:
 	_test_people()
 	_test_shops()
 	_test_side_bosses()
+	_test_side_quests()
 	print("Hub: %d checks, %d failures" % [checks, failures])
 	quit(0 if failures == 0 else 1)
 
@@ -126,3 +127,26 @@ func _test_side_bosses() -> void:
 	# The peaceful ending sends a LinkedOut request, the forceful one a profile view.
 	var flags: Dictionary = {"tanner_resolution": "peaceful", "kyle_resolution": "forceful"}
 	_check(LinkedOut.person("tanner").name == "Tanner" and LinkedOut.unlocked(flags, LinkedOut.person("tanner")) and not LinkedOut.unlocked(flags, LinkedOut.person("kyle")), "Tanner connects after a peaceful ending, Kyle does not after a forceful one")
+
+func _test_side_quests() -> void:
+	var all: Dictionary = _rooms()
+	for e: Dictionary in NativeSideQuests.GUESTS:
+		_check(NativeBossArt.drawn(str(e.art)) and NativeRandomFights.is_fight(str(e.fight)), str(e.id) + " has art and a fight")
+		for k: String in ["a", "b"]:
+			var p: Vector2 = e[k]
+			var wb: Array = all.H02.walk_bounds
+			_check(p.x >= float(wb[0]) and p.x <= float(wb[0]) + float(wb[2]) and p.y >= float(wb[1]) and p.y <= float(wb[1]) + float(wb[3]), str(e.id) + " stays in the room")
+			for pl: Dictionary in all.H02.placements:
+				if str(pl.kind) == "threshold" or str(pl.kind) == "stairs": continue
+				var r: Rect2 = Rect2(float(pl.x) - float(pl.w) * 0.5, float(pl.y) - float(pl.h) * 0.5, float(pl.w), float(pl.h)).grow(10.0)
+				_check(not r.has_point(p), str(e.id) + " end " + k + " is clear of " + str(pl.kind))
+	_check(all.H02.objects.any(func(o: Dictionary) -> bool: return str(o.id) == "kitchen"), "H02 has the kitchen")
+	_check(all.P01.objects.any(func(o: Dictionary) -> bool: return str(o.id) == "intern_desk"), "P01 has the intern desk")
+	for t: Array in NativeSideQuests.TASKS: _check(int(t[2]) > 0, str(t[0]) + " pays")
+	_check(NativeSideQuests.ORDER.all(func(c: String) -> bool: return NativeSideQuests.CUPS.has(c)), "Every ordered cup is on the menu")
+	for d: Array in NativeSideQuests.DEMO: _check(int(d[2]) >= 0 and int(d[2]) < d[1].size(), "A demo slide has an honest option")
+	for p: Array in NativeSideQuests.PINGS: _check(str(p[1]) in ["Reply", "React", "Mute"], "A ping has a right answer")
+	var text: String = FileAccess.get_file_as_string("res://services/side_quests.gd") + FileAccess.get_file_as_string("res://services/room_scenes.gd")
+	_check(not "—" in text, "No em-dashes in quest text")
+	var f: Dictionary = {"chapter1_complete": true}
+	_check(NativeRoomScenes.steps("tanner_couch").size() > 5, "The couch scene has steps")
