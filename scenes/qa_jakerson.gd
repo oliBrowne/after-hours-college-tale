@@ -16,7 +16,8 @@ func run(main: Node) -> bool:
 		_assert(NativeJakerson.controls(game).contains("Up: Up.") and NativeJakerson.controls(game).contains("Left: J."),"Tutorial reports actual partial bindings without unavailable defaults")
 		await _press("cancel")
 	await _choose("Back");await _choose("Begin the evening")
-	while int(game.mode)==INTRO:await _press()
+	await _movein()
+	_assert(int(game.mode)==MENU and game.jakerson_ui,"Four years later the evening opens on Jakerson's greeting and walk offer")
 	_assert(str(game.dialogue_lines[1][0])=="Jakerson","Jakerson is the first NPC greeting")
 	await _capture("01-first-npc-greeting");await _settle()
 	_assert(str(game.caption).begins_with("Jakerson / walk"),"Jakerson offers to walk you to the UMC")
@@ -58,13 +59,14 @@ func run(main: Node) -> bool:
 	for _i: int in range(30):await _frame()
 	_assert(int(game.mode)==DIALOGUE and str(game.dialogue_lines[0][0])=="Jakerson","Terrace scene starts on arrival")
 	await _settle()
-	_assert(str(game.caption).begins_with("Jakerson / a friendly spar"),"Jakerson offers the practice spar")
-	await _choose("Sure, show me")
-	await _spar()
-	_assert(game.state.flags.get("jakerson_resolution","")=="peaceful","Spar ends with RELEASE")
-	_assert(NativeJakerson.guide(game)=="terrace" and int(game.mode)==WORLD and str(game.state.room)=="U02","Back on the terrace after the spar")
+	_assert(NativeJakerson.guide(game)=="terrace" and int(game.mode)==WORLD and str(game.state.room)=="U02","On the terrace, no second spar: the dorm already taught it")
 	_assert(game.state.inventory==inventory,"The walk and spar cost no supplies")
-	for _i: int in range(120):await _frame()
+	# With no spar to re-enter the room, he walks to his spot by the medallion; wait for him there.
+	for _i: int in range(600):
+		var jakerson: AnimatedSprite2D=NativeJakerson.npc(game)
+		if jakerson!=null and not jakerson.has_meta("goal"):break
+		await _frame()
+	for _i: int in range(60):await _frame()
 	await _capture("06-terrace-after")
 	await _object("jakerson");await _settle()
 	_assert(str(game.caption).begins_with("Jakerson / one thing"),"Terrace Jakerson opens the help menu")
@@ -74,36 +76,6 @@ func run(main: Node) -> bool:
 	await _door("main_entrance","U03")
 	_release();_log("FAIL" if failed else "PASS Jakerson walk and practice spar route")
 	_write_trace();return not failed
-
-## The spar with ordinary menu input: answer every coaching line, follow its advice.
-func _spar() -> void:
-	var start: int=ticks
-	var coached: int=0
-	while not failed and int(game.mode)!=RESULT:
-		if ticks-start>9000:_assert(false,"Spar did not resolve");break
-		match int(game.mode):
-			DIALOGUE:
-				coached+=1
-				if not captures.has("coach-%d"%int(game.battle.get("coached",0))):
-					captures["coach-%d"%int(game.battle.get("coached",0))]=true;await _capture("04-coach-%d"%int(game.battle.get("coached",0)))
-				await _settle()
-			BATTLE:
-				_release()
-				if str(game.caption)=="Review party plan":await _choose("Commit turn")
-				elif str(game.caption).contains("Choose an action"):await _choose("CONNECT")
-				elif str(game.caption).begins_with("Connect"):
-					var labels: Array=game.menu_options.map(func(o: Dictionary) -> String:return str(o.label))
-					if labels.any(func(l: String) -> bool:return l.begins_with("RELEASE")):await _choose("RELEASE")
-					elif int(game.battle.turn)==0:await _choose("Ask what")
-					else:await _choose("Catch three")
-				else:_assert(false,"Unexpected spar menu "+str(game.caption))
-			DODGE:
-				await _defend_box("jakerson")
-			_:
-				_release();await _frame()
-	_assert(coached>=3,"Jakerson coached each turn (%d)"%coached)
-	await _capture("05-spar-result")
-	await _choose("Continue");await _settle()
 
 ## Room objects plus the ones added in code (Jakerson on the terrace).
 func _definition(id: String) -> Dictionary:

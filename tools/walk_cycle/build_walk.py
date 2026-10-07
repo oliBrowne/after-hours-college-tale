@@ -22,6 +22,8 @@ FRAMES = 8
 PALETTES = {  # one trouser/shoe palette per actor, sampled from the first side view built
 	# Eric's probe cable crosses his legs and would win the sample, so his khakis are set here.
 	"eric": dict(base=(182, 164, 118, 255), shade=(150, 130, 90, 255), shoe=(154, 104, 62, 255), shoe_dark=(116, 72, 44, 255)),
+	# Eli's tall brown boots outnumber his jeans in the leg rows.
+	"eli": dict(base=(36, 39, 74, 255), shade=(24, 27, 49, 255), shoe=(148, 75, 29, 255), shoe_dark=(95, 40, 36, 255)),
 }
 
 # Per actor: leg length above the last filled row (hip), stride half-width, leg widths, shoe size.
@@ -32,7 +34,19 @@ SIDE = {
 	"jak": dict(hip=21, stride=7, thigh=6, shin=5, shoe=(8, 3)),
 	"jaktennis": dict(hip=21, stride=7, thigh=6, shin=5, shoe=(8, 3)),
 	"eric": dict(hip=9, stride=4, thigh=7, shin=6, shoe=(6, 3)),
+	# Campus cast with a drawn side view: side cycle from the standing pose, stepping front and back.
+	"cal": dict(hip=10, stride=4, thigh=6, shin=5, shoe=(6, 3)),
+	"mags": dict(hip=12, stride=5, thigh=6, shin=5, shoe=(7, 3)),
+	"mara": dict(hip=10, stride=4, thigh=5, shin=4, shoe=(6, 3)),
+	"eli": dict(hip=13, stride=5, thigh=6, shin=5, shoe=(7, 4)),
+	"chip": dict(hip=11, stride=4, thigh=7, shin=6, shoe=(7, 3)),
+	"deion": dict(hip=14, stride=5, thigh=6, shin=5, shoe=(7, 3)),
+	"todd": dict(hip=14, stride=5, thigh=5, shin=5, shoe=(7, 3)),
+	# Drawn facing front only: they step in place on every heading.
+	"nell": dict(hip=10), "dev": dict(hip=10), "rook": dict(hip=12), "val_small": dict(hip=6),
 }
+SIDE_CAST = ("cal", "mags", "mara", "eli", "chip", "deion", "todd")
+FRONT_CAST = ("nell", "dev", "rook", "val_small")
 
 
 def load(actor, anim, index):
@@ -260,6 +274,13 @@ def main():
 		src = [load(actor, "idle_right", 0)]
 		jobs.append((actor, "right", side_cycle(actor, "right", src)))
 		for direction in ("down", "up"):
+			jobs.append((actor, direction, stand_cycle(actor, direction)))
+	for actor in SIDE_CAST:
+		jobs.append((actor, "right", side_cycle(actor, "right", [load(actor, "idle_right", 0)])))
+		for direction in ("down", "up"):
+			jobs.append((actor, direction, stand_cycle(actor, direction)))
+	for actor in FRONT_CAST:
+		for direction in ("right", "down", "up"):
 			jobs.append((actor, direction, stand_cycle(actor, direction)))
 	for actor, direction, (frames, foot) in jobs:
 		w, h = frames[0].size

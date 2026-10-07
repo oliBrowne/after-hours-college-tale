@@ -43,11 +43,11 @@ static func setup(s: Dictionary) -> void:
 	match id:
 		"commit_storm":
 			s.phaseName = "Commit Storm"
-			s.hint = "Code falls two columns at a time; red bands warn first. Sign each diploma: stand in it, Z."
+			s.hint = "Code falls two columns at a time; red bands warn first. Sign each diploma: stand in it and press confirm."
 			s.signSpots = [Vector2(-0.6, 0.5), Vector2(0.55, -0.45), Vector2(0.05, 0.55)]
 		"lob_rally":
 			s.phaseName = "Lob Rally"
-			s.hint = "Blue soul: up or Z jumps, like a lob. Hop the low balls, step off the marks. Sign mid-air."
+			s.hint = "Turned blue: up or confirm jumps, like a lob. Hop the low balls, step off the marks. Sign mid-air."
 			s.signSpots = [Vector2(0.5, 0), Vector2(-0.55, 0), Vector2(0.2 if phase == 0 else 0.55, 0)]
 			# Start on your side of the court (left of the phase 1 net).
 			s.soul.x = -60.0

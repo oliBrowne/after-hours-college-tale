@@ -1,0 +1,78 @@
+{
+ "world_height": 50,
+ "battle_height": 74,
+ "cells": {
+  "engineering_major-world-0.png": {
+   "size": [
+    56,
+    54
+   ],
+   "foot": [
+    28,
+    53
+   ],
+   "height": 50,
+   "battle_cell": 0
+  },
+  "engineering_major-world-1.png": {
+   "size": [
+    56,
+    54
+   ],
+   "foot": [
+    28,
+    53
+   ],
+   "height": 50,
+   "battle_cell": 1
+  },
+  "engineering_major-world-2.png": {
+   "size": [
+    56,
+    54
+   ],
+   "foot": [
+    28,
+    53
+   ],
+   "height": 50,
+   "battle_cell": 2
+  },
+  "engineering_major-world-3.png": {
+   "size": [
+    56,
+    54
+   ],
+   "foot": [
+    28,
+    53
+   ],
+   "height": 50,
+   "battle_cell": 3
+  },
+  "engineering_major-world-4.png": {
+   "size": [
+    56,
+    54
+   ],
+   "foot": [
+    27,
+    53
+   ],
+   "height": 50,
+   "battle_cell": 4
+  },
+  "engineering_major-world-5.png": {
+   "size": [
+    56,
+    54
+   ],
+   "foot": [
+    28,
+    53
+   ],
+   "height": 50,
+   "battle_cell": 5
+  }
+ }
+}

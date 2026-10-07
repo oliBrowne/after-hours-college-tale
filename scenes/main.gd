@@ -1,6 +1,6 @@
 extends Node2D
 
-enum Mode { TITLE, WORLD, DIALOGUE, MENU, BATTLE, TIMING, TELEGRAPH, DODGE, RESULT, PAUSE, RESOLVE, GALLERY, INTRO, MAP }
+enum Mode { TITLE, WORLD, DIALOGUE, MENU, BATTLE, TIMING, TELEGRAPH, DODGE, RESULT, PAUSE, RESOLVE, GALLERY, INTRO, MAP, BANNER }
 const INK: Color = Color("0d101c")
 const CREAM: Color = Color("e6d6b1")
 const AMBER: Color = Color("e8b45c")
@@ -11,6 +11,10 @@ const TRACK: Color = Color("1d1a2a")
 const MUTED: Color = Color("8a8296")
 ## The bitmap glyphs are 5px wide in 8px cells; a 6px advance reads as words, not spaced-out letters.
 const GLYPH: float = 6.0
+## Ticks each page of an over-long label stays up before the next page shows.
+const LABEL_PAGE_TICKS: int = 150
+## What each queued action does, shown under the action log while a turn resolves.
+const ACTION_HELP: Dictionary = {"strike": "A timed hit. Accuracy changes damage.", "connect": "Listening. OPEN rises as they open up.", "promise": "A promise: the next defense has a real objective.", "boundary": "A boundary: one smaller, honest task.", "guard": "Guarding: less damage, +12 SYNC.", "shield": "Hold the Light cancels one hit.", "heal": "Healing also revives a fallen ally.", "item": "A supply, used on resolution.", "warmth": "Share the Warmth: heal and guard.", "slow": "Half Time slows the next pattern.", "lantern": "Lantern Ward opens a shelter pocket.", "windbreak": "Windbreak shields one ally.", "brace": "Bracing for the next defense.", "release": "RELEASE: enough for tonight."}
 const ACTORS: Array[String] = ["jules", "imani", "walt"]
 const INTRO_CARDS: Array = [["BOULDER / LAST LIGHT", "The Flatirons keep the sunset a little longer than the streets."], ["JULES NAVARRO", "One borrowed mixer. One promise to return it. One last bus home."], ["9:12 PM / THE UMC", "The campus bus pulls away. Jules shifts the mixer and looks toward the UMC."]]
 var mode: Mode = Mode.TITLE
@@ -72,6 +76,8 @@ var target: int = 0
 var pattern: Dictionary = {}
 var battle_sprites: Array[AnimatedSprite2D] = []
 var foe: AnimatedSprite2D
+## CAPTAIN LANCE's paceline (assets/art/peloton-riders.png), a child of foe drawn behind him; only shown for the cone fight.
+var foe_riders: Sprite2D
 var dodge_view: DodgeBoxView
 var phase_ticks: int = 0
 var timing_ticks: int = 0
@@ -105,6 +111,9 @@ var pin_art: Node2D
 var scene_props: Array[Node2D] = []
 var intro_index: int = 0
 var intro_ticks: int = 0
+## The cards being shown and which one brings the world up: move-in day (none), or the evening.
+var intro_cards: Array = INTRO_CARDS
+var intro_arrival: int = 2
 var transition_ticks: int = 0
 var footsteps: float = 0.0
 var resolution_index: int = 0
@@ -127,6 +136,17 @@ var qa_music_events: Array[Dictionary] = []
 var graze_sync: int = 0
 var arrival_point: Vector2 = Vector2.INF
 var growth_note: String = ""
+## Dialogue box (and the choice box after it) sits at the top while the people talking stand where
+## the bottom box would cover them (Undertale/Deltarune style).
+var dialogue_top: bool = false
+## A label() whose text did not fit its box shows it a page at a time; this keeps the pages turning.
+var paging_labels: bool = false
+var wind_fx: NativeWindStreaks
+## Screen rect the compact menu's Back button sits in (read by the control overlay).
+var menu_back_rect: Rect2 = Rect2()
+## Ending card / credits roll shown once after the epilogue, then its callback.
+var ending_ticks: int = -1
+var ending_done: Callable
 
 func _ready() -> void:
 	qa = ("--qa-opening" in OS.get_cmdline_user_args() or "--qa-smoke" in OS.get_cmdline_user_args()) and (OS.has_feature("debug") or not OS.get_environment("AFTER_HOURS_QA").is_empty())
@@ -354,8 +374,8 @@ func _input(event: InputEvent) -> void:
 			if pointer_path.is_empty():
 				pointer_object = {}
 				message("That spot has no clear approach. Try the aisle beside it.")
-		elif mode == Mode.DODGE and Rect2(192, 166, 256, 120).has_point(point):
-			dodge_goal = (point - Vector2(192, 166)).clamp(Vector2(3, 3), Vector2(253, 117))
+		elif mode == Mode.DODGE and Rect2(Vector2.ZERO, Vector2(256, 120)).has_point(dodge_view.to_arena(point)):
+			dodge_goal = dodge_view.to_arena(point).clamp(Vector2(3, 3), Vector2(253, 117))
 		elif mode == Mode.DIALOGUE:
 			advance_dialogue()
 		elif mode == Mode.TIMING:
@@ -381,6 +401,7 @@ func _physics_process(delta: float) -> void:
 				if scenery is UMCEnvironment: scenery.reduced_motion = environment.reduced_motion; scenery.step(delta)
 				elif scenery is NativeBattleBackdrop: scenery.reduced_motion = environment.reduced_motion; scenery.step(delta)
 		vfx.step(delta)
+		NativeBattleJuice.step(bool(state.settings.reducedMotion))
 		claim_art.step(delta)
 		pin_art.step(delta)
 		for prop: Node2D in scene_props:
@@ -394,7 +415,7 @@ func _physics_process(delta: float) -> void:
 			for light: Node in lighting.get_children(): light.energy = 0.55
 		if mode == Mode.INTRO:
 			ui_dirty = intro_ticks % 8 == 0
-			if intro_index == 2:
+			if intro_index == intro_arrival:
 				environment.set_arrival(minf(1.0, intro_ticks / 180.0))
 				if intro_ticks >= 70: player.art.play("idle_up")
 	if not pause_context and mode != Mode.PAUSE:
@@ -432,6 +453,8 @@ func _physics_process(delta: float) -> void:
 						phrase_pause = 9 if character == "," else 16
 					elif character != " " and state.settings.blips and not state.settings.instant:
 						audio.voiced_blip(str(line[0]), str(line[2]) if line.size() > 2 else "neutral")
+			# The speaker's mouth moves while the words appear and rests at pauses.
+			NativeTalkMotion.update(self, floori(reveal) < words.length() and phrase_pause == 0, environment.elapsed)
 			ui_dirty = true
 		Mode.TIMING:
 			timing_ticks += 1
@@ -463,6 +486,9 @@ func _physics_process(delta: float) -> void:
 				ui_dirty = true
 		Mode.DODGE:
 			dodge_tick()
+	if paging_labels and intro_ticks % LABEL_PAGE_TICKS == 0: ui_dirty = true
+	if ending_ticks >= 0 and not pause_context:
+		ending_ticks += 1; ui_dirty = true
 	if ui_dirty:
 		render_ui()
 		ui_dirty = false
@@ -494,7 +520,7 @@ func world_tick(delta: float) -> void:
 	state.x = player.position.x
 	state.y = player.position.y
 	NativeJakerson.world_step(self,moved)
-	if NativeImaniJoin.world_step(self): return
+	if NativeRandomFights.step(self, moved): return
 	if pointer_goal != Vector2.INF:
 		pointer_stall = pointer_stall + 1 if moved < 0.05 and axis.length_squared() > 0 else 0
 		if pointer_stall > 60:
@@ -513,7 +539,7 @@ func world_tick(delta: float) -> void:
 			followers[i].follow(trail_point((i + 1) * 48.0))
 	pip.visible = state.flags.get("pip_joined", false)
 	if pip.visible: pip.position = trail_point(144.0)
-	camera.position = camera.position.lerp(Vector2(clampf(player.position.x, 320, camera.limit_right - 320), clampf(player.position.y, 180, camera.limit_bottom - 180)), 0.15)
+	camera.position = camera.position.lerp(Vector2(clampf(player.position.x, camera.limit_left + 320, camera.limit_right - 320), clampf(player.position.y, camera.limit_top + 180, camera.limit_bottom - 180)), 0.15)
 	if arrival_point != Vector2.INF and player.position.distance_to(arrival_point) >= 14: arrival_point = Vector2.INF
 	if not growth_note.is_empty() and notice_ticks == 0:
 		message(growth_note); growth_note = ""
@@ -536,6 +562,8 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 	jakerson_ui=false
 	set_cast_paused(false)
 	reset_pointer_controls()
+	# Move-in day is late-August fall; the night before graduation is a snowy one, and the dawn after it is spring.
+	state.flags.season="fall" if NativeMoveIn.active(self) else "spring" if str(state.flags.get("dawn_talk_read",""))!="" or id in ["M07","G01","G02"] else "winter"
 	NativeCampusWorld.prepare(rooms[id],state.flags)
 	navigation.configure(rooms[id])
 	point = navigation.safe_point(point)
@@ -578,9 +606,15 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 	world.get_node("Dusk").color=Color(0.90,0.88,0.87,1) if state.flags.get("dawn_started",false) else Color(0.68,0.72,0.84,1)
 	environment.configure(id, rooms[id], state.flags)
 	environment.glove_claimed = bool(state.flags.get("pip_joined", false))
+	# The camera stays on the painted room: the dark margin outside the walkable floor (left, right
+	# and below) is never shown, wherever that still leaves a full screen to look at.
+	camera.limit_left = 0; camera.limit_top = 0
 	camera.limit_right = int(rooms[id].dimensions[0])
 	camera.limit_bottom = int(rooms[id].dimensions[1])
-	camera.position = Vector2(clampf(point.x, 320, camera.limit_right - 320), clampf(point.y, 180, camera.limit_bottom - 180))
+	var floor_area: Array = rooms[id].walk_bounds
+	if float(floor_area[2]) + 8.0 >= 640.0 and camera.limit_right > 640: camera.limit_left = maxi(0, int(floor_area[0]) - 4); camera.limit_right = mini(camera.limit_right, int(floor_area[0]) + int(floor_area[2]) + 4)
+	if float(floor_area[3]) + float(floor_area[1]) - 4.0 >= 360.0 and camera.limit_bottom > 360: camera.limit_bottom = mini(camera.limit_bottom, int(floor_area[1]) + int(floor_area[3]) + 4)
+	camera.position = Vector2(clampf(point.x, camera.limit_left + 320, camera.limit_right - 320), clampf(point.y, camera.limit_top + 180, camera.limit_bottom - 180))
 	for block: Dictionary in rooms[id].blocks:
 		var body: StaticBody2D = StaticBody2D.new()
 		body.position = Vector2(float(block.x) + float(block.w) / 2, float(block.y) + float(block.h) / 2)
@@ -594,10 +628,11 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 	if id == "U07" and state.flags.has("claim_resolution"):
 		room_objects.append({"id":"mags_cleanup", "name":"Mags / intake desk", "x":725, "y":332, "kind":"talk", "sprite":"mags", "hit_rect":[-20,-48,40,54], "lines":[["Mags","One shelf at a time. Then I clock out.","warm"]]})
 	room_objects = NativeJakerson.room_objects(self, id, point, room_objects)
+	room_objects = NativeMoveIn.room_objects(self, id, room_objects)
 	for keepsake_id: String in PartyGrowth.KEEPSAKES:
 		var keepsake: Dictionary = PartyGrowth.KEEPSAKES[keepsake_id]
 		var holder: String = str(keepsake.member)
-		if keepsake.room != id or PartyGrowth.found(state.flags, keepsake_id) or (holder != "jules" and not state.flags.get(holder + "_joined", false)): continue
+		if bool(keepsake.get("shop", false)) or keepsake.room != id or PartyGrowth.found(state.flags, keepsake_id) or (holder != "jules" and not state.flags.get(holder + "_joined", false)): continue
 		room_objects.append({"id":"keepsake_" + keepsake_id, "keepsake":keepsake_id, "name":str(keepsake.name) + " / pick up", "x":keepsake.x, "y":keepsake.y, "kind":"keepsake", "hit_rect":[-16,-22,32,30]})
 	for object: Dictionary in room_objects:
 		if object.id in ["imani", "walt"] and state.flags.get(str(object.id) + "_joined", false): continue
@@ -624,8 +659,9 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 			var npc: AnimatedSprite2D = AnimatedSprite2D.new()
 			var asset: String = "flyerer" if object.sprite == "flyer" else str(object.sprite).replace("-", "_") if str(object.sprite).begins_with("npc-") else str(object.sprite) + "_world"
 			var art_id: String=str(object.sprite).trim_prefix("npc-").replace("-","_")
-			var upgraded: bool=art_id in NativeCastArt.IDS or art_id in ["flyer","imani","eric"]
-			npc.sprite_frames = NativePartyArt.frames(art_id) if art_id in ["walt","imani"] else NativeCastArt.frames(art_id) if upgraded else load("res://resources/art_%s.tres" % asset)
+			var encounter: bool=NativeBossArt.encounter_cast(art_id)
+			var upgraded: bool=art_id in NativeCastArt.IDS or art_id in ["flyer","imani","eric"] or encounter
+			npc.sprite_frames = NativePartyArt.frames(art_id) if art_id in ["walt","imani"] else NativeBossArt.frames(art_id) if encounter else NativeCastArt.frames(art_id) if upgraded else load("res://resources/art_%s.tres" % asset)
 			if seated_frames(object, npc): art_id += "_seated"; upgraded = false
 			npc.centered = false
 			npc.offset = Vector2(-16, -48)
@@ -648,6 +684,9 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 			world.add_child(npc); world_npcs.append(npc)
 	NativeRoomScenes.reset()
 	NativeJakerson.on_enter(self, id)
+	NativeSpatialProp.room_left = float(camera.limit_left); NativeSpatialProp.room_size = Vector2(float(camera.limit_right), float(camera.limit_bottom))
+	NativeSpatialProp.watch = [player, pip] + followers + world_npcs
+	NativeMoveIn.on_enter(self, id)
 	for source: Array in rooms[id].lights:
 		var pos := Vector2(source[0], source[1])
 		var light: PointLight2D = PointLight2D.new()
@@ -714,24 +753,35 @@ func living_speakers() -> Array[String]:
 	var present: Array[String] = ["Jules"]
 	for member: String in ["imani", "walt", "pip"]:
 		if state.flags.get(member + "_joined", false): present.append(member.capitalize())
-	var names: Dictionary = {"jakerson":"Jakerson", "mara":"Mara", "eli":"Eli", "chip":"Chip", "deion":"Deion Sanders", "todd":"Todd Saliman", "flyer":"Flyerer", "mags":"Mags", "mags_cleanup":"Mags", "imani":"Imani", "cal":"Cal", "walt":"Walt", "encore":"ENCORE", "rook":"Rook", "nell":"Nell", "dev":"Dev", "errata":"ERRATA", "index":"INDEX", "loadbearer":"LOADBEARER", "eric":"Professor Eric"}
+	var names: Dictionary = {"jakerson":"Jakerson", "mara":"Mara", "eli":"Eli", "chip":"Chip", "deion":"Deion Sanders", "todd":"Todd Saliman", "flyer":"Flyerer", "mags":"Mags", "mags_cleanup":"Mags", "imani":"Imani", "cal":"Cal", "walt":"Walt", "encore":"ENCORE", "rook":"Rook", "nell":"Nell", "dev":"Dev", "errata":"Gwen the Red", "autocomplete":"AUTOCOMPLETE", "loadbearer":"LOADBEARER", "eric":"Professor Eric"}
 	for npc: AnimatedSprite2D in world_npcs:
 		var name: String = names.get(str(npc.get_meta("id", "")), "")
 		if not name.is_empty() and not name in present: present.append(name)
 	for prop: Node2D in scene_props:
-		var name: String = {"claim":"CLAIM", "pinpal":"Pin Pal"}.get(str(prop.get_meta("id", "")), "")
+		var name: String = {"claim":"Advisor Bev", "pinpal":"Pin Pal"}.get(str(prop.get_meta("id", "")), "")
 		if not name.is_empty(): present.append(name)
 	return present
 
 func interact(object: Dictionary) -> void:
 	audio.combat("pick")
+	NativeLinkedOutMenu.met(self, object)
+	if NativeMoveIn.handle(self, object): return
 	if NativeJakerson.handle(self,object):return
 	if object.kind == "keepsake":
 		pick_up_keepsake(str(object.keepsake)); return
 	if NativeCampaign.handle(self, object): return
+	if NativeSideBosses.handle(self, object): return
+	if NativeShops.handle(self, object): return
+	if object.kind == "save" and not str(object.id) in ["lamp", "farrand_lamp"]:
+		rest_menu(); return
 	if object.kind in ["battle", "challenge"] and not state.flags.get("walt_joined", false):
-		dialogue([["Jules", "The escaped voice went under Broadway. We should check on Walt and his lantern in the underpass first.", "concern"]], resume_world)
-		return
+		if not state.flags.get("imani_joined", false):
+			# The poster has its own line; everything else waits on the mixer.
+			if str(object.id) != "flyer":
+				dialogue([["Jules", "Not now. Imani's mixer comes first.", "neutral"]], resume_world); return
+		else:
+			dialogue([["Jules", "The voice went under Broadway. We should follow it to the underpass first.", "concern"]], resume_world)
+			return
 	if object.kind == "door":
 		use_door(object); return
 	var discovery: Dictionary = NativeDiscoveries.scene(str(object.id), state, living_speakers())
@@ -757,10 +807,8 @@ func interact(object: Dictionary) -> void:
 				dialogue([["Jules", "NEXT YEAR. Say who you will become. I do not have time to audition for tomorrow.", "concern"]], resume_world)
 			else:
 				dialogue([["Booth", "Jules Navarro. Tomorrow you will wish you had stayed.", "concern"], ["Jules", "That was my voice. I did not record that.", "concern"], ["Imani", "The booth is not connected to the mixer. It is connected to the floor.", "concern"], ["Jules", "Then we find out who is down there. One real answer. Not our entire future.", "warm"]], func() -> void: state.flags.booth_seen = true; persist(); resume_world())
-		"lamp":
-			for member: Dictionary in state.party: member.hp = member.max
-			audio.effect("save")
-			open_menu(Mode.MENU, "Warm light / rest and save", [option("Save slot 1", func() -> void: manual_save("slot1")), option("Save slot 2", func() -> void: manual_save("slot2")), option("Save slot 3", func() -> void: manual_save("slot3")), option("Back", resume_world)])
+		"lamp", "farrand_lamp":
+			rest_menu()
 		"flyer", "pinpal", "claim":
 			var key: String = str(object.id) + "_resolution"
 			if state.flags.has(key):
@@ -768,12 +816,18 @@ func interact(object: Dictionary) -> void:
 			if object.id == "flyer" and not state.flags.get("imani_joined", false):
 				dialogue([["Flyerer", "RETURN FIRST. RECRUIT LATER. RETURN FIRST!", "concern"]], resume_world); return
 			boss_id = "" if object.id == "flyer" else str(object.id)
-			var intro: Dictionary = {"flyer": [["Flyerer", "ONE PAGE! JUST ONE! THE CLUB CANNOT CLOSE IF NOBODY READS!", "concern"], ["Imani", "That poster was flat a minute ago. We should probably discuss that.", "concern"], ["Jules", "We can read one invitation. Or make enough room to walk past.", "neutral"]], "pinpal": [["Pin Pal", "RETURN SERVICE! RETURN SERVICE!", "warm"], ["Walt", "A bowling pin practicing returns. One ball at a time. I respect a clear job.", "warm"]], "claim": [["CLAIM", "TAKE A NUMBER. TAKE A COAT. TAKE A RESPONSIBILITY. EVERYTHING HAS AN OWNER.", "concern"], ["Jules", "That glove looks like it is waving.", "concern"], ["Imani", "We can carry one thing. We cannot be the owner of every forgotten thing.", "warm"]]}
+			var intro: Dictionary = {"flyer": [["Flyerer", "ONE PAGE! JUST ONE! THE CLUB CANNOT CLOSE IF NOBODY READS!", "concern"], ["Imani", "That poster was just a poster a minute ago. Now it has opinions. We should probably discuss that.", "concern"], ["Jules", "We can read one invitation. Or make enough room to walk past.", "neutral"]], "pinpal": [["Pin Pal", "RETURN SERVICE! RETURN SERVICE!", "warm"], ["Walt", "A bowling pin practicing returns. One ball at a time. I respect a clear job.", "warm"]], "claim": [["Advisor Bev", "HAVE YOU CHECKED YOUR DEGREE AUDIT, SWEETIE? TAKE A NUMBER. TAKE A FOLDER. EVERYTHING HERE HAS AN ADVISOR.", "concern"], ["Jules", "That glove looks like it is waving.", "concern"], ["Advisor Bev", "PAGE ONE OF THE FOUR-YEAR PLAN! ITEM 41, UNCLAIMED CREDIT! I HAVE SCHEDULED IT FOR SPRING OF NEVER.", "concern"], ["Imani", "Her desk plate says BEV. We can carry one thing, Bev. We cannot be the advisor of every forgotten thing.", "warm"]]}
 			dialogue(intro[str(object.id)], start_battle)
 		_:
 			if object.id == "squirrel": audio.combat("squirrel")
 			var contextual: Array = environment.context_lines(str(object.id), state.flags)
 			dialogue(contextual if not contextual.is_empty() else object.get("lines", [["Jules", "Something unfinished.", "neutral"]]), resume_world)
+
+## A lamp, a bench or a beanbag: the party rests to full and the player can save.
+func rest_menu() -> void:
+	for member: Dictionary in state.party: member.hp = member.max
+	audio.effect("save")
+	open_menu(Mode.MENU, "Warm light / rest and save", [option("Save slot 1", func() -> void: manual_save("slot1")), option("Save slot 2", func() -> void: manual_save("slot2")), option("Save slot 3", func() -> void: manual_save("slot3")), option("Back", resume_world)])
 
 func pick_up_keepsake(id: String) -> void:
 	var keepsake: Dictionary = PartyGrowth.KEEPSAKES[id]
@@ -803,7 +857,7 @@ func party_menu() -> void:
 		var worn: String = PartyGrowth.equipped(state.flags, id)
 		options.append(option("%s HP %d/%d POW %d DEF %d / %s" % [id.capitalize(), int(member.hp), int(member.max), int(member.power), int(member.defence), PartyGrowth.KEEPSAKES[worn].name if not worn.is_empty() else "no keepsake"], func() -> void: cycle_keepsake(id)))
 	options.append(option("Back", pause_menu))
-	open_menu(Mode.MENU, "Party / choose someone to swap their keepsake", options)
+	open_menu(Mode.MENU, "Party / %schoose someone to swap their keepsake" % ("Buff Bucks %d / " % NativeRandomFights.bucks(state.flags) if state.flags.has("buff_bucks") else ""), options)
 
 func cycle_keepsake(member: String) -> void:
 	var owned: Array[String] = PartyGrowth.owned(state.flags, member)
@@ -825,6 +879,7 @@ func complete_mixer(response: String) -> void:
 func resume_world() -> void:
 	mode = Mode.WORLD
 	refresh_growth()
+	NativeLinkedOutMenu.notify(self)
 	for npc: AnimatedSprite2D in world_npcs:
 		var id: String = str(npc.get_meta("id", ""))
 		if str(npc.get_meta("art_id",id)) in NativeCastArt.IDS or id == "flyer": npc.play("settled" if state.flags.get(id + "_resolution", "") == "peaceful" else "down" if state.flags.has(id + "_resolution") else "idle_down")
@@ -870,7 +925,7 @@ func show_title() -> void:
 	reset_pointer_controls()
 	pause_context = false
 	world.visible = false; backdrop.visible = true
-	camera.position = Vector2(320, 180); camera.limit_right = 640; camera.limit_bottom = 360
+	camera.position = Vector2(320, 180); camera.limit_left = 0; camera.limit_top = 0; camera.limit_right = 640; camera.limit_bottom = 360
 	_set_battle_visible(false)
 	boss_id = ""
 	var continue_option: Dictionary = option("Continue", func() -> void: load_save("auto"))
@@ -886,26 +941,47 @@ func has_continue() -> bool:
 	if FileAccess.file_exists(saves.base_path.path_join("auto.json")): return not qa
 	return not qa and not NativeCampaign.legacy_slot(self, "auto").has("error")
 
+## A new game opens on move-in day in Farrand Hall; skipping the cards goes straight to the evening.
 func new_game() -> void:
 	state = NativeState.fresh(state.settings)
 	notice = ""; notice_ticks = 0; growth_note = ""
 	boss_id = ""
+	intro_cards = NativeMoveIn.CARDS; intro_arrival = -1
+	enter_room(NativeMoveIn.START, NativeMoveIn.ENTRY, false)
+	world.visible = false; backdrop.visible = true
+	intro_index = 0; intro_ticks = 0; mode = Mode.INTRO; ui_dirty = true
+
+## "Four years later", then the Last Light evening on Broadway.
+func begin_evening() -> void:
+	intro_cards = NativeMoveIn.evening_cards(INTRO_CARDS); intro_arrival = intro_cards.size() - 1
 	enter_room("U01", Vector2(96, 258), false)
 	world.visible = false; backdrop.visible = true
 	intro_index = 0; intro_ticks = 0; mode = Mode.INTRO; ui_dirty = true
 
 func dialogue(lines: Array, completed: Callable, choices: Array = []) -> void:
 	dialogue_lines = []
+	# Pages follow the box: wrap at the text column's width, then up to three lines a page (four
+	# in large text), split evenly so no page is left holding one stray word.
+	var large: bool = state.settings.large
+	var per_line: int = floori(448.0 / (GLYPH * (2.0 if large else 1.0)))
+	var room: int = 4 if large else 3
 	for line: Array in lines:
 		var mood: String = str(line[2]) if line.size() > 2 else "neutral"
-		var page: String = ""
-		var limit: int = 60 if state.settings.large else 135
+		var rows: Array[String] = []
+		var row: String = ""
 		for word: String in str(line[1]).split(" "):
-			if page.length() + word.length() + 1 > limit and not page.is_empty():
-				dialogue_lines.append([line[0], page, mood]); page = ""
-			page += (" " if not page.is_empty() else "") + word
-		if not page.is_empty(): dialogue_lines.append([line[0], page, mood])
+			if row.length() + word.length() + 1 > per_line and not row.is_empty():
+				rows.append(row); row = ""
+			row += (" " if not row.is_empty() else "") + word
+		if not row.is_empty(): rows.append(row)
+		var pages: int = ceili(float(rows.size()) / room)
+		var start: int = 0
+		for page: int in range(pages):
+			var take: int = ceili(float(rows.size() - start) / (pages - page))
+			dialogue_lines.append([line[0], " ".join(rows.slice(start, start + take)), mood])
+			start += take
 	line_index = 0; reveal = 0; phrase_pause = 0
+	dialogue_top = false
 	dialogue_callback = completed; dialogue_choices = choices
 	mode = Mode.DIALOGUE; input_lock = 2; ui_dirty = true
 	stage_dialogue()
@@ -924,9 +1000,15 @@ func advance_dialogue() -> void:
 		dialogue_choices = []
 		dialogue_callback.call()
 		if not choices.is_empty():
-			open_menu(Mode.MENU, "How does Jules answer?", choices)
+			open_menu(Mode.MENU, choice_caption(choices), choices)
 	input_lock = maxi(input_lock, 2)
 	ui_dirty = true
+
+## Choices that all begin with a party member's name are that person's to make.
+func choice_caption(choices: Array) -> String:
+	for who: String in ["Imani", "Walt", "Pip"]:
+		if choices.all(func(c: Dictionary) -> bool: return str(c.label).begins_with(who + " ")): return "What does %s choose?" % who
+	return "How does Jules answer?"
 
 func message(text: String) -> void:
 	notice = text
@@ -1035,7 +1117,7 @@ func open_pause() -> void:
 
 func pause_menu() -> void:
 	var options: Array = [option("Resume", resume_pause)]
-	if pause_mode == Mode.WORLD: options.append_array([option("Campus map", open_map), option("Party / keepsakes", party_menu)])
+	if pause_mode == Mode.WORLD: options.append_array([option("Campus map", open_map), option("Party / keepsakes", party_menu), option("LinkedOut" + NativeLinkedOutMenu.badge(state.flags), func() -> void: NativeLinkedOutMenu.open(self))])
 	options.append_array([option("Settings", settings_menu), option("Saves / import / export", func() -> void: save_menu(false)), option("Return to title", show_title)])
 	open_menu(Mode.PAUSE, "Paused", options)
 
@@ -1104,6 +1186,10 @@ func settings_menu() -> void:
 		state.settings.assist = 0.85 if float(state.settings.assist) == 1.0 else (0.7 if float(state.settings.assist) == 0.85 else 1.0)
 		_save_preferences()
 		settings_menu()))
+	if not settings_return_title and pause_mode == Mode.WORLD:
+		options.append(option("Wandering fights: %s" % ("Off" if bool(state.flags.get("wander_off", false)) else "On"), func() -> void:
+			state.flags.wander_off = not bool(state.flags.get("wander_off", false))
+			persist(); settings_menu()))
 	options.append(option("Remap keyboard", remap_menu))
 	options.append(option("Back", show_title if settings_return_title else pause_menu))
 	open_menu(Mode.MENU, "Settings / story outcomes stay the same", options)
@@ -1164,7 +1250,7 @@ func _build_battle_sprites() -> void:
 		sprite.sprite_frames = NativePartyBattleArt.frames(ACTORS[i])
 		sprite.centered = false
 		sprite.offset = Vector2(-24, -72)
-		sprite.position = Vector2(55 + i * 65, 150)
+		sprite.position = Vector2(48 + i * 74, 150)
 		sprite.z_index = 200
 		add_child(sprite)
 		sprite.play("idle")
@@ -1184,10 +1270,20 @@ func _build_battle_sprites() -> void:
 	foe.frame_changed.connect(func() -> void: NativeCastArt.fit(foe, foe_height()))
 	foe.animation_changed.connect(func() -> void: NativeCastArt.fit(foe, foe_height()))
 	NativeCastArt.fit(foe, foe_height())
+	wind_fx = NativeWindStreaks.new()
+	wind_fx.z_index = 203
+	add_child(wind_fx)
+	foe_riders = Sprite2D.new()
+	foe_riders.centered = false
+	foe_riders.show_behind_parent = true
+	foe_riders.offset = -Vector2(40, 123)  # the riders image is anchored on Lance's foot point
+	foe_riders.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	foe_riders.visible = false
+	foe.add_child(foe_riders)
 	_set_battle_visible(false)
 
 func foe_height() -> float:
-	return 40.0 if boss_id=="val" and boss_stage==3 else 104.0 if boss_id=="val" else 80.0
+	return 40.0 if boss_id=="val" and boss_stage==3 else 104.0 if boss_id=="val" else 84.0 if boss_id=="cone" and NativeBossArt.drawn("peloton") else 80.0
 
 func _set_battle_visible(value: bool) -> void:
 	for i: int in range(battle_sprites.size()):
@@ -1196,6 +1292,8 @@ func _set_battle_visible(value: bool) -> void:
 	claim_art.visible = value and boss_id == "claim"
 	pin_art.visible = value and boss_id == "pinpal"
 	vfx.visible = value
+	wind_fx.visible = value and boss_id == "walt"
+	wind_fx.reduced = bool(state.settings.reducedMotion)
 	battle_scenery.visible = value and battle_scenery.get_child_count() > 0
 
 ## Shows the room's own painted battle backdrop when it has one; otherwise rebuilds the current room
@@ -1242,7 +1340,7 @@ func begin_battle() -> void:
 		qa_record = AudioEffectRecord.new()
 		AudioServer.add_bus_effect(0, qa_record)
 		qa_record.set_recording_active(true)
-	feedback.clear(); vfx.clear(); hit_flash = 0
+	feedback.clear(); vfx.clear(); hit_flash = 0; NativeBattleJuice.clear()
 	refresh_growth()
 	battle = BattleRules.create_battle(state.party, state.inventory)
 	battle.sync = mini(100, int(battle.sync) + PartyGrowth.starting_sync(state.flags))
@@ -1255,15 +1353,22 @@ func begin_battle() -> void:
 	last_promise_result = ""
 	battle.rook_stage=0;battle.revision="";battle.val_revision="";battle.rejected=[];battle.val_stage=0;battle.final_ready=false;battle.val_force=false
 	battle.lantern_kept = false; battle.final_cue = false; battle.campus_promise = false
-	battle.hp = ({"cone":100,"empty_chair":70,"rook":240,"val":200}[boss_id]) if boss_id in NativeFinalEncounter.IDS else (240 if boss_id=="index" else 100) if boss_id in NativeChapterTwo.BOSSES else 30 if boss_id == "jakerson" else 150 if boss_id == "jakerson_final" else 76 if boss_id == "walt" else 220 if boss_id == "encore" else 190 if boss_id == "claim" else 70 if boss_id == "pinpal" else int(BossDirector.profile(boss_id).maxHp) if not boss_id.is_empty() else 48
-	foe.sprite_frames = NativeCastArt.frames(boss_id.trim_suffix("_final") if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "empty_chair", "rook", "val", "jakerson", "jakerson_final"] else "flyer")
-	foe.play("idle_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "empty_chair", "rook", "val", "jakerson", "jakerson_final"] else "idle")
+	battle.hp = ({"cone":100,"chad":70,"rook":240,"val":200}[boss_id]) if boss_id in NativeFinalEncounter.IDS else (240 if boss_id=="autocomplete" else 100) if boss_id in NativeChapterTwo.BOSSES else 30 if boss_id == "jakerson" else 150 if boss_id == "jakerson_final" else 76 if boss_id == "walt" else 220 if boss_id == "encore" else 190 if boss_id == "claim" else 70 if boss_id == "pinpal" else int(BossDirector.profile(boss_id).maxHp) if not boss_id.is_empty() else 48
+	foe.sprite_frames = NativeCastArt.frames(boss_id.trim_suffix("_final") if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "flyer")
+	foe.play("idle_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "idle")
+	if NativeRandomFights.is_fight(boss_id): NativeRandomFights.setup(self)
+	elif NativeSideBosses.is_boss(boss_id): NativeSideBosses.setup(self)
 	NativeCastArt.fit(foe, foe_height())
+	foe_riders.visible = boss_id == "cone" and NativeBossArt.drawn("peloton") and ResourceLoader.exists("res://assets/art/peloton-riders.png")
+	if foe_riders.visible and foe_riders.texture == null: foe_riders.texture = load("res://assets/art/peloton-riders.png")
+	foe.position = Vector2(480, 154 if boss_id == "cone" and NativeBossArt.drawn("peloton") else 146)  # Lance is 84px tall: stand him low enough that his helmet clears the boss panel
 	claim_art.set_pose("idle"); pin_art.set_pose("idle")
 	plan = []; actor = 0; target = 0; retreating = false; notice_ticks = 0
 	var full_hp: int = int(battle.hp)
+	var resumed: bool = false
 	if boss_id=="val":
 		if NativeFinalCampaign.restore_checkpoint(self):
+			resumed = true
 			# A phase checkpoint keeps the party it was saved with; bring it up to the story's growth.
 			battle.party = PartyGrowth.apply(battle.party, state.flags)
 			for i: int in range(1, 3):
@@ -1277,49 +1382,58 @@ func begin_battle() -> void:
 	while actor < battle.party.size() and int(battle.party[actor].hp) <= 0: actor += 1
 	show_battle_scenery()
 	world.visible = false; backdrop.visible = false; _set_battle_visible(true)
-	camera.position = Vector2(320, 180); camera.limit_right = 640; camera.limit_bottom = 360
+	camera.position = Vector2(320, 180); camera.limit_left = 0; camera.limit_top = 0; camera.limit_right = 640; camera.limit_bottom = 360
 	hint = "Choose one action. Cancel revises your plan."
 	audio.play_music("")
-	audio.play_music(NativeSoundtrack.battle_cue(boss_id, "last-call" if boss_id=="rook" else "graduation" if boss_id=="val" else "boss-dark" if boss_id not in ["", "pinpal", "jakerson", "jakerson_final"] else "battle-rich"))
+	audio.play_music(NativeSoundtrack.battle_cue(boss_id, "last-call" if boss_id=="rook" else "graduation" if boss_id=="val" else "boss-dark" if boss_id not in ["", "pinpal", "jakerson", "jakerson_final"] and not NativeRandomFights.is_fight(boss_id) else "battle-rich"))
 	audio.ambient("")
 	if actor >= battle.party.size():
 		battle.outcome = "defeat"; defeat_menu(); return
-	if boss_id == "jakerson": NativeJakerson.coach(self)
-	else: command_menu()
+	var opening: Callable = func() -> void:
+		if boss_id == "jakerson": NativeJakerson.coach(self)
+		else: command_menu()
+	# Story bosses make an entrance first, like a gym leader; random fights start straight away,
+	# and so does a fight resumed from a mid-fight checkpoint.
+	if NativeBossIntro.has_card(boss_id) and not resumed:
+		mode = Mode.BANNER; caption = ""; menu_options = []; ui_dirty = true
+		NativeBossIntro.play(self, boss_id, opening)
+	else: opening.call()
 
 func command_menu() -> void:
 	open_menu(Mode.BATTLE, str(battle.party[actor].id).capitalize() + " / Choose an action", [option("STRIKE", func() -> void: queue_command({"actor": actor, "kind": "strike"})), option("CONNECT", connect_menu), option("TALENT", talent_menu), option("ITEM", item_menu), option("GUARD", func() -> void: queue_command({"actor": actor, "kind": "guard"})), option("RETREAT", retreat)])
 
 func connect_menu() -> void:
 	if boss_id in NativeFinalEncounter.IDS:final_connect_menu();return
-	var names: Dictionary = {"": ["Read the club's purpose", "Read one invitation", "Only one page tonight"], "chip": ["Ask for a small rehearsal", "Follow three called columns", "Applause can be quiet"], "deion": ["Ask for a clean handoff", "Carry the relay flag", "Practice, then take a break"], "todd": ["Ask what the form consents to", "Sign two consent boxes", "Allow unanswered questions"], "pinpal": ["Ask what needs returning", "Return three balls", "One ball at a time"], "claim": ["Identify Pip, the unclaimed glove", "Carry one numbered tag", "Return ONE thing; leave a note"]}
+	var names: Dictionary = {"": ["Read the club's purpose", "Read one invitation", "Only one page tonight"], "chip": ["Ask for a small rehearsal", "Follow three called columns", "Applause can be quiet"], "deion": ["Ask for a clean handoff", "Carry the relay flag", "Practice, then take a break"], "todd": ["Ask what the form consents to", "Sign two consent boxes", "Allow unanswered questions"], "pinpal": ["Ask what needs returning", "Return three balls", "One ball at a time"], "claim": ["Ask why the glove is on page one", "Carry one numbered ticket", "Return ONE thing; leave a note"]}
 	names.jakerson_final = ["Ask what he'll miss", "Sign three diploma lines", "We stay friends after this"]
 	names.jakerson = ["Ask what he's building", "Catch three green commits", "Spar's over when I say so"]
 	names.walt = ["Ask how the lantern helps", "Keep the light through three gusts", "We can clear one path"]
 	names.encore = ["Ask who gets to stop", "Answer two stopping cues", "A song can have an ending"]
-	names.errata=["Ask whose sentence it is", "Keep one sentence through three pauses", "Suggestions need consent"]
+	names.errata=["Ask whose voice is on the page", "Keep one sentence through three pauses", "Feedback needs consent"]
 	names.eric=["Ask what he's measuring", "Probe three test points", "The demo can ship as is"]
-	names.index=["Ask for the original voice", "Deliver one useful bookmark", "The other pages can wait"]
+	names.autocomplete=["Ask for the original voice", "Accept one useful suggestion", "Let the rest stay unwritten"]
+	if NativeRandomFights.is_fight(boss_id): names[boss_id] = NativeRandomFights.connect_labels(boss_id)
+	if NativeSideBosses.is_boss(boss_id): names[boss_id] = NativeSideBosses.connect_labels(boss_id)
 	var lines: Array = names[boss_id]
 	hint = "A promise creates a real objective in the next defense."
 	var choices: Array = [option(str(lines[0]), func() -> void: queue_command({"actor": actor, "kind": "connect", "label": str(lines[0])})), option(str(lines[1]), func() -> void: queue_command({"actor": actor, "kind": "promise", "label": str(lines[1])}))]
 	if boss_id != "claim" or bool(claim_needs.tagDelivered):
 		choices.append(option(str(lines[2]), func() -> void: queue_command({"actor": actor, "kind": "guard", "boundary": true, "label": str(lines[2])})))
 	if int(battle.openness) >= 100 and release_ready():
-		choices.append(option("RELEASE / enough for tonight", func() -> void: queue_command({"actor": actor, "kind": "release"})))
+		choices.append(option("RELEASE / good game" if boss_id == "jakerson_final" else "RELEASE / enough for tonight", func() -> void: queue_command({"actor": actor, "kind": "release"})))
 	choices.append(option("Back", command_menu))
 	open_menu(Mode.BATTLE, "Connect / a concrete promise", choices)
 
 func final_connect_menu() -> void:
 	var choices: Array=[]
-	var names: Dictionary={"cone":["Ask for one route","Follow three marked rows"],"empty_chair":["Ask what space is needed","Keep the empty seat clear"],"rook":["Ask what one shift needs","Carry one key to one exit"],"val":["Hear the ordinary person","One return and one stopping cue"]}
+	var names: Dictionary={"cone":["Ask for one clear line","Follow three marked routes"],"chad":["Ask what he actually wants","Protect one free hour"],"rook":["Ask what one shift needs","Carry one key to one exit"],"val":["Ask who's really hiring","One answer, one full stop"]}
 	choices.append(option(names[boss_id][0],func() -> void:queue_command({"actor":actor,"kind":"connect","label":names[boss_id][0]})))
 	if boss_id=="rook" and boss_stage>=1:
 		choices.append(option("REVISE / keep west exit; decline east",func() -> void:queue_command({"actor":actor,"kind":"promise","revision":"west","label":"One west exit"})))
 		choices.append(option("REVISE / keep east exit; decline west",func() -> void:queue_command({"actor":actor,"kind":"promise","revision":"east","label":"One east exit"})))
 	elif boss_id=="val" and boss_stage==1:
 		var id: String=str(battle.party[actor].id)
-		var line: String={"jules":"Jules: I can disappoint and still belong","imani":"Imani: I cannot be loved by everyone","walt":"Walt: I can choose to need company"}[id]
+		var line: String={"jules":"Jules: I'll miss deadlines. I still belong","imani":"Imani: Not every manager will love me","walt":"Walt: I work better with a team"}[id]
 		choices.append(option(line,func() -> void:queue_command({"actor":actor,"kind":"connect","reject":id,"label":line})))
 	elif boss_id=="val" and boss_stage==2:
 		choices.append(option("REVISE / unreserve the left chairs",func() -> void:queue_command({"actor":actor,"kind":"promise","revision":"left","label":"Open the left passage"})))
@@ -1330,12 +1444,13 @@ func final_connect_menu() -> void:
 	if int(battle.openness)>=100 and release_ready():
 		if boss_id=="val":
 			choices.clear()
-			choices.append(option("RELEASE / let impossible futures go",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"release","label":"RELEASE the futures"})))
-			choices.append(option("REWRITE / one finite gathering",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"rewrite","label":"REWRITE a finite gathering"})))
-			choices.append(option("BREAK / stop the frame; repair the room",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"break","label":"BREAK the mechanism"})))
+			choices.append(option("RELEASE / let every other future go",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"release","label":"RELEASE the other futures"})))
+			choices.append(option("REWRITE / one real offer, with hours",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"rewrite","label":"REWRITE one real offer"})))
+			choices.append(option("BREAK / walk out; fix the stage later",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"break","label":"BREAK off the interview"})))
 		else:choices.append(option("RELEASE / enough for tonight",func() -> void:queue_command({"actor":actor,"kind":"release"})))
 	choices.append(option("Back",command_menu))
-	open_menu(Mode.BATTLE,"Connect / choose a finite promise",choices)
+	var ending_now: bool=boss_id=="val" and int(battle.openness)>=100 and release_ready()
+	open_menu(Mode.BATTLE,"Connect / this choice decides the ending" if ending_now else "Connect / choose a finite promise",choices)
 
 func talent_menu() -> void:
 	var options: Array = []
@@ -1373,7 +1488,7 @@ func item_menu() -> void:
 
 func release_ready() -> bool:
 	if boss_id in NativeFinalEncounter.IDS:return bool(battle.get("final_ready",false)) and (boss_stage==3 if boss_id=="val" else boss_stage==2 and battle.get("revision","") in ["west","east"] if boss_id=="rook" else true)
-	if boss_id in NativeChapterTwo.BOSSES:return bool(battle.get("campus_promise",false)) and boss_stage >= (2 if boss_id=="index" else 0)
+	if boss_id in NativeChapterTwo.BOSSES:return bool(battle.get("campus_promise",false)) and boss_stage >= (2 if boss_id=="autocomplete" else 0)
 	if boss_id == "claim": return ClaimNeeds.can_release(claim_needs)
 	if boss_id == "walt": return bool(battle.get("lantern_kept", false))
 	if boss_id == "encore": return boss_stage >= 2 and bool(battle.get("final_cue", false))
@@ -1469,12 +1584,18 @@ func resolve_plan() -> void:
 	present_action(); ui_dirty = true
 
 func complete_resolution() -> void:
+	var asked: bool = plan.any(func(c: Dictionary) -> bool: return c.kind == "connect" and not c.has("reject") and not c.has("joint"))
 	battle = pending_battle; pending_battle = {}; shown_enemy_hp = int(battle.hp)
 	foe.modulate = Color.WHITE
 	plan.clear()
 	if boss_id=="val" and battle.outcome=="forceful" and boss_stage<3:NativeFinalCampaign.force_advance(self);return
 	if battle.outcome != "active": finish_battle(); return
 	rest_party_poses()
+	# Asking a boss something gets an answer (once a fight) before its next attack.
+	var reply: Array = NativeBossIntro.answer(boss_id) if asked and not bool(battle.get("answered", false)) else []
+	if not reply.is_empty():
+		battle.answered = true
+		dialogue([reply], start_phase); return
 	start_phase()
 
 func rest_party_poses() -> void:
@@ -1490,7 +1611,7 @@ func start_phase() -> void:
 	elif boss_id == "claim":
 		boss_stage = ClaimNeeds.combat_phase(claim_needs, int(battle.hp), bool(battle.promise))
 		if battle.hp <= 70: peak_music = true
-	elif boss_id == "encore" or boss_id=="index":
+	elif boss_id == "encore" or boss_id=="autocomplete":
 		boss_stage = mini(2, boss_rounds)
 	elif boss_id in ["chip", "deion", "todd"]:
 		boss_stage = BossDirector.next_phase(boss_stage, int(battle.hp), int(BossDirector.profile(boss_id).maxHp), mini(2, boss_rounds))
@@ -1501,17 +1622,22 @@ func start_phase() -> void:
 	var tick: int = int(bar_marker.get("music_tick", 0))
 	pattern = NativeFinalEncounter.create(boss_id,int(checkpoint.seed)+int(battle.turn),boss_stage,tick) if boss_id in NativeFinalEncounter.IDS else NativeCampusEncounter.create(boss_id,int(checkpoint.seed)+int(battle.turn),boss_stage,tick) if boss_id in NativeChapterTwo.BOSSES else NativeNewEncounter.create(boss_id, int(checkpoint.seed) + int(battle.turn), boss_stage, tick) if boss_id in NativeCampaign.EXPANSION_BOSSES else EncounterDirector.create("flyer" if boss_id.is_empty() else boss_id, int(checkpoint.seed) + int(battle.turn), boss_stage, tick)
 	if DodgeBox.handles(boss_id): pattern = DodgeBox.create(boss_id, int(checkpoint.seed) + int(battle.turn), boss_stage, tick, boss_rounds, DodgeBox.beat_ticks_for(float(audio.music_metadata().get("bpm", 120.0))))
+	if pattern.get("engine", "") == "box": pattern.references = LinkedOut.accepted_ids(state.flags)
 	if boss_id in NativeFinalEncounter.IDS:
 		pattern.revision=battle.get("val_revision","") if boss_id=="val" else battle.get("revision","");pattern.rejected=battle.get("rejected",[]).duplicate()
 	pattern.wardTicks = (270 if PartyGrowth.has_perk(state.flags, "lantern_wick") else 180) if battle.get("ward", false) else 0
 	pattern.wardPocket = Rect2(104, 82, 48, 34)
 	pattern.boundary = boundary_active
+	# A limit set with CONNECT makes the boss ease off for this attack.
+	battle.eased = boundary_active and not retreating
 	mode = Mode.TELEGRAPH; phase_ticks = 60
-	target = 0
-	while target < 3 and int(battle.party[target].hp) <= 0: target += 1
+	# Hits go around the party, starting with a different person each round.
+	target = posmod(int(battle.turn), 3)
+	next_target(false)
 	dodge_goal = Vector2.INF; beat_defend = false
-	foe.play("interact_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "empty_chair", "rook", "val", "jakerson", "jakerson_final"] else "tell")
+	foe.play("interact_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "tell")
 	claim_art.set_pose("tell"); pin_art.set_pose("tell")
+	NativeBattleJuice.windup(claim_art if boss_id == "claim" else pin_art if boss_id == "pinpal" else foe)
 	audio.combat("whistle" if boss_id == "deion" else "stamp" if boss_id == "todd" else "warning")
 	ui_dirty = true
 
@@ -1571,11 +1697,12 @@ func dodge_tick() -> void:
 		audio.combat("guard" if lost == 0 else "hit")
 		battle_sprites[target].modulate = Color("df807b")
 		battle_sprites[target].play("hit" if int(battle.party[target].hp) > 0 else "down")
-		if int(battle.party[target].hp) <= 0:
-			target = 0
-			while target < 3 and int(battle.party[target].hp) <= 0: target += 1
-			pattern.invulnerability = 60
+		if lost > 0:
+			NativeBattleJuice.flinch(battle_sprites[target], Vector2.LEFT, lost); NativeBattleJuice.flash(battle_sprites[target], 6)
+			NativeBattleJuice.kick([battle_scenery, foe, claim_art, pin_art] + battle_sprites, 1.0 if lost < 12 else 2.0, 8)
+		if int(battle.party[target].hp) <= 0: pattern.invulnerability = 60
 		if battle.outcome == "defeat": defeat_menu(); return
+		next_target(true)
 	for sprite: AnimatedSprite2D in battle_sprites: sprite.modulate = sprite.modulate.lerp(Color.WHITE, 0.16)
 	if retreating and int(pattern.clock) >= 180:
 		merge_party(battle.party); state.inventory = battle.inventory.duplicate(true)
@@ -1587,7 +1714,7 @@ func dodge_tick() -> void:
 		var success: bool = bool(pattern.promiseComplete)
 		var final_advanced: bool=NativeFinalCampaign.record_defense(self,success,bool(battle.promise)) if boss_id in NativeFinalEncounter.IDS else false
 		if battle.promise and success:
-			if boss_id in NativeChapterTwo.BOSSES and (boss_id!="index" or boss_stage==2):battle.campus_promise=true
+			if boss_id in NativeChapterTwo.BOSSES and (boss_id!="autocomplete" or boss_stage==2):battle.campus_promise=true
 			if boss_id == "walt": battle.lantern_kept = true
 			if boss_id == "encore" and boss_stage == 2: battle.final_cue = true
 		last_promise_result = ("Promise kept\n" if success else "Promise unfinished\n") + live_promise_progress() if battle.promise else ""
@@ -1609,6 +1736,14 @@ func dodge_tick() -> void:
 		elif boss_id == "jakerson" and battle.outcome == "active":NativeJakerson.coach(self)
 		else:command_menu()
 	ui_dirty = true
+
+## Moves the hit target to the next conscious party member (or keeps it, if it is still up and
+## advance is false).
+func next_target(advance: bool) -> void:
+	if advance: target = (target + 1) % 3
+	for _i: int in range(3):
+		if int(battle.party[target].hp) > 0: return
+		target = (target + 1) % 3
 
 func retreat() -> void:
 	reset_pointer_controls()
@@ -1638,6 +1773,7 @@ func defeat_menu() -> void:
 	audio.effect("defeat")
 
 func finish_battle() -> void:
+	if NativeRandomFights.is_fight(boss_id): NativeRandomFights.finish(self); return
 	reset_pointer_controls()
 	var resolved_id: String = "flyer" if boss_id.is_empty() else boss_id
 	merge_party(BattleRules.recover(battle.party))
@@ -1657,6 +1793,7 @@ func finish_battle() -> void:
 	open_menu(Mode.RESULT, "A promise kept" if peaceful else "The way is clear", [option("Continue", func() -> void: show_aftermath(resolved_id))])
 
 func show_aftermath(resolved_id: String) -> void:
+	if NativeSideBosses.is_boss(resolved_id): NativeSideBosses.aftermath(self, resolved_id); return
 	if resolved_id in NativeFinalCampaign.AFTERMATHS:NativeFinalCampaign.aftermath(self,resolved_id);return
 	if resolved_id == "jakerson": NativeJakerson.after_spar(self); return
 	if resolved_id == "jakerson_final": NativeJakerson.after_final(self); return
@@ -1669,7 +1806,7 @@ func show_aftermath(resolved_id: String) -> void:
 	var peaceful: bool = str(state.flags.get(resolved_id + "_resolution", "")) == "peaceful"
 	boss_id = ""
 	enter_room(str(state.room), Vector2(float(state.x), float(state.y)), false)
-	var aftermath: Dictionary = {"flyer": [["Flyerer", "One reader. One page. We can close now.", "warm"], ["Imani", "We did not promise forever. And it worked.", "warm"], ["Jules", "Now the atrium booth. I need to know why it used my voice.", "concern"]] if peaceful else [["Imani", "The stand's bent. I've left a note by the hinge.", "concern"], ["Jules", "Then we check that voice in the atrium.", "neutral"]], "pinpal": [["Pin Pal", "RETURN RECEIVED. THANK YOU FOR PLAYING.", "warm"]] if peaceful else [["Walt", "The housing's cracked. Leave it switched off.", "concern"], ["Jules", "I'll put the ball on the rack.", "neutral"]], "claim": [["CLAIM", "ONE RETURN. ONE NOTE. THE REST CAN WAIT.", "warm"], ["Pip", "I am coming with you. I can point. That is a surprisingly useful glove skill.", "warm"], ["Jules", "The booth has a maker. We find them, then find a way home.", "warm"], ["Mags", "Last Light is not over. But tonight, you learned how to leave something unfinished.", "warm"]] if peaceful else [["Mags", "The ticket spool broke. I will sort it. Leave the glove with me?", "concern"], ["Pip", "Actually, I would like to come with them.", "warm"], ["Jules", "Then we find who made that booth. Together.", "warm"]]}
+	var aftermath: Dictionary = {"flyer": [["Flyerer", "One reader. One page. We can close now.", "warm"], ["Imani", "We did not promise forever. And it worked.", "warm"], ["Imani", "Now the atrium booth. I want to know why it used my voice.", "concern"]] if peaceful else [["Imani", "The stand's bent. I've left a note by the hinge.", "concern"], ["Jules", "Then we check that voice in the atrium.", "neutral"]], "pinpal": [["Pin Pal", "RETURN RECEIVED. THANK YOU FOR PLAYING.", "warm"]] if peaceful else [["Walt", "The housing's cracked. Leave it switched off.", "concern"], ["Jules", "I'll put the ball on the rack.", "neutral"]], "claim": [["Advisor Bev", "ONE RETURN. ONE NOTE. THE REST OF THE FOUR-YEAR PLAN CAN WAIT UNTIL OFFICE HOURS, SWEETIE.", "warm"], ["Pip", "I am coming with you. I can point. That is a surprisingly useful glove skill.", "warm"], ["Advisor Bev", "PIP, SWEETIE: I HAVE MOVED YOU FROM 'UNCLAIMED' TO 'UNDECLARED.' IT IS THE BEST MAJOR.", "warm"], ["Jules", "The booth has a maker. We find them, then find a way home.", "warm"], ["Mags", "Mags, from the cart out front. I heard all of that. Leaving something unfinished on purpose is harder than it looks.", "warm"]] if peaceful else [["Mags", "Mags, from the cart out front. The ticket spool broke; I'll sort it. Leave the glove with me?", "concern"], ["Pip", "Actually, I would like to come with them.", "warm"], ["Jules", "Then we find who made that booth. Together.", "warm"]]}
 	dialogue(aftermath.get(resolved_id, [[resolved_id.capitalize(), "Good practice. Remember to rest.", "warm"]]), func() -> void:
 		state.flags.aftermath_pending = ""
 		persist()
@@ -1723,6 +1860,7 @@ func caret(at: Vector2, color: Color) -> void:
 func label(text: String, rect: Rect2, size_px: int = 12, color: Color = CREAM) -> Label:
 	var node: Label = Label.new()
 	var clean: String = text.replace("Â·", " / ").replace("â€”", "-").replace("â†’", ">").replace("â€™", "'")
+	clean = key_words(clean)
 	var max_chars: int = maxi(6, floori(rect.size.x / (GLYPH * size_px / 12.0)))
 	var wrapped: Array[String] = []
 	for paragraph: String in clean.split("\n"):
@@ -1733,7 +1871,18 @@ func label(text: String, rect: Rect2, size_px: int = 12, color: Color = CREAM) -
 				line = ""
 			line += (" " if not line.is_empty() else "") + word
 		wrapped.append(line)
+	# Never draw past the box: text taller than the box shows a page at a time, turning every
+	# few seconds, with page dots in the box's bottom-right corner.
+	var room: int = maxi(1, floori((rect.size.y + 2.0) / (font.get_height(size_px) + 2.0)))
+	var pages: int = ceili(float(wrapped.size()) / room)
+	var page: int = 0
+	if pages > 1:
+		paging_labels = true
+		page = (intro_ticks / LABEL_PAGE_TICKS) % pages
+		var per_page: int = ceili(float(wrapped.size()) / pages)
+		wrapped = wrapped.slice(page * per_page, page * per_page + per_page)
 	node.text = "\n".join(wrapped)
+	node.max_lines_visible = room
 	node.position = rect.position
 	node.size = rect.size
 	node.add_theme_font_override("font", font)
@@ -1748,7 +1897,17 @@ func label(text: String, rect: Rect2, size_px: int = 12, color: Color = CREAM) -
 	node.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(node)
 	text_nodes.append(node)
+	if pages > 1 and room > 1:
+		for dot: int in range(pages):
+			fill(Rect2(rect.end.x - 4 - (pages - 1 - dot) * 5, rect.end.y - 2, 3, 2), AMBER if dot == page else LINE)
 	return node
+
+## Prompts written with a keyboard key ("up or Z jumps") read the same on any device.
+func key_words(text: String) -> String:
+	if not text.contains("Z"): return text
+	var key := RegEx.new()
+	key.compile("(?<![A-Za-z0-9'])Z(?![A-Za-z0-9'])")
+	return key.sub(text, "confirm", true)
 
 func right_label(text: String, rect: Rect2, color: Color = CREAM) -> Label:
 	var node: Label = label(text, rect, 12, color)
@@ -1758,6 +1917,8 @@ func right_label(text: String, rect: Rect2, color: Color = CREAM) -> Label:
 func render_ui() -> void:
 	for node: Control in text_nodes: node.queue_free()
 	text_nodes.clear(); buttons.clear(); battle_help = null
+	paging_labels = false
+	menu_back_rect = Rect2()
 	if is_instance_valid(overlay): overlay.update_state()
 	var stack: float = 40.0
 	if mode == Mode.WORLD and world.visible:
@@ -1776,7 +1937,8 @@ func render_ui() -> void:
 		stack += 28
 	if mode == Mode.WORLD:
 		var tutorial_hint: String=NativeJakerson.hint(self)
-		if not tutorial_hint.is_empty():
+		# One line of guidance at a time: the standing hint steps aside while a bark is showing.
+		if not tutorial_hint.is_empty() and notice_ticks <= 0:
 			panel(Rect2(12,stack,470,40));label(tutorial_hint,Rect2(22,stack+4,450,34),12,MINT)
 			stack += 44
 		var object: Dictionary = nearest_object()
@@ -1798,14 +1960,14 @@ func render_ui() -> void:
 		panel(Rect2(20, 228, 252, 122))
 		render_options(Rect2(26, 234, 240, 115))
 	elif mode == Mode.INTRO:
-		var arrival: bool = intro_index == 2
+		var arrival: bool = intro_index == intro_arrival
 		var top: float = 12 if arrival else 211
 		panel(Rect2(28, top, 584, 128))
-		label(str(INTRO_CARDS[intro_index][0]), Rect2(44, top + 14, 552, 28), 18, AMBER)
-		var text: String = str(INTRO_CARDS[intro_index][1])
+		label(str(intro_cards[intro_index][0]), Rect2(44, top + 14, 552, 28), 18, AMBER)
+		var text: String = str(intro_cards[intro_index][1])
 		label(text.left(mini(text.length(), intro_ticks / 2)), Rect2(44, top + 53, 552, 58), 12)
 		var advance: Button = Button.new()
-		advance.text = binding_label("confirm") + (" / begin" if intro_index == 2 else " / continue")
+		advance.text = binding_label("confirm") + (" / begin" if intro_index == intro_cards.size() - 1 else " / continue")
 		advance.position = Vector2(390, top + 102); advance.size = Vector2(210, 23)
 		advance.add_theme_font_override("font", font); advance.add_theme_font_size_override("font_size", 12)
 		advance.add_theme_color_override("font_color", MINT)
@@ -1816,7 +1978,7 @@ func render_ui() -> void:
 		advance.pressed.connect(advance_intro)
 		ui.add_child(advance); text_nodes.append(advance)
 		var skip: Button = Button.new()
-		skip.text = binding_label("cancel") + " / skip arrival"
+		skip.text = binding_label("cancel") + (" / skip move-in day" if intro_arrival < 0 else " / skip arrival")
 		skip.position = Vector2(36, top + 102); skip.size = Vector2(288, 23)
 		skip.add_theme_font_override("font", font); skip.add_theme_font_size_override("font_size", 12)
 		skip.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -1825,7 +1987,7 @@ func render_ui() -> void:
 		ui.add_child(skip); text_nodes.append(skip)
 	elif mode == Mode.DIALOGUE:
 		var large: bool = state.settings.large
-		var top: float = 130 if large else 214
+		var top: float = 38.0 if dialogue_top else 130.0 if large else 214.0
 		var height: float = 220 if large else 136
 		panel(Rect2(12, top, 616, height))
 		var line: Array = dialogue_lines[line_index]
@@ -1833,8 +1995,23 @@ func render_ui() -> void:
 		var mood: String = str(line[2]) if line.size() > 2 else "neutral"
 		var talking: bool = reveal < str(line[1]).length()
 		var face: int = 2 if mood == "concern" else 3 if mood == "warm" else 0
-		if talking and mood != "concern" and intro_ticks % 16 < 8: face = 1
-		portrait(speaker, face, Rect2(16, top + 4, 128, 128))
+		# A speaker with no portrait (a voice, a notice) gets the whole box for text, not an empty frame.
+		var iconic: Texture2D = NativeTalkArt.icon(speaker, talking and intro_ticks % 20 < 12)
+		if NativeCastArt.portrait(speaker, face) == null and NativeTalkArt.portrait(speaker, face) == null and iconic == null:
+			var bare_tab: float = text_width(speaker) + 16
+			fill(Rect2(22, top - 8, bare_tab, 17), AMBER)
+			label(speaker, Rect2(30, top - 7, bare_tab - 8, 16), 12, INK)
+			label(str(line[1]).left(floori(reveal)), Rect2(30, top + 18, 582, height - 34), 24 if large else 12)
+			if not talking: caret(Vector2(606, top + height - 14), AMBER)
+			return
+		# While a line types out the mouth flaps (closed on punctuation); portraits without drawn
+		# open mouths fall back to swapping in the talking face.
+		var open: bool = talking and intro_ticks % 10 < 5 and not str(line[1]).substr(maxi(0, floori(reveal) - 1), 1) in [".", ",", "!", "?"]
+		var mouth: Texture2D = NativeTalkArt.portrait(speaker, face) if open else null
+		if mouth == null and talking and mood != "concern" and intro_ticks % 16 < 8 and NativeTalkArt.portrait(speaker, face) == null: face = 1
+		if iconic != null: portrait_texture(iconic, Rect2(16, top + 4, 128, 128))
+		elif mouth != null: portrait_texture(mouth, Rect2(16, top + 4, 128, 128))
+		else: portrait(speaker, face, Rect2(16, top + 4, 128, 128))
 		fill(Rect2(150, top + 10, 1, height - 20), LINE)
 		# Name tab sits on the frame, so the speaker reads before the line does.
 		var tab: float = text_width(speaker) + 16
@@ -1843,15 +2020,33 @@ func render_ui() -> void:
 		label(str(line[1]).left(floori(reveal)), Rect2(164, top + 18, 448, height - 34), 24 if large else 12)
 		if not talking: caret(Vector2(606, top + height - 14), AMBER)
 	elif mode in [Mode.MENU, Mode.PAUSE]:
-		if pause_context and pause_mode == Mode.WORLD and (caption == "Paused" or caption.begins_with("Party") or party_caption(caption)):
+		if ending_ticks >= 0 and not pause_context and mode == Mode.MENU and caption.begins_with("The end"):
+			render_ending()
+		elif pause_context and pause_mode == Mode.WORLD and (caption == "Paused" or caption.begins_with("Party") or party_caption(caption)):
 			render_pause_screen()
+		elif mode == Mode.MENU and NativeLinkedOutMenu.is_profile(caption):
+			NativeLinkedOutMenu.render(self)
 		else:
+			# A framed box sized to its options. Story choices sit where the dialogue box was (bottom,
+			# or top when the speakers stand low); other menus hang from the top.
 			var quiz: float = 46.0 if stack > 40.0 else 0.0
-			panel(Rect2(70, 22 + quiz, 500, 318 - quiz))
-			label(caption, Rect2(88, 36 + quiz, 464, 46), 12, AMBER)
-			fill(Rect2(88, 82 + quiz, 464, 1), LINE)
-			render_options(Rect2(88, 91 + quiz, 464, (194 if mode == Mode.MENU else 239) - quiz))
-	elif mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESOLVE, Mode.RESULT]:
+			var has_back: bool = mode == Mode.MENU and menu_options.any(func(choice: Dictionary) -> bool: return choice.label == "Back")
+			var count: int = maxi(1, menu_options.size() - (1 if has_back else 0))
+			var caption_lines: int = clampi(ceili(text_width(caption) / 464.0), 1, 2)
+			var head: float = 20.0 + 18.0 * caption_lines
+			var back_room: float = 26.0 if has_back else 0.0
+			var rows: int = clampi(count, 1, floori((318.0 - quiz - head - 10.0 - back_room) / 23.0))
+			var height: float = head + rows * 23.0 + 10.0 + back_room
+			var top: float = 22.0 + quiz
+			if world.visible and not pause_context and mode == Mode.MENU:
+				top = maxf(22.0 + quiz, 38.0 if dialogue_top else 350.0 - height)
+			panel(Rect2(70, top, 500, height))
+			label(caption, Rect2(88, top + 10, 464, 18.0 * caption_lines), 12, AMBER)
+			fill(Rect2(88, top + head - 5, 464, 1), LINE)
+			# Back is drawn by the overlay button in the row after the options.
+			render_options(Rect2(88, top + head + 2, 464, (rows + (1 if has_back else 0)) * 23.0))
+			if has_back: menu_back_rect = Rect2(88, top + head + 2 + rows * 23.0, 464, 23)
+	elif mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESOLVE, Mode.RESULT, Mode.BANNER]:
 		render_battle_ui()
 	if notice_ticks > 0 and mode == Mode.WORLD:
 		var width: float = minf(text_width(notice) + 28, 616)
@@ -1898,14 +2093,36 @@ func render_pause_screen() -> void:
 	label(objective(), Rect2(238, 292, 372, 34), 12, CREAM)
 	right_label("Keepsakes %d/%d" % [found, PartyGrowth.KEEPSAKES.size()], Rect2(410, 273, 200, 16), MUTED)
 
+## The closing card: the scene fades to dark, the title and an end line fade in, then the choices
+## (keep exploring / title) appear underneath in a small framed list.
+func render_ending() -> void:
+	var fade: float = clampf(ending_ticks / 80.0, 0.0, 1.0)
+	fill(Rect2(0, 0, 640, 360), Color(0.04, 0.05, 0.09, fade))
+	if ending_ticks < 50: return
+	var shown: float = clampf((ending_ticks - 50) / 60.0, 0.0, 1.0)
+	var tint: Color = Color(1, 1, 1, shown)
+	var title: Label = label("AFTER HOURS", Rect2(120, 70, 400, 50), 36, Color(CREAM, shown)); title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var sub: Label = label("C O L L E G E   T A L E", Rect2(120, 122, 400, 20), 12, Color(AMBER, shown)); sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	fill(Rect2(220, 152, 200, 1), Color(LINE, shown))
+	var line: Label = label("THE END", Rect2(120, 164, 400, 24), 18, Color(MINT, shown)); line.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	if ending_ticks < 120: return
+	var rows: int = menu_options.size()
+	var top: float = 296.0 - rows * 23.0
+	panel(Rect2(150, top - 10, 340, rows * 23.0 + 18))
+	render_options(Rect2(160, top, 320, rows * 23.0))
+
 func render_options(rect: Rect2) -> void:
 	var reviewing: bool = mode == Mode.BATTLE and caption == "Review party plan"
 	var grid: bool = mode == Mode.BATTLE and (caption.contains("Choose an action") or reviewing)
 	var rows: int = floori(rect.size.y / 23)
-	var first: int = 0 if grid else maxi(0, selection - rows + 1)
-	var count: int = 3 if reviewing else 6 if grid else rows
+	# A list longer than the box but short enough for two columns (e.g. five CONNECT options and
+	# Back in the battle panel) splits into columns instead of scrolling Back out of view.
+	var per_column: int = ceili(menu_options.size() / 2.0)
+	var columns: int = 2 if not grid and menu_options.size() > rows and rect.size.x >= 400 and per_column <= rows else 1
+	var first: int = 0 if grid or columns == 2 else maxi(0, selection - rows + 1)
+	var count: int = 3 if reviewing else 6 if grid else menu_options.size() if columns == 2 else rows
 	var names_only: bool = pause_context and mode == Mode.MENU and (caption.begins_with("Party") or party_caption(caption))
-	if not grid and menu_options.size() > rows:
+	if not grid and columns == 1 and menu_options.size() > rows:
 		var track: ColorRect = ColorRect.new()
 		track.position = Vector2(rect.end.x + 2, rect.position.y); track.size = Vector2(3, rect.size.y); track.color = PLUM
 		track.mouse_filter = Control.MOUSE_FILTER_IGNORE; ui.add_child(track); text_nodes.append(track)
@@ -1925,8 +2142,9 @@ func render_options(rect: Rect2) -> void:
 		button.add_theme_color_override("font_color", MUTED if menu_options[i].get("disabled", false) else INK if chosen else CREAM)
 		button.add_theme_color_override("font_hover_color", Color.WHITE)
 		button.clip_text = true
-		button.position = rect.position + (Vector2((i % 3) * (rect.size.x / 3), (i / 3) * 35) if grid else Vector2(0, (i - first) * 23))
-		button.size = Vector2(rect.size.x / 3 - 8, 24 if reviewing else 30) if grid else Vector2(rect.size.x, 22)
+		button.position = rect.position + (Vector2((i % 3) * (rect.size.x / 3), (i / 3) * 35) if grid else Vector2((i / per_column) * (rect.size.x / 2 + 4), (i % per_column) * 23) if columns == 2 else Vector2(0, (i - first) * 23))
+		var option_size: Vector2 = Vector2(rect.size.x / 3 - 8, 24 if reviewing else 30) if grid else Vector2(rect.size.x / 2 - 4, 22) if columns == 2 else Vector2(rect.size.x, 22)
+		button.size = option_size
 		button.alignment = HORIZONTAL_ALIGNMENT_CENTER if grid else HORIZONTAL_ALIGNMENT_LEFT
 		# Selected = solid amber with dark text; the rest stay quiet so one choice stands out.
 		var normal: StyleBoxFlat = StyleBoxFlat.new()
@@ -1951,7 +2169,7 @@ func render_options(rect: Rect2) -> void:
 		ui.add_child(button); text_nodes.append(button); buttons.append(button)
 		# Size again once the slim styleboxes apply; the default theme's cached minimum clamped it taller.
 		button.update_minimum_size()
-		button.size = Vector2(rect.size.x / 3 - 8, 24 if reviewing else 30) if grid else Vector2(rect.size.x, 22)
+		button.size = option_size
 
 func command_summary(command: Dictionary) -> String:
 	var actor_name: String = str(battle.party[int(command.actor)].id).capitalize()
@@ -1966,17 +2184,26 @@ func command_summary(command: Dictionary) -> String:
 	return text
 
 func render_battle_ui() -> void:
-	var name: String = "FLYERER" if boss_id.is_empty() else "COACH PRIME" if boss_id == "deion" else "HOLD THE LIGHT" if boss_id == "walt" else "JAKERSON" if boss_id == "jakerson_final" else boss_id.to_upper()
-	# Foe card: name, then real meters instead of bare numbers.
-	panel(Rect2(392, 8, 236, 62))
-	label(name, Rect2(404, 13, 212, 16), 12, AMBER)
-	if BattleRules.desperate(battle) and battle.outcome == "active" and boss_id not in ["jakerson", "jakerson_final"]: right_label("HITTING HARDER", Rect2(404, 13, 214, 16), Color("e8837b"))
-	label("WIND" if boss_id == "walt" else "HP", Rect2(404, 31, 44, 16), 12, CREAM)
-	meter(Rect2(450, 36, 124, 5), float(shown_enemy_hp) / maxf(1.0, float(battle.get("max_hp", shown_enemy_hp))), AMBER)
-	right_label(str(shown_enemy_hp), Rect2(576, 31, 42, 16))
-	label("OPEN", Rect2(404, 49, 44, 16), 12, MINT)
-	meter(Rect2(450, 54, 124, 5), float(battle.openness) / 100.0, MINT)
-	right_label("%s%%" % battle.openness, Rect2(576, 49, 42, 16), MINT)
+	var name: String = "FLYERER" if boss_id.is_empty() else "COACH PRIME" if boss_id == "deion" else "HOLD THE LIGHT" if boss_id == "walt" else "JAKERSON" if boss_id == "jakerson_final" else "GWEN THE RED" if boss_id == "errata" else "ADVISOR BEV" if boss_id == "claim" else "CAPTAIN LANCE" if boss_id == "cone" else NativeRandomFights.name_of(boss_id).to_upper() if NativeRandomFights.is_fight(boss_id) else boss_id.to_upper()
+	# Foe card: name, then real meters instead of bare numbers. It sits top centre, between the
+	# party and the foe, so it never covers the enemy sprite (tall bosses reach y 42).
+	var card: float = 214.0
+	panel(Rect2(card, 8, 212, 62))
+	label(name, Rect2(card + 12, 13, 188, 16), 12, AMBER)
+	if bool(battle.get("eased", false)) and battle.outcome == "active" and mode in [Mode.TELEGRAPH, Mode.DODGE]: right_label("EASING UP", Rect2(card + 12, 13, 190, 16), MINT)
+	elif BattleRules.desperate(battle) and int(battle.openness) < 100 and battle.outcome == "active" and boss_id not in ["jakerson", "jakerson_final"]: right_label("DESPERATE", Rect2(card + 12, 13, 190, 16), Color("e8837b"))
+	# OPEN is the meter most fights are won on, so it is the big, bright one; HP is the quiet one.
+	label("WIND" if boss_id == "walt" else "HP", Rect2(card + 12, 31, 40, 16), 12, MUTED)
+	meter(Rect2(card + 52, 37, 112, 3), float(shown_enemy_hp) / maxf(1.0, float(battle.get("max_hp", shown_enemy_hp))), Color("a8823f"))
+	right_label(str(shown_enemy_hp), Rect2(card + 166, 31, 36, 16), MUTED)
+	# In Hold the Light the lantern-bearer on the foe side is Walt, who is being helped: say so.
+	if boss_id == "walt":
+		var plate: float = text_width("WALT / HOLDS THE LIGHT") + 12
+		panel(Rect2(480 - plate / 2, 148, plate, 17), MINT)
+		label("WALT / HOLDS THE LIGHT", Rect2(480 - plate / 2 + 6, 149, plate - 8, 16), 12, MINT)
+	label("OPEN", Rect2(card + 12, 49, 40, 16), 12, MINT)
+	meter(Rect2(card + 52, 51, 112, 9), float(battle.openness) / 100.0, MINT)
+	right_label("%s%%" % battle.openness, Rect2(card + 166, 49, 36, 16), MINT)
 	# Party strip: one card per member, SYNC as its own meter at the end.
 	var joined: int = 1 + int(bool(state.flags.get("imani_joined", false))) + int(bool(state.flags.get("walt_joined", false)))
 	for i: int in range(joined):
@@ -1996,7 +2223,9 @@ func render_battle_ui() -> void:
 	if mode in [Mode.TELEGRAPH, Mode.DODGE]: progress = live_promise_progress() if battle.promise else "No promise this turn"
 	elif mode == Mode.BATTLE: progress = last_promise_result
 	if boss_id == "claim":
-		progress += ("\n" if not progress.is_empty() else "") + "Tag%s / Return%s / Boundary%s" % ["+" if claim_needs.tagDelivered else "-", "+" if claim_needs.oneReturned else "-", "+" if claim_needs.boundaryKept else "-"]
+		# The three things RELEASE needs (tag delivered, one item returned, a boundary kept).
+		var met: int = int(bool(claim_needs.tagDelivered)) + int(bool(claim_needs.oneReturned)) + int(bool(claim_needs.boundaryKept))
+		progress += ("\n" if not progress.is_empty() else "") + "Needs met %d/3" % met
 	if mode == Mode.BATTLE:
 		panel(Rect2(12, 166, 616, 142))
 		label(battle_error if not battle_error.is_empty() else caption.replace("Choose an action", "your turn"), Rect2(26, 175, 330, 16), 12, Color("e8837b") if not battle_error.is_empty() else AMBER)
@@ -2023,41 +2252,59 @@ func render_battle_ui() -> void:
 		fill(Rect2(302, 235, 36, 21), AMBER)
 		fill(Rect2(80 + minf(1.0, timing_ticks / 54.0) * 480, 231, 3, 29), CREAM)
 	elif mode == Mode.RESOLVE:
-		panel(Rect2(12, 166, 616, 34))
-		label(action_text, Rect2(26, 175, 588, 16), 12, AMBER)
+		# Keep the command panel at full height: who is acting, the whole turn's plan as a log
+		# (done / now / next) and what the current action does.
+		panel(Rect2(12, 166, 616, 142))
+		label(action_text, Rect2(26, 175, 420, 16), 12, AMBER)
+		right_label("Action %d/%d" % [mini(resolution_index + 1, plan.size()), plan.size()], Rect2(450, 175, 164, 16), MUTED)
+		fill(Rect2(26, 195, 588, 1), LINE)
+		for i: int in range(mini(plan.size(), 3)):
+			var row: float = 205 + i * 22
+			var now: bool = i == resolution_index
+			if now: caret(Vector2(28, row + 5), AMBER)
+			label(command_summary(plan[i]), Rect2(42, row, 572, 16), 12, AMBER if now else MUTED if i < resolution_index else CREAM)
+		if resolution_index < plan.size():
+			var acting: Dictionary = plan[resolution_index]
+			var kind: String = "boundary" if acting.get("boundary", false) else str(acting.kind)
+			label(str(ACTION_HELP.get(kind, "")), Rect2(26, 284, 588, 16), 12, MINT)
 	elif mode in [Mode.TELEGRAPH, Mode.DODGE]:
-		var instructions: Dictionary = {"": "Move through the paper gaps. Confirm briefly pushes paper away.", "chip": "Tap left / right to hop. Match the called safe column.", "deion": "%s: jump. %s: duck. Or use the buttons." % [binding_label("confirm"), binding_label("run")], "todd": "Move between stamps. RED AUDIT: stay still. Confirm signs boxes.", "pinpal": "Move left / right. Confirm near a ball to flip it back.", "claim": "Carry the outlined tag." if boss_stage == 0 else "Return one item. Confirm at a destination; leave the other a note."}
-		instructions.cone="Follow each green row. Crossed-out rows are cancelled calls."
-		instructions.empty_chair="Leave the outlined seat empty. Rest in the lantern pocket."
+		var instructions: Dictionary = {"": "Move through the paper gaps. Confirm briefly pushes paper away.", "chip": "Tap left / right to hop. Match the called safe column.", "deion": "%s: jump. %s: duck. Or use the buttons." % [binding_label("confirm"), binding_label("run")], "todd": "Move between stamps. RED AUDIT: stay still. Confirm signs boxes.", "pinpal": "Move left / right. Confirm near a ball to flip it back.", "claim": "Carry the outlined ticket." if boss_stage == 0 else "Return one item. Confirm at a pigeonhole; leave the other a note."}
+		instructions.cone="Follow each green row. Crossed-out rows say CALL CANCELLED: nobody rides them."
+		instructions.chad="Keep the FREE slot empty. Rest in the Do Not Disturb bubble."
 		instructions.rook=["Confirm at the key, then the exit.","CONNECT > REVISE chooses one exit. Hold its green box.","Move into each green cue and confirm together."][mini(2,boss_stage)]
-		instructions.val=["Confirm the top return, right stop, then left note.","Each ally rejects their own ideal in CONNECT. Hold shared green space.","CONNECT > REVISE removes one side of the chairs. Hold its passage.","Confirm at two green stopping cues. Then choose an ending."][mini(3,boss_stage)]
+		instructions.val=["Confirm at RETURN, then STOP, then NOTE.","In CONNECT, each of you turns down your own perfect resume. Hold the shared space.","CONNECT > REVISE frees one side of the booked chairs. Hold the way out.","Confirm at two green stopping cues. Then choose an ending."][mini(3,boss_stage)]
 		instructions.jakerson_final = "Everything he taught you. With a promise, sign each green line with confirm."
 		instructions.jakerson = "Dodge the code. With a promise, stand in each green commit and press confirm."
 		instructions.walt = "Stay in the gold shelter. Confirm at the lantern as gusts warn. Dodge debris."
 		instructions.encore = "Follow the lit lane. When the cue box opens, move into it and confirm."
-		instructions.errata="Keep the sentence. Confirm in its green box during three marked pauses."
+		instructions.errata="Dodge the red pen. Confirm in the green box at the three marked pauses."
 		instructions.eric="Dodge the traces. With a promise, stand on each test point and press confirm to probe it."
-		instructions.index="Confirm at the top bookmark, then at the outlined return slot. Read moving margins."
+		instructions.autocomplete="Confirm at the green suggestion, then at the STOP box. Slip through the gaps."
 		var instruction: String = "Get ready" if mode == Mode.TELEGRAPH else str(pattern.get("phaseName", "Defense"))
 		if boss_id == "claim" and mode == Mode.DODGE:
-			instruction = "Tag carried / move to the outlined destination" if pattern.get("carryTag", false) else "Pick up the outlined tag"
-			if pattern.promiseComplete: instruction = "Tag delivered through the sweep." if int(pattern.phase) == 0 else "One return, one note. Promise kept." if battle.promise else "One return, one note completed."
+			instruction = "Ticket carried / move to the outlined pigeonhole" if pattern.get("carryTag", false) else "Pick up the outlined ticket"
+			if pattern.promiseComplete: instruction = "Ticket delivered through the plan." if int(pattern.phase) == 0 else "One return, one note. Promise kept." if battle.promise else "One return, one note completed."
 		if pattern.get("audit", false): instruction = "RED AUDIT / HOLD STILL"
 		# Three columns: how to play | arena | what the promise needs.
-		panel(Rect2(12, 166, 172, 120))
-		var heading: float = 16.0 if text_width(instruction) <= 156 else 34.0
-		label(instruction, Rect2(22, 173, 156, heading), 12, Color("e8837b") if pattern.get("audit", false) else AMBER)
-		fill(Rect2(22, 177 + heading, 152, 1), LINE)
-		label(str(pattern.get("hint", instructions[boss_id])), Rect2(22, 183 + heading, 156, 100 - heading), 12, CREAM)
-		panel(Rect2(456, 166, 172, 120), MINT if battle.promise else LINE)
-		label("PROMISE" if battle.promise else "DEFEND", Rect2(466, 173, 152, 16), 12, MINT if battle.promise else MUTED)
-		fill(Rect2(466, 193, 152, 1), LINE)
+		# The side panels stop 20px short of the box (emitters and rigs sit just outside its edges).
+		panel(Rect2(12, 166, 160, 120))
+		var heading: float = 16.0 if text_width(instruction) <= 144 else 34.0
+		label(instruction, Rect2(20, 173, 146, heading), 12, Color("e8837b") if pattern.get("audit", false) else AMBER)
+		fill(Rect2(20, 177 + heading, 144, 1), LINE)
+		label(str(pattern.get("hint", instructions.get(boss_id, ""))), Rect2(20, 183 + heading, 146, 100 - heading), 12, CREAM)
+		panel(Rect2(468, 166, 160, 120), MINT if battle.promise else LINE)
+		label("PROMISE" if battle.promise else "DEFEND", Rect2(476, 173, 146, 16), 12, MINT if battle.promise else MUTED)
+		fill(Rect2(476, 193, 144, 1), LINE)
 		var lines: Array[String] = []
 		for part: String in progress.replace("\n", " / ").split(" / "):
 			var piece: String = part.strip_edges()
 			if not piece.is_empty(): lines.append(piece.left(1).to_upper() + piece.substr(1))
-		label("\n".join(lines), Rect2(466, 199, 152, 84), 12, CREAM)
-		if resume_ticks > 0: label("Resume in %s" % ceili(resume_ticks / 60.0), Rect2(239, 214, 180, 26), 12, AMBER)
+		label("\n".join(lines), Rect2(476, 199, 146, 84), 12, CREAM)
+		if resume_ticks > 0:
+			# The countdown takes the action button's slot (hidden meanwhile), clear of the arena and soul.
+			panel(Rect2(232, 291, 176, 22), AMBER)
+			var count: Label = label("Resume in %s" % ceili(resume_ticks / 60.0), Rect2(232, 294, 176, 16), 12, AMBER)
+			count.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	elif mode == Mode.RESULT:
 		panel(Rect2(24, 187, 592, 113), AMBER)
 		label(caption, Rect2(40, 202, 560, 26), 18, AMBER)
@@ -2078,7 +2325,7 @@ func _draw() -> void:
 			var anchor := Vector2(hovered.x, hovered.y)
 			draw_arc(anchor, 17, 0, TAU, 24, AMBER, 2)
 	var defending: bool = mode in [Mode.DODGE, Mode.TELEGRAPH] or pause_context and pause_mode in [Mode.DODGE, Mode.TELEGRAPH]
-	var fighting: bool = mode==Mode.DIALOGUE and not world.visible or mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESULT, Mode.RESOLVE]
+	var fighting: bool = mode==Mode.DIALOGUE and not world.visible or mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESULT, Mode.RESOLVE, Mode.BANNER]
 	if (fighting or pause_context and pause_mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESULT, Mode.RESOLVE]) and battle_scenery.visible:
 		# Dim the room behind the fight; deeper below the fighters where the menus sit. A painted
 		# battle backdrop carries its own shading.
@@ -2162,7 +2409,7 @@ func use_door(object: Dictionary) -> void:
 	for required: String in object.get("requires", []):
 		if not state.flags.get(required, false):
 			player.position += Vector2(0, 12)
-			message(str({"cal_key_received":"Ask Cal for the service key on the repair landing.", "walt_joined":"Find Walt in the underpass under Broadway first.", "claim_resolution":"Follow the voice into lost property first.", "chip_resolution":"Meet Chip on the audience lawn first.", "volunteers_released":"Finish one task with the volunteers in the tent.", "imani_performance":"Let Imani choose her song backstage.", "chapter1_complete":"Finish ENCORE on Farrand main stage.", "library_pass":"Speak to Nell at the checkout desk.", "stacks_shifted":"Turn the crank in the moving stacks.", "bookmark_found":"Pick up the bookmark in the reading room.", "errata_resolution":"Settle ERRATA in the moving stacks.", "dev_met":"Speak to Dev in the workshop.", "bridge_ready":"After Professor Eric's test, return to Dev to install the bridge.", "index_resolution":"Bring the source reel back to INDEX.", "playback_heard":"Listen to the reel in the playback room.", "chapter2_complete":"Hear the full reel in Norlin playback.", "notice_limits":"Read the notices in Old Main hall.", "booth_origin":"Read the original directory in the empty office.","rook_confessed":"Hear Rook in Old Main courtyard.","chapter3_complete":"Complete Todd\'s audit in Old Main.","attendees_freed":"Give the cloakroom guests a choice.","music_ready":"Let Imani finish the score in the orchestra pit.","rook_resolution":"Finish Rook\'s last shift on the balcony.","val_resolution":"Choose an ending on the graduation stage.","dawn_talk_read":"Talk with the party at the dawn exit."}.get(required, "Return the mixer, then help the living invitation.")))
+			message(str({"flyer_resolution":"Settle the poster in the club room first.","cal_key_received":"Ask Cal for the service key on the repair landing.", "walt_joined":"Find Walt in the underpass under Broadway first.", "claim_resolution":"Follow the voice into lost property first.", "chip_resolution":"Meet Chip on the audience lawn first.", "volunteers_released":"Finish one task with the volunteers in the tent.", "imani_performance":"Let Imani choose her song backstage.", "chapter1_complete":"Finish ENCORE on Farrand main stage.", "library_pass":"Speak to Nell at the checkout desk.", "stacks_shifted":"Turn the crank in the moving stacks.", "bookmark_found":"Pick up the bookmark in the reading room.", "errata_resolution":"Settle Gwen the Red in the moving stacks.", "dev_met":"Speak to Dev in the workshop.", "bridge_ready":"After Professor Eric's test, return to Dev to install the bridge.", "autocomplete_resolution":"Bring the source reel back to AUTOCOMPLETE.", "playback_heard":"Listen to the reel in the playback room.", "chapter2_complete":"Hear the full reel in Norlin playback.", "notice_limits":"Read the notices in Old Main hall.", "booth_origin":"Read the original directory in the empty office.","rook_confessed":"Hear Rook in Old Main courtyard.","chapter3_complete":"Complete Todd\'s audit in Old Main.","attendees_freed":"Give the cloakroom guests a choice.","music_ready":"Let Imani finish the score in the orchestra pit.","rook_resolution":"Finish Rook\'s last shift on the balcony.","val_resolution":"Choose an ending on the graduation stage.","dawn_talk_read":"Talk with the party at the dawn exit."}.get(required, "Return the mixer, then help the living invitation.")))
 			return
 	if object.to == "U05" and not state.flags.get("booth_seen", false):
 		message("Imani points to the NEXT YEAR booth. Check that voice first."); return
@@ -2183,18 +2430,19 @@ func object_label(object: Dictionary) -> String:
 
 func advance_intro() -> void:
 	if intro_ticks < 30: return
-	var full_ticks: int = str(INTRO_CARDS[intro_index][1]).length() * 2
-	if intro_index == 2: full_ticks = maxi(full_ticks, 180)
+	var full_ticks: int = str(intro_cards[intro_index][1]).length() * 2
+	if intro_index == intro_arrival: full_ticks = maxi(full_ticks, 180)
 	if intro_ticks < full_ticks:
 		intro_ticks = full_ticks; ui_dirty = true
 		return
 	intro_index += 1; intro_ticks = 0; ui_dirty = true
-	if intro_index == 2:
+	if intro_index == intro_arrival:
 		world.visible = true; backdrop.visible = false
 		environment.arrival_origin = player.position; environment.set_arrival(0.0)
 		player.facing = "up"; player.art.play("interact_up")
-	if intro_index >= 3:
-		finish_arrival(false)
+	if intro_index >= intro_cards.size():
+		if intro_arrival < 0: NativeMoveIn.begin(self)
+		else: finish_arrival(false)
 
 func finish_arrival(skip: bool) -> void:
 	enter_room("U01", Vector2(96, 258), false)
@@ -2217,6 +2465,7 @@ func present_action() -> void:
 	var origin: Vector2 = battle_sprites[index].position - Vector2(0, 34)
 	if kind == "strike":
 		vfx.play("slash", origin, Vector2(480, 108)); audio.combat("swing")
+		NativeBattleJuice.lunge(battle_sprites[index])
 	else:
 		vfx.play("guard" if kind == "guard" else "heal" if kind in ["heal", "item", "warmth"] else "promise", origin, origin)
 		audio.combat("guard" if kind == "guard" else "shield" if kind == "shield" else "release" if kind == "release" else "pick")
@@ -2231,33 +2480,62 @@ func present_impact() -> void:
 		foe.modulate = Color("df8078"); claim_art.set_pose("hit"); pin_art.set_pose("hit")
 		foe.play("hit")
 		audio.combat("enemyhurt")
+		var struck: Node2D = claim_art if boss_id == "claim" else pin_art if boss_id == "pinpal" else foe
+		NativeBattleJuice.flinch(struck, Vector2.RIGHT, damage); NativeBattleJuice.flash(struck)
+		if damage >= 12: NativeBattleJuice.kick([battle_scenery, foe, claim_art, pin_art] + battle_sprites, 2.0, 10)
+	elif str(command.kind) in ["heal", "item", "warmth"]:
+		# Healing pops a green number over each ally it reached.
+		for i: int in range(mini(3, battle_sprites.size())):
+			if command.has("target") and int(command.target) != i: continue
+			var gained: int = int(pending_battle.party[i].hp) - int(battle.party[i].hp)
+			if gained > 0 and battle_sprites[i].visible: vfx.play("heal", battle_sprites[i].position, battle_sprites[i].position - Vector2(0, 38), gained)
 	ui_dirty = true
 
 func stage_dialogue() -> void:
 	var speaker: String = str(dialogue_lines[line_index][0])
 	for prop: Node2D in scene_props:
-		if str(prop.get_meta("id", "")) == {"CLAIM":"claim", "Pin Pal":"pinpal"}.get(speaker, ""):
+		if str(prop.get_meta("id", "")) == {"Advisor Bev":"claim", "Pin Pal":"pinpal"}.get(speaker, ""):
 			prop.set_pose("tell")
 	for prop: Node2D in environment.foreground_nodes:
 		if prop is NativeSpatialProp and prop.definition.get("object") == "booth": prop.set_pose("tell" if speaker == "Booth" else "idle")
 	pip.set_pose("wave" if speaker == "Pip" else "idle")
-	var identities: Dictionary = {"Cal":"cal", "Mags":"mags", "Nell":"nell", "Dev":"dev", "Rook":"rook", "Walt":"walt", "ENCORE":"encore", "ERRATA":"errata", "INDEX":"index", "LOADBEARER":"loadbearer", "Professor Eric":"eric", "VAL":"val", "Val":"val_small", "CONE COMMITTEE":"cone", "EMPTY CHAIR":"empty_chair", "Jakerson":"jakerson", "Mara":"mara", "Eli":"eli", "Chip":"chip", "Deion Sanders":"deion", "Todd Saliman":"todd", "Flyerer":"flyer"}
-	for npc: AnimatedSprite2D in world_npcs:
-		if str(npc.get_meta("art_id",npc.get_meta("id",""))) in NativeCastArt.IDS or npc.get_meta("id", "") == "flyer":
-			npc.play("interact_down" if npc.get_meta("art_id",npc.get_meta("id")) == identities.get(speaker, "") else "settled" if state.flags.has(str(npc.get_meta("id")) + "_resolution") else "idle_down")
+	var identities: Dictionary = {"Cal":"cal", "Mags":"mags", "Nell":"nell", "Dev":"dev", "Rook":"rook", "Walt":"walt", "ENCORE":"encore", "Gwen the Red":"errata", "AUTOCOMPLETE":"autocomplete", "LOADBEARER":"loadbearer", "Professor Eric":"eric", "VAL":"val", "Val":"val_small", "Captain Lance":"cone", "PELOTON":"cone", "Chad":"chad", "Jakerson":"jakerson", "Mara":"mara", "Eli":"eli", "Chip":"chip", "Deion Sanders":"deion", "Todd Saliman":"todd", "Flyerer":"flyer"}
+	if speaker != "Booth": NativeTalkMotion.stage(self, speaker, identities)
+	dialogue_top = dialogue_side_top(NativeTalkMotion.speakers(self, speaker, identities))
 	if speaker == "Booth":
 		strange_ticks = 120
 		audio.combat("warning")
 		for person: WorldActor in [player] + followers:
 			if person.visible: person.art.play("interact_up")
-	elif world.visible:
-		for i: int in range(3):
-			var person: WorldActor = player if i == 0 else followers[i - 1]
-			if person.visible:
-				person.art.play(("interact_" if ACTORS[i].capitalize() == speaker else "idle_") + person.facing)
+
+## Undertale-style box placement: the box goes to the top when it would cover the people talking
+## (the speaker, and Jules a little), and back down when the top box would cover them instead.
+func dialogue_side_top(talkers: Array) -> bool:
+	if not world.visible: return false
+	var large: bool = state.settings.large
+	var bottom_edge: float = (130.0 if large else 214.0) - 8.0
+	var top_edge: float = (38.0 + 220.0 if large else 38.0 + 136.0) + 8.0
+	var canvas: Transform2D = get_viewport().get_canvas_transform()
+	var under_bottom: float = 0.0
+	var under_top: float = 0.0
+	var anchors: Array = []
+	for sprite: Variant in talkers: anchors.append([sprite, 1.0])
+	anchors.append([player.art, 0.5])
+	for anchor: Array in anchors:
+		if not is_instance_valid(anchor[0]): continue
+		var sprite: Node2D = anchor[0]
+		if not sprite.is_visible_in_tree(): continue
+		var feet: Vector2 = canvas * sprite.global_position
+		if feet.x < -16 or feet.x > 656 or feet.y < 0 or feet.y > 420: continue
+		var middle: float = feet.y - 26.0
+		if middle > bottom_edge: under_bottom += float(anchor[1])
+		if middle < top_edge: under_top += float(anchor[1])
+	if under_bottom > under_top: return true
+	if under_top > under_bottom: return false
+	return dialogue_top
 
 func _qa_smoke() -> void:
-	var route: Node = load("res://scenes/qa_jakerson.gd" if "--qa-jakerson" in OS.get_cmdline_user_args() else "res://scenes/qa_final.gd" if "--qa-final" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter3.gd" if "--qa-chapter3" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter2.gd" if "--qa-chapter2" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter1.gd" if "--qa-chapter1" in OS.get_cmdline_user_args() else "res://scenes/qa_review_controls.gd" if "--qa-review-ui" in OS.get_cmdline_user_args() else "res://scenes/qa_opening.gd").new()
+	var route: Node = load("res://scenes/qa_hub.gd" if "--qa-hub" in OS.get_cmdline_user_args() else "res://scenes/qa_wander.gd" if "--qa-wander" in OS.get_cmdline_user_args() else "res://scenes/qa_jakerson.gd" if "--qa-jakerson" in OS.get_cmdline_user_args() else "res://scenes/qa_final.gd" if "--qa-final" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter3.gd" if "--qa-chapter3" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter2.gd" if "--qa-chapter2" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter1.gd" if "--qa-chapter1" in OS.get_cmdline_user_args() else "res://scenes/qa_review_controls.gd" if "--qa-review-ui" in OS.get_cmdline_user_args() else "res://scenes/qa_opening.gd").new()
 	add_child(route)
 	var passed: bool = await route.run(self)
 	if qa_record != null and not qa_record_finishing: qa_finish_record()
@@ -2283,7 +2561,9 @@ func qa_finish_record() -> void:
 	qa_record_finishing = false
 
 func portrait(speaker: String, expression: int, rect: Rect2) -> void:
-	var texture: Texture2D = NativeCastArt.portrait(speaker, expression)
+	portrait_texture(NativeCastArt.portrait(speaker, expression), rect)
+
+func portrait_texture(texture: Texture2D, rect: Rect2) -> void:
 	if texture == null: return
 	var node := TextureRect.new()
 	node.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
@@ -2346,7 +2626,7 @@ func live_promise_progress() -> String:
 		"pinpal": return "Balls returned %d/3" % mini(3, int(pattern.get("deflections", 0)))
 		"claim":
 			if int(pattern.get("phase", boss_stage)) == 0:
-				return "Tag %s / sweep %s\ndelivered %s" % ["held" if pattern.get("carryTag", false) else "open", "clear" if int(pattern.get("claimSweepPassed", 0)) > 0 else "open", "yes" if markers.size() > 1 and markers[1].get("collected", false) else "open"]
+				return "Ticket %s / plan %s\ndelivered %s" % ["held" if pattern.get("carryTag", false) else "open", "clear" if int(pattern.get("claimSweepPassed", 0)) > 0 else "open", "yes" if markers.size() > 1 and markers[1].get("collected", false) else "open"]
 			return "One return %s / note %s\nboundary %s" % ["done" if int(pattern.get("delivery", 0)) > 0 else "open", "left" if pattern.get("noteLeft", false) else "open", "kept" if claim_needs.boundaryKept or pattern.get("boundary", false) and pattern.get("promiseComplete", false) else "offered" if pattern.get("boundary", false) else "open"]
 	return ""
 
@@ -2357,7 +2637,7 @@ func draw_final_arena(offset: Vector2) -> void:
 			var y: float=float(pattern.cancelledLane)
 			draw_line(offset+Vector2(0,y),offset+Vector2(256,y),PLUM,1)
 			draw_line(offset+Vector2(116,y-7),offset+Vector2(140,y+7),CREAM,2);draw_line(offset+Vector2(116,y+7),offset+Vector2(140,y-7),CREAM,2)
-	if boss_id=="empty_chair":
+	if boss_id=="chad" and pattern.get("engine","")!="box":
 		draw_rect(Rect2(offset+pattern.emptySpace.position,pattern.emptySpace.size),Color("6b526a"),false,2)
 		draw_line(offset+pattern.emptySpace.position,offset+pattern.emptySpace.end,PLUM,1)
 		draw_rect(Rect2(offset+pattern.quietPocket.position,pattern.quietPocket.size),MINT,false,2)
@@ -2379,6 +2659,8 @@ func animate_idle_cast() -> void:
 	var reduced: bool=bool(state.settings.reducedMotion)
 	if world.visible:
 		for person: WorldActor in [player]+followers:
+			# Standing still, the party fidget too once their art has fidget_<dir> animations.
+			if mode == Mode.WORLD and str(person.art.animation).begins_with("idle_"): NativeNpcLife.fidget(person.art,Vector2.INF,t,reduced)
 			if str(person.art.animation).begins_with("idle") or str(person.art.animation).begins_with("interact"):
 				NativeIdleMotion.apply(person.art,person.appearance_height,t,reduced,person.get_instance_id())
 		for npc: AnimatedSprite2D in world_npcs:

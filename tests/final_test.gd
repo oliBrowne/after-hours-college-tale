@@ -14,7 +14,7 @@ func drive(id: String,phase: int,assist: float,slow: bool,promised: bool,revisio
 		var at:=Vector2(p.cursor.x,p.cursor.y);var dest:=Vector2(128,62)
 		match id:
 			"cone":dest=Vector2(128,p.safeLane)
-			"empty_chair":dest=Vector2(48,90)
+			"chad":dest=Vector2(48,90)
 			"rook":dest=Vector2(60,24) if phase==0 and not p.keyHeld else Vector2(196,96) if phase==0 else Vector2(48 if revision=="west" else 208,70) if phase==1 else Vector2(128,84)
 			"val":dest=[Vector2(128,24),Vector2(208,96),Vector2(48,96)][mini(2,int(p.valTask))] if phase==0 else Vector2(64 if revision=="left" else 192,84) if phase==2 else Vector2(128,62)
 		var d: Vector2=dest-at;var axis:=Vector2(signf(d.x) if absf(d.x)>2 else 0,signf(d.y) if absf(d.y)>2 else 0)
@@ -37,7 +37,7 @@ func run() -> void:
 	var blocked: Dictionary=drive("val",2,1.0,false,true)
 	check(not blocked.promiseComplete and blocked.chairs.size()==2,"VAL unrevised chairs remain real collision obstacles")
 	check(drive("val",2,1.0,false,true,"right").chairs.size()==1,"REVISE right removes exactly that physical chair field")
-	var chair: Dictionary=NativeFinalEncounter.create("empty_chair",1,0,0);chair.cursor={"x":128.0,"y":60.0};chair.clock=chair.leadIn
+	var chair: Dictionary=NativeFinalEncounter.create("chad",1,0,0);chair.cursor={"x":128.0,"y":60.0};chair.clock=chair.leadIn
 	chair=NativeFinalEncounter.step(chair,Vector2.ZERO,false,1.0,false,true,false)
 	check(chair.chairEntered and not chair.promiseComplete,"Occupying empty chair invalidates quiet promise")
 	var g: Node=load("res://scenes/main.tscn").instantiate();root.add_child(g)
@@ -49,7 +49,7 @@ func run() -> void:
 	NativeFinalCampaign.record_defense(g,true,true);g.connect_menu();check(g.boss_stage==1 and g.menu_options.any(func(c: Dictionary) -> bool:return str(c.label).begins_with("REVISE")),"Kept key objective reveals real REVISE choices next turn")
 	NativeFinalCampaign.record_defense(g,true,true);check(g.boss_stage==2 and not g.release_ready(),"Kept chosen exit still requires shared stopping cues")
 	NativeFinalCampaign.record_defense(g,true,true);g.battle.revision="west";check(g.release_ready(),"Only ordered shared shift unlocks Rook release")
-	for id: String in ["cone","empty_chair"]:
+	for id: String in ["cone","chad"]:
 		for outcome: String in ["peaceful","forceful"]:
 			g.state.flags[id+"_resolution"]=outcome;g.state.flags.aftermath_pending=id;g.persist();g.restore_state(g.saves.load_slot("auto").state)
 			check(g.mode==g.Mode.DIALOGUE and g.state.flags.aftermath_pending==id,id+" "+outcome+" replays optional consequence from disk")

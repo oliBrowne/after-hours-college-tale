@@ -11,7 +11,7 @@ func _run() -> void:
 		["Mara", "mara", "vocal-mags-neutral-1", 0.9],
 		["Eli", "eli", "vocal-cal-neutral-1", 1.12],
 		["Booth voice", "booth", "vocal-jules-neutral-1", 0.86],
-		["CLAIM", "claim", "blip-flyer", 0.7],
+		["Advisor Bev", "advisor bev", "vocal-mags-neutral-1", 0.96],
 		["Pin Pal", "pinpal", "vocal-todd-neutral-1", 0.92],
 		["Pip", "pip", "vocal-chip-neutral-1", 1.34],
 		["Jules Navarro", "jules", "vocal-jules-neutral-1", 1.0],

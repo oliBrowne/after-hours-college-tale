@@ -21,8 +21,10 @@ static func frames(id: String) -> SpriteFrames:
 	if frame_cache.has(id):return frame_cache[id]
 	var result:=SpriteFrames.new();result.remove_animation("default")
 	var poses: Dictionary={"idle":[0],"tell":[1],"reaction":[2],"settled":[3],"hit":[2],"down":[2],"strike":[1],"guard":[0],"connect":[1]}
-	for direction: String in ["up","down","left","right"]:poses["idle_"+direction]=[0];poses["walk_"+direction]=[0];poses["interact_"+direction]=[1]
+	for direction: String in ["up","down","left","right"]:poses["idle_"+direction]=[0];poses["walk_"+direction]=[0];poses["run_"+direction]=[0];poses["interact_"+direction]=[1]
 	for name: String in poses:
 		result.add_animation(name);result.set_animation_speed(name,4)
 		for index: int in poses[name]:result.add_frame(name,body(id,index))
+	if id=="val_small":result.set_meta("walk_key",id);result.set_meta("walk_mirror_left",true)  # stepping cycles from tools/walk_cycle
+	elif id in ["cone","empty_chair","val"]:result.set_meta("idle_key",id)  # blink and idle poses from assets/art/idle
 	frame_cache[id]=result;return result

@@ -1,7 +1,9 @@
 """Offline previews (no Godot needed).
 
     python3 preview.py room   <ID> <out.png> [flag=value ...]   whole room at 2x, dusk tint, scale markers
-    python3 preview.py battle <ID> <out.png> [dawn]              battle backdrop at 2x under the battle UI
+    python3 preview.py battle <ID> <out.png> [dawn] [winter|fall|spring]   battle backdrop at 2x under the battle UI
+
+Rooms take season=winter (or fall, spring) like any flag: the manifest's season variants are used.
 
 Room previews composite the background, state overlays, animals and every placement's painted
 prop in y order (like the game), then apply the world's dusk tint (0.68, 0.72, 0.84). Grey
@@ -44,6 +46,14 @@ def over(dst, src, x, y):
     dst[y0:y1, x0:x1, :3] = s[..., :3] * a + dst[y0:y1, x0:x1, :3] * (1 - a)
 
 
+def pick(d, key, flags, dawn_aware=True):
+    """Like NativeSeason.pick (services/season.gd): dawn and season variants of a manifest key."""
+    season = flags.get("season") if flags.get("season") in ("fall", "winter", "spring") else ""
+    if dawn_aware and flags.get("dawn_started") and key + "_dawn" in d:
+        return d.get(f"{key}_dawn_{season}", d[key + "_dawn"]) if season else d[key + "_dawn"]
+    return d.get(f"{key}_{season}", d.get(key)) if season else d.get(key)
+
+
 def shows(o, flags):
     v = flags.get(o["flag"])
     if "equals" in o:
@@ -68,9 +78,14 @@ def compose(room, view=None, flags=None, markers=True, tint=True):
     placements = layout["placements"]
     dawn = flags.get("dawn_started") and "background_dawn" in m
     img = load(m["background_dawn" if dawn else "background"]).copy()
+    season = flags.get("season") if flags.get("season") in ("fall", "winter", "spring") else ""
+    layer = m.get(f"background_dawn_{season}" if dawn else f"background_{season}") if season else None
+    if layer:
+        # season layers hold only the pixels the season changes (services/season.gd overlay)
+        over(img, load(layer), 0, 0)
     for o in m.get("overlays", []):
         if shows(o, flags):
-            over(img, load(o["texture"]), int(o["x"]), int(o["y"]))
+            over(img, load(pick(o, "texture", flags, False)), int(o["x"]), int(o["y"]))
     sheet, regions = fauna_sheet()
     for f in m.get("fauna", []):
         rx, ry, rw, rh, n = regions[f["kind"]]
@@ -84,12 +99,12 @@ def compose(room, view=None, flags=None, markers=True, tint=True):
         pl = dict(placements[int(key)])
         if "base_x" in pl:
             pl["x"] = pl["base_x"] + (pl.get("shift_x", 0) if flags.get("stacks_shifted") else 0)
-        tex = p["texture"]
+        tex = pick(p, "texture", flags, False)
         if p.get("flag") and flags.get(p["flag"]):
-            tex = p["flag_texture"]
+            tex = pick(p, "flag_texture", flags, False)
         items.append((pl["y"], load(tex), int(pl["x"] - p["anchor"][0]), int(pl["y"] - p["anchor"][1])))
     for o in m.get("occluders", []):
-        items.append((o["base"], load(o["texture"]), o["x"], o["y"]))
+        items.append((o["base"], load(pick(o, "texture", flags, False)), o["x"], o["y"]))
     for _, spr, x, y in sorted(items, key=lambda t: t[0]):
         over(img, spr, x, y)
     static_layers(img, [l for l in m.get("layers", []) if "flag" not in l or shows(l, flags)])
@@ -134,15 +149,24 @@ def static_layers(img, layers):
                 over(img, c.reshape(1, 1, 4), int(p[0]), int(p[1]))
 
 
-def battle(room, dawn=False, ui="menu"):
+def battle(room, dawn=False, ui="menu", season=""):
     m = json.load(open(f"{PROJECT}/assets/art/rooms/{room}/manifest.json"))
     spec = m["battle"]
+    # dawn variants replace the images; season layers are overlays over them (not at dawn
+    # unless a dawn layer exists: services/season.gd overlay)
+    def layer(key):
+        k = f"{key}_dawn_{season}" if dawn and f"{key}_dawn" in spec else f"{key}_{season}"
+        return spec.get(k) if season else None
     far = spec.get("far_dawn", spec["far"]) if dawn else spec["far"]
     img = load(far).copy()
+    if layer("far"):
+        over(img, load(layer("far")), 0, 0)
     static_layers(img, [l for l in spec.get("layers", []) if l.get("depth", "near") == "far"])
     near = spec.get("near_dawn", spec.get("near")) if dawn else spec.get("near")
     if near:
         over(img, load(near), 0, 0)
+        if layer("near"):
+            over(img, load(layer("near")), 0, 0)
     static_layers(img, [l for l in spec.get("layers", []) if l.get("depth", "near") == "near"])
     overlay = np.array(Image.open(f"{HERE}/ui-overlay-{ui}.png").convert("RGBA")).astype(np.float32) / 255
     over(img, overlay, 0, 0)
@@ -164,5 +188,6 @@ if __name__ == "__main__":
             flags[k] = True if v in ("", "true") else False if v == "false" else v
         save2x(compose(room, flags=flags), out)
     else:
-        save2x(battle(room, dawn="dawn" in extra, ui="dodge" if "dodge" in extra else "menu"), out)
+        season = next((e for e in extra if e in ("fall", "winter", "spring")), "")
+        save2x(battle(room, dawn="dawn" in extra, ui="dodge" if "dodge" in extra else "menu", season=season), out)
     print(out)

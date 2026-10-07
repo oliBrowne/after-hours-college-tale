@@ -1,18 +1,18 @@
 class_name NativeFinalCampaign
 extends RefCounted
-const IDS: Array[String]=["cone","empty_chair","rook","val"]
-const AFTERMATHS: Array[String]=["cone","empty_chair","rook","val","dawn"]
+const IDS: Array[String]=["cone","chad","rook","val"]
+const AFTERMATHS: Array[String]=["cone","chad","rook","val","dawn"]
 static func handle(g: Node, object: Dictionary) -> bool:
 	if object.get("kind","")=="door":return false
 	var f: Dictionary=g.state.flags
 	var id: String=str(object.id)
 	var room: String=str(g.state.room)
 	if id=="cone":
-		if f.has("cone_resolution"):NativeChapterTwo.say(g,[["CONE COMMITTEE","ONE ROUTE. CANCELLED CALLS STAY CANCELLED.","warm"]]);return true
-		g.dialogue([["CONE COMMITTEE","LEFT. RIGHT. BOTH. SAFETY HAS FORMED A COMMITTEE.","concern"],["Jules","One announced route would be safer than three simultaneous instructions.","neutral"]],g.resume_world,[g.option("Practice one marked route.",func() -> void:NativeChapterTwo.fight(g,"cone",[["CONE COMMITTEE","FOLLOW THREE GREEN ROWS. CROSSED-OUT CALLS ARE CANCELLED. MOVE FREELY; NO HOPS REQUIRED.","neutral"]])),g.option("Leave the optional committee for later.",g.resume_world)]);return true
-	if id=="empty_chair":
-		if f.has("empty_chair_resolution"):NativeChapterTwo.say(g,[["EMPTY CHAIR","THERE IS STILL ROOM FOR SOMEONE TO BE ABSENT.","warm"]]);return true
-		g.dialogue([["Imani","Somebody left a chair empty on purpose.","neutral"],["Walt","We don't need to invent who belongs in it.","neutral"]],g.resume_world,[g.option("Respect the empty space.",func() -> void:NativeChapterTwo.fight(g,"empty_chair",[["EMPTY CHAIR","KEEP THE SEAT CLEAR. REST BY THE LITTLE LANTERN. YOU DO NOT HAVE TO FILL EVERY GAP.","neutral"]])),g.option("Leave the chair quietly.",func() -> void:NativeChapterTwo.say(g,[["Jules","We can leave it empty without making it a test.","warm"]],{"absence_respected":true}))]);return true
+		if f.has("cone_resolution"):NativeChapterTwo.say(g,[["Captain Lance","ONE LINE. CANCELLED CALLS STAY CANCELLED. I HAVE LAMINATED THE RULE.","warm"]]);return true
+		g.dialogue([["Captain Lance","ON YOUR LEFT! ON YOUR RIGHT! ON BOTH SIDES! WHEN THREE RIDERS CALL THREE PASSES, THAT IS NOT A PACELINE. THAT IS A PILEUP WITH A CADENCE.","concern"],["Imani","His kit is so bright I can hear it. He is also whistling at a squirrel.","concern"],["Walt","He keeps checking his mirror for us. Loud, but he is checking.","neutral"],["Jules","One announced line would be safer than three calls at once.","neutral"]],g.resume_world,[g.option("Practice one marked route.",func() -> void:NativeChapterTwo.fight(g,"cone",[["Captain Lance","FOLLOW EACH GREEN ROUTE. ANY CALL MARKED CALL CANCELLED STAYS CANCELLED. MOVE FREELY; NO HOPS REQUIRED.","neutral"]])),g.option("Leave the optional peloton for later.",g.resume_world)]);return true
+	if id=="chad":
+		if f.has("chad_resolution"):NativeChapterTwo.say(g,[["Chad","Free hour still free? Love that for you. Genuinely.","warm"]]);return true
+		g.dialogue([["Chad","Hey hey HEY! Chad. Networking. You're Jules, right? I feel like we've connected before. On LinkedOut.","warm"],["Imani","He has a ring light. In a garden. At night.","concern"],["Chad","Quick coffee chat? Fifteen minutes. Ten. Five! Your calendar says you've got a free hour. Let me just pop something in.","warm"],["Walt","It's free. That's the point of it.","neutral"]],g.resume_world,[g.option("Protect your free hour.",func() -> void:NativeChapterTwo.fight(g,"chad",[["Chad","Love the energy! Let's circle back. I'll pencil in a sync. And a sync about the sync.","warm"]])),g.option("Decline politely.",func() -> void:NativeChapterTwo.say(g,[["Jules","Not tonight, Chad. My calendar's allowed a gap.","warm"],["Chad","...Respect. Huge respect. Circling back never.","warm"]],{"absence_respected":true}))]);return true
 	if not str(f.get("ending","")).is_empty():
 		if id=="mags":NativeChapterTwo.say(g,[["Mags","The mixer is back. The work has an end. I brought breakfast, which is an even better end.","warm"],["Walt","I'll have cocoa. And I'll choose where I go after that.","warm"],["Mags","Of course. Nobody's breakfast comes with an assignment.","warm"]],{"morning_thanks":true});return true
 		if id=="booth":NativeChapterTwo.say(g,[["Booth","CLOSED. ORDINARY QUESTIONS AVAILABLE IN DAYLIGHT.","warm"],["Imani","Good. I can bring my ordinary, unfinished answer.","warm"]]);return true
@@ -26,19 +26,19 @@ static func handle(g: Node, object: Dictionary) -> bool:
 		"attendees":
 			if f.get("attendees_freed",false):NativeChapterTwo.say(g,[["Mara","Tickets are invitations again. Some people left. Some chose to stay.","warm"]]);return true
 			g.dialogue([["Mara","My ticket says I have to arrive as every person I could become. I would settle for one coat.","concern"],["Eli","Mine says leaving cancels my place forever. Nobody told me that when I took it.","concern"],["Imani","A ticket isn't consent to stay forever. You get to choose.","neutral"]],g.resume_world,[g.option("Guests can leave with their tickets.",func() -> void:NativeChapterTwo.say(g,[["Mara","I'll go home. Keep a seat free without writing my name on tomorrow.","warm"],["Eli","I can stay for one ending. Then I leave too.","warm"]],{"attendees_freed":true,"attendee_choice":"leave"})),g.option("Offer one finite, optional gathering.",func() -> void:NativeChapterTwo.say(g,[["Mara","I choose one gathering. I'll leave when it's over.","warm"],["Eli","So will I. A small invitation, answered for ourselves.","warm"]],{"attendees_freed":true,"attendee_choice":"invite"}))]);return true
-		"mara":NativeChapterTwo.say(g,[["Mara","One borrowed appliance became a whole night. You still get to choose when you go home.","warm"]]);return true
+		"mara":NativeChapterTwo.say(g,[["Mara","My ticket's mine again. I think I'll go home when the song ends. Or before. My call.","warm"]]);return true
 		"eli":NativeChapterTwo.say(g,[["Eli","I'm keeping an ordinary seat open. I don't need every version of myself to sit in it.","warm"]]);return true
 		"final_score":
 			g.dialogue([["Imani","The score has no rests. It wants applause to last forever.","concern"],["Jules","What do you want to play?","neutral"],["Imani","A verse I can finish, or an instrumental that makes room for the room. My choice.","neutral"]],g.resume_world,[g.option("Imani chooses her rough verse.",func() -> void:NativeChapterTwo.say(g,[["Imani","I keep the missed breath. I write an ending after the verse.","warm"]],{"music_ready":true,"final_score":"honest"})),g.option("Imani chooses a quiet instrumental.",func() -> void:NativeChapterTwo.say(g,[["Imani","No audition for every listener. An instrumental, with a real final note.","warm"]],{"music_ready":true,"final_score":"instrumental"}))]);return true
 		"rook":
 			if f.has("rook_resolution"):NativeChapterTwo.say(g,[["Rook","One exit. One shift. Mags promised a cup, not a purpose for my entire life.","warm"]]);return true
 			if not f.get("attendees_freed",false) or not f.get("music_ready",false):NativeChapterTwo.say(g,[["Rook","Guests in the cloakroom. Score in the pit. Give those people choices before asking me to trust an ending.","neutral"]]);return true
-			NativeChapterTwo.fight(g,"rook",[["Rook","LAST CALL. No one leaves until everyone who could have arrived is accounted for.","concern"],["Jules","That's two incompatible jobs. We can revise one, with you.","neutral"],["Rook","Take the key to one exit first. Then CONNECT offers REVISE: choose west or east and decline the other. I need one shift I can finish.","neutral"],["Walt","After that, two shared stopping cues. You will not hold the room alone.","warm"]]);return true
+			NativeChapterTwo.fight(g,"rook",[["Rook","LAST CALL. No one leaves until everyone who could have arrived is accounted for.","concern"],["Jules","Keep every door open and lock every door. That's two jobs, Rook. Nobody can do both.","neutral"],["Rook","One key. One exit. If I could finish one shift, just one, I'd know it was allowed.","neutral"],["Walt","Then we finish it with you. You won't hold the room alone.","warm"]]);return true
 		"val":
-			if f.has("val_resolution"):NativeChapterTwo.say(g,[["Val","The chairs can be chairs. I can ask people what comes next.","warm"]]);return true
-			NativeChapterTwo.fight(g,"val",[["VAL","EVERYONE YOU COULD BE. A PLACE FOR ALL OF YOU. NO ONE WILL BE LEFT OUT. NO ONE MAY LEAVE.","concern"],["Jules","The futures have taken the space living people need.","concern"],["Imani","First one familiar return and stopping cue. Then each of us rejects our own impossible role.","neutral"],["Walt","We revise the reserved chairs into an open passage. We hear the small person inside that frame.","neutral"],["Jules","Then an explicit choice: RELEASE the impossible futures, REWRITE one finite gathering, or BREAK the mechanism and repair what happens after.","neutral"],["Pip","Nobody has to lose me forever. I can hold the door because I choose to.","warm"]]);return true
+			if f.has("val_resolution"):NativeChapterTwo.say(g,[["Val","Off the clock. I'm going to ask people what they actually want next. Out loud. Terrifying.","warm"]]);return true
+			NativeChapterTwo.fight(g,"val",[["VAL","WELCOME, CANDIDATES! VAL, VP OF TALENT ACQUISITION. THANK YOU FOR YOUR INTEREST IN... EVERYTHING.","concern"],["VAL","WE'RE HIRING EVERYONE YOU COULD EVER BE. EVERY FUTURE GETS A SEAT. NOBODY LEAVES THE PIPELINE.","concern"],["Jules","Those chairs are full of people who don't exist yet. The real ones are standing in the aisles.","concern"],["Imani","I've had auditions like this. You don't win them. You just stop letting them decide who you are.","neutral"],["Walt","Then we answer as ourselves, and see if anyone up there is listening.","warm"],["Pip","I have no resume. I am a glove. I feel strangely calm.","warm"]]);return true
 		"dawn_conversation":
-			NativeChapterTwo.say(g,[["Jules","The morning isn't asking who I will become. It's asking what we do next.","warm"],["Imani","Breakfast. Then I keep working on my recording, with the missed breath.","warm"],["Walt","I'll check the lantern handle. After cocoa. And I'll ask for the tool I need.","warm"],["Pip","One door at a time. I don't have to be lost to have a purpose.","warm"],["Jules","Let's take the morning path back to the UMC, thank Mags, then call home at the Broadway bus stop.","neutral"]],{"dawn_talk_read":true});return true
+			NativeChapterTwo.say(g,[["Jules","The morning isn't asking who I will become. It's asking what we do next.","warm"],["Imani","Breakfast. Then I keep working on my recording, with the missed breath.","warm"],["Walt","I'll check the lantern handle. After cocoa. And I'll ask for the tool I need.","warm"],["Pip","I would like pancakes. I have no mouth. I would still like them.","warm"],["Jules","Let's take the morning path back to the UMC, thank Mags, then call home at the Broadway bus stop.","neutral"]],{"dawn_talk_read":true});return true
 		"procession_lamp","lobby_lamp","pit_lamp","balcony_lamp","stage_lamp","dawn_lamp":
 			for member: Dictionary in g.state.party:member.hp=member.max
 			g.persist();g.audio.effect("save");g.open_menu(g.Mode.MENU,"Rested / choose a save slot",[g.option("Save slot 1",func() -> void:g.manual_save("slot1")),g.option("Save slot 2",func() -> void:g.manual_save("slot2")),g.option("Save slot 3",func() -> void:g.manual_save("slot3")),g.option("Back",g.resume_world)]);return true
@@ -63,7 +63,7 @@ static func record_defense(g: Node, success: bool, promised: bool) -> bool:
 	if g.boss_id=="rook":
 		if g.boss_stage==2:g.battle.final_ready=true
 		else:g.battle.rook_stage=g.boss_stage+1;g.boss_stage=int(g.battle.rook_stage)
-	if g.boss_id in ["cone","empty_chair"]:g.battle.final_ready=true
+	if g.boss_id in ["cone","chad"]:g.battle.final_ready=true
 	if g.boss_id!="val":return false
 	if g.boss_stage==3:g.battle.final_ready=true;return false
 	g.battle.val_stage=g.boss_stage+1;return true
@@ -97,11 +97,11 @@ static func restore_checkpoint(g: Node) -> bool:
 	return true
 static func phase_dialogue(g: Node) -> void:
 	g.boss_stage=int(g.battle.val_stage)
-	g.foe.sprite_frames=NativeFinalArt.frames("val_small" if g.boss_stage==3 else "val");g.foe.play("idle_down");NativeCastArt.fit(g.foe,g.foe_height())
+	g.foe.sprite_frames=NativeCastArt.frames("val_small" if g.boss_stage==3 else "val");g.foe.play("idle_down");NativeCastArt.fit(g.foe,g.foe_height())
 	var lines: Array=[]
-	if g.boss_stage==1:lines=[["VAL","JULES NEVER DISAPPOINTS. IMANI IS LOVED BY EVERYONE. WALT NEEDS NOBODY.","concern"],["Jules","Those people can't live a real day. In CONNECT, each of us rejects our own role; nobody answers for someone else.","neutral"],["Walt","Then we hold one shared green space. I can choose company without giving away my independence.","warm"]]
-	elif g.boss_stage==2:lines=[["Imani","The ideal roles are paper. The chairs still take real space.","neutral"],["Jules","CONNECT > REVISE. Give up the reserved seats on one side. Then hold that usable passage open.","neutral"],["Walt","People get to choose whether they enter. An empty chair is allowed.","warm"]]
-	else:lines=[["Val","I wanted everyone to have somewhere to go. I thought an ending meant I had failed them.","concern"],["Pip","I can hold a door. You can ask a question. We can choose a new small job.","warm"],["Jules","Two ordinary stopping cues. Then we choose openly what happens to this mechanism.","neutral"]]
+	if g.boss_stage==1:lines=[["VAL","LET'S TALK FIVE YEARS OUT. JULES: NEVER MISSES A DEADLINE. IMANI: LOVED BY EVERY MANAGER. WALT: NEEDS NO TEAM.","concern"],["Jules","That's not a five-year plan. That's three people who never sleep.","neutral"],["Walt","Each of us can answer for ourselves on that one.","warm"]]
+	elif g.boss_stage==2:lines=[["VAL","WE HAVE MORE CANDIDATES. MANY MORE. EVERY SEAT ON THIS PANEL IS BOOKED.","concern"],["Imani","Booked for people who haven't even applied. The real ones can't reach the door.","neutral"],["Walt","Then cancel one side. An empty chair is allowed.","warm"]]
+	else:lines=[["Val","...Can I take the headset off? Thanks. There's no VP. It's just me. Val. The intern.","concern"],["Val","They gave me a target: every possible graduate. Saying 'we went another way' felt like failing all of them.","concern"],["Pip","You can stop interviewing. You're allowed to just ask a question.","warm"],["Jules","Then we have one for you, Val. When does your shift end?","neutral"]]
 	g.dialogue(lines,g.command_menu)
 static func force_advance(g: Node) -> void:
 	g.battle.outcome="active";g.battle.val_force=true;g.battle.val_stage=int(g.battle.get("val_stage",0))+1;g.battle.hp=160
@@ -116,19 +116,22 @@ static func aftermath(g: Node, id: String) -> void:
 		g.dialogue([["Jules","I sent where I am, not a report about who I managed to become.","warm"],["Mom","I can meet you at the stop. You never had to earn the ride home.","warm"],["Imani","One evening. Not every future.","warm"],["Walt","One light. Then daylight.","warm"],["Jules","And a morning we can choose together.","warm"]],func() -> void:f.dawn_complete=true;f.aftermath_pending="";g.persist();NativeJakerson.graduation(g));return
 	if id=="val":
 		var ending: String=str(f.get("ending","break"))
-		var first: Array=[["Val","The impossible futures can go. People can still choose to come back.","warm"],["Imani","My recording stays mine. We did not erase anybody's right to choose.","warm"]] if ending=="release" else [["Val","One finite gathering. Named jobs, shared work, and a closing time.","warm"],["Walt","Ask before inviting people. Leave room for no.","neutral"]] if ending=="rewrite" else [["Jules","The frame is stopped. We'll repair the ordinary room without rebuilding its impossible command.","concern"],["Val","The small puppet still has a voice. The people who chose a new purpose are still here.","warm"]]
-		first.append_array([["Rook","One exit. One shift. I can finish it and still choose what comes after.","warm"],["Pip","I choose the door. ENCORE chose a show that ends. INDEX chose a useful stopping place.","warm"],["Jules","Those purposes don't belong to VAL anymore. We agreed them together.","neutral"],["Imani","The reserved chairs stop multiplying. The campus has room for morning.","warm"]])
+		var first: Array=[["Val","Okay. The pipeline's closed. Every candidate who doesn't exist yet can stop waiting in my lobby.","warm"],["Val","The ones who do exist can apply when they want. Or not. Huh. That's allowed.","warm"],["Imani","My recording stays mine. Nobody had to be erased for that.","warm"]] if ending=="release" else [["Val","One real role. Posted hours. A start date and an end date. Ugh. It's actually a good job.","warm"],["Walt","And people can say no to it. That's what makes the yes count.","neutral"]] if ending=="rewrite" else [["Jules","The panel's off. We'll fix the stage in daylight, not rebuild the machine.","concern"],["Val","You walked out of my interview. ...Honestly? Good for you. I've wanted to for months.","warm"]]
+		first.append_array([["Pip","I just watched a VP turn out to be an intern. I have learned so much about careers tonight.","warm"],["Jules","Their jobs belong to them now. We agreed on that together.","neutral"],["Imani","And the booked chairs stop multiplying. The campus has room for morning.","warm"]])
 		g.dialogue(first,func() -> void:f.dawn_started=true;f.aftermath_pending="";f.val_checkpoint="";g.enter_room("M07",Vector2(120,445),false);g.persist();g.resume_world());return
-	var lines: Array=[["Rook","You held a small job with me. I can finish a shift without having to finish myself.","warm"],["Walt","Mags saved a cup. A cup, not a contract.","warm"],["Jules","The stage is open. Now VAL needs choices from the people it made.","neutral"]] if id=="rook" and peaceful else [["Rook","The key ring is bent. I can lend the stage key without becoming every locked door.","concern"],["Imani","We'll straighten it in daylight. For now, one exit is open.","neutral"]] if id=="rook" else [["CONE COMMITTEE","ONE MARKED ROUTE. THE OTHER CALLS ARE CANCELLED.","warm"]] if id=="cone" and peaceful else [["Jules","The route tape is broken. We left a repair note and a clear path.","neutral"]] if id=="cone" else [["EMPTY CHAIR","THE SPACE STAYS EMPTY. THAT CAN BE ENOUGH.","warm"]] if peaceful else [["Walt","The chair needs repair. Nobody has to fill it while we do that.","neutral"]]
+	var lines: Array=[["Rook","You held a small job with me. I can finish a shift without having to finish myself.","warm"],["Walt","Mags saved a cup. A cup, not a contract.","warm"],["Jules","The stage is open. Now VAL needs choices from the people it made.","neutral"]] if id=="rook" and peaceful else [["Rook","The key ring is bent. I can lend the stage key without becoming every locked door.","concern"],["Imani","We'll straighten it in daylight. For now, one exit is open.","neutral"]] if id=="rook" else [["Captain Lance","ONE MARKED LINE. THE OTHER CALLS ARE CANCELLED. ON YOUR LEFT, BUT ONLY ONCE.","warm"],["PELOTON","SHARE THE PATH! SHARE THE PATH! (WE PRACTICED.)","warm"]] if id=="cone" and peaceful else [["Jules","The paceline scattered. We left a repair note on the bike rack and a clear path.","neutral"]] if id=="cone" else [["Chad","One unbooked hour. No agenda. I genuinely don't know what to do with my hands.","warm"],["Imani","Sit down. That's the whole agenda.","warm"]] if peaceful else [["Walt","His ring light's cracked. Nobody has to be on all the time, Chad.","neutral"]]
 	g.dialogue(lines,func() -> void:
 		if id=="rook":f.balcony_open=true
-		if id=="empty_chair":f.absence_respected=true
+		if id=="chad":f.absence_respected=true
 		f.aftermath_pending="";g.persist();g.resume_world())
 static func ending_menu(g: Node) -> void:
-	var title: String="Morning / "+str(g.state.flags.get("ending","release")).to_upper()
-	var options: Array=[g.option("Keep exploring the changed campus",g.resume_world),g.option("Return to title",g.show_title)]
-	if not g.state.flags.get("graduation_complete",false):options.insert(0,g.option("Epilogue / graduation day",func() -> void:NativeJakerson.graduation(g)))
+	var title: String="The End / "+str({"release":"every other future let go","rewrite":"one real offer, with hours","break":"you walked out of the interview"}.get(str(g.state.flags.get("ending","release")),"thanks for playing"))
+	var options: Array=[g.option("Keep exploring the changed campus",func() -> void:g.ending_ticks=-1;g.resume_world()),g.option("Return to title",func() -> void:g.ending_ticks=-1;g.show_title())]
+	if not g.state.flags.get("graduation_complete",false):options.insert(0,g.option("Epilogue / graduation day",func() -> void:g.ending_ticks=-1;NativeJakerson.graduation(g)))
+	# A finished story closes on a card; the epilogue's own menu (before graduation) stays a plain list.
+	g.ending_ticks=0 if g.state.flags.get("graduation_complete",false) else -1
 	g.open_menu(g.Mode.MENU,title,options)
+	if g.ending_ticks==0:g.input_lock=125
 static func objective(s: Dictionary) -> String:
 	var f: Dictionary=s.flags
 	if f.get("graduation_day",false) and not f.has("jakerson_final_resolution"):return "One friendly set / Jakerson on the tennis courts"
@@ -140,4 +143,4 @@ static func objective(s: Dictionary) -> String:
 	if not f.get("attendees_freed",false):return "Tickets are invitations / Macky cloakroom"
 	if not f.get("music_ready",false):return "Imani chooses the ending / Macky orchestra pit"
 	if not f.has("rook_resolution"):return "Revise one last shift / Rook on the balcony"
-	return "Make room for living people / VAL on the graduation stage"
+	return "Finish the interview / Val on the graduation stage"

@@ -6,13 +6,19 @@
    "texture": "res://assets/art/rooms/U08/deck.png",
    "x": 368,
    "y": 108,
-   "base": 999
+   "base": 999,
+   "texture_winter": "res://assets/art/rooms/U08/deck-winter.png",
+   "texture_fall": "res://assets/art/rooms/U08/deck-fall.png",
+   "texture_spring": "res://assets/art/rooms/U08/deck-spring.png"
   },
   {
    "texture": "res://assets/art/rooms/U08/front-rail.png",
    "x": 0,
    "y": 322,
-   "base": 999
+   "base": 999,
+   "texture_winter": "res://assets/art/rooms/U08/front-rail-winter.png",
+   "texture_fall": "res://assets/art/rooms/U08/front-rail-fall.png",
+   "texture_spring": "res://assets/art/rooms/U08/front-rail-spring.png"
   }
  ],
  "props": {
@@ -21,7 +27,8 @@
    "anchor": [
     46,
     52
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/U08/prop-0-winter.png"
   },
   "1": {
    "texture": "res://assets/art/rooms/U08/prop-1.png",
@@ -30,28 +37,32 @@
     18
    ],
    "flag": "imani_joined",
-   "flag_texture": "res://assets/art/rooms/U08/empty.png"
+   "flag_texture": "res://assets/art/rooms/U08/empty.png",
+   "texture_winter": "res://assets/art/rooms/U08/prop-1-winter.png"
   },
   "2": {
    "texture": "res://assets/art/rooms/U08/prop-2.png",
    "anchor": [
     16,
     34
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/U08/prop-2-winter.png"
   },
   "3": {
    "texture": "res://assets/art/rooms/U08/prop-3.png",
    "anchor": [
     28,
     44
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/U08/prop-3-winter.png"
   },
   "4": {
    "texture": "res://assets/art/rooms/U08/prop-4.png",
    "anchor": [
     20,
     34
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/U08/prop-4-winter.png"
   }
  },
  "label_only": [
@@ -438,6 +449,12 @@
      }
     ]
    }
-  ]
- }
+  ],
+  "far_winter": "res://assets/art/rooms/U08/battle-far-winter.png",
+  "far_fall": "res://assets/art/rooms/U08/battle-far-fall.png",
+  "far_spring": "res://assets/art/rooms/U08/battle-far-spring.png"
+ },
+ "background_winter": "res://assets/art/rooms/U08/background-winter.png",
+ "background_fall": "res://assets/art/rooms/U08/background-fall.png",
+ "background_spring": "res://assets/art/rooms/U08/background-spring.png"
 }

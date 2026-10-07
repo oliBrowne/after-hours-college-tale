@@ -1,0 +1,393 @@
+{
+ "id": "P02",
+ "name": "Pearl Street / the break room",
+ "cue": "campus",
+ "dimensions": [
+  640,
+  360
+ ],
+ "walk_bounds": [
+  20,
+  152,
+  600,
+  188
+ ],
+ "entry": [
+  64,
+  184
+ ],
+ "arrivals": {
+  "P01": [
+   64,
+   184
+  ]
+ },
+ "npc_spots": [
+  [
+   300,
+   186
+  ],
+  [
+   470,
+   290
+  ],
+  [
+   560,
+   300
+  ]
+ ],
+ "fixed_blocks": [],
+ "placements": [
+  {
+   "kind": "door",
+   "x": 64,
+   "y": 152,
+   "w": 46,
+   "h": 74,
+   "depth": 0,
+   "object": "office_door",
+   "label": "OFFICE",
+   "anchor_offset": [
+    0,
+    16
+   ]
+  },
+  {
+   "kind": "bench",
+   "x": 176,
+   "y": 300,
+   "w": 54,
+   "h": 40,
+   "depth": 12,
+   "object": "beanbag",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 420,
+   "y": 262,
+   "w": 72,
+   "h": 52,
+   "depth": 14,
+   "object": "high_top",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  },
+  {
+   "kind": "crate",
+   "x": 598,
+   "y": 182,
+   "w": 44,
+   "h": 22,
+   "depth": 12,
+   "object": "dog_bed",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  },
+  {
+   "kind": "crate",
+   "x": 262,
+   "y": 186,
+   "w": 40,
+   "h": 32,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 176,
+   "y": 266,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 330,
+   "y": 186,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 500,
+   "y": 192,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 360,
+   "y": 332,
+   "w": 70,
+   "h": 38,
+   "depth": 14,
+   "object": "foosball",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "office_door",
+   "name": "Back to the open office",
+   "x": 64,
+   "y": 168,
+   "kind": "door",
+   "to": "P01",
+   "spawn": [
+    880,
+    204
+   ],
+   "requires": []
+  },
+  {
+   "id": "snack_wall",
+   "name": "The snack wall",
+   "x": 140,
+   "y": 162,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Eleven kinds of almonds, four kinds of jerky, a whole bin of something called PROTEIN DUST. Not one sandwich.",
+   "lines": [
+    [
+     "Jules",
+     "Eleven kinds of almonds, four kinds of jerky, a whole bin of something called PROTEIN DUST. Not one sandwich.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "kombucha_tap",
+   "name": "Kombucha on tap",
+   "x": 300,
+   "y": 162,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Three taps: GINGER, HIBISCUS, and one with tape over it that says KYLE'S SCOBY. DO NOT.",
+   "lines": [
+    [
+     "Jules",
+     "Three taps: GINGER, HIBISCUS, and one with tape over it that says KYLE'S SCOBY. DO NOT.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "sticker_fridge",
+   "name": "The sticker fridge",
+   "x": 372,
+   "y": 162,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Stickers on top of stickers: a mountain, a ski hill, three startups that don't exist any more. The fridge is holding them up.",
+   "lines": [
+    [
+     "Jules",
+     "Stickers on top of stickers: a mountain, a ski hill, three startups that don't exist any more. The fridge is holding them up.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "espresso",
+   "name": "Espresso machine",
+   "x": 524,
+   "y": 162,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "It cost more than a semester. The screen says DESCALE ME, and has for a while.",
+   "lines": [
+    [
+     "Jules",
+     "It cost more than a semester. The screen says DESCALE ME, and has for a while.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "bins",
+   "name": "Four bins",
+   "x": 584,
+   "y": 162,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "COMPOST, RECYCLE, LANDFILL, and a fourth bin labelled EQUITY. It's empty.",
+   "lines": [
+    [
+     "Jules",
+     "COMPOST, RECYCLE, LANDFILL, and a fourth bin labelled EQUITY. It's empty.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "beanbag",
+   "name": "The beanbag / rest and save",
+   "x": 176,
+   "y": 308,
+   "kind": "save",
+   "requires": [],
+   "suggested": "You sink in a little too far. Nobody will find you here for a while. A good place to stop.",
+   "lines": [
+    [
+     "Jules",
+     "You sink in a little too far. Nobody will find you here for a while. A good place to stop.",
+     "warm"
+    ]
+   ]
+  },
+  {
+   "id": "sink",
+   "name": "Sink / a note",
+   "x": 436,
+   "y": 162,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "WASH YOUR OWN MUG. Underneath, in different handwriting: KYLE. Underneath that: ESPECIALLY KYLE.",
+   "lines": [
+    [
+     "Jules",
+     "WASH YOUR OWN MUG. Underneath, in different handwriting: KYLE. Underneath that: ESPECIALLY KYLE.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "back_window",
+   "name": "Back window",
+   "x": 474,
+   "y": 162,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Over the alley and the rooftops, the Flatirons are black against the last of the sky.",
+   "lines": [
+    [
+     "Jules",
+     "Over the alley and the rooftops, the Flatirons are black against the last of the sky.",
+     "warm"
+    ]
+   ]
+  },
+  {
+   "id": "high_top",
+   "name": "High-top table",
+   "x": 420,
+   "y": 270,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Two stools, one laptop sticker per square inch, and a mug that says WORLD'S OKAYEST FOUNDER.",
+   "lines": [
+    [
+     "Jules",
+     "Two stools, one laptop sticker per square inch, and a mug that says WORLD'S OKAYEST FOUNDER.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "foosball",
+   "name": "Foosball table",
+   "x": 360,
+   "y": 340,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "One of the blue goalies has been superglued facing the wrong way. Nobody will say who did it.",
+   "lines": [
+    [
+     "Jules",
+     "One of the blue goalies has been superglued facing the wrong way. Nobody will say who did it.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "dog_bed",
+   "name": "The office dog",
+   "x": 598,
+   "y": 190,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "The office dog is asleep. His bed says SEED ROUND. Nobody wakes him for stand-up.",
+   "lines": [
+    [
+     "Jules",
+     "The office dog is asleep. His bed says SEED ROUND. Nobody wakes him for stand-up.",
+     "warm"
+    ]
+   ]
+  },
+  {
+   "id": "vibes_neon",
+   "name": "Neon / GOOD VIBES",
+   "x": 206,
+   "y": 162,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "GOOD VIBES, in mint neon. The O flickers on the hour.",
+   "lines": [
+    [
+     "Jules",
+     "GOOD VIBES, in mint neon. The O flickers on the hour.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "coworker_tap",
+   "name": "Coworker / pouring a kombucha",
+   "x": 300,
+   "y": 196,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot at the tap"
+  },
+  {
+   "id": "coworker_hightop",
+   "name": "Coworker / at the high-top",
+   "x": 470,
+   "y": 284,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot beside the high-top"
+  }
+ ]
+}

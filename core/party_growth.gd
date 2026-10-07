@@ -24,6 +24,10 @@ const KEEPSAKES: Dictionary = {
 	"earplugs": {"member": "imani", "name": "Earplugs", "stat": "defence", "amount": 1, "room": "N03", "x": 60, "y": 334, "lines": [["Imani", "Foam earplugs. Quiet is allowed.", "neutral"]]},
 	"trail_map": {"member": "walt", "name": "Trail map", "stat": "power", "amount": 2, "room": "N05", "x": 60, "y": 318, "lines": [["Walt", "An old trail map. Every path on it ends somewhere. Good.", "warm"]]},
 	"night_lanyard": {"member": "jules", "name": "Night-shift lanyard", "stat": "max", "amount": 8, "room": "E02", "x": 748, "y": 326, "lines": [["Jules", "A night-shift lanyard. Dev says it's for whoever stays late. Tonight that's me.", "neutral"]]},
+	# Bought at the Book Store register with Buff Bucks (NativeShops): never lying in a room, so "shop" skips the pickup.
+	"buffs_hoodie": {"member": "jules", "name": "Buffs hoodie", "stat": "max", "amount": 10, "shop": true, "room": "C02", "x": 1, "y": 1, "lines": []},
+	"lyric_notebook": {"member": "imani", "name": "Lyric notebook", "stat": "sync", "amount": 8, "shop": true, "room": "C02", "x": 1, "y": 1, "lines": []},
+	"wool_socks": {"member": "walt", "name": "Wool socks", "stat": "defence", "amount": 1, "shop": true, "room": "C02", "x": 1, "y": 1, "lines": []},
 }
 ## What each keepsake does besides its stat (read where the effect happens: main.gd and battle_rules.gd).
 const PERKS: Dictionary = {"bus_pass": "Blocks the first hit of each fight", "moms_keychain": "Wider STRIKE timing for Jules", "guitar_pick": "Close dodges on the beat give double SYNC", "earplugs": "Half Time costs 10 less SYNC", "lantern_wick": "Lantern Ward's safe pocket lasts longer", "thermos_lid": "Share the Warmth heals 12 more"}
@@ -58,6 +62,8 @@ static func stats(member: String, flags: Dictionary) -> Dictionary:
 	var result: Dictionary = {"max": int(row[0]), "power": int(row[1]), "defence": int(row[2]), "sync": 0}
 	var id: String = equipped(flags, member)
 	if not id.is_empty(): result[KEEPSAKES[id].stat] = int(result[KEEPSAKES[id].stat]) + int(KEEPSAKES[id].amount)
+	# LinkedOut endorsements: small permanent boosts for the whole party (SYNC is added once, in starting_sync).
+	for stat: String in ["max", "power", "defence"]: result[stat] = int(result[stat]) + LinkedOut.bonus(flags, stat)
 	return result
 
 ## Returns the party with derived max/power/defence. When heal is true (a new
@@ -88,4 +94,4 @@ static func starting_sync(flags: Dictionary) -> int:
 	for member: String in MEMBERS:
 		if member != "jules" and not bool(flags.get(member + "_joined", false)): continue
 		bonus += int(stats(member, flags).sync)
-	return bonus
+	return bonus + LinkedOut.bonus(flags, "sync")

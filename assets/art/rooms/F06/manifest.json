@@ -10,7 +10,9 @@
     78
    ],
    "flag": "encore_resolution",
-   "flag_texture": "res://assets/art/rooms/F06/prop-0-dark.png"
+   "flag_texture": "res://assets/art/rooms/F06/prop-0-dark.png",
+   "texture_winter": "res://assets/art/rooms/F06/prop-0-winter.png",
+   "flag_texture_winter": "res://assets/art/rooms/F06/prop-0-dark-winter.png"
   },
   "1": {
    "texture": "res://assets/art/rooms/F06/prop-1.png",
@@ -19,7 +21,9 @@
     71
    ],
    "flag": "encore_resolution",
-   "flag_texture": "res://assets/art/rooms/F06/prop-1-quiet.png"
+   "flag_texture": "res://assets/art/rooms/F06/prop-1-quiet.png",
+   "texture_winter": "res://assets/art/rooms/F06/prop-1-winter.png",
+   "flag_texture_winter": "res://assets/art/rooms/F06/prop-1-quiet-winter.png"
   },
   "2": {
    "texture": "res://assets/art/rooms/F06/prop-2.png",
@@ -28,28 +32,33 @@
     71
    ],
    "flag": "encore_resolution",
-   "flag_texture": "res://assets/art/rooms/F06/prop-2-quiet.png"
+   "flag_texture": "res://assets/art/rooms/F06/prop-2-quiet.png",
+   "texture_winter": "res://assets/art/rooms/F06/prop-2-winter.png",
+   "flag_texture_winter": "res://assets/art/rooms/F06/prop-2-quiet-winter.png"
   },
   "3": {
    "texture": "res://assets/art/rooms/F06/prop-3.png",
    "anchor": [
     64,
     35
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/F06/prop-3-winter.png"
   },
   "4": {
    "texture": "res://assets/art/rooms/F06/prop-4.png",
    "anchor": [
     64,
     35
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/F06/prop-4-winter.png"
   },
   "5": {
    "texture": "res://assets/art/rooms/F06/prop-5.png",
    "anchor": [
     13,
     62
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/F06/prop-5-winter.png"
   }
  },
  "label_only": [],
@@ -1747,6 +1756,12 @@
     ],
     "color": "f6e0b0"
    }
-  ]
- }
+  ],
+  "near_winter": "res://assets/art/rooms/F06/battle-near-winter.png",
+  "near_fall": "res://assets/art/rooms/F06/battle-near-fall.png",
+  "near_spring": "res://assets/art/rooms/F06/battle-near-spring.png"
+ },
+ "background_winter": "res://assets/art/rooms/F06/background-winter.png",
+ "background_fall": "res://assets/art/rooms/F06/background-fall.png",
+ "background_spring": "res://assets/art/rooms/F06/background-spring.png"
 }

@@ -33,11 +33,12 @@ static func label_only(room_id: String, index: int) -> bool:
 	return float(index) in manifest(room_id).get("label_only", [])
 
 ## Painted pieces that sit in front of characters standing behind them (y-sorted on `base`).
-static func occluders(room_id: String) -> Array[Node2D]:
+## A seasonal "texture_<season>" replaces the texture (flags.season, see services/season.gd).
+static func occluders(room_id: String, flags: Dictionary = {}) -> Array[Node2D]:
 	var nodes: Array[Node2D] = []
 	for item: Dictionary in manifest(room_id).get("occluders", []):
 		var sprite := Sprite2D.new()
-		sprite.texture = texture(str(item.texture))
+		sprite.texture = texture(str(NativeSeason.pick(item, "texture", flags, false)))
 		sprite.centered = false
 		sprite.position = Vector2(float(item.x), float(item.base))
 		sprite.offset = Vector2(0, float(item.y) - float(item.base))
@@ -47,24 +48,34 @@ static func occluders(room_id: String) -> Array[Node2D]:
 
 static func draw_room(canvas: CanvasItem, room_id: String, elapsed: float, reduced_motion: bool, flags: Dictionary = {}) -> void:
 	var art: Dictionary = manifest(room_id)
+	# The background follows dawn; the season paints its changes over it (background_<season>, at
+	# dawn background_dawn_<season>; NativeSeason.overlay).
 	var dawn: bool = bool(flags.get("dawn_started", false)) and art.has("background_dawn")
 	canvas.draw_texture(texture(str(art.background_dawn if dawn else art.background)), Vector2.ZERO)
+	var season_layer: Variant = NativeSeason.overlay(art, "background", flags)
+	if season_layer != null: canvas.draw_texture(texture(str(season_layer)), Vector2.ZERO)
 	# State overlays painted into the room: {texture, x, y, flag, and "equals" or "when" (default true)}.
 	for overlay: Dictionary in art.get("overlays", []):
-		if shows(overlay, flags): canvas.draw_texture(texture(str(overlay.texture)), Vector2(float(overlay.x), float(overlay.y)))
+		if shows(overlay, flags): canvas.draw_texture(texture(str(NativeSeason.pick(overlay, "texture", flags, false))), Vector2(float(overlay.x), float(overlay.y)))
 	var t: float = 0.0 if reduced_motion else elapsed
+	var leaf_colors: Array[Color] = NativeSeason.leaf_colors(flags, LEAF_COLORS)
+	var leaf_count: int = NativeSeason.leaf_count(flags)
 	for area: Array in art.get("leaves", []):
-		for leaf: int in 7:
-			var fall: float = fmod(t * (9.0 + leaf * 2.0) + leaf * 13.0, float(area[3]))
+		for leaf: int in leaf_count:
+			var fall: float = fmod(t * (9.0 + (leaf % 7) * 2.0) + leaf * 13.0, float(area[3]))
 			var sway: float = sin(t * 1.3 + leaf * 2.1) * 4.0
 			var at := Vector2(float(area[0]) + float((leaf * 23) % int(area[2])) + sway, float(area[1]) + fall).round()
-			canvas.draw_rect(Rect2(at, Vector2(2, 1)), LEAF_COLORS[leaf % LEAF_COLORS.size()])
+			canvas.draw_rect(Rect2(at, Vector2(2, 1)), leaf_colors[leaf % leaf_colors.size()])
 	draw_fauna(canvas, art.get("fauna", []), t, float(art.get("width", 640)))
 	# Animated layers (screens, neon, spotlights), same kinds as battle backdrops; "flag" makes one conditional.
 	var lt: float = 1.3 if reduced_motion else elapsed
-	for layer: Dictionary in art.get("layers", []):
+	for layer: Dictionary in NativeSeason.adapt_layers(art.get("layers", []), flags):
 		if layer.has("flag") and not shows(layer, flags): continue
 		NativeBattleBackdrop.draw_layer(canvas, layer, lt, float(art.get("width", 640)))
+	# Snowfall, a wind of leaves or petals over the room and under the actors.
+	var size := Vector2(float(art.get("width", 640)), float(art.get("height", 0)))
+	if size.y <= 0.0: size.y = float(texture(str(art.background)).get_height())
+	NativeSeason.draw_weather(canvas, flags, elapsed, reduced_motion, size, art.get("leaves", []))
 
 static func shows(overlay: Dictionary, flags: Dictionary) -> bool:
 	var value: Variant = flags.get(str(overlay.flag), null)

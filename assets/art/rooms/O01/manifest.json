@@ -8,35 +8,46 @@
    "anchor": [
     68,
     136
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/O01/prop-1-winter.png",
+   "texture_fall": "res://assets/art/rooms/O01/prop-1-fall.png",
+   "texture_spring": "res://assets/art/rooms/O01/prop-1-spring.png"
   },
   "2": {
    "texture": "res://assets/art/rooms/O01/prop-2.png",
    "anchor": [
     57,
     140
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/O01/prop-2-winter.png",
+   "texture_fall": "res://assets/art/rooms/O01/prop-2-fall.png",
+   "texture_spring": "res://assets/art/rooms/O01/prop-2-spring.png"
   },
   "3": {
    "texture": "res://assets/art/rooms/O01/prop-3.png",
    "anchor": [
     78,
     34
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/O01/prop-3-winter.png"
   },
   "4": {
    "texture": "res://assets/art/rooms/O01/prop-4.png",
    "anchor": [
     12,
     70
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/O01/prop-4-winter.png"
   },
   "5": {
    "texture": "res://assets/art/rooms/O01/prop-5.png",
    "anchor": [
     89,
     58
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/O01/prop-5-winter.png",
+   "texture_fall": "res://assets/art/rooms/O01/prop-5-fall.png",
+   "texture_spring": "res://assets/art/rooms/O01/prop-5-spring.png"
   }
  },
  "label_only": [
@@ -625,6 +636,12 @@
      }
     ]
    }
-  ]
- }
+  ],
+  "near_winter": "res://assets/art/rooms/O01/battle-near-winter.png",
+  "near_fall": "res://assets/art/rooms/O01/battle-near-fall.png",
+  "near_spring": "res://assets/art/rooms/O01/battle-near-spring.png"
+ },
+ "background_winter": "res://assets/art/rooms/O01/background-winter.png",
+ "background_fall": "res://assets/art/rooms/O01/background-fall.png",
+ "background_spring": "res://assets/art/rooms/O01/background-spring.png"
 }

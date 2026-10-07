@@ -249,7 +249,7 @@ def build(project):
         entry.update(extra or {})
         props[str(index)] = entry
 
-    save(0, directory_board(120, 74, rows=(("< CLOAKROOM", ""), ("ORCHESTRA PIT >", ""), ("BALCONY ^ AFTER", ""))))
+    save(0, directory_board(120, 74, title="THREE WAYS", rows=(("< CLOAKROOM", ""), ("ORCHESTRA PIT >", ""), ("BALCONY ^ AFTER", ""))))
     save(1, lobby_planter(82, 54, seed=1))
     save(2, lobby_planter(82, 54, seed=2))
     save(3, lobby_bench(115, 32, seed=3))

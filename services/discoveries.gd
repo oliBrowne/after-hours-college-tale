@@ -20,7 +20,7 @@ static func scene(id: String, state: Dictionary, speakers: Array[String]) -> Dic
 				changes = ["discovery_eli_acknowledged"]
 			elif f.get("discovery_eli_acknowledged", false) or f.get("mixer_returned", false): lines = [["Eli", "Brake holding?", "neutral"], ["Jules", "Better than the rest of tonight.", "warm"]]
 		"mags":
-			if f.get("opening_finished", false): lines = [["Mags", "One box left on my shift. That one's mine.", "warm"], ["Jules", "Mixer's back. Pip came with us.", "neutral"]]
+			if f.get("opening_finished", false): lines = [["Mags", "One box left on my shift. That one's mine, not yours.", "warm"], ["Jules", "Deal. We only took one glove. It insisted.", "warm"]]
 			elif state.room == "U02" and f.get("mixer_returned", false): lines = [["Mags", "Mixer back?", "neutral"], ["Jules", "Back with Imani. We're following one strange voice downstairs.", "neutral"], ["Mags", "One thing at a time. My cart and I approve.", "warm"]]
 			elif state.room == "U05" and f.get("cal_joined", false): lines = [["Mags", "Cal has his key. Follow the useful plan.", "warm"], ["Jules", "One thing at a time.", "neutral"]]
 		"mara":
@@ -58,7 +58,7 @@ static func scene(id: String, state: Dictionary, speakers: Array[String]) -> Dic
 			var peaceful: bool = f[id + "_resolution"] == "peaceful"
 			if id == "flyer": lines = [["Flyerer", "ONE PAGE. STILL READ." if peaceful else "STAND OUT OF ORDER.", "warm" if peaceful else "neutral"]]
 			elif id == "pinpal": lines = [["Pin Pal", "NEXT PLAYER.", "warm"]] if peaceful else [["Walt", "Still unplugged. The ball's on the rack.", "neutral"]]
-			else: lines = [["CLAIM", "NEXT ITEM. AFTER TEA.", "warm"]] if peaceful else [["Jules", "The ticket mechanism's stopped.", "neutral"]]
+			else: lines = [["Advisor Bev", "NEXT, SWEETIE. AFTER TEA.", "warm"]] if peaceful else [["Jules", "The ticket mechanism's stopped.", "neutral"]]
 		"invitation":
 			if f.get("flyer_resolution", "") == "peaceful": lines = [["Imani", "They've put the sign-up sheet away.", "warm"], ["Jules", "Left the page out, though.", "neutral"]]
 			elif f.has("flyer_resolution"): lines = [["Jules", "The club page is readable. The hinge is still bent.", "neutral"]]

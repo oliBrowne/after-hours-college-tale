@@ -16,7 +16,7 @@ func run(main: Node) -> bool:
 	await _choose("Settings")
 	if not game.state.settings.instant: await _choose("Instant dialogue:")
 	await _choose("Back");await _capture("00-title")
-	await _choose("Begin the evening");await _settle()
+	await _choose("Begin the evening");await _movein();await _settle()
 	if game.jakerson_ui:await _choose("I'll find my way")
 	_assert(not game.state.flags.get("imani_joined",false) and not game.state.flags.get("walt_joined",false),"Solo opening")
 	await _door("umc_path","U08");await _object("walt");await _settle()
@@ -43,7 +43,7 @@ func run(main: Node) -> bool:
 	_assert(game.state.flags.get("cal_key_received",false) and game.state.party[2].id=="walt","Cal gives key without replacing Walt")
 	await _door("connection_stairs","U06");await _door("lost_property","U07")
 	await _object("claim");await _fight("claim")
-	_assert(game.state.flags.get("pip_joined",false),"Pip stays a companion after CLAIM")
+	_assert(game.state.flags.get("pip_joined",false),"Pip stays a companion after Advisor Bev")
 	await _door("connection","U06");await _door("atrium","U05");await _door("atrium","U03")
 	await _door("farrand_gate","F01");await _capture("02-farrand")
 	# Open the persistent mouse map button, select a district and close through input.
@@ -62,7 +62,7 @@ func _farrand_finish() -> void:
 func _stage_finish() -> void:
 	await _object("chip");await _settle();await _choose("Try the friendly challenge");await _fight("chip")
 	_assert(game.state.flags.get("chip_resolution","")=="peaceful","Chip is the required Farrand boss")
-	await _door("backstage","F05");await _object("consent");await _settle();await _choose("Imani chooses her honest");await _settle();await _capture("05-backstage-choice")
+	await _door("backstage","F05");await _object("consent");await _settle();await _choose("Imani chooses her unfinished");await _settle();await _capture("05-backstage-choice")
 	await _door("mainstage","F06");await _object("encore");await _fight("encore")
 	_assert(game.state.flags.get("chapter1_complete",false),"Chapter 1 ends after ENCORE")
 	await _object("norlin_route");await _settle();await _capture("06-chapter1-complete")
@@ -96,6 +96,8 @@ func _fight(id: String) -> void:
 			TIMING:
 				if game.timing_ticks>=27: await _press()
 				else: await _frame()
+			# A boss answering a CONNECT question.
+			DIALOGUE: await _settle()
 			_:
 				_release();await _frame()
 	_release()

@@ -20,6 +20,13 @@ var art_anchor: Vector2 = Vector2.ZERO
 var label_only: bool = false
 var art_flag: String = ""
 var art_flag_texture: Texture2D
+## People standing in the room (set by the game) and the room's size: exit labels fade while one
+## of them stands over the label, and slide back inside the room so the camera never crops them.
+static var watch: Array = []
+static var room_size: Vector2 = Vector2(640, 360)
+static var room_left: float = 0.0
+var label_alpha: float = 1.0
+var art_seasons: Dictionary = {}
 
 ## Painted rooms hand props a sprite (drawn at its floor anchor) or mark them as already painted.
 func use_art(art: Dictionary, painted: bool) -> void:
@@ -27,6 +34,10 @@ func use_art(art: Dictionary, painted: bool) -> void:
 	if art.is_empty(): return
 	art_texture = NativeRoomArt.texture(str(art.texture))
 	art_anchor = Vector2(float(art.anchor[0]), float(art.anchor[1]))
+	# Season variants ("texture_winter", "flag_texture_spring", ...) follow flags.season.
+	for season: String in NativeSeason.SEASONS:
+		for key: String in ["texture", "flag_texture"]:
+			if art.has(key + "_" + season): art_seasons[key + "_" + season] = NativeRoomArt.texture(str(art[key + "_" + season]))
 	if art.has("flag"):
 		art_flag = str(art.flag); art_flag_texture = NativeRoomArt.texture(str(art.flag_texture))
 	queue_redraw()
@@ -52,6 +63,24 @@ func r(x: float, y: float, w: float, h: float, color: Color) -> void:
 func text(value: String, at: Vector2, color: Color = CREAM) -> void:
 	draw_string(FONT, at.round(), value, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, color)
 
+## Draws an exit label: kept inside the room, and faded while someone stands behind it.
+func exit_label(value: String, left: float, baseline: float, color: Color, plate: bool) -> void:
+	if value.is_empty(): return
+	var width: float = FONT.get_string_size(value, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+	var pad: float = 3.0 if plate else 0.0
+	var shift: float = 0.0
+	if global_position.x + left - pad < room_left + 3.0: shift = room_left + 3.0 - (global_position.x + left - pad)
+	elif global_position.x + left + width + pad > room_size.x - 3.0: shift = (room_size.x - 3.0) - (global_position.x + left + width + pad)
+	var box: Rect2 = Rect2(global_position + Vector2(left + shift - pad, baseline - 12.0), Vector2(width + pad * 2.0, 15.0))
+	var covered: bool = false
+	for person: Variant in watch:
+		if not is_instance_valid(person) or not (person as Node2D).is_visible_in_tree(): continue
+		var feet: Vector2 = (person as Node2D).global_position
+		if box.intersects(Rect2(feet.x - 12.0, feet.y - 46.0, 24.0, 48.0)): covered = true; break
+	label_alpha = move_toward(label_alpha, 0.18 if covered else 1.0, 0.12)
+	if plate: r(left + shift - pad, baseline - 11.0, width + pad * 2.0, 15.0, Color(INK, 0.85 * label_alpha))
+	text(value, Vector2(left + shift, baseline), Color(color, color.a * label_alpha))
+
 func _draw() -> void:
 	if definition.is_empty(): return
 	var w: float = definition.w
@@ -65,10 +94,13 @@ func _draw() -> void:
 		var locked: bool = false
 		for required: String in definition.get("requires", []):
 			if not flags.get(required, false): locked = true
-		if not label.is_empty(): r(-width / 2 - 3, -h - 20, width + 6, 15, Color(INK, 0.85)); text(label, Vector2(-width / 2, -h - 9), Color("c46a5c") if locked else AMBER)
+		exit_label(label, -width / 2, -h - 9, Color("c46a5c") if locked else AMBER, true)
 		return
 	if art_texture != null:
-		draw_texture(art_flag_texture if not art_flag.is_empty() and flags.get(art_flag, false) else art_texture, -art_anchor)
+		var key: String = "flag_texture" if not art_flag.is_empty() and flags.get(art_flag, false) else "texture"
+		var shown: Texture2D = art_flag_texture if key == "flag_texture" else art_texture
+		if not art_seasons.is_empty(): shown = art_seasons.get(key + "_" + NativeSeason.current(flags), shown)
+		draw_texture(shown, -art_anchor)
 		_draw_state_details(kind, w, h, l)
 		return
 	r(l + 2, -1, w, 3, Color(INK, 0.35))
@@ -84,8 +116,7 @@ func _draw() -> void:
 			r(l - 5, -8, w + 10, 10, WOOD); r(l - 5, -8, w + 10, 2, CREAM)
 			for xx in range(int(l), int(w / 2), 9): r(xx, -5, 4, 5, STONE)
 			var label_width: float = FONT.get_string_size(str(definition.label), HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
-			r(-label_width / 2 - 3, -27, label_width + 6, 17, INK)
-			text(str(definition.label), Vector2(-label_width / 2, -14), AMBER)
+			exit_label(str(definition.label), -label_width / 2, -14, AMBER, true)
 		"door", "stairs":
 			r(l, -h, w, h, INK); r(l + 3, -h + 3, w - 6, h - 3, WOOD)
 			if kind == "stairs":
@@ -99,7 +130,7 @@ func _draw() -> void:
 			for required: String in definition.get("requires", []):
 				if not flags.get(required, false): locked = true
 			if locked: r(l + 5, -13, w - 10, 5, RUST)
-			text(str(definition.label), Vector2(l, -h - 5), AMBER)
+			exit_label(str(definition.label), l, -h - 5, AMBER, false)
 		"lamp":
 			r(-3, -h + 15, 6, h - 15, WOOD); r(-7, -4, 14, 4, INK)
 			r(-8, -h, 16, 17, INK); r(-6, -h + 2, 12, 12, AMBER)

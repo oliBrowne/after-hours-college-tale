@@ -1,0 +1,78 @@
+{
+ "world_height": 52,
+ "battle_height": 78,
+ "cells": {
+  "athlete-world-0.png": {
+   "size": [
+    56,
+    56
+   ],
+   "foot": [
+    28,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 0
+  },
+  "athlete-world-1.png": {
+   "size": [
+    56,
+    56
+   ],
+   "foot": [
+    28,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 1
+  },
+  "athlete-world-2.png": {
+   "size": [
+    56,
+    56
+   ],
+   "foot": [
+    28,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 2
+  },
+  "athlete-world-3.png": {
+   "size": [
+    56,
+    56
+   ],
+   "foot": [
+    28,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 3
+  },
+  "athlete-world-4.png": {
+   "size": [
+    56,
+    56
+   ],
+   "foot": [
+    27,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 4
+  },
+  "athlete-world-5.png": {
+   "size": [
+    56,
+    56
+   ],
+   "foot": [
+    28,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 5
+  }
+ }
+}

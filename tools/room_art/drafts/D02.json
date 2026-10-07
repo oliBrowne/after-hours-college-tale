@@ -1,0 +1,379 @@
+{
+ "id": "D02",
+ "name": "Farrand Hall / second floor",
+ "cue": "arrival",
+ "dimensions": [
+  1280,
+  360
+ ],
+ "walk_bounds": [
+  20,
+  158,
+  1240,
+  156
+ ],
+ "entry": [
+  150,
+  198
+ ],
+ "fixed_blocks": [],
+ "placements": [
+  {
+   "kind": "door",
+   "x": 150,
+   "y": 160,
+   "w": 36,
+   "h": 74,
+   "depth": 0,
+   "object": "room_214",
+   "label": "ROOM 214",
+   "anchor_offset": [
+    0,
+    16
+   ]
+  },
+  {
+   "kind": "stairs",
+   "x": 1210,
+   "y": 160,
+   "w": 38,
+   "h": 76,
+   "depth": 0,
+   "object": "stairs_lobby",
+   "label": "LOBBY",
+   "anchor_offset": [
+    0,
+    16
+   ]
+  },
+  {
+   "kind": "cart",
+   "x": 262,
+   "y": 250,
+   "w": 64,
+   "h": 58,
+   "depth": 18,
+   "object": "move_in_cart",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "boxes",
+   "x": 96,
+   "y": 188,
+   "w": 40,
+   "h": 44,
+   "depth": 14,
+   "object": "jakerson_boxes",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  },
+  {
+   "kind": "crate",
+   "x": 372,
+   "y": 184,
+   "w": 26,
+   "h": 36,
+   "depth": 12,
+   "object": "free_fridge",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  },
+  {
+   "kind": "case",
+   "x": 812,
+   "y": 176,
+   "w": 18,
+   "h": 50,
+   "depth": 8,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "basket",
+   "x": 1046,
+   "y": 182,
+   "w": 36,
+   "h": 24,
+   "depth": 10,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "bicycle",
+   "x": 1150,
+   "y": 184,
+   "w": 54,
+   "h": 34,
+   "depth": 10,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "bench",
+   "x": 690,
+   "y": 182,
+   "w": 72,
+   "h": 30,
+   "depth": 12,
+   "object": "hall_bench",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 100,
+   "y": 242,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 360,
+   "y": 242,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 620,
+   "y": 242,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 880,
+   "y": 242,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 1140,
+   "y": 242,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "room_214",
+   "name": "Room 214 / Jules and Jakerson",
+   "x": 150,
+   "y": 176,
+   "kind": "door",
+   "to": "D01",
+   "spawn": [
+    60,
+    166
+   ],
+   "requires": [],
+   "note": "spawn = just inside D01's hallway door at (58, 134); D01's own hallway door should spawn here at [150, 196]"
+  },
+  {
+   "id": "stairs_lobby",
+   "name": "Stairs / down to the lobby",
+   "x": 1210,
+   "y": 176,
+   "kind": "door",
+   "to": "D03",
+   "spawn": [
+    56,
+    196
+   ],
+   "requires": []
+  },
+  {
+   "id": "ra_board",
+   "name": "RA board / WELCOME HOME",
+   "x": 467,
+   "y": 166,
+   "kind": "inspect",
+   "requires": [],
+   "lines": [
+    [
+     "Jules",
+     "Floor meeting at nine. Quiet hours at ten. Laundry is in the lobby. Someone already drew a moustache on the RA.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "jakerson_boxes",
+   "name": "Boxes marked JAKERSON",
+   "x": 96,
+   "y": 196,
+   "kind": "inspect",
+   "requires": [],
+   "lines": [
+    [
+     "Jules",
+     "TENNIS, JAKERSON, and a racket bag with a ball pocket. He moved in before I did.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "move_in_cart",
+   "name": "A move-in cart",
+   "x": 262,
+   "y": 258,
+   "kind": "inspect",
+   "requires": [],
+   "lines": [
+    [
+     "Jules",
+     "A lamp, a pillow, a rug and a fan. Somebody's whole room on four wheels.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "free_fridge",
+   "name": "Mini fridge / FREE?",
+   "x": 372,
+   "y": 192,
+   "kind": "inspect",
+   "requires": [],
+   "lines": [
+    [
+     "Jules",
+     "FREE, with a question mark. It hums like it is nervous about it too.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "fountain",
+   "name": "Drinking fountain",
+   "x": 236,
+   "y": 166,
+   "kind": "inspect",
+   "requires": [],
+   "lines": [
+    [
+     "Jules",
+     "The water is cold and tastes like 1949.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "hall_bench",
+   "name": "Hall bench",
+   "x": 690,
+   "y": 190,
+   "kind": "inspect",
+   "requires": [],
+   "lines": [
+    [
+     "Jules",
+     "Someone left a backpack here to save a seat for the floor meeting.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "study_lounge",
+   "name": "Study lounge",
+   "x": 880,
+   "y": 166,
+   "kind": "inspect",
+   "requires": [],
+   "lines": [
+    [
+     "Jules",
+     "A cooking show at full volume and nobody watching it.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "ra_mika",
+   "name": "Mika / your RA",
+   "x": 640,
+   "y": 192,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot (sprite to be chosen by gameplay); stands by the RA's own door"
+  },
+  {
+   "id": "floormate_208",
+   "name": "Floormate / door propped open",
+   "x": 760,
+   "y": 184,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot in the open doorway of 208"
+  },
+  {
+   "id": "floormate_lounge",
+   "name": "Floormate / looking for TY",
+   "x": 520,
+   "y": 282,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot near the dropped TY name tag"
+  }
+ ]
+}

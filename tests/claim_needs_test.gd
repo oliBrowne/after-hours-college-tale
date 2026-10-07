@@ -8,7 +8,7 @@ var failures: int = 0
 func _init() -> void:
 	_test_bypass()
 	_test_objectives()
-	print("Godot CLAIM needs: %d checks, %d failures" % [checks, failures])
+	print("Godot Advisor Bev needs: %d checks, %d failures" % [checks, failures])
 	quit(0 if failures == 0 else 1)
 
 func _check(condition: bool, label: String) -> void:
@@ -39,7 +39,7 @@ func _test_bypass() -> void:
 	var commands: Array = [{"actor": 0, "kind": "release"}]
 	_check(Rules.validate_plan(battle, commands).is_empty(), "Generic battle rules intentionally permit ordinary release at 100")
 	_check(Rules.resolve_plan(battle, commands).outcome == "peaceful", "Source-derived bypass reproduces without actual needs")
-	_check(not Needs.validate_plan(needs, commands).is_empty() and not Needs.can_release(needs), "CLAIM production gate rejects that exact release plan")
+	_check(not Needs.validate_plan(needs, commands).is_empty() and not Needs.can_release(needs), "Advisor Bev production gate rejects that exact release plan")
 	_check(Needs.combat_phase(needs, 190) == 0, "Rounds and observations cannot advance peaceful phase")
 	_check(Needs.combat_phase(needs, 110) == 1 and not Needs.can_release(needs), "Damage advances attack/music phase independently without granting peaceful release")
 	_check(Needs.combat_phase(needs, 80, true) == 0, "Offering first promise after prior damage restores reachable carry objective")
@@ -69,13 +69,13 @@ func _test_objectives() -> void:
 	_check(Needs.record_defense(carried, incomplete, true, true) == carried, "Failed second promise preserves first need and allows retry")
 	var failed_second: Dictionary = _complete(1, false)
 	var preserved: Dictionary = Needs.record_defense(carried, failed_second, true, false)
-	_check(not failed_second.promiseComplete and preserved == carried, "Real director failure without accepted boundary retains the carried-tag need")
+	_check(not failed_second.promiseComplete and preserved == carried, "Real director failure without accepted boundary retains the carried-ticket need")
 	_check(Needs.can_release(Needs.record_defense(preserved, second, true, true)), "A later real boundary return recovers peacefully after that failed attempt")
 	incomplete = second.duplicate(true); incomplete.markers[2].collected = true
 	_check(not Needs.can_release(Needs.record_defense(carried, incomplete, true, true)), "Returning both items violates one-item boundary")
 	incomplete = first.duplicate(true); incomplete.claimSweepPassed = 0
 	_check(not Needs.record_defense(empty, incomplete, true, false).tagDelivered, "Tag contacts without surviving a carry sweep are insufficient")
 	var failed: Dictionary = _complete(0, true, false)
-	_check(not failed.promiseComplete and Needs.record_defense(empty, failed, false, false) == empty, "Observation-only defense cannot fulfill carried-tag need")
+	_check(not failed.promiseComplete and Needs.record_defense(empty, failed, false, false) == empty, "Observation-only defense cannot fulfill carried-ticket need")
 	_check(Needs.record_defense(carried, first, true, false) == carried, "Repeated successful first objectives never replace the second need")
 	_check(Needs.create() == empty and not Needs.can_release(Needs.create()), "Normal battle retry initializes both concrete needs afresh")

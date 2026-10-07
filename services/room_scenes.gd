@@ -7,13 +7,20 @@ extends RefCounted
 ##
 ## A scene is a list of steps run in order:
 ##   ["spawn", actor, cast id, point]      a new sprite for the scene, removed at the end
+##                                         (party members use their party art)
 ##   ["borrow", actor, room object id]     an NPC already standing in the room
-##   ["walk", [[actor, point, speed], ...]] everyone listed walks at once until all arrive
+##   ["walk", [[actor, point, speed], ...]] everyone listed walks at once until all arrive;
+##                                         the point "jules" means a spot beside Jules
 ##   ["face", actor, point or actor]       turn toward something
 ##   ["jules", point or actor]             Jules turns toward something
-##   ["say", lines]                        ordinary dialogue
+##   ["say", lines]                        ordinary dialogue; a line spoken by Imani, Walt or Pip is
+##                                         skipped until they have joined (unless the scene has them on
+##                                         screen), and a 4th entry names a flag the line needs
+##                                         ("!flag": needs it unset)
 ##   ["wait", ticks]
 ##   ["leave", actor]                      a spawned actor walks off-screen through its last door
+##   ["call", callable]                     runs callable(game) once
+## Lines may use {move}, {run} and {confirm} for the player's own key names.
 
 const WALK: float = 1.2
 const RUN: float = 2.6
@@ -26,13 +33,23 @@ static func reset() -> void:run = {}
 static func due(g: Node) -> String:
 	var f: Dictionary = g.state.flags
 	var room: String = str(g.state.room)
+	if room == NativeMoveIn.START and f.get("movein_active", false) and not f.get("scene_movein_meet", false): return "movein_meet"
 	if room == "U03" and not f.get("mixer_returned", false) and not f.get("scene_chip_todd", false): return "chip_todd"
+	# Not tied to its scene flag: it replays until Imani has joined, so it can never be lost.
+	if room == "U03" and f.get("mixer_returned", false) and not f.get("imani_joined", false): return "imani_booth"
 	if room == "N01" and f.get("chapter1_complete", false) and not f.get("library_pass", false) and not f.get("scene_nell_pencil", false): return "nell_pencil"
 	if room == "E01" and not f.has("eric_resolution") and not f.get("scene_eric_lobby", false): return "eric_lobby"
+	if room == "F01" and not f.get("chapter1_complete", false) and not f.get("scene_val_chairs", false): return "val_chairs"
+	if room == "O01" and f.get("chapter2_complete", false) and not f.get("rook_confessed", false) and not f.get("scene_todd_audit", false): return "todd_audit"
+	if room == "M01" and f.get("chapter3_complete", false) and not f.has("val_resolution") and not f.get("scene_val_procession", false): return "val_procession"
 	return ""
 
 static func steps(id: String) -> Array:
 	match id:
+		"imani_booth":
+			return NativeImaniJoin.steps()
+		"movein_meet":
+			return NativeMoveIn.steps()
 		"chip_todd":
 			# Chip bursts in from the Farrand gate to the president, then dashes back out.
 			return [["borrow", "todd", "todd"], ["spawn", "chip", "chip", Vector2(730, 385)],
@@ -42,7 +59,7 @@ static func steps(id: String) -> Array:
 					["Chip", "Policies are for people who don't have an ENCORE!", "warm"],
 					["Todd Saliman", "...I'm going to need that in writing.", "neutral"]]],
 				["walk", [["chip", Vector2(730, 385), RUN]]], ["leave", "chip"], ["face", "todd", "jules"],
-				["say", [["Jules", "Was that the university president? At midnight?", "concern"],
+				["say", [["Jules", "Was that the university president? At this hour?", "concern"],
 					["Todd Saliman", "Somebody has to sign off on the end of the night.", "neutral"]]]]
 		"nell_pencil":
 			# Nell steps out of Norlin looking for something that is not supposed to walk.
@@ -68,6 +85,50 @@ static func steps(id: String) -> Array:
 				["say", [["Jules", "Was that a professor? Still teaching?", "neutral"],
 					["Imani", "Professor Eric. Signal integrity. My roommate says his office hours never really end.", "warm"],
 					["Walt", "Sounds like somebody else's night we know.", "neutral"]]]]
+		"val_chairs":
+			# Chapter 1, Farrand: Val, a tiny recruiting intern in a graduation cap, counts seats for people who haven't
+			# arrived yet, and Rook tries to send it home. First look at Val, long before Macky.
+			return [["borrow", "rook", "rook"], ["spawn", "val", "val_small", Vector2(720, 350)],
+				["walk", [["val", Vector2(575, 360), RUN]]], ["face", "val", Vector2(515, 315)], ["wait", 30],
+				["say", [["Val", "Forty thousand and one. Forty thousand and two. Every future hire needs a seat.", "concern"]]],
+				["walk", [["rook", Vector2(625, 345), WALK]]], ["face", "rook", "val"], ["face", "val", "rook"],
+				["say", [["Rook", "Little one. It's past midnight. The chairs are for the people who actually came.", "neutral"],
+					["Val", "But what about the people they could become? Nobody should arrive and find no room.", "concern"],
+					["Rook", "Then nobody would ever get to leave. Go home. Tomorrow has chairs too.", "neutral"],
+					["Val", "...I'll reserve just a few more.", "neutral"]]],
+				["walk", [["val", Vector2(720, 350), RUN]]], ["leave", "val"],
+				["walk", [["rook", Vector2(635, 310), WALK]]], ["face", "rook", "jules"], ["jules", "rook"],
+				["say", [["Rook", "Don't mind Val. Recruiting intern. Very small, very thorough.", "warm"],
+					["Imani", "Was that an intern in a graduation cap?", "concern"],
+					["Walt", "With a hiring quota. Somebody taught that kid to count and never to stop.", "neutral"]]]]
+		"todd_audit":
+			# Chapter 3, Old Main: Todd comes down from the notice hall for Rook's key ring.
+			return [["borrow", "rook", "rook"], ["spawn", "todd", "todd", Vector2(450, 196)],
+				["walk", [["todd", Vector2(590, 330), WALK]]], ["face", "todd", "rook"], ["face", "rook", "todd"],
+				["say", [["Todd Saliman", "Rook. I need the master ring. Every key to every door in Old Main.", "neutral"],
+					["Rook", "Which job is it for? I've stopped being able to tell.", "concern"],
+					["Todd Saliman", "That's what an audit is for. Every door, every promise, and who actually agreed to it.", "neutral"],
+					["Rook", "Then start with the directory. And bring a pencil with an eraser.", "neutral"],
+					["Rook", "Not the red one from Norlin.", "warm", "scene_nell_pencil"]]],
+				["face", "todd", "jules"], ["jules", "todd"],
+				["say", [["Todd Saliman", "Evening, Chip's friends. The finite-plan desk is upstairs. Read before you sign anything.", "neutral", "scene_chip_todd"],
+					["Todd Saliman", "Evening. The finite-plan desk is upstairs. Read before you sign anything.", "neutral", "!scene_chip_todd"]]],
+				["walk", [["todd", Vector2(450, 196), WALK]]], ["leave", "todd"], ["face", "rook", "jules"],
+				["say", [["Rook", "He's going to read everything. Even the parts I folded.", "concern"]]]]
+		"val_procession":
+			# Finale, procession walk: Val hurries into Macky with the night's last reservations.
+			return [["borrow", "mags", "mags"], ["spawn", "val", "val_small", Vector2(865, 350)],
+				["walk", [["val", Vector2(600, 330), RUN]]], ["face", "mags", "val"],
+				["say", [["Mags", "Hey! Little one! Those chairs are for the morning ceremony!", "concern"]]],
+				["face", "val", "mags"],
+				["say", [["Val", "The VP wants every possible graduate interviewed tonight. Somebody has to save them seats.", "concern"],
+					["Mags", "And who saves a seat for the people who are already tired?", "neutral"]]],
+				["walk", [["val", Vector2(510, 196), RUN]]], ["leave", "val"], ["jules", Vector2(510, 196)],
+				["say", [["Jules", "That's the little intern from Farrand. Val.", "concern", "scene_val_chairs"],
+					["Jules", "Was that an intern in a graduation cap?", "concern", "!scene_val_chairs"],
+					["Walt", "Reserve more chairs. Same words as the loudspeaker in Norlin.", "neutral"]]],
+				["face", "mags", "jules"],
+				["say", [["Mags", "Whatever's in Macky has a lot of chairs and no closing time. I saved you a cup for after.", "warm"]]]]
 	return []
 
 ## Called at the top of world_tick. True while a scene holds the world still.
@@ -95,7 +156,7 @@ static func _do(g: Node, s: Array) -> bool:
 	match str(s[0]):
 		"spawn":
 			var sprite := AnimatedSprite2D.new()
-			sprite.sprite_frames = NativeCastArt.frames(str(s[2]))
+			sprite.sprite_frames = NativePartyArt.frames(str(s[2])) if str(s[2]) in ["jules", "imani", "walt"] else NativeCastArt.frames(str(s[2]))
 			sprite.set_meta("id", "scene_" + str(s[1])); sprite.set_meta("art_id", str(s[2]))
 			sprite.set_meta("idle_height", NativeCastArt.world_height(str(s[2])))
 			sprite.z_index = g.player.z_index
@@ -111,11 +172,11 @@ static func _do(g: Node, s: Array) -> bool:
 			var moving: bool = false
 			for move: Array in s[1]:
 				var sprite: AnimatedSprite2D = actors.get(str(move[0]))
-				if sprite != null and is_instance_valid(sprite) and _walk(g, sprite, Vector2(move[1]), float(move[2])): moving = true
+				if sprite != null and is_instance_valid(sprite) and _walk(g, sprite, _goal(g, sprite, move[1]), float(move[2])): moving = true
 			if moving: return false
 			for move: Array in s[1]:
 				var sprite2: AnimatedSprite2D = actors.get(str(move[0]))
-				if sprite2 != null and is_instance_valid(sprite2): _pose(sprite2, "idle_" + str(sprite2.get_meta("facing", "down"))); sprite2.position = _base(sprite2)
+				if sprite2 != null and is_instance_valid(sprite2): _pose(sprite2, "idle_" + str(sprite2.get_meta("facing", "down"))); sprite2.position = _base(sprite2); sprite2.remove_meta("scene_goal")
 		"face":
 			var who: AnimatedSprite2D = actors.get(str(s[1]))
 			if who != null and is_instance_valid(who): _face(who, _point(g, s[2]))
@@ -124,8 +185,10 @@ static func _do(g: Node, s: Array) -> bool:
 			g.player.facing = ("left" if d.x < 0 else "right") if absf(d.x) > absf(d.y) else ("up" if d.y < 0 else "down")
 			g.player.art.play("idle_" + g.player.facing)
 		"say":
+			var lines: Array = _lines(g, s[1])
+			if lines.is_empty(): return true
 			run.saying = true
-			g.dialogue(s[1], func() -> void:
+			g.dialogue(lines, func() -> void:
 				run.saying = false; g.resume_world())
 		"wait":
 			run.wait = int(run.wait) + 1
@@ -135,7 +198,29 @@ static func _do(g: Node, s: Array) -> bool:
 			var gone: AnimatedSprite2D = actors.get(str(s[1]))
 			if gone != null and is_instance_valid(gone):
 				g.world_npcs.erase(gone); gone.queue_free(); actors.erase(str(s[1]))
+		"call":
+			(s[1] as Callable).call(g)
 	return true
+
+## Key names the player actually uses: {move}, {run} and {confirm} in a line become their bindings.
+static func keys(g: Node, text: String) -> String:
+	if not "{" in text: return text
+	return text.replace("{move}", NativeJakerson.move_keys(g)).replace("{run}", NativeJakerson.key(g, "run")).replace("{confirm}", NativeJakerson.key(g, "confirm"))
+
+## Drops lines from party members who haven't joined yet, and lines whose flag doesn't match.
+static func _lines(g: Node, lines: Array) -> Array:
+	var f: Dictionary = g.state.flags
+	var kept: Array = []
+	for line: Array in lines:
+		var who: String = str(line[0])
+		if who in ["Imani", "Walt", "Pip"] and not f.get(who.to_lower() + "_joined", false) and not run.actors.has(who.to_lower()): continue
+		line = line.duplicate(); line[1] = keys(g, str(line[1]))
+		if line.size() > 3:
+			var flag: String = str(line[3])
+			if flag.begins_with("!") == bool(f.get(flag.trim_prefix("!"), false)): continue
+			line = line.slice(0, 3)
+		kept.append(line)
+	return kept
 
 static func _finish(g: Node) -> void:
 	for sprite: Variant in run.spawned:
@@ -152,6 +237,15 @@ static func _point(g: Node, target: Variant) -> Vector2:
 	return _base(sprite) if sprite != null and is_instance_valid(sprite) else g.player.position
 
 static func _base(sprite: AnimatedSprite2D) -> Vector2:return Vector2(sprite.get_meta("base", sprite.position))
+
+## A walk goal: a point, or "jules" for a free spot just beside Jules on the walker's side.
+static func _goal(g: Node, sprite: AnimatedSprite2D, goal: Variant) -> Vector2:
+	if goal is Vector2: return goal
+	# Not "goal": NativeJakerson walks any sprite carrying that key after the scene, as if it were his.
+	if not sprite.has_meta("scene_goal"):
+		var side: float = -1.0 if _base(sprite).x < g.player.position.x else 1.0
+		sprite.set_meta("scene_goal", g.navigation.safe_point(g.player.position + Vector2(30.0 * side, 2.0)))
+	return Vector2(sprite.get_meta("scene_goal"))
 
 ## One tick of walking toward goal along the room's walkable route. False once there.
 static func _walk(g: Node, sprite: AnimatedSprite2D, goal: Vector2, speed: float) -> bool:

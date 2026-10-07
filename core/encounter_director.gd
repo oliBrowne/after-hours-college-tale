@@ -9,7 +9,7 @@ const BEAT: int = 30
 
 static func profile(id: String) -> Dictionary:
 	match id:
-		"claim": return {"id": id, "profileName": "CLAIM / Lost Property", "instructions": "Carry the marked tag through a sweep. Then deliver one thing and leave a note.", "promise": "Carry one tag; later return one item with an honest boundary.", "phaseName": "Hold On To This", "duration": 480}
+		"claim": return {"id": id, "profileName": "Advisor Bev / Degree Audit", "instructions": "Carry the marked ticket through a plan sweep. Then deliver one thing and leave a note.", "promise": "Carry one ticket; later return one item with an honest boundary.", "phaseName": "Hold On To This", "duration": 480}
 		"chip": return {"id": id, "profileName": "Chip / Confetti Hop", "instructions": "Tap left/right to hop columns. Follow the outlined safe column.", "promise": "Reach three called columns.", "phaseName": "Confetti Grid", "duration": 480}
 		"deion": return {"id": id, "profileName": "Deion / Hurdle Run", "instructions": "Confirm jumps. Hold precision to duck. You run at fixed X.", "promise": "Clear two hurdles and claim the airborne relay flag.", "phaseName": "Jump / Duck Relay", "duration": 480}
 		"todd": return {"id": id, "profileName": "Todd / Stamp Audit", "instructions": "Walk between stamps. Stay still on red AUDIT. Confirm near both boxes.", "promise": "Sign both consent boxes.", "phaseName": "Rotating Audit", "duration": 540}

@@ -171,8 +171,10 @@ static func draw_over(_c: CanvasItem, _s: Dictionary, _v: Node2D) -> void:
 static func draw_bullet(c: CanvasItem, b: Dictionary, at: Vector2, turn: float, alpha: float, v: Node2D) -> bool:
 	match str(b.shape):
 		"glyph":
-			c.draw_circle(at, 5.0, Color(INK, 0.6 * alpha))
-			v.text(c, at + Vector2(0, 4), str(b.get("glyph", "1")), Color(BLUE, alpha), 12.0)
+			# A solid dark disc with a bright ring so the glyph reads against any backdrop.
+			c.draw_circle(at, 6.5, Color(INK, 0.92 * alpha))
+			c.draw_arc(at, 6.5, 0.0, TAU, 14, Color(AMBER, 0.85 * alpha), 1.0)
+			v.text(c, at + Vector2(0, 4), str(b.get("glyph", "1")), Color(CREAM, alpha), 12.0)
 			return true
 		"block":
 			c.draw_colored_polygon(v.quad(at, float(b.w), float(b.h), turn), Color(BLUE, 0.85 * alpha))

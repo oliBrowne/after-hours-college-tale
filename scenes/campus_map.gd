@@ -82,7 +82,7 @@ func select_district(index: int) -> void:
 	for room_id: String in ROOM_IDS[index]:
 		if game.state.flags.get("visited_"+room_id,false): visited+=1
 	var access: String="Open" if index==5 and game.state.flags.get("chapter3_complete",false) and game.state.flags.get("rook_confessed",false) else "Finish Todd and hear Rook" if index==5 else "Open" if index==4 and game.state.flags.get("chapter2_complete",false) else "Finish Norlin playback" if index==4 else "Open" if index==0 or index==1 and game.state.flags.has("claim_resolution") and game.state.flags.get("walt_joined",false) or index>=2 and game.state.flags.get("chapter1_complete",false) else "Finish ENCORE" if index>=2 else "Locked until CLAIM + Walt"
-	details.text=wrap_text("Rooms seen %d/%d\n%s\nNext: %s" % [visited,ROOM_IDS[index].size(),access,game.objective()])
+	details.text=wrap_text("%s\nRooms visited: %d of %d\nAccess: %s\nNext: %s" % [DISTRICTS[index],visited,ROOM_IDS[index].size(),"open to explore" if access=="Open" else "opens when you "+access.substr(0,1).to_lower()+access.substr(1) if access.begins_with("Finish") else access.substr(0,1).to_lower()+access.substr(1),game.objective()])
 	show_rooms()
 func _exit_tree() -> void: game=null
 
@@ -129,5 +129,5 @@ func room_details(room_id: String) -> void:
 		var unlocked: bool=true
 		for flag: String in object.get("requires",[]):
 			if not game.state.flags.get(flag,false):unlocked=false
-		lines.append(("Open: " if unlocked else "Locked: ")+str(game.rooms[object.to].name).split(" /")[0])
+		lines.append(str(game.rooms[object.to].name).split(" /")[0]+(" (open)" if unlocked else " (locked)"))
 	details.text=wrap_text("\n".join(lines))

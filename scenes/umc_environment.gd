@@ -135,7 +135,7 @@ func _rebuild_foreground() -> void:
 			prop.use_art(NativeRoomArt.prop_art(room_id, index), NativeRoomArt.label_only(room_id, index))
 			owner.add_child(prop)
 			foreground_nodes.append(prop)
-		for piece: Node2D in NativeRoomArt.occluders(room_id):
+		for piece: Node2D in NativeRoomArt.occluders(room_id, room_flags):
 			owner.add_child(piece)
 			foreground_nodes.append(piece)
 		foreground_active = true
@@ -678,7 +678,7 @@ func _arrival_action_visuals() -> void:
 func _lost_property() -> void:
 	_floor(Color("70686c"))
 	_wall(20,28,600,121,true)
-	_label("LOST PROPERTY / CLAIM",206,26,AMBER)
+	_label("LOST PROPERTY / ADVISING",206,26,AMBER)
 	# Numbered cubbies, mismatched belongings and a tagged trolley.
 	for shelf in 3:
 		var xx=38+shelf*151

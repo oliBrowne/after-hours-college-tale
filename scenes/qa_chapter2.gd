@@ -23,19 +23,19 @@ func run(main: Node) -> bool:
 	await _object("bookmark");await _settle();await _capture("02-reading-own-demo")
 	await _door("checkout","N02");await _door("stacks","N04");await _object("stack_crank");await _settle();await _capture("03-shifted-stacks")
 	await _object("errata");await _fight("errata")
-	await _door("archive","N06");await _object("index");await _settle()
-	_assert(not game.state.flags.has("index_resolution") and int(game.mode)==WORLD,"INDEX introduces source quest before combat")
+	await _door("archive","N06");await _object("autocomplete");await _settle()
+	_assert(not game.state.flags.has("autocomplete_resolution") and int(game.mode)==WORLD,"AUTOCOMPLETE introduces source quest before combat")
 	await _door("stacks","N04");await _door("garden","N05");await _object("rook");await _settle();await _capture("04-margin-garden")
 	await _door("steps","N01");await _door("engineering","E01");await _object("rook");await _settle();await _capture("05-loading-court")
 	await _door("workshop","E02");await _object("cal");await _settle();await _object("dev");await _settle()
 	_assert(game.state.party[2].id=="walt","Cal and Dev remain engineering NPCs")
-	await _door("test_floor","E03");await _door("model_stairs","E04");await _object("model_plan");await _settle();await _choose("Ask Cal and Dev");await _settle();await _capture("06-shared-model")
+	await _door("test_floor","E03");await _door("model_stairs","E04");await _object("model_plan");await _settle();await _choose("Revise the model");await _settle();await _capture("06-shared-model")
 	await _door("test_floor","E03");await _object("eric");await _fight("eric")
 	await _door("workshop","E02");await _object("dev");await _settle()
 	_assert(game.state.flags.get("bridge_ready",false),"Post-battle shared work installs bridge")
 	await _door("test_floor","E03");await _door("model_stairs","E04");await _door("control","E05");await _object("source_reel");await _settle();await _capture("07-source-reel")
 	await _door("court_shortcut","E01");await _door("bridge_shortcut","N01");await _door("checkout","N02");await _door("stacks","N04");await _door("archive","N06")
-	await _object("index");await _fight("index");await _door("playback","N07");await _object("playback");await _settle();await _capture("08-playback-twist")
+	await _object("autocomplete");await _fight("autocomplete");await _door("playback","N07");await _object("playback");await _settle();await _capture("08-playback-twist")
 	_assert(game.state.flags.get("chapter2_complete",false) and game.state.flags.get("aftermath_pending","")=="","Full source hook completes before chapter flag")
 	await _door("steps","N01")
 	await _press("menu");await _choose("Campus map");await _capture("09-chapter2-map");await _press("cancel");await _press("cancel")
@@ -66,11 +66,13 @@ func _fight(id: String) -> void:
 					await _choose("CONNECT" if game.battle.party.slice(0,game.actor).all(func(m: Dictionary) -> bool:return int(m.hp)<=0) else "GUARD")
 				elif str(game.caption).begins_with("Connect"):
 					var released: bool=game.menu_options.any(func(c: Dictionary) -> bool:return str(c.label).begins_with("RELEASE"))
-					await _choose("RELEASE" if released else "Keep one sentence" if id=="errata" else "Probe three" if id=="eric" else "Deliver one useful")
+					await _choose("RELEASE" if released else "Keep one sentence" if id=="errata" else "Probe three" if id=="eric" else "Accept one useful")
 				else:_assert(false,"Unexpected battle menu "+str(game.caption))
 			DODGE:
 				if not pause_checked and int(game.pattern.clock)>=80:await _pause_defense()
 				else:await _defend(id)
+			# A boss answering a CONNECT question.
+			DIALOGUE: await _settle()
 			_:
 				_release();await _frame()
 	_release()
@@ -83,7 +85,7 @@ func _defend(id: String) -> void:
 	var p: Dictionary=game.pattern
 	var at:=Vector2(p.cursor.x,p.cursor.y)
 	var dest:=Vector2(p.sentenceX,84) if id=="errata" else Vector2(58 if int(p.currentAnchor)==0 else 198,90) if id=="eric" else Vector2(p.returnX,96) if p.carryBookmark else Vector2(128,24)
-	if id=="index" and p.bookmarkDelivered:dest=Vector2(128,p.safeLane)
+	if id=="autocomplete" and p.bookmarkDelivered:dest=Vector2(128,p.safeLane)
 	var delta: Vector2=dest-at
 	_axis(Vector2(signf(delta.x) if absf(delta.x)>2 else 0,signf(delta.y) if absf(delta.y)>2 else 0))
 	var confirm: bool=at.distance_to(dest)<15
