@@ -2020,6 +2020,8 @@ func render_ui() -> void:
 			render_ending()
 		elif pause_context and pause_mode == Mode.WORLD and (caption == "Paused" or caption.begins_with("Party") or party_caption(caption)):
 			render_pause_screen()
+		elif mode == Mode.MENU and NativeLinkedOutMenu.is_profile(caption):
+			NativeLinkedOutMenu.render(self)
 		else:
 			# A framed box sized to its options. Story choices sit where the dialogue box was (bottom,
 			# or top when the speakers stand low); other menus hang from the top.
