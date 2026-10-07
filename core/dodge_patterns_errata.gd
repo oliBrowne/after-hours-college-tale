@@ -1,15 +1,18 @@
 extends RefCounted
-## ERRATA: the correction machine in the moving stacks. "REPLACE UNCERTAINTY.
-## ERASE HESITATION. FIX EVERY LINE." Four handmade attacks, one per turn,
-## cycling. The box is a ruled page; ERRATA's red pen strikes lines, swaps your
-## letters, types over the page and circles you as an error.
+## Gwen the Red, the teaching assistant in the moving stacks (the fight keeps the id
+## "errata", which replaced the old correction machine). "SEE ME AFTER CLASS." Four
+## handmade attacks, one per turn, cycling. The box is a ruled page and every
+## projectile is something a grader carries: red pen slashes (with marginal notes
+## shooting up your column in phase 1), a deck of graded papers that she shuffles
+## between two rows, C- stamps walking along the bottom of the page, and her red pen
+## circling you as the error.
 ## The promise (Keep One Sentence) is three sentence pauses per turn: a green
 ## sentence box opens for 75 ticks, three times, and confirming inside it while
-## promised keeps that pause. The kept sentence's line is never written over.
+## promised keeps that pause. The kept sentence's line is never marked over.
 ## Phase 1 (from the second turn) adds a layer to every attack.
 
 const D = preload("res://core/dodge_box.gd")
-const ORDER: Array[String] = ["strikethrough", "anagram", "typewriter", "proofmarks"]
+const ORDER: Array[String] = ["slashes", "regrade", "stamps", "circles"]
 const PHASES: Array[int] = [0, 1]
 const LENGTH: int = 450
 const WINDOWS: Array[int] = [40, 185, 330]
@@ -17,14 +20,17 @@ const OPEN: int = 75
 const ROWS: Array[float] = [-48.0, -32.0, -16.0, 0.0, 16.0, 32.0, 48.0]
 const SLOT: float = 12.0
 const SLOTS: int = 20
-const WORD_TOP: String = "HESITATE"
-const WORD_BOTTOM: String = "PERHAPS?"
+const WORD_TOP: String = "UNCLEAR?"
+const WORD_BOTTOM: String = "AWKWARD!"
 const LETTERS: String = "ABCDEFGHIKLMNOPRSTUVWY"
 const RED: Color = Color("e0524a")
 const PINK: Color = Color("e8837b")
 const PAPER: Color = Color("e6d6b1")
 const MINT: Color = Color("b9d5bc")
 const DARK: Color = Color("1a1420")
+const INK: Color = Color("b8242c")
+const WOOD: Color = Color("b9794a")
+const KNOB: Color = Color("d9a066")
 
 static func setup(s: Dictionary) -> void:
 	var id: String = ORDER[int(s.turn) % ORDER.size()]
@@ -39,17 +45,17 @@ static func setup(s: Dictionary) -> void:
 	s.bannerColor = PINK
 	var spots: Array = []
 	match id:
-		"strikethrough":
-			s.hint = "The red pen strikes whole lines. Stand on a clean line. Confirm in each green sentence."
+		"slashes":
+			s.hint = "Red pen slashes whole lines. Stand on a clean one. Confirm in each green sentence."
 			spots = [Vector2(-32, 32), Vector2(48, -16), Vector2(-56, 16)]
-		"anagram":
-			s.hint = "ERRATA swaps your letters. Read their dotted paths. Confirm in each green sentence."
+		"regrade":
+			s.hint = "Gwen shuffles the papers. Read their dotted paths. Confirm in each green sentence."
 			spots = [Vector2(-40, 0), Vector2(44, -8), Vector2(0, 12)]
-		"typewriter":
-			s.hint = "Pinned to the page: jump the cursor, land in the spaces. Confirm in each green sentence."
+		"stamps":
+			s.hint = "Pinned to the page: hop the C- stamps, land in the gaps. Confirm in each green sentence."
 			spots = [Vector2(-60, 36), Vector2(36, 36), Vector2(-24, 36)]
-		"proofmarks":
-			s.hint = "Red circles close in on you. Leave through the gap. Confirm in each green sentence."
+		"circles":
+			s.hint = "Gwen circles you in red. Leave through the gap. Confirm in each green sentence."
 			spots = [Vector2(-60, 28), Vector2(56, -26), Vector2(-40, -28)]
 	s.spots = spots
 	for i: int in range(3):
@@ -68,10 +74,10 @@ static func tick(s: Dictionary, t: int) -> void:
 	_sentences(s, t)
 	var phase: int = int(s.phase)
 	match str(s.patternId):
-		"strikethrough": _strikethrough(s, t, phase)
-		"anagram": _anagram(s, t, phase)
-		"typewriter": _typewriter(s, t, phase)
-		"proofmarks": _proofmarks(s, t, phase)
+		"slashes": _slashes(s, t, phase)
+		"regrade": _regrade(s, t, phase)
+		"stamps": _stamps(s, t, phase)
+		"circles": _circles(s, t, phase)
 	_grow(s)
 
 static func after(s: Dictionary, _t: int) -> void:
@@ -154,7 +160,7 @@ static func _grow(s: Dictionary) -> void:
 			if float(b.radius) < 7.0:
 				b.dead = true
 				_burst(s, Vector2(float(b.x), float(b.y)))
-	# Struck words fall apart: a few loose letters drop out of the line, but
+	# Slashed words fall apart: a few torn scraps of paper drop out of the line, but
 	# never onto a kept sentence that is open or about to open.
 	var t: int = int(s.clock) - int(s.leadIn)
 	for at: Vector2 in spawn:
@@ -162,32 +168,33 @@ static func _grow(s: Dictionary) -> void:
 		for i: int in range(3):
 			if t >= WINDOWS[i] - 50 and t < WINDOWS[i] + OPEN and absf(at.x - float(s.objectives[i].x)) < 30.0 and at.y < float(s.objectives[i].y): clear = false
 		if not clear: continue
-		D.shot(s, {"space": "box", "x": at.x, "y": at.y, "vx": D.rand_range(s, -0.3, 0.3), "vy": -0.9, "ay": 0.06, "r": 3.0, "shape": "glyph", "ch": _letter(s), "life": 150, "spin": 0.05})
+		D.shot(s, {"space": "box", "x": at.x, "y": at.y, "vx": D.rand_range(s, -0.3, 0.3), "vy": -0.9, "ay": 0.06, "r": 3.0, "shape": "scrap", "ch": _letter(s), "life": 150, "spin": 0.05})
 
 static func _burst(s: Dictionary, at: Vector2) -> void:
 	D.effect(s, "hit", D.to_world(s, at), 16)
 	var turn: float = D.rand(s) * TAU
 	for i: int in range(6):
 		var dir: Vector2 = Vector2.from_angle(turn + i * TAU / 6.0)
-		D.shot(s, {"space": "box", "x": at.x, "y": at.y, "vx": dir.x * 1.35, "vy": dir.y * 1.35, "r": 3.0, "shape": "glyph", "ch": "x", "life": 140})
+		D.shot(s, {"space": "box", "x": at.x, "y": at.y, "vx": dir.x * 1.35, "vy": dir.y * 1.35, "r": 3.0, "shape": "xmark", "ch": "x", "life": 140})
 
-# ---------------------------------------------------------------- Strikethrough
+# ---------------------------------------------------------------- Red pen slashes
 # The page is ruled into seven lines. The pen marks three or four of them
 # (usually the line you stand on; never the kept sentence's line or the lines
-# between you and it near a pause), then strikes them in quick succession;
-# struck words drop loose letters. Phase 1: insertion carets shoot up the
+# between you and it near a pause), then slashes them in quick succession;
+# slashed words drop torn scraps. Phase 1: marginal notes shoot up the
 # column you stand in.
-static func _strikethrough(s: Dictionary, t: int, phase: int) -> void:
+static func _slashes(s: Dictionary, t: int, phase: int) -> void:
 	if t == 0: D.box_to(s, {"w": 248.0, "h": 116.0}, 24)
 	var every: int = 50 if phase == 0 else 44
+	if t == 16: D.banner(s, "VAGUE!", 40)
 	if t >= 16 and t <= 372 and (t - 16) % every == 0:
-		_strike_pass(s, t, phase, int((t - 16) / every))
+		_slash_pass(s, t, phase, int((t - 16) / every))
 	if phase > 0 and t % 66 == 42 and t > 60 and t < 372:
 		var h: Vector2 = D.half(s)
 		var x: float = clampf(float(s.soul.x) + D.rand_range(s, -8.0, 8.0), -h.x + 10.0, h.x - 10.0)
-		_stroke(s, Vector2(x, h.y + 2.0), Vector2.UP, h.y * 2.0 + 4.0, 8.0, 3.0, 32, 10, "caret")
+		_stroke(s, Vector2(x, h.y + 2.0), Vector2.UP, h.y * 2.0 + 4.0, 8.0, 3.0, 32, 10, "note")
 
-static func _strike_pass(s: Dictionary, t: int, phase: int, pass_index: int) -> void:
+static func _slash_pass(s: Dictionary, t: int, phase: int, pass_index: int) -> void:
 	var h: Vector2 = D.half(s)
 	var soul_row: int = _row_of(float(s.soul.y))
 	var kept: int = _kept_row(s, t)
@@ -214,31 +221,32 @@ static func _strike_pass(s: Dictionary, t: int, phase: int, pass_index: int) -> 
 	for r: int in rows:
 		var from_left: bool = (pass_index + k) % 2 == 0
 		var start: Vector2 = Vector2(-h.x - 6.0 if from_left else h.x + 6.0, ROWS[r])
-		_stroke(s, start, Vector2.RIGHT if from_left else Vector2.LEFT, h.x * 2.0 + 12.0, 9.0, 3.5, 30 + k * 6, 14, "strike", {"crumbs": 2})
+		_stroke(s, start, Vector2.RIGHT if from_left else Vector2.LEFT, h.x * 2.0 + 12.0, 9.0, 3.5, 30 + k * 6, 14, "slash", {"crumbs": 2})
 		k += 1
 
-# ---------------------------------------------------------------- Anagram
-# Two lines of your words sit at the top and bottom of the page. Every second
-# ERRATA trades letters between them: dotted paths show where each letter will
-# fly, then pairs cross the page on curved paths. Letters spit punctuation at
-# you in between. Phase 1: the page tilts back and forth as it is rewritten.
+# ---------------------------------------------------------------- Regrade
+# Two rows of graded papers sit at the top and bottom of the page, each sheet
+# carrying one letter of Gwen's margin comments (UNCLEAR? and AWKWARD!). Every second
+# she shuffles the deck between them: dotted paths show where each sheet will
+# fly, then pairs cross the page on curved paths. The sheets flick ink blots at
+# you in between. Phase 1: the page tilts back and forth as she regrades it.
 static func _slot(line: int, i: int) -> Vector2:
 	return Vector2(-77.0 + 22.0 * i, -46.0 if line == 0 else 46.0)
 
-static func _anagram(s: Dictionary, t: int, phase: int) -> void:
+static func _regrade(s: Dictionary, t: int, phase: int) -> void:
 	if t == 0:
 		D.box_to(s, {"w": 200.0, "h": 120.0}, 24)
 		for line: int in range(2):
 			var word: String = WORD_TOP if line == 0 else WORD_BOTTOM
 			for i: int in range(8):
 				var at: Vector2 = _slot(line, i)
-				D.shot(s, {"space": "box", "x": at.x, "y": at.y, "r": 5.0, "shape": "glyph", "big": true, "ch": word.substr(i, 1), "letter": true, "line": line, "idx": i, "arm": 30, "life": 2000})
+				D.shot(s, {"space": "box", "x": at.x, "y": at.y, "r": 5.0, "shape": "graded", "ch": word.substr(i, 1), "letter": true, "line": line, "idx": i, "arm": 30, "life": 2000})
 	if phase > 0 and t >= 30:
 		s.box.rot = 0.24 * sin(float(t - 30) * 0.018)
 	var every: int = 62 if phase == 0 else 56
 	if t >= 24 and t <= 352 and (t - 24) % every == 0:
 		_shuffle(s, t, phase)
-	_fly_letters(s, t)
+	_fly_sheets(s, t)
 	if t >= 40 and t < 392 and t % 28 == 14:
 		var pick: Array = []
 		for b: Dictionary in s.bullets:
@@ -248,7 +256,7 @@ static func _anagram(s: Dictionary, t: int, phase: int) -> void:
 			var from: Vector2 = Vector2(float(b.x), float(b.y))
 			var aim: Vector2 = (_soul(s) - from).normalized() * (1.45 + phase * 0.15)
 			D.effect(s, "block", D.to_world(s, from), 12)
-			D.shot(s, {"space": "box", "x": from.x, "y": from.y, "vx": aim.x, "vy": aim.y, "r": 2.5, "shape": "glyph", "ch": "," if D.rand(s) < 0.5 else ".", "life": 220})
+			D.shot(s, {"space": "box", "x": from.x, "y": from.y, "vx": aim.x, "vy": aim.y, "r": 2.5, "shape": "blot", "ch": "," if D.rand(s) < 0.5 else ".", "life": 220})
 
 static func _shuffle(s: Dictionary, t: int, phase: int) -> void:
 	var by_slot: Dictionary = {}
@@ -281,7 +289,7 @@ static func _shuffle(s: Dictionary, t: int, phase: int) -> void:
 		left.idx = a + 1
 		_send(right, _slot(line, a), t + 30, 30, 12.0 if line == 0 else -12.0)
 		right.idx = a
-	D.banner(s, "REARRANGE", 30)
+	D.banner(s, "REGRADE", 30)
 
 static func _send(b: Dictionary, to: Vector2, start: int, dur: int, bend: float) -> void:
 	b.move = {"fx": float(b.x), "fy": float(b.y), "tx": to.x, "ty": to.y, "t0": start, "dur": dur, "bend": bend}
@@ -293,7 +301,7 @@ static func _move_point(m: Dictionary, p: float) -> Vector2:
 	var side: Vector2 = (to - from).normalized().orthogonal()
 	return from.lerp(to, e) + side * float(m.bend) * sin(PI * e)
 
-static func _fly_letters(s: Dictionary, t: int) -> void:
+static func _fly_sheets(s: Dictionary, t: int) -> void:
 	for b: Dictionary in s.bullets:
 		if not b.has("move"): continue
 		var m: Dictionary = b.move
@@ -303,18 +311,18 @@ static func _fly_letters(s: Dictionary, t: int) -> void:
 		b.x = at.x; b.y = at.y
 		if p >= 1.0: b.erase("move")
 
-# ---------------------------------------------------------------- Typewriter
-# Blue soul on the bottom line of the page. A cursor types the line from left
-# to right; the faint ghost text shows which slots get letters, so you wait in
-# a space and hop the cursor as it passes (it hesitates between words). At the
-# end of a line: DING, the carriage slams back (jump it) and the line feeds up
-# to the top of the page, where it caps your highest jumps. The kept
-# sentences are never typed over. Phase 1: ERRATA backspaces mid-line,
-# flinging the deleted letters up into the page.
+# ---------------------------------------------------------------- C- stamps
+# Blue soul on the bottom line of the page. Gwen's rubber stamp walks the line
+# from left to right, stamping a C- on every paper; the faint outlines show which
+# slots get a stamp, so you wait in a gap and hop the stamp as it passes (it
+# hesitates between words). At the end of the line: NEXT PAPER, the stamp slams
+# back (jump it) and the page feeds up to the top, where it caps your highest
+# jumps. The kept sentences are never stamped over. Phase 1: Gwen re-stamps
+# mid-line, peeling the stamped slips off the page and flinging them up.
 static func _slot_x(k: int) -> float:
 	return -114.0 + SLOT * k
 
-static func _typewriter(s: Dictionary, t: int, phase: int) -> void:
+static func _stamps(s: Dictionary, t: int, phase: int) -> void:
 	var h: Vector2 = D.half(s)
 	if t == 0:
 		D.box_to(s, {"w": 240.0, "h": 88.0}, 20)
@@ -322,7 +330,7 @@ static func _typewriter(s: Dictionary, t: int, phase: int) -> void:
 		s.soul.gravity = Vector2.DOWN
 		s.tw = {"x": _slot_x(0) - 8.0, "k": 0, "state": "wait", "wait": 32, "plan": _type_plan(s), "back": false, "dir": 1}
 		D.shot(s, {"space": "box", "x": _slot_x(0) - 8.0, "y": 37.0, "collide": "rect", "w": 2.0, "h": 7.0, "shape": "cursor", "cursor": true, "arm": 32, "life": 2000})
-		D.banner(s, "TYPESET", 40)
+		D.banner(s, "C- FOR ALL", 40)
 		return
 	var tw: Dictionary = s.tw
 	var floor_y: float = h.y
@@ -344,10 +352,10 @@ static func _typewriter(s: Dictionary, t: int, phase: int) -> void:
 				tw.k = k + 1
 				if phase > 0 and not bool(tw.back) and k == 11:
 					tw.back = true; tw.state = "back"; tw.stop = k - 3
-					D.banner(s, "BACKSPACE", 30)
+					D.banner(s, "RE-STAMP", 30)
 				if int(tw.k) >= SLOTS:
 					tw.state = "ding"; tw.wait = 26
-					D.banner(s, "DING", 30)
+					D.banner(s, "NEXT PAPER", 30)
 					D.warn(s, {"kind": "edge", "space": "box", "x": h.x - 4.0, "y": floor_y - 7.0, "dir": Vector2.LEFT}, 26, true)
 		"back":
 			var stop: int = int(tw.stop)
@@ -358,7 +366,7 @@ static func _typewriter(s: Dictionary, t: int, phase: int) -> void:
 				for b: Dictionary in s.bullets:
 					if b.get("typed", false) and int(b.row) == 0 and int(b.slot) == slot:
 						b.typed = false
-						b.vx = D.rand_range(s, -0.8, 0.8); b.vy = -2.6; b.ay = 0.11; b.spin = 0.2; b.shape = "glyph"; b.collide = "circle"; b.r = 3.0
+						b.vx = D.rand_range(s, -0.8, 0.8); b.vy = -2.6; b.ay = 0.11; b.spin = 0.2; b.shape = "scrap"; b.collide = "circle"; b.r = 3.0
 				tw.k = slot
 				tw.plan[slot] = "" if _sentence_slot(s, slot) else _letter(s)
 				if slot <= stop:
@@ -379,7 +387,7 @@ static func _typewriter(s: Dictionary, t: int, phase: int) -> void:
 			b.x = float(tw.x); b.y = floor_y - 7.0
 		elif b.get("typed", false) and b.has("ty"):
 			b.y = move_toward(float(b.y), float(b.ty), 3.0)
-		elif b.has("vy") and b.shape == "glyph" and float(b.y) > floor_y + 6.0:
+		elif b.has("vy") and b.shape == "scrap" and float(b.y) > floor_y + 6.0:
 			b.dead = true
 
 static func _sentence_slot(s: Dictionary, k: int) -> bool:
@@ -408,16 +416,17 @@ static func _line_feed(s: Dictionary) -> void:
 		b.ty = h.y - 3.5 - 48.0 * int(b.row)
 		if int(b.row) >= 2: b.fade = 16
 
-# ---------------------------------------------------------------- Proofmarks
-# ERRATA circles you as an error: the pen draws a red circle around where you
+# ---------------------------------------------------------------- Circled in red
+# Gwen circles you as the error: the pen draws a red circle around where you
 # stand, leaving one gap (facing into the page, or toward an open sentence),
 # then the circle closes. Get out through the gap; whatever is left inside is
 # deleted in a burst of x's.
-# An underline then strikes along your line. Phase 1: a second, smaller circle
+# An underline then slashes along your line. Phase 1: a second, smaller circle
 # overlaps the first and both gaps turn as they close.
-static func _proofmarks(s: Dictionary, t: int, phase: int) -> void:
+static func _circles(s: Dictionary, t: int, phase: int) -> void:
 	if t == 0: D.box_to(s, {"w": 208.0, "h": 112.0}, 24)
 	var every: int = 74 if phase == 0 else 66
+	if t == 14: D.banner(s, "SEE ME!", 40)
 	if t >= 14 and t <= 360 and (t - 14) % every == 0:
 		var at: Vector2 = _soul(s)
 		_circle(s, at, 44.0, 0.011 if phase > 0 else 0.0)
@@ -429,7 +438,7 @@ static func _proofmarks(s: Dictionary, t: int, phase: int) -> void:
 		var h2: Vector2 = D.half(s)
 		var from_left: bool = D.rand(s) < 0.5
 		var y: float = clampf(float(s.soul.y), -h2.y + 6.0, h2.y - 6.0)
-		_stroke(s, Vector2(-h2.x - 6.0 if from_left else h2.x + 6.0, y), Vector2.RIGHT if from_left else Vector2.LEFT, h2.x * 2.0 + 12.0, 8.0, 3.0, 28, 10, "strike")
+		_stroke(s, Vector2(-h2.x - 6.0 if from_left else h2.x + 6.0, y), Vector2.RIGHT if from_left else Vector2.LEFT, h2.x * 2.0 + 12.0, 8.0, 3.0, 28, 10, "slash")
 
 static func _circle(s: Dictionary, at: Vector2, radius: float, spin: float, arm: int = 28) -> void:
 	var inward: float = (-at).angle() if at.length() > 14.0 else D.rand(s) * TAU
@@ -471,14 +480,16 @@ static func draw_under(c: CanvasItem, s: Dictionary, v) -> void:
 			var poly: PackedVector2Array = v.box_rect_poly(r)
 			poly.append(poly[0])
 			_dashed_poly(c, poly, Color(MINT, blink))
-	if s.patternId == "typewriter" and s.has("tw"):
+	if s.patternId == "stamps" and s.has("tw"):
 		var tw: Dictionary = s.tw
 		var from: int = int(tw.k) if str(tw.state) != "return" else SLOTS
 		for k: int in range(from, SLOTS):
 			var ch: String = str(tw.plan[k])
 			if ch.is_empty(): continue
-			_glyph(c, v, v.box_point(Vector2(_slot_x(k), h.y - 3.5)), ch, Color(PAPER, 0.16), 12)
-	if s.patternId == "anagram":
+			var slip: PackedVector2Array = v.box_rect_poly(Rect2(Vector2(_slot_x(k) - 4.0, h.y - 7.0), Vector2(8.0, 7.0)))
+			slip.append(slip[0])
+			c.draw_polyline(slip, Color(PINK, 0.24), 1.0)
+	if s.patternId == "regrade":
 		for b: Dictionary in s.bullets:
 			if not b.has("move"): continue
 			var m: Dictionary = b.move
@@ -492,7 +503,7 @@ static func draw_over(_c: CanvasItem, _s: Dictionary, _v) -> void:
 
 static func draw_bullet(c: CanvasItem, b: Dictionary, at: Vector2, turn: float, alpha: float, v) -> bool:
 	match str(b.shape):
-		"strike", "caret":
+		"slash", "note":
 			var k: Dictionary = b.stroke
 			var o: Vector2 = Vector2(float(k.ox), float(k.oy))
 			var d: Vector2 = Vector2(float(k.dx), float(k.dy))
@@ -500,8 +511,8 @@ static func draw_bullet(c: CanvasItem, b: Dictionary, at: Vector2, turn: float, 
 			if int(b.age) <= int(k.warn):
 				var blink: float = 0.35 + 0.3 * sin(float(b.age) * 0.6)
 				_dashed(c, a, v.box_point(o + d * float(k.len)), Color(PINK, blink * alpha))
-				if b.shape == "caret":
-					_glyph(c, v, v.box_point(o + d * 7.0), "^", Color(RED, 0.9 * alpha), 12)
+				if b.shape == "note":
+					_glyph(c, v, v.box_point(o + d * 7.0), "?", Color(RED, 0.9 * alpha), 12)
 				return true
 			var head: Vector2 = v.box_point(o + d * float(k.cur))
 			c.draw_line(a, head, Color(RED, 0.95 * alpha), float(b.h) * 2.0)
@@ -511,32 +522,68 @@ static func draw_bullet(c: CanvasItem, b: Dictionary, at: Vector2, turn: float, 
 				var side: Vector2 = dir.orthogonal()
 				c.draw_colored_polygon(PackedVector2Array([head + dir * 5.0, head - dir * 3.0 + side * 4.0, head - dir * 3.0 - side * 4.0]), Color(DARK, alpha))
 				c.draw_line(head - dir * 2.0, head + dir * 5.0, Color(RED, alpha), 1)
+			if b.shape == "note":
+				# A marginal note rides on the pen: a small paper flag with a red question mark.
+				var flag: Vector2 = head - (head - a).normalized() * 6.0
+				c.draw_circle(flag, 4.6, Color(DARK, 0.85 * alpha))
+				c.draw_circle(flag, 3.8, Color(PAPER, alpha))
+				_glyph(c, v, flag + Vector2(0, 0.5), "?", Color(INK, alpha), 10)
 			return true
-		"glyph":
-			var big: bool = b.get("big", false)
-			if big:
-				c.draw_rect(Rect2(at - Vector2(6, 7), Vector2(12, 14)), Color(DARK, 0.85 * alpha))
-				c.draw_rect(Rect2(at - Vector2(6, 7), Vector2(12, 14)), Color(PINK, alpha * (1.0 if int(b.age) > int(b.arm) else 0.35)), false, 1)
-			var ch: String = str(b.ch)
-			if not big and (ch == "." or ch == ","):
-				c.draw_circle(at, 2.8, Color(DARK, alpha))
-				c.draw_circle(at, 2.0, Color(Color("f2b0a8"), alpha))
-				if ch == ",": c.draw_line(at + Vector2(1, 1), at + Vector2(-1, 4), Color(Color("f2b0a8"), alpha), 1)
-				return true
-			if not big: c.draw_circle(at, 4.0, Color(DARK, 0.7 * alpha))
-			_glyph(c, v, at, ch, Color(PAPER if big else Color("f2b0a8"), alpha), 12)
+		"scrap":
+			# A torn scrap of paper with a red tick, tumbling out of a slashed line.
+			var size: float = 3.0 + float(str(b.ch).unicode_at(0) % 3) * 0.4
+			var scrap: PackedVector2Array = v.quad(at, size, size * 0.72, turn)
+			c.draw_colored_polygon(scrap, Color(PAPER, alpha))
+			scrap.append(scrap[0])
+			c.draw_polyline(scrap, Color(DARK, 0.75 * alpha), 1.0)
+			c.draw_line(at + Vector2(-size + 1.2, 0.0).rotated(turn), at + Vector2(size - 1.2, 0.0).rotated(turn), Color(INK, alpha), 1.0)
+			return true
+		"xmark":
+			c.draw_line(at + Vector2(-2.6, -2.6), at + Vector2(2.6, 2.6), Color(DARK, 0.8 * alpha), 3.0)
+			c.draw_line(at + Vector2(-2.6, 2.6), at + Vector2(2.6, -2.6), Color(DARK, 0.8 * alpha), 3.0)
+			c.draw_line(at + Vector2(-2.4, -2.4), at + Vector2(2.4, 2.4), Color(RED, alpha), 1.5)
+			c.draw_line(at + Vector2(-2.4, 2.4), at + Vector2(2.4, -2.4), Color(RED, alpha), 1.5)
+			return true
+		"blot":
+			# A flicked drop of red ink; the comma-shaped ones carry a small satellite drop.
+			c.draw_circle(at, 3.0, Color(DARK, alpha))
+			c.draw_circle(at, 2.3, Color(INK, alpha))
+			c.draw_circle(at + Vector2(-0.7, -0.7), 0.9, Color(1.0, 0.72, 0.66, alpha))
+			if str(b.ch) == ",":
+				c.draw_circle(at + Vector2(-2.6, 2.4), 1.2, Color(INK, alpha))
+			return true
+		"graded":
+			# A graded paper: cream sheet, folded corner, one red letter of Gwen's comment on it.
+			var armed: bool = int(b.age) > int(b.arm)
+			var shade: float = alpha * (1.0 if armed else 0.45)
+			var edge: PackedVector2Array = v.quad(at, 6.0, 7.0, turn)
+			c.draw_colored_polygon(edge, Color(DARK, 0.85 * alpha))
+			c.draw_colored_polygon(v.quad(at, 5.0, 6.0, turn), Color(PAPER, 0.96 * shade))
+			c.draw_colored_polygon(PackedVector2Array([at + Vector2(1.5, -6.0).rotated(turn), at + Vector2(5.0, -6.0).rotated(turn), at + Vector2(5.0, -2.5).rotated(turn)]), Color(0.62, 0.55, 0.45, shade))
+			c.draw_line(at + Vector2(-3.5, 4.5).rotated(turn), at + Vector2(1.5, 4.5).rotated(turn), Color(0.45, 0.55, 0.85, 0.8 * shade), 1.0)
+			edge.append(edge[0])
+			c.draw_polyline(edge, Color(PINK, shade), 1.0)
+			_glyph(c, v, at + Vector2(0, -0.5), str(b.ch), Color(INK, alpha), 12)
 			return true
 		"type":
-			var col: Color = PAPER if int(b.age) > int(b.arm) else RED
-			c.draw_rect(Rect2(at - Vector2(4, 3.5), Vector2(8, 7)), Color(DARK, alpha))
-			_glyph(c, v, at + Vector2(0, 0.5), str(b.ch), Color(col, alpha), 12)
+			# A C- stamp on a slip of paper, drawn with lines: a C and a minus.
+			var wet: bool = int(b.age) <= int(b.arm)
+			var slip: Rect2 = Rect2(at - Vector2(4, 3.5), Vector2(8, 7))
+			c.draw_rect(slip, Color(PAPER, 0.96 * alpha))
+			c.draw_rect(slip, Color(PINK if wet else RED, alpha), false, 1.0)
+			c.draw_arc(at + Vector2(-1.4, 0.0), 1.9, 0.75, TAU - 0.75, 8, Color(INK, alpha), 1.0)
+			c.draw_line(at + Vector2(1.4, 0.0), at + Vector2(3.0, 0.0), Color(INK, alpha), 1.0)
 			return true
 		"cursor":
+			# Gwen's rubber stamp: wooden handle and knob over a red ink pad face.
 			var lit: bool = int(b.age) > int(b.arm)
 			var blink2: bool = (int(b.age) / 8) % 2 == 0
-			c.draw_rect(Rect2(at - Vector2(2, 7), Vector2(4, 14)), Color(RED if lit else PINK, alpha * (1.0 if lit or blink2 else 0.3)))
-			c.draw_line(at + Vector2(-4, -7), at + Vector2(4, -7), Color(RED, alpha), 1)
-			c.draw_line(at + Vector2(-4, 7), at + Vector2(4, 7), Color(RED, alpha), 1)
+			var shown: float = alpha * (1.0 if lit or blink2 else 0.3)
+			c.draw_rect(Rect2(at + Vector2(-4, 3), Vector2(8, 4)), Color(RED if lit else PINK, shown))
+			c.draw_rect(Rect2(at + Vector2(-4, 3), Vector2(8, 1)), Color(1.0, 0.72, 0.66, 0.6 * shown))
+			c.draw_rect(Rect2(at + Vector2(-1.5, -4), Vector2(3, 7)), Color(WOOD, shown))
+			c.draw_rect(Rect2(at + Vector2(-3.5, -7), Vector2(7, 3)), Color(KNOB, shown))
+			c.draw_line(at + Vector2(-3.5, -7), at + Vector2(3.5, -7), Color(RED, shown), 1.0)
 			return true
 		"redring":
 			var gw: float = float(b.gapWidth) * 0.5

@@ -12,9 +12,13 @@ extends RefCounted
 ## assets/art/walk under walk_key replaces them (NativeWalkArt).
 const WORLD_HEIGHT: Dictionary={"val":54,"autocomplete":60,"chad":52,"advisor":50,"ta":52,"peloton":54,"sunbeam":52,"tanner":52,"kyle":52}
 const WALK_KEY: Dictionary={"val":"val_vp"}
+## Internal boss ids whose art is filed under another id: the fight, flags and saves keep the old id
+## (errata) while the sheet, entrance pose and portraits are Gwen the Red's ("ta").
+const ART_ALIAS: Dictionary={"errata":"ta"}
 static var metadata: Dictionary={}
 static var textures: Dictionary={}
 static var animations: Dictionary={}
+static func art_id(id: String) -> String:return ART_ALIAS.get(id,id)
 static func sheet(id: String) -> String:return "res://assets/art/%s-v1.png"%id
 static func atlas(id: String) -> String:return "res://assets/art/%s-atlas.json"%id
 static func drawn(id: String) -> bool:return ResourceLoader.exists(sheet(id)) and FileAccess.file_exists(atlas(id))

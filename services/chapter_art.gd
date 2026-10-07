@@ -6,6 +6,8 @@ static var frame_cache: Dictionary={}
 ## AUTOCOMPLETE took over INDEX's boss (2026-10-07). Its own sheet is NativeBossArt's; when that is
 ## missing, the old INDEX cells in chapter2-atlas.json stand in under the new id.
 const LEGACY: Dictionary={"autocomplete":"index"}
+## Gwen the Red took over ERRATA's boss the same way: her sheet is NativeBossArt's "ta" (routed in
+## cast_art.gd by the id "errata"); the errata cells in chapter2-atlas.json stay as her fallback.
 static func resolve(id: String) -> String:return LEGACY.get(id,id)
 static func data() -> Dictionary:
 	if metadata.is_empty():metadata=JSON.parse_string(FileAccess.get_file_as_string("res://assets/art/chapter2-atlas.json"))

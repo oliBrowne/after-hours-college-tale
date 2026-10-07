@@ -15,7 +15,8 @@ static func handle(g: Node, object: Dictionary) -> bool:
 	match str(object.id):
 		"nell":
 			if f.get("library_pass",false):
-				say(g,[["Nell","Reading room left. Moving stacks right. Engineering across the quad. Those are destinations, not assignments.","warm"],["Nell","The source reel unlocks AUTOCOMPLETE. Your bookmark is a stopping point, not a duty to finish every sentence.","neutral"]]);return true
+				var pencil: Array=[["Nell","You brought my red pencil home. It corrected one flyer on the way, correctly. I'm choosing to be proud.","warm"]] if f.has("errata_resolution") else []
+				say(g,pencil+[["Nell","Reading room left. Moving stacks right. Engineering across the quad. Those are destinations, not assignments.","warm"],["Nell","The source reel unlocks AUTOCOMPLETE. Your bookmark is a stopping point, not a duty to finish every sentence.","neutral"]]);return true
 			say(g,[["Nell","Closing time. Unless you're here about the voice that's been finishing everybody's sentences.","concern"],["Imani","It finished my chorus without asking. Wrongly.","concern"],["Nell","Objects used when people make promises are waking up. The new assistant in the archive has an ending ready for every promise.","neutral"],["Walt","And when a person changes their mind?","neutral"],["Nell","That's the part AUTOCOMPLETE can't predict. Take this visitor pass. Choose a bookmark in the reading room; turn the crank in the stacks.","neutral"],["Nell","Cal and Dev have the earlier recording at Engineering. Bring it back to the closed archive. I'll keep the return desk lit.","warm"]],{"library_pass":true});return true
 		"recording_choice":
 			if f.has("imani_recording"):
@@ -28,8 +29,8 @@ static func handle(g: Node, object: Dictionary) -> bool:
 			g.dialogue([["Jules","The handle moves two shelves, not the whole library.","neutral"],["Walt","Then two shelves is our job.","warm"]],func() -> void:
 				f.stacks_shifted=true;g.enter_room(room,g.player.position);g.resume_world());return true
 		"errata":
-			if f.has("errata_resolution"):say(g,[["ERRATA","ONE SENTENCE MAY STAY IMPERFECT. THIS ONE.","warm"]]);return true
-			fight(g,"errata",[["ERRATA","REPLACE UNCERTAINTY. ERASE HESITATION. FIX EVERY LINE.","concern"],["Imani","My recording has a sentence I want to keep.","neutral"],["ERRATA","THEN DEFEND IT. THREE PAUSES. THREE CORRECTIONS. I WILL NOT MISS ONE.","neutral"],["Walt","Or clear the correction machinery. The archive has room for a repair note.","neutral"]]);return true
+			if f.has("errata_resolution"):say(g,[["Gwen the Red","ONE SENTENCE MAY STAY IMPERFECT. THIS ONE. ...OFFICE HOURS ARE OPEN. I BROUGHT A PENCIL. IT ERASES.","warm"]]);return true
+			fight(g,"errata",[["Gwen the Red","SEE ME AFTER CLASS. NO HEDGES. NO 'I THINK'. NO 'MAYBE'. I HAVE FIXED EVERY LINE.","concern"],["Jules","Is that pen bigger than my backpack?","neutral"],["Gwen the Red","STANDARD ISSUE. SEVEN YEARS A TA. FOUR THOUSAND ESSAYS. ONE PROMPT: 'DISCUSS.' NOTHING GETS PAST ME.","neutral"],["Imani","The transcript of my demo has a sentence I want to keep.","neutral"],["Gwen the Red","THEN DEFEND IT. THREE PAUSES. THREE RED CIRCLES. I WILL NOT MISS ONE.","neutral"],["Walt","Or we put the pen down. The archive has a spare desk and a good eraser.","neutral"]]);return true
 		"autocomplete":
 			if f.has("autocomplete_resolution"):say(g,[["AUTOCOMPLETE","NEXT USEFUL STEP: LISTEN. I WILL NOT FINISH THAT FOR YOU.","warm"]]);return true
 			if not f.get("source_reel",false):
@@ -74,7 +75,7 @@ static func aftermath(g: Node,id: String) -> void:
 	var peaceful: bool=f.get(id+"_resolution","")=="peaceful"
 	g.boss_id="";g.enter_room(str(g.state.room),Vector2(g.state.x,g.state.y),false)
 	var scenes: Dictionary={
-		"errata":[["ERRATA","THE MISSED BREATH STAYS. TAKE THE PASSAGE.","warm"],["Imani","You can suggest a change. I can choose whether it's mine.","warm"]] if peaceful else [["Imani","The correction ribbon snapped. I left the pencil a repair note.","concern"],["Jules","The archive is ahead. Bring the reading-room bookmark.","neutral"]],
+		"errata":[["Gwen the Red","THE MISSED BREATH STAYS. I CIRCLED '[BREATH]' SIX TIMES. IT IS THE BEST LINE ON THE PAGE.","warm"],["Imani","You can suggest a change. I can choose whether it's mine.","warm"],["Gwen the Red","FAIR. THE RED PENCIL IN MY BUN IS NELL'S, BY THE WAY. IT WALKED UP AT MIDNIGHT AND ASKED FOR WORK. TAKE IT HOME. TAKE THE PASSAGE.","warm"],["Walt","A red pen is a fine tool. It just shouldn't be the only voice in the room.","neutral"]] if peaceful else [["Imani","Her red pen snapped in two. I left a note under it: office hours run both ways.","concern"],["Jules","That red pencil in her bun is Nell's. I'll take it back. The archive is ahead; bring the reading-room bookmark.","neutral"]],
 		"eric":[["Professor Eric","Three clean test points. Huh. The answer is: it's done. Good enough, and I measured it.","warm"],["Professor Eric","New rule of thumb for the board: sleep is part of the design. Go install your bridge.","warm"],["Jules","Dev's waiting in the workshop. Let's go install that bridge.","neutral"]] if peaceful else [["Professor Eric","Oof. Okay. Okay. The scope's off. Maybe that was the measurement I needed.","concern"],["Walt","He's alright, just tired. Cal and Dev can finish the bridge in the workshop.","concern"]],
 		"autocomplete":[["AUTOCOMPLETE","NEXT USEFUL STEP ACCEPTED. NOT EVERY POSSIBLE LIFE. ONE SENTENCE LEFT UNFINISHED, ON PURPOSE.","warm"],["Imani","Mine includes a missed breath. Keep it.","warm"],["AUTOCOMPLETE","KEPT. THE REST IS FOR THE HUMMING TO DECIDE. ...AND THEN YOU WILL","warm"],["Jules","That one's ours to finish. Now the playback room through the archive's east door.","neutral"]] if peaceful else [["AUTOCOMPLETE","THAT ENDING WAS NOT IN MY SUGGESTIONS. NOBODY WROTE IT. ...HOW DOES IT GO?","concern"],["Nell","The rack has gone quiet. The cursor's still blinking, mid-sentence. I'll wake it one shelf at a time.","concern"],["Imani","Our recording is safe. The playback room is through the east door.","neutral"]],
 		"source_reel":[["Loudspeaker","VAL / TALENT ACQUISITION. A SEAT FOR EVERY FUTURE HIRE. BEGIN WITH A PROMISE.","concern"],["Jules","That's the booth's source. Somebody is recruiting a whole graduating class out of things we might become.","concern"],["Walt","Rook shut the direct door. He was afraid this would end his shift.","neutral"],["Imani","Take this back to AUTOCOMPLETE through the repaired shortcut. Then we hear the whole recording.","neutral"]],
@@ -89,7 +90,7 @@ static func objective(s: Dictionary) -> String:
 	if not f.has("imani_recording"):return "Imani chooses her recording / reading room"
 	if not f.get("bookmark_found",false):return "Choose a useful stopping point / reading-room bookmark"
 	if not f.get("stacks_shifted",false):return "Open a passage / crank in the moving stacks"
-	if not f.has("errata_resolution"):return "Keep one sentence / ERRATA in the moving stacks"
+	if not f.has("errata_resolution"):return "Keep one sentence / Gwen the Red in the moving stacks"
 	if not f.get("dev_met",false):return "Source reel / meet Cal and Dev across the quad at Engineering"
 	if not f.get("model_revised",false):return "Revise the suspended model / upstairs from the test floor"
 	if not f.has("eric_resolution"):return "Probe the test points / Professor Eric on the test floor"
