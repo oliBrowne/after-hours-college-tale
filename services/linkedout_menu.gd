@@ -24,17 +24,42 @@ static func notify(g: Node) -> void:
 
 static func open(g: Node) -> void:
 	var f: Dictionary = g.state.flags
+	var pending: Array = LinkedOut.pending(f)
 	var options: Array = []
-	for p: Dictionary in LinkedOut.pending(f):
+
+	## Show each pending request as a profile option with details.
+	for p: Dictionary in pending:
 		var id: String = str(p.id)
-		options.append(g.option("Accept %s / %s" % [str(p.name), LinkedOut.effect_text(p)], func() -> void:accept(g, id)))
-	if LinkedOut.pending(f).size() > 1:
+		options.append(g.option("-> " + str(p.name), func() -> void:accept(g, id)))
+
+	if pending.size() > 1:
 		options.append(g.option("Accept all", func() -> void:
 			for p: Dictionary in LinkedOut.pending(g.state.flags): LinkedOut.accept(g.state.flags, str(p.id))
 			changed(g, "Everyone accepted.")))
+
 	options.append(g.option("Profile feed", func() -> void:feed(g, 0)))
 	options.append(g.option("Back", g.pause_menu))
-	g.open_menu(g.Mode.MENU, LinkedOut.summary(f), options)
+
+	## Build the main header with profile stats.
+	var header: Array[String] = []
+	var accepted_count: int = LinkedOut.accepted(f).size()
+	var request_count: int = pending.size()
+	var view_count: int = LinkedOut.views(f)
+	header.append("LINKEDOUT")
+	header.append("")
+	header.append("Connections: %d  |  Requests: %d  |  Views: %d" % [accepted_count, request_count, view_count])
+	header.append("")
+
+	## Add connection request preview info.
+	if request_count > 0:
+		header.append("PENDING REQUESTS:")
+		for p: Dictionary in pending:
+			header.append("  " + str(p.name) + " - " + str(p.headline))
+			header.append("    Skill: " + str(p.skill) + " (" + LinkedOut.effect_text(p) + ")")
+	else:
+		header.append("No pending requests.")
+
+	g.open_menu(g.Mode.MENU, "\n".join(header), options)
 
 static func accept(g: Node, id: String) -> void:
 	if not LinkedOut.accept(g.state.flags, id): return
@@ -53,6 +78,17 @@ static func feed(g: Node, index: int) -> void:
 	var posts: Array[String] = LinkedOut.feed(g.state.flags)
 	index = clampi(index, 0, posts.size() - 1)
 	var options: Array = []
+
 	if index + 1 < posts.size(): options.append(g.option("Older post", func() -> void:feed(g, index + 1)))
 	options.append(g.option("Back to LinkedOut", func() -> void:open(g)))
-	g.open_menu(g.Mode.MENU, "Feed %d/%d / %s" % [index + 1, posts.size(), posts[index]], options)
+
+	## Format the feed post as a readable activity.
+	var post: String = posts[index]
+	var formatted_header: Array[String] = []
+	formatted_header.append("LINKEDOUT FEED")
+	formatted_header.append("")
+	formatted_header.append("Post %d/%d" % [index + 1, posts.size()])
+	formatted_header.append("")
+	formatted_header.append(post)
+
+	g.open_menu(g.Mode.MENU, "\n".join(formatted_header), options)
