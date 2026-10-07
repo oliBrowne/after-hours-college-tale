@@ -123,7 +123,7 @@ static func frames(id: String) -> SpriteFrames:
 	return result
 
 static func world_height(id: String) -> float:
-	return float({"jules":52,"imani":50,"walt":52,"cal":52,"mags":54,"mara":52,"eli":54,"nell":50,"dev":52,"eric":46,"jakerson":60,"flyer":64,"pip":36,"pinpal":76,"claim":88}.get(id,56))
+	return float({"jules":52,"imani":50,"walt":52,"cal":52,"mags":54,"mara":52,"eli":54,"nell":50,"dev":52,"eric":46,"val_small":34,"rook":56,"jakerson":60,"flyer":64,"pip":36,"pinpal":76,"claim":88}.get(id,56))
 static func fit(sprite: AnimatedSprite2D,height: float) -> void:
 	NativePixelCast.fit(sprite,roundi(height))
 

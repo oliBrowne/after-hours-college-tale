@@ -11,7 +11,9 @@ extends RefCounted
 ##   ["walk", [[actor, point, speed], ...]] everyone listed walks at once until all arrive
 ##   ["face", actor, point or actor]       turn toward something
 ##   ["jules", point or actor]             Jules turns toward something
-##   ["say", lines]                        ordinary dialogue
+##   ["say", lines]                        ordinary dialogue; a line spoken by Imani, Walt or Pip is
+##                                         skipped until they have joined, and a 4th entry names a flag
+##                                         the line needs ("!flag": needs it unset)
 ##   ["wait", ticks]
 ##   ["leave", actor]                      a spawned actor walks off-screen through its last door
 
@@ -29,6 +31,9 @@ static func due(g: Node) -> String:
 	if room == "U03" and not f.get("mixer_returned", false) and not f.get("scene_chip_todd", false): return "chip_todd"
 	if room == "N01" and f.get("chapter1_complete", false) and not f.get("library_pass", false) and not f.get("scene_nell_pencil", false): return "nell_pencil"
 	if room == "E01" and not f.has("eric_resolution") and not f.get("scene_eric_lobby", false): return "eric_lobby"
+	if room == "F01" and not f.get("chapter1_complete", false) and not f.get("scene_val_chairs", false): return "val_chairs"
+	if room == "O01" and f.get("chapter2_complete", false) and not f.get("rook_confessed", false) and not f.get("scene_todd_audit", false): return "todd_audit"
+	if room == "M01" and f.get("chapter3_complete", false) and not f.has("val_resolution") and not f.get("scene_val_procession", false): return "val_procession"
 	return ""
 
 static func steps(id: String) -> Array:
@@ -68,6 +73,50 @@ static func steps(id: String) -> Array:
 				["say", [["Jules", "Was that a professor? Still teaching?", "neutral"],
 					["Imani", "Professor Eric. Signal integrity. My roommate says his office hours never really end.", "warm"],
 					["Walt", "Sounds like somebody else's night we know.", "neutral"]]]]
+		"val_chairs":
+			# Chapter 1, Farrand: a little graduate puppet counts seats for people who haven't
+			# arrived yet, and Rook tries to send it home. First look at Val, long before Macky.
+			return [["borrow", "rook", "rook"], ["spawn", "val", "val_small", Vector2(720, 350)],
+				["walk", [["val", Vector2(575, 360), RUN]]], ["face", "val", Vector2(515, 315)], ["wait", 30],
+				["say", [["Val", "Forty thousand and one. Forty thousand and two. Every future needs a seat.", "concern"]]],
+				["walk", [["rook", Vector2(625, 345), WALK]]], ["face", "rook", "val"], ["face", "val", "rook"],
+				["say", [["Rook", "Little one. It's past midnight. The chairs are for the people who actually came.", "neutral"],
+					["Val", "But what about the people they could become? Nobody should arrive and find no room.", "concern"],
+					["Rook", "Then nobody would ever get to leave. Go home. Tomorrow has chairs too.", "neutral"],
+					["Val", "...I'll reserve just a few more.", "neutral"]]],
+				["walk", [["val", Vector2(720, 350), RUN]]], ["leave", "val"],
+				["walk", [["rook", Vector2(635, 310), WALK]]], ["face", "rook", "jules"], ["jules", "rook"],
+				["say", [["Rook", "Don't mind Val. Ceremony helper. Very small, very thorough.", "warm"],
+					["Imani", "Was that a puppet in a graduation cap?", "concern"],
+					["Walt", "A puppet in a graduation cap. And somebody taught it to count.", "neutral"]]]]
+		"todd_audit":
+			# Chapter 3, Old Main: Todd comes down from the notice hall for Rook's key ring.
+			return [["borrow", "rook", "rook"], ["spawn", "todd", "todd", Vector2(450, 196)],
+				["walk", [["todd", Vector2(590, 330), WALK]]], ["face", "todd", "rook"], ["face", "rook", "todd"],
+				["say", [["Todd Saliman", "Rook. I need the master ring. Every key to every door in Old Main.", "neutral"],
+					["Rook", "Which job is it for? I've stopped being able to tell.", "concern"],
+					["Todd Saliman", "That's what an audit is for. Every door, every promise, and who actually agreed to it.", "neutral"],
+					["Rook", "Then start with the directory. And bring a pencil with an eraser.", "neutral"],
+					["Rook", "Not the red one from Norlin.", "warm", "scene_nell_pencil"]]],
+				["face", "todd", "jules"], ["jules", "todd"],
+				["say", [["Todd Saliman", "Evening, Chip's friends. The finite-plan desk is upstairs. Read before you sign anything.", "neutral", "scene_chip_todd"],
+					["Todd Saliman", "Evening. The finite-plan desk is upstairs. Read before you sign anything.", "neutral", "!scene_chip_todd"]]],
+				["walk", [["todd", Vector2(450, 196), WALK]]], ["leave", "todd"], ["face", "rook", "jules"],
+				["say", [["Rook", "He's going to read everything. Even the parts I folded.", "concern"]]]]
+		"val_procession":
+			# Finale, procession walk: Val hurries into Macky with the night's last reservations.
+			return [["borrow", "mags", "mags"], ["spawn", "val", "val_small", Vector2(865, 350)],
+				["walk", [["val", Vector2(600, 330), RUN]]], ["face", "mags", "val"],
+				["say", [["Mags", "Hey! Little one! Those chairs are for the morning ceremony!", "concern"]]],
+				["face", "val", "mags"],
+				["say", [["Val", "Every possible graduate must arrive. Somebody has to save them seats.", "concern"],
+					["Mags", "And who saves a seat for the people who are already tired?", "neutral"]]],
+				["walk", [["val", Vector2(510, 196), RUN]]], ["leave", "val"], ["jules", Vector2(510, 196)],
+				["say", [["Jules", "That's the little usher from Farrand. Val.", "concern", "scene_val_chairs"],
+					["Jules", "Was that a puppet in a graduation cap?", "concern", "!scene_val_chairs"],
+					["Walt", "Reserve more chairs. Same words as the loudspeaker in Norlin.", "neutral"]]],
+				["face", "mags", "jules"],
+				["say", [["Mags", "Whatever's in Macky has a lot of chairs and no closing time. I saved you a cup for after.", "warm"]]]]
 	return []
 
 ## Called at the top of world_tick. True while a scene holds the world still.
@@ -124,8 +173,10 @@ static func _do(g: Node, s: Array) -> bool:
 			g.player.facing = ("left" if d.x < 0 else "right") if absf(d.x) > absf(d.y) else ("up" if d.y < 0 else "down")
 			g.player.art.play("idle_" + g.player.facing)
 		"say":
+			var lines: Array = _lines(g, s[1])
+			if lines.is_empty(): return true
 			run.saying = true
-			g.dialogue(s[1], func() -> void:
+			g.dialogue(lines, func() -> void:
 				run.saying = false; g.resume_world())
 		"wait":
 			run.wait = int(run.wait) + 1
@@ -136,6 +187,20 @@ static func _do(g: Node, s: Array) -> bool:
 			if gone != null and is_instance_valid(gone):
 				g.world_npcs.erase(gone); gone.queue_free(); actors.erase(str(s[1]))
 	return true
+
+## Drops lines from party members who haven't joined yet, and lines whose flag doesn't match.
+static func _lines(g: Node, lines: Array) -> Array:
+	var f: Dictionary = g.state.flags
+	var kept: Array = []
+	for line: Array in lines:
+		var who: String = str(line[0])
+		if who in ["Imani", "Walt", "Pip"] and not f.get(who.to_lower() + "_joined", false): continue
+		if line.size() > 3:
+			var flag: String = str(line[3])
+			if flag.begins_with("!") == bool(f.get(flag.trim_prefix("!"), false)): continue
+			line = line.slice(0, 3)
+		kept.append(line)
+	return kept
 
 static func _finish(g: Node) -> void:
 	for sprite: Variant in run.spawned:

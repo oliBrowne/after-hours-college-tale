@@ -433,6 +433,8 @@ func _physics_process(delta: float) -> void:
 						phrase_pause = 9 if character == "," else 16
 					elif character != " " and state.settings.blips and not state.settings.instant:
 						audio.voiced_blip(str(line[0]), str(line[2]) if line.size() > 2 else "neutral")
+			# The speaker's mouth moves while the words appear and rests at pauses.
+			NativeTalkMotion.update(self, floori(reveal) < words.length() and phrase_pause == 0, environment.elapsed)
 			ui_dirty = true
 		Mode.TIMING:
 			timing_ticks += 1
@@ -2251,19 +2253,12 @@ func stage_dialogue() -> void:
 		if prop is NativeSpatialProp and prop.definition.get("object") == "booth": prop.set_pose("tell" if speaker == "Booth" else "idle")
 	pip.set_pose("wave" if speaker == "Pip" else "idle")
 	var identities: Dictionary = {"Cal":"cal", "Mags":"mags", "Nell":"nell", "Dev":"dev", "Rook":"rook", "Walt":"walt", "ENCORE":"encore", "ERRATA":"errata", "INDEX":"index", "LOADBEARER":"loadbearer", "Professor Eric":"eric", "VAL":"val", "Val":"val_small", "CONE COMMITTEE":"cone", "EMPTY CHAIR":"empty_chair", "Jakerson":"jakerson", "Mara":"mara", "Eli":"eli", "Chip":"chip", "Deion Sanders":"deion", "Todd Saliman":"todd", "Flyerer":"flyer"}
-	for npc: AnimatedSprite2D in world_npcs:
-		if str(npc.get_meta("art_id",npc.get_meta("id",""))) in NativeCastArt.IDS or npc.get_meta("id", "") == "flyer":
-			npc.play("interact_down" if npc.get_meta("art_id",npc.get_meta("id")) == identities.get(speaker, "") else "settled" if state.flags.has(str(npc.get_meta("id")) + "_resolution") else "idle_down")
+	if speaker != "Booth": NativeTalkMotion.stage(self, speaker, identities)
 	if speaker == "Booth":
 		strange_ticks = 120
 		audio.combat("warning")
 		for person: WorldActor in [player] + followers:
 			if person.visible: person.art.play("interact_up")
-	elif world.visible:
-		for i: int in range(3):
-			var person: WorldActor = player if i == 0 else followers[i - 1]
-			if person.visible:
-				person.art.play(("interact_" if ACTORS[i].capitalize() == speaker else "idle_") + person.facing)
 
 func _qa_smoke() -> void:
 	var route: Node = load("res://scenes/qa_jakerson.gd" if "--qa-jakerson" in OS.get_cmdline_user_args() else "res://scenes/qa_final.gd" if "--qa-final" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter3.gd" if "--qa-chapter3" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter2.gd" if "--qa-chapter2" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter1.gd" if "--qa-chapter1" in OS.get_cmdline_user_args() else "res://scenes/qa_review_controls.gd" if "--qa-review-ui" in OS.get_cmdline_user_args() else "res://scenes/qa_opening.gd").new()
@@ -2388,6 +2383,8 @@ func animate_idle_cast() -> void:
 	var reduced: bool=bool(state.settings.reducedMotion)
 	if world.visible:
 		for person: WorldActor in [player]+followers:
+			# Standing still, the party fidget too once their art has fidget_<dir> animations.
+			if mode == Mode.WORLD and str(person.art.animation).begins_with("idle_"): NativeNpcLife.fidget(person.art,Vector2.INF,t,reduced)
 			if str(person.art.animation).begins_with("idle") or str(person.art.animation).begins_with("interact"):
 				NativeIdleMotion.apply(person.art,person.appearance_height,t,reduced,person.get_instance_id())
 		for npc: AnimatedSprite2D in world_npcs:
