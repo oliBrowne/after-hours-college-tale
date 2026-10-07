@@ -63,7 +63,7 @@ func _fight(id: String) -> void:
 						await _capture("ending-choice-"+id);await _choose(ending.to_upper() if id=="val" else "RELEASE")
 					elif id=="rook":await _choose("Carry one" if game.boss_stage==0 else "REVISE / keep west")
 					elif id=="jakerson_final":await _choose("Ask what" if int(game.battle.turn)==0 else "Sign three")
-					else:await _choose("One return" if game.boss_stage==0 else str(game.battle.party[game.actor].id).capitalize()+":" if game.boss_stage==1 else "REVISE / unreserve the left" if game.boss_stage==2 else "Answer two")
+					else:await _choose("One answer" if game.boss_stage==0 else str(game.battle.party[game.actor].id).capitalize()+":" if game.boss_stage==1 else "REVISE / unreserve the left" if game.boss_stage==2 else "Answer two")
 				else:_assert(false,"Unexpected final menu "+str(game.caption))
 			DODGE:
 				if not pause_checked and int(game.pattern.clock)>=80:await _pause_defense()

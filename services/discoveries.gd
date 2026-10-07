@@ -20,7 +20,7 @@ static func scene(id: String, state: Dictionary, speakers: Array[String]) -> Dic
 				changes = ["discovery_eli_acknowledged"]
 			elif f.get("discovery_eli_acknowledged", false) or f.get("mixer_returned", false): lines = [["Eli", "Brake holding?", "neutral"], ["Jules", "Better than the rest of tonight.", "warm"]]
 		"mags":
-			if f.get("opening_finished", false): lines = [["Mags", "One box left on my shift. That one's mine.", "warm"], ["Jules", "Mixer's back. Pip came with us.", "neutral"]]
+			if f.get("opening_finished", false): lines = [["Mags", "One box left on my shift. That one's mine, not yours.", "warm"], ["Jules", "Deal. We only took one glove. It insisted.", "warm"]]
 			elif state.room == "U02" and f.get("mixer_returned", false): lines = [["Mags", "Mixer back?", "neutral"], ["Jules", "Back with Imani. We're following one strange voice downstairs.", "neutral"], ["Mags", "One thing at a time. My cart and I approve.", "warm"]]
 			elif state.room == "U05" and f.get("cal_joined", false): lines = [["Mags", "Cal has his key. Follow the useful plan.", "warm"], ["Jules", "One thing at a time.", "neutral"]]
 		"mara":

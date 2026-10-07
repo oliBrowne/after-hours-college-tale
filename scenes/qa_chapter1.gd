@@ -62,7 +62,7 @@ func _farrand_finish() -> void:
 func _stage_finish() -> void:
 	await _object("chip");await _settle();await _choose("Try the friendly challenge");await _fight("chip")
 	_assert(game.state.flags.get("chip_resolution","")=="peaceful","Chip is the required Farrand boss")
-	await _door("backstage","F05");await _object("consent");await _settle();await _choose("Imani chooses her honest");await _settle();await _capture("05-backstage-choice")
+	await _door("backstage","F05");await _object("consent");await _settle();await _choose("Imani chooses her unfinished");await _settle();await _capture("05-backstage-choice")
 	await _door("mainstage","F06");await _object("encore");await _fight("encore")
 	_assert(game.state.flags.get("chapter1_complete",false),"Chapter 1 ends after ENCORE")
 	await _object("norlin_route");await _settle();await _capture("06-chapter1-complete")
@@ -96,6 +96,8 @@ func _fight(id: String) -> void:
 			TIMING:
 				if game.timing_ticks>=27: await _press()
 				else: await _frame()
+			# A boss answering a CONNECT question.
+			DIALOGUE: await _settle()
 			_:
 				_release();await _frame()
 	_release()

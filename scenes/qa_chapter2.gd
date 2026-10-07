@@ -29,7 +29,7 @@ func run(main: Node) -> bool:
 	await _door("steps","N01");await _door("engineering","E01");await _object("rook");await _settle();await _capture("05-loading-court")
 	await _door("workshop","E02");await _object("cal");await _settle();await _object("dev");await _settle()
 	_assert(game.state.party[2].id=="walt","Cal and Dev remain engineering NPCs")
-	await _door("test_floor","E03");await _door("model_stairs","E04");await _object("model_plan");await _settle();await _choose("Ask Cal and Dev");await _settle();await _capture("06-shared-model")
+	await _door("test_floor","E03");await _door("model_stairs","E04");await _object("model_plan");await _settle();await _choose("Revise the model");await _settle();await _capture("06-shared-model")
 	await _door("test_floor","E03");await _object("eric");await _fight("eric")
 	await _door("workshop","E02");await _object("dev");await _settle()
 	_assert(game.state.flags.get("bridge_ready",false),"Post-battle shared work installs bridge")
@@ -71,6 +71,8 @@ func _fight(id: String) -> void:
 			DODGE:
 				if not pause_checked and int(game.pattern.clock)>=80:await _pause_defense()
 				else:await _defend(id)
+			# A boss answering a CONNECT question.
+			DIALOGUE: await _settle()
 			_:
 				_release();await _frame()
 	_release()

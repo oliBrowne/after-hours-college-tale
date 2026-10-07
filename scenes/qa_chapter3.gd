@@ -41,6 +41,8 @@ func _fight(id: String) -> void:
 			DODGE:
 				if not pause_checked and int(game.pattern.clock)>=80:await _pause_defense()
 				else:await _defend(id)
+			# A boss answering a CONNECT question.
+			DIALOGUE: await _settle()
 			_:
 				_release();await _frame()
 	_release()

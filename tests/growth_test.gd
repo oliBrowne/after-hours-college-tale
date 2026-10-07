@@ -85,6 +85,9 @@ func _test_damage() -> void:
 	battle.openness = 0
 	battle.hp = 24
 	_check(Rules.desperate(battle) and Rules.enemy_damage("walt", battle) == 10, "At half HP a boss hits 25 percent harder")
+	battle.eased = true
+	_check(Rules.enemy_damage("walt", battle) == 5, "A limit set with CONNECT eases the hit instead of the desperate bonus")
+	battle.eased = false
 	battle.hp = 25
 	_check(not Rules.desperate(battle), "Above half HP and under 50 Openness is not desperate")
 	battle.promise = true

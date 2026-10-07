@@ -1,13 +1,22 @@
 extends RefCounted
-## VAL: the graduation ceremony that was told to gather everyone its guests
-## could ever become, and never to close. The final boss, in four stages. Each
-## stage keeps its own promise and has its own three handmade attacks, cycling
-## by turn within the stage (SETS[stage][turn % 3]); ORDER names the slots.
-##   Stage 0  Familiar Promises      confirm top return, right stop, left note
-##   Stage 1  Nobody Has To Be Ideal hold the shared space (after 3 rejections)
-##   Stage 2  Unreserve the Chairs   reserved chairs hurt; hold the open passage
-##   Stage 3  An Ordinary Voice      confirm at two ordinary stopping cues
-## The promise rules and progress text match NativeFinalEncounter exactly.
+## VAL: Val, VP of Talent Acquisition. The final boss is "getting a job": a
+## final-round interview held on the Macky graduation stage, run by a recruiter
+## in a power suit and headset mic in front of a wall of candidate screens. She
+## wants every candidate Jules and friends could ever be in the pipeline, and
+## nobody may leave. In stage 3 the persona drops (val_small): the tired real
+## recruiter under it, who would also like to go home. Four stages; each keeps
+## its own promise and has its own three handmade attacks, cycling by turn
+## within the stage (SETS[stage][turn % 3]); ORDER names the slots.
+##   Stage 0  Tell Me About Yourself   confirm top return, right stop, left note
+##   Stage 1  Five Years From Now      hold the shared space (after 3 rejections)
+##   Stage 2  We Have More Candidates  booked panel chairs hurt; hold the way out
+##   Stage 3  Any Questions for Us?    confirm at two ordinary stopping cues
+## Props: applicants in line holding resumes, lobbed resumes that land as red
+## tape, a ring of deadlines and red pen, panel applause printed with buzzwords,
+## cubicle walls, BOOKED interview chairs and a panel schedule, a pen swinging
+## on a lanyard, headset cords, the office clock and badges tossed at home time.
+## The promise rules and progress text match NativeFinalEncounter exactly (the
+## CONNECT menu in main.gd still says ideals / chairs, so those words stay).
 ## main.gd sets s.revision and s.rejected after setup, so they are read lazily.
 
 const D = preload("res://core/dodge_box.gd")
@@ -21,12 +30,14 @@ const SETS: Array = [
 const ORDER: Array[String] = ["first", "second", "third"]
 const PHASES: Array[int] = [0, 1, 2, 3]
 const LENGTHS: Array[int] = [600, 480, 540, 420]
-const STAGE_NAMES: Array[String] = ["Familiar Promises", "Nobody Has To Be Ideal", "Unreserve the Chairs", "An Ordinary Voice"]
+## main.gd draws "<stage> / <title>" in a heading 26 glyphs wide: every stage
+## name plus " /" stays within 25 glyphs, so each title gets its own line.
+const STAGE_NAMES: Array[String] = ["Tell Me About Yourself", "Five Years From Now", "We Have More Candidates", "Any Questions for Us?"]
 const TITLES: Dictionary = {
-	"procession": "Processional", "roll_call": "Roll Call", "reprise": "Reprise",
-	"perfect_record": "Never Disappoints", "loved_by_all": "Loved By Everyone", "needs_nobody": "Needs Nobody",
-	"reserved_rows": "Reserved Seating", "seating_chart": "Seating Chart", "tassel": "Turn the Tassel",
-	"strings": "Puppet Strings", "closing_time": "Closing Time", "commencement": "Commencement",
+	"procession": "The Applicant Line", "roll_call": "Next Candidate", "reprise": "Behavioral Questions",
+	"perfect_record": "Never Misses a Deadline", "loved_by_all": "Loved by Every Manager", "needs_nobody": "Needs No Team",
+	"reserved_rows": "Fully Booked", "seating_chart": "Panel Schedule", "tassel": "Sign on the Line",
+	"strings": "Strings Attached", "closing_time": "Off the Clock", "commencement": "Exit Interview",
 }
 ## Old arena destinations (128,24), (208,96), (48,96) in box space.
 const DESTINATIONS: Array[Vector2] = [Vector2(0, -36), Vector2(80, 36), Vector2(-80, 36)]
@@ -38,27 +49,33 @@ const SEAT_Y: float = 24.0
 const CUE_AT: Vector2 = Vector2(0, 2)
 ## Old chair fields: x < 100 and x >= 156 in arena space.
 const CHAIR_EDGE: float = 28.0
-const CALLS: Array[String] = ["JULES.", "IMANI.", "WALT.", "THE WHOLE CLASS.", "PIP.", "JULES, WHO NEVER FAILS.", "IMANI, LOVED BY ALL.", "EVERYONE YOU COULD BE."]
-const REPRISES: Array[String] = ["REPRISE: THE STORM", "REPRISE: THE SHOW", "REPRISE: ONE ROUTE", "REPRISE: LAST CALL"]
+## Banners are drawn 8 px a glyph in a 200 px strip: 25 glyphs at most.
+const CALLS: Array[String] = ["JULES NAVARRO.", "IMANI BELL.", "WALT.", "THE WHOLE APPLICANT POOL.", "PIP.", "JULES, NEVER LATE. EVER.", "IMANI, 110% CULTURE FIT.", "EVERY YOU WE COULD HIRE."]
+## Each reprise is a behavioural question about an earlier boss, asked in two
+## beats: "TELL ME ABOUT A TIME..." then the rest.
+const REPRISE_ASK: String = "TELL ME ABOUT A TIME..."
+const REPRISES: Array[String] = ["...YOU WEATHERED A STORM.", "...YOU STOLE THE SHOW.", "...YOU PICKED ONE ROUTE.", "...YOU WORKED LAST CALL."]
+const BUZZWORDS: Array[String] = ["SYNERGY", "SELF-STARTER", "PASSIONATE", "DETAIL-ORIENTED", "TEAM PLAYER"]
+const FUTURES: Array[String] = ["CEO", "GRAD SCHOOL", "FOUNDER", "INFLUENCER", "BURNOUT"]
 const HINTS: Dictionary = {
-	"procession": ["Graduates march in step: slip through each gap. Confirm top, right, then left marks."],
-	"roll_call": ["Names are called, diplomas follow, ribbons unroll. Confirm top, right, then left marks."],
-	"reprise": ["VAL replays every promise you kept. Confirm at the top, right, then left marks."],
-	"perfect_record": ["Slip through the star ring's flaws; leave red ink. Hold the shared green space.",
-		"Slip through the star ring's flaws; leave red ink. Each ally rejects their ideal first."],
+	"procession": ["Applicants march in line: slip through each gap. Confirm top, right, then left marks."],
+	"roll_call": ["Names are called, resumes follow, red tape unrolls. Confirm top, right, then left marks."],
+	"reprise": ["Val asks about every promise you kept. Confirm at the top, right, then left marks."],
+	"perfect_record": ["Slip through the gaps in her deadlines; dodge red pen. Hold the shared green space.",
+		"Slip through the gaps in her deadlines; dodge red pen. Each ally rejects their ideal first."],
 	"loved_by_all": ["Step out of the spotlight; stay in the gap when they clap. Hold the shared space.",
 		"Step out of the spotlight; stay in the gap when they clap. Reject all three ideals first."],
-	"needs_nobody": ["Doors slam and the room pulls you apart. Come back. Hold the shared green space.",
-		"Doors slam and the room pulls you apart. Each ally rejects their own ideal first."],
-	"reserved_rows": ["Reserved rows descend: pass through the empty seat. Hold the open passage.",
-		"Pass through each row's empty seat. Chairs hurt; CONNECT > REVISE opens a side."],
-	"seating_chart": ["Leave marked squares before their seats fill. Hold the open passage.",
-		"Leave marked squares before they fill. Chairs hurt; CONNECT > REVISE opens a side."],
-	"tassel": ["Stay under the tassel's arc or cross behind it. Dodge caps. Hold the open passage.",
-		"Stay under the tassel's arc; dodge caps. Chairs hurt; CONNECT > REVISE opens a side."],
-	"strings": ["Strings drop where you stand and are cut at each stop. Confirm in the green cue."],
+	"needs_nobody": ["Cubicle walls slam and the room pulls you apart. Come back. Hold the shared green space.",
+		"Cubicle walls slam and the room pulls you apart. Each ally rejects their own ideal first."],
+	"reserved_rows": ["Booked rows descend: pass through the empty seat. Hold the way out.",
+		"Pass through each row's empty seat. Booked chairs hurt; CONNECT > REVISE opens a side."],
+	"seating_chart": ["Leave marked slots before they are booked. Hold the way out.",
+		"Leave marked slots before they are booked. Chairs hurt; CONNECT > REVISE opens a side."],
+	"tassel": ["Stay under the pen's swing or cross behind it. Dodge drafts. Hold the way out.",
+		"Stay under the pen's swing; dodge drafts. Chairs hurt; CONNECT > REVISE opens a side."],
+	"strings": ["Cords drop where you stand and unplug at each stop. Confirm in the green cue."],
 	"closing_time": ["Cross a hand at its gap or through the hub. Confirm at the centre when it stops."],
-	"commencement": ["Caps fly; everyone leaves for the exits. Confirm at two stopping cues."],
+	"commencement": ["Badges fly; everyone heads home. Confirm at two stopping cues."],
 }
 const PIVOT: Vector2 = Vector2(0, -112)
 const CORD: float = 150.0
@@ -72,6 +89,11 @@ const PLUM: Color = Color("6b526a")
 const INK_RED: Color = Color("e0524a")
 const BOARD: Color = Color("3b3550")
 const WOOD: Color = Color("7a5c44")
+const SUIT: Color = Color("4b5a86")
+const PAPER: Color = Color("f2ead8")
+const INK_BLUE: Color = Color("7fb0f0")
+const CUBICLE: Color = Color("6c7890")
+const LANYARD: Color = Color("c4506a")
 
 # ---------------------------------------------------------------- setup
 
@@ -96,7 +118,7 @@ static func setup(s: Dictionary) -> void:
 		1:
 			D.objective(s, {"kind": "hold", "x": POCKET.get_center().x, "y": POCKET.get_center().y, "w": POCKET.size.x * 0.5, "h": POCKET.size.y * 0.5, "need": 90, "active": false, "label": "SHARED SPACE"})
 		2:
-			D.objective(s, {"kind": "hold", "x": 0.0, "y": SEAT_Y, "r": 22.0, "need": 90, "active": false, "label": "PASSAGE"})
+			D.objective(s, {"kind": "hold", "x": 0.0, "y": SEAT_Y, "r": 22.0, "need": 90, "active": false, "label": "THE WAY OUT"})
 			D.objective(s, {"kind": "avoid", "x": -78.0, "y": 0.0, "w": 50.0, "h": 90.0, "active": true})
 			D.objective(s, {"kind": "avoid", "x": 78.0, "y": 0.0, "w": 50.0, "h": 90.0, "active": true})
 		3:
@@ -182,7 +204,7 @@ static func _seat_sync(s: Dictionary) -> void:
 	s.objectives[1].active = rev != "left"
 	s.objectives[2].active = rev != "right"
 
-## The open floor between the reserved chairs: x from .x to .y (box space).
+## The open floor between the booked chairs: x from .x to .y (box space).
 static func _open(s: Dictionary) -> Vector2:
 	var rev: String = str(s.revision)
 	var hx: float = D.half(s).x
@@ -240,15 +262,17 @@ static func _fire_events(s: Dictionary, t: int) -> void:
 				var h: Vector2 = D.half(s)
 				var g: float = 0.1
 				var vy: float = -sqrt(2.0 * g * (h.y * 2.0 - 16.0))
-				D.shot(s, {"space": "box", "x": float(e.x), "y": h.y + 6.0, "vx": D.rand_range(s, -0.25, 0.25), "vy": vy, "ay": g, "r": 5.0, "shape": "cap", "spin": 0.15, "life": 200})
+				D.shot(s, {"space": "box", "x": float(e.x), "y": h.y + 6.0, "vx": D.rand_range(s, -0.25, 0.25), "vy": vy, "ay": g, "r": 5.0, "shape": "badge", "spin": 0.15, "life": 200})
 	s.events = kept
 
 # ================================================================ stage 0
-# Familiar Promises: the ceremony replays the familiar. Three destinations.
+# Tell Me About Yourself: the opening questions replay the familiar. Three
+# destinations.
 
-# Processional: ranks of graduates march in from alternating sides, striding on
-# the beat and shuffling between. Proud families' cameras flash where you stand.
-# The second half quickens and some ranks march two deep.
+# The Applicant Line: ranks of applicants holding up their resumes march in from
+# alternating sides, striding on the beat and shuffling between. Headshot
+# cameras flash where you stand. The second half quickens and some ranks march
+# two deep.
 static func _procession(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"w": 240.0, "h": 112.0}, 24)
@@ -257,7 +281,7 @@ static func _procession(s: Dictionary, t: int) -> void:
 	var stride: bool = (int(s.clock) + int(s.musicBase)) % 30 < 18
 	for b: Dictionary in s.bullets:
 		if b.has("march"): b.vx = float(b.march) * (2.0 if stride else 0.45)
-	if t == 300: D.banner(s, "EVERY FUTURE MARCHES", 50)
+	if t == 300: D.banner(s, "EVERY CANDIDATE, PLEASE", 50)
 	var every: int = 60 if t < 300 else 48
 	if t % every == 6 and t < 510:
 		var dir: float = 1.0 if int(s.rank) % 2 == 0 else -1.0
@@ -271,16 +295,17 @@ static func _procession(s: Dictionary, t: int) -> void:
 			for i: int in range(slots):
 				if i == gap or i == gap + 1: continue
 				D.shot(s, {"space": "box", "x": -dir * (h.x + 12.0 + col * 16.0), "y": -h.y + 6.0 + i * spacing, "vx": dir * 0.45, "march": dir,
-					"r": 4.5, "shape": "cap", "life": 460, "bob": i})
+					"r": 4.5, "shape": "applicant", "life": 460, "bob": i})
 		D.warn(s, {"kind": "aisle", "x": -dir * (h.x - 3.0), "y": -h.y + 6.0 + (gap + 0.5) * spacing, "h": spacing * 1.2}, 50)
 	if t % 80 == 60 and t < 500:
 		var at: Vector2 = _soul(s) + Vector2(D.rand_range(s, -5.0, 5.0), D.rand_range(s, -5.0, 5.0))
 		s.events.append({"at": t + 40, "kind": "flash", "x": at.x, "y": at.y})
 		D.warn(s, {"kind": "viewfinder", "x": at.x, "y": at.y}, 40, true)
 
-# Roll Call: names are called from two lecterns outside the box; each call lobs
-# a fan of diplomas at you, which unroll into ribbons along the floor. Every
-# fourth call is the whole class: caps rain down every column but two.
+# Next Candidate: names are called from two panel desks outside the box; each
+# call lobs a fan of resumes at you, which land as red tape unrolling along the
+# floor. Every fourth call is the whole applicant pool: briefcases rain down
+# every column but two.
 static func _roll_call(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"w": 232.0, "h": 112.0}, 24)
@@ -292,7 +317,7 @@ static func _roll_call(s: Dictionary, t: int) -> void:
 		s.caller = -1.0 if idx % 2 == 0 else 1.0
 		D.banner(s, CALLS[idx % CALLS.size()], 46)
 		if idx % 4 == 3: _whole_class(s, h)
-		else: _lob_diplomas(s, h, float(s.caller), 3 if idx < 8 else 4)
+		else: _lob_resumes(s, h, float(s.caller), 3 if idx < 8 else 4)
 	var landed: Array = []
 	for b: Dictionary in s.bullets:
 		if b.get("unroll", false) and not b.dead and float(b.y) >= h.y - 5.0 and float(b.vy) > 0.0:
@@ -300,9 +325,9 @@ static func _roll_call(s: Dictionary, t: int) -> void:
 			landed.append(float(b.x))
 	for x: float in landed:
 		for side: float in [-1.0, 1.0]:
-			D.shot(s, {"space": "box", "x": x, "y": h.y - 3.0, "vx": side * 1.5, "collide": "rect", "w": 5.0, "h": 2.0, "shape": "ribbon", "life": 200})
+			D.shot(s, {"space": "box", "x": x, "y": h.y - 3.0, "vx": side * 1.5, "collide": "rect", "w": 5.0, "h": 2.0, "shape": "tape", "life": 200})
 
-static func _lob_diplomas(s: Dictionary, h: Vector2, side: float, count: int) -> void:
+static func _lob_resumes(s: Dictionary, h: Vector2, side: float, count: int) -> void:
 	var from: Vector2 = Vector2(side * (h.x + 10.0), -h.y + 16.0)
 	var soul: Vector2 = _soul(s)
 	var flight: float = 48.0
@@ -312,7 +337,7 @@ static func _lob_diplomas(s: Dictionary, h: Vector2, side: float, count: int) ->
 		var target: Vector2 = Vector2(clampf(soul.x + off, -h.x + 8.0, h.x - 8.0), clampf(soul.y, -h.y + 10.0, h.y - 12.0))
 		var vx: float = (target.x - from.x) / flight
 		var vy: float = (target.y - from.y - 0.5 * g * flight * (flight + 1.0)) / flight
-		D.shot(s, {"space": "box", "x": from.x, "y": from.y, "vx": vx, "vy": vy, "ay": g, "r": 4.0, "shape": "scroll", "spin": 0.16 * side, "life": 300, "unroll": true})
+		D.shot(s, {"space": "box", "x": from.x, "y": from.y, "vx": vx, "vy": vy, "ay": g, "r": 4.0, "shape": "resume", "spin": 0.16 * side, "life": 300, "unroll": true})
 		D.warn(s, {"kind": "mark", "x": target.x, "y": target.y}, int(flight))
 
 static func _whole_class(s: Dictionary, h: Vector2) -> void:
@@ -325,12 +350,13 @@ static func _whole_class(s: Dictionary, h: Vector2) -> void:
 		var x: float = -h.x + 8.0 + k * spacing
 		D.warn(s, {"kind": "lane", "x": D.centre(s).x + x, "w": 6.0, "horizontal": false}, 36, k == 0)
 		for j: int in range(3):
-			D.shot(s, {"space": "box", "x": x, "y": -h.y - 8.0 - 2.6 * 36.0 - j * 18.0, "vy": 2.6, "r": 4.5, "shape": "cap", "rot": 0.0, "life": 200})
+			D.shot(s, {"space": "box", "x": x, "y": -h.y - 8.0 - 2.6 * 36.0 - j * 18.0, "vy": 2.6, "r": 4.5, "shape": "briefcase", "rot": 0.0, "life": 200})
 
-# Reprise: VAL replays the promises the party already kept, one after another,
-# each tinted gold like an old photo: Walt's storm (wind and paper), ENCORE's
-# show (spotlights and footlight notes), the Cone Committee's one marked route
-# (crossed-out rows fill with traffic) and Rook's last call (key rings).
+# Behavioral Questions: "Tell me about a time..." Val makes the party relive the
+# promises they already kept, one question after another: Walt's storm on
+# Broadway (wind and paper), ENCORE's show that would not end (spotlights and
+# footlight notes), the Cone Committee's one marked route (crossed-out rows fill
+# with traffic) and Rook's last call (key rings).
 static func _reprise(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"w": 236.0, "h": 112.0}, 24)
@@ -338,8 +364,9 @@ static func _reprise(s: Dictionary, t: int) -> void:
 	var seg: int = mini(3, t / 140)
 	var local: int = t - seg * 140
 	var h: Vector2 = D.half(s)
+	if local == 0: D.banner(s, REPRISE_ASK, 28)
+	if local == 28: D.banner(s, REPRISES[seg], 46)
 	if local == 0:
-		D.banner(s, REPRISES[seg], 60)
 		s.wind = Vector2.ZERO
 		s.rigs = [Vector2(36, -34), Vector2(220, -34)] if seg == 1 else []
 		s.reprise = seg
@@ -418,12 +445,12 @@ static func _reprise_keys(s: Dictionary, local: int, h: Vector2) -> void:
 		D.shot(s, {"space": "box", "x": from.x, "y": from.y, "vx": aim.x, "vy": aim.y, "r": 3.5, "shape": "key", "rot": aim.angle(), "life": 220})
 
 # ================================================================ stage 1
-# Nobody Has To Be Ideal: one attack per imposed ideal. The shared pocket in the
-# middle is where the party holds together.
+# Five Years From Now: one attack per impossible candidate profile Val holds up
+# for an ally. The shared pocket in the middle is where the party holds together.
 
-# Never Disappoints (Jules): a perfect ring of gold stars breathes in and out
-# around the shared space with two flaws to slip through, red ink crosses out
-# wherever you stand, and later a SEE ME circle closes in on you.
+# Never Misses a Deadline (Jules): a perfect ring of due dates breathes in and
+# out around the shared space with two gaps to slip through, red pen crosses
+# out wherever you stand, and later a red circle closes in on you: THIS GAP?
 static func _perfect_record(s: Dictionary, t: int) -> void:
 	var c: Vector2 = D.to_world(s, POCKET.get_center())
 	if t == 0:
@@ -431,10 +458,10 @@ static func _perfect_record(s: Dictionary, t: int) -> void:
 		s.ringSpin = 1.0
 		for k: int in range(14):
 			if k in [0, 1, 7, 8]: continue
-			D.shot(s, {"orbit": {"ox": c.x, "oy": c.y, "radius": 76.0, "angle": k * TAU / 14.0, "av": 0.0}, "r": 3.5, "shape": "star", "arm": 40, "starRing": true, "life": 2000})
+			D.shot(s, {"orbit": {"ox": c.x, "oy": c.y, "radius": 76.0, "angle": k * TAU / 14.0, "av": 0.0}, "r": 3.5, "shape": "deadline", "arm": 40, "starRing": true, "life": 2000})
 	if t == 200:
 		D.warn(s, {"kind": "spin", "dir": -1.0}, 40, true)
-		D.banner(s, "NO MISTAKES", 40)
+		D.banner(s, "NO GAPS IN YOUR RESUME", 40)
 	if t == 240: s.ringSpin = -1.0
 	var radius: float = 50.0 + 26.0 * cos(t * 0.022)
 	for b: Dictionary in s.bullets:
@@ -452,9 +479,10 @@ static func _perfect_record(s: Dictionary, t: int) -> void:
 		D.shot(s, {"space": "box", "x": soul.x, "y": soul.y, "collide": "ring", "radius": 34.0, "grow": -0.38, "thick": 1.5, "gap": D.rand(s) * TAU, "gapWidth": 1.1,
 			"arm": 30, "life": 80, "shape": "inkring"})
 
-# Loved By Everyone (Imani): the audience around the box throws hearts at you
-# on every beat, a follow spot lands wherever you stand, and the applause claps
-# the box shut top and bottom, leaving only a band through the middle.
+# Loved by Every Manager (Imani): hiring managers all around the box throw
+# hearts at you on every beat, a follow spot lands wherever you stand, and the
+# panel's applause (printed with buzzwords) claps the box shut top and bottom,
+# leaving only a band through the middle: CULTURE FIT.
 static func _loved_by_all(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"w": 232.0, "h": 112.0}, 24)
@@ -477,7 +505,7 @@ static func _loved_by_all(s: Dictionary, t: int) -> void:
 	if t >= 140 and t % 120 == 20 and t < 400:
 		s.clapAt = t + 30
 		D.warn(s, {"kind": "clap"}, 30, true)
-		D.banner(s, "APPLAUSE", 30)
+		D.banner(s, "CULTURE FIT", 30)
 		for side: float in [-1.0, 1.0]:
 			D.shot(s, {"space": "box", "x": 0.0, "y": side * (h.y + 44.0), "collide": "rect", "w": h.x + 8.0, "h": 30.0, "shape": "hands", "clap": side, "life": 30 + 46})
 	var ct: int = t - int(s.clapAt)
@@ -491,9 +519,10 @@ static func _loved_by_all(s: Dictionary, t: int) -> void:
 			var closed: float = -36.0 if side2 < 0.0 else 48.0
 			b.y = lerpf(side2 * (h.y + 44.0), closed, k2)
 
-# Needs Nobody (Walt): the room drifts you away from the middle, doors slam
-# into the box in a zigzag that sweeps back and forth, and halfway the box
-# closes in to one lonely cell with embers rising from Walt's lantern.
+# Needs No Team (Walt): the open office drifts you away from the middle,
+# cubicle walls slam into the box in a zigzag that sweeps back and forth, and
+# halfway the box closes in to one lonely cubicle with embers rising from
+# Walt's lantern: SELF-STARTER.
 static func _needs_nobody(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"w": 240.0, "h": 116.0}, 24)
@@ -507,7 +536,7 @@ static func _needs_nobody(s: Dictionary, t: int) -> void:
 		s.wind = Vector2.ZERO
 	if t == 180:
 		D.warn(s, {"kind": "curtain"}, 30, true)
-		D.banner(s, "NEEDS NOBODY", 40)
+		D.banner(s, "SELF-STARTER", 40)
 		D.box_to(s, {"w": 132.0}, 40, 10)
 	if t == 340:
 		D.banner(s, "YOU CAN CHOOSE COMPANY", 40)
@@ -559,12 +588,13 @@ static func _needs_nobody(s: Dictionary, t: int) -> void:
 			"wave": {"amp": 7.0, "freq": 0.07, "phase": D.rand(s) * TAU}, "life": 200})
 
 # ================================================================ stage 2
-# Unreserve the Chairs: the reserved fields hurt. Without REVISE only the aisle
-# between them is free; with it, one whole side opens up.
+# We Have More Candidates: the interview panel's BOOKED chairs hurt. Without
+# REVISE only the aisle between them is free; with it, one whole side opens up
+# and the way out is there.
 
-# Reserved Seating: rows of folding chairs descend over the open floor, each with
-# one empty seat to pass through, while RESERVED cards are flung out of the
-# reserved fields at you. Later rows also rise from the floor.
+# Fully Booked: rows of panel chairs descend over the open floor, each with one
+# empty seat to pass through, while calendar invites are flung out of the booked
+# fields at you. Later rows also rise from the floor.
 static func _reserved_rows(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"h": 116.0}, 20)
@@ -572,7 +602,7 @@ static func _reserved_rows(s: Dictionary, t: int) -> void:
 	var h: Vector2 = D.half(s)
 	var open: Vector2 = _open(s)
 	var soul: Vector2 = _soul(s)
-	if t == 270: D.banner(s, "EVERY SEAT IS SPOKEN FOR", 50)
+	if t == 270: D.banner(s, "EVERY SLOT IS BOOKED", 50)
 	var every: int = 46 if t < 270 else 40
 	if t % every == 8 and t < 470:
 		var up: bool = t >= 270 and int(s.rowN) % 2 == 1
@@ -593,13 +623,14 @@ static func _reserved_rows(s: Dictionary, t: int) -> void:
 		var side: float = sides[int(s.cardN) % sides.size()]
 		s.cardN = int(s.cardN) + 1
 		var y: float = clampf(soul.y + D.rand_range(s, -8.0, 8.0), -h.y + 6.0, h.y - 6.0)
-		D.shot(s, {"space": "box", "x": side * (CHAIR_EDGE + 8.0), "y": y, "vx": -side * 1.9, "collide": "rect", "w": 4.0, "h": 3.0, "shape": "card",
+		D.shot(s, {"space": "box", "x": side * (CHAIR_EDGE + 8.0), "y": y, "vx": -side * 1.9, "collide": "rect", "w": 4.0, "h": 3.0, "shape": "invite",
 			"arm": 24, "hold": true, "life": 24 + 170})
 		D.warn(s, {"kind": "edge", "space": "box", "x": side * (CHAIR_EDGE - 3.0), "y": y, "dir": Vector2(-side, 0)}, 24)
 
-# Seating Chart: VAL assigns seats on a grid over the open floor. Marked squares
-# fill with chairs a moment later (checkerboards, rows, columns, a ring around
-# you). Possible graduates drift out of the reserved fields between charts.
+# Panel Schedule: Val books interview slots on a calendar grid over the open
+# floor. Marked slots fill with meetings a moment later (checkerboards, rows,
+# columns, a ring around you). Five-year-plan futures (CEO, GRAD SCHOOL...)
+# drift out of the booked fields between schedules.
 static func _seating_chart(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"h": 112.0}, 20)
@@ -635,7 +666,7 @@ static func _seating_chart(s: Dictionary, t: int) -> void:
 					_: on = D.rand(s) < 0.5 and Vector2i(i, j) != keep
 				if on: lit.append(Rect2(float(grid.left) + i * float(grid.cw), -h.y + j * float(grid.ch), float(grid.cw), float(grid.ch)))
 		s.assigns.append({"cells": lit, "live": t + 42, "end": t + 64})
-		D.banner(s, ["SEATING CHART", "SEATING CHART", "BY ROW", "BY COLUMN", "AROUND YOU", "AS IT FALLS"][kind], 30)
+		D.banner(s, ["PANEL SCHEDULE", "PANEL SCHEDULE", "ONE SLOT LEFT", "ONE DAY FREE", "BOOKED AROUND YOU", "WHENEVER WORKS"][kind], 30)
 		s.telegraphs.append({"ticksRemaining": 20})
 	var kept: Array = []
 	for a: Dictionary in s.assigns:
@@ -651,7 +682,7 @@ static func _seating_chart(s: Dictionary, t: int) -> void:
 		var side: float = sides[int(s.ghostN) % sides.size()]
 		s.ghostN = int(s.ghostN) + 1
 		D.shot(s, {"space": "box", "x": side * (CHAIR_EDGE + 14.0), "y": D.rand_range(s, -h.y + 10.0, h.y - 10.0), "vx": -side * 0.85,
-			"wave": {"amp": 9.0, "freq": 0.06, "phase": D.rand(s) * TAU}, "r": 4.5, "shape": "ghost", "arm": 22, "life": 260})
+			"wave": {"amp": 9.0, "freq": 0.06, "phase": D.rand(s) * TAU}, "r": 4.5, "shape": "ghost", "arm": 22, "life": 260, "future": (int(s.ghostN) - 1) % FUTURES.size()})
 
 static func _grid(s: Dictionary) -> Dictionary:
 	var h: Vector2 = D.half(s)
@@ -661,16 +692,17 @@ static func _grid(s: Dictionary) -> Dictionary:
 	var cols: int = maxi(2, int((right - left) / 28.0))
 	return {"left": left, "cols": cols, "cw": (right - left) / float(cols), "ch": h.y * 0.5}
 
-# Turn the Tassel: a giant tassel swings from above like a pendulum; you stay
-# under its arc or cross when it is away. Caps are tossed in and bounce along
-# the floor, and threads fly off the tassel at the end of every swing.
+# Sign on the Line: the offer pen swings from above on Val's lanyard like a
+# pendulum; you stay under its arc or cross when it is away. Crumpled drafts are
+# tossed in and bounce along the floor, and ink flicks off the pen at the end of
+# every swing: SIGN HERE.
 static func _tassel(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"h": 120.0}, 20)
 		s.swingPhase = 0.0; s.swingAmp = 0.0; s.swingSign = 0.0
 	var h: Vector2 = D.half(s)
 	var open: Vector2 = _open(s)
-	if t == 250: D.banner(s, "MOVE THE TASSEL", 50)
+	if t == 250: D.banner(s, "SIGN HERE", 50)
 	s.swingPhase = float(s.swingPhase) + (0.042 if t < 250 else 0.047)
 	# Autopilot: once the passage is held (or there is none), wait under the arc.
 	var holding: bool = s.objectives[0].active and not s.objectives[0].done
@@ -697,23 +729,25 @@ static func _tassel(s: Dictionary, t: int) -> void:
 		var outward: float = signf(theta)
 		for k: int in range(5):
 			var a: float = PI * 0.5 - outward * 0.9 + (k - 2) * 0.28
-			D.shot(s, {"space": "box", "x": tip.x, "y": tip.y, "vx": cos(a) * 1.3, "vy": sin(a) * 1.3 - 0.6, "ay": 0.04, "r": 2.0, "shape": "thread", "life": 160})
+			D.shot(s, {"space": "box", "x": tip.x, "y": tip.y, "vx": cos(a) * 1.3, "vy": sin(a) * 1.3 - 0.6, "ay": 0.04, "r": 2.0, "shape": "ink", "life": 160})
 	s.swingSign = sign_now
 	if t % (56 if open.y - open.x < 80.0 else 44) == 30 and t < 470:
 		var x: float = D.rand_range(s, open.x + 8.0, open.y - 8.0)
 		var wide: bool = open.y - open.x > 80.0
 		var fall: float = 0.6 * 30.0 + 0.11 * 30.0 * 31.0 * 0.5
 		D.shot(s, {"space": "box", "x": x, "y": -h.y - 6.0 - fall, "vx": D.rand_range(s, -0.6, 0.6) if wide else D.rand_range(s, -0.2, 0.2), "vy": 0.6, "ay": 0.11, "bounce": 0.6,
-			"r": 5.0, "shape": "cap", "spin": 0.08, "life": 260})
+			"r": 5.0, "shape": "crumple", "spin": 0.08, "life": 260})
 		D.warn(s, {"kind": "edge", "space": "box", "x": x, "y": -h.y + 4.0, "dir": Vector2.DOWN}, 30)
 
 # ================================================================ stage 3
-# An Ordinary Voice: VAL is small now. Every 150 ticks the fight offers an
+# Any Questions for Us?: the persona is off and Val is small now, a tired
+# recruiter who would also like to go home. Every 150 ticks the fight offers an
 # ordinary stopping cue in the centre (open 60..120); the attacks make room.
 
-# Puppet Strings: strings drop to where you stand from above and below, then
-# sway. When the cue opens they are cut and fall as beads. The frame squeezes
-# in between cues and loosens at each one.
+# Strings Attached: coiled headset cords drop to where you stand from above and
+# below, then sway. When the cue opens they are unplugged and fall in coils.
+# Val's "..." typing bubbles drift in from the right. The frame squeezes in
+# between cues and loosens at each one.
 static func _strings(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"w": 220.0, "h": 112.0}, 24)
@@ -725,7 +759,7 @@ static func _strings(s: Dictionary, t: int) -> void:
 	if m == 124 and t < 300: D.box_to(s, {"w": 156.0}, 70)
 	if m == 36 and t > 100: D.box_to(s, {"w": 220.0}, 22)
 	if m == 60:
-		D.banner(s, "SNIP", 40)
+		D.banner(s, "UNPLUG", 40)
 		var cut: Array = []
 		for b: Dictionary in s.bullets:
 			if b.has("baseX"):
@@ -734,7 +768,7 @@ static func _strings(s: Dictionary, t: int) -> void:
 		for b: Dictionary in cut:
 			for k: int in range(4):
 				var y: float = float(b.y) - float(b.h) + float(b.h) * 2.0 * (k + 0.5) / 4.0
-				D.shot(s, {"space": "box", "x": float(b.x), "y": y, "vy": 0.3, "ay": 0.05, "r": 2.5, "shape": "bead", "life": 160})
+				D.shot(s, {"space": "box", "x": float(b.x), "y": y, "vy": 0.3, "ay": 0.05, "r": 2.5, "shape": "coil", "life": 160})
 	if not quiet and t % (32 if t < 150 else 26) == 4 and t < 370:
 		var top: bool = int(s.stringN) % 2 == 0
 		s.stringN = int(s.stringN) + 1
@@ -752,12 +786,9 @@ static func _strings(s: Dictionary, t: int) -> void:
 	if not quiet and t % 50 == 30 and t < 360:
 		var y2: float = clampf(soul.y + D.rand_range(s, -14.0, 14.0), -h.y + 8.0, h.y - 8.0)
 		for k: int in range(3):
-			D.shot(s, {"space": "box", "x": h.x + 10.0 + k * 9.0, "y": y2, "vx": -1.3, "r": 2.5, "shape": "word", "life": 260})
+			D.shot(s, {"space": "box", "x": h.x + 10.0 + k * 9.0, "y": y2, "vx": -1.3, "r": 2.5, "shape": "typing", "life": 260})
 
-# Closing Time: a clock face around the stopping cue. Its hands are live; each
-# has a gap to cross through, and the hub always lets you pass under them. The
-# alarm rings out from the hub until the clock stops for the cue, and the hours
-# fall inward toward the centre.
+## One headset cord from the top or bottom edge down to just past the soul.
 static func _string(s: Dictionary, h: Vector2, x: float, soul_y: float, top: bool) -> void:
 	var edge: float = -h.y - 4.0 if top else h.y + 4.0
 	var end: float = clampf(soul_y + (26.0 if top else -26.0), -h.y + 12.0, h.y - 12.0)
@@ -766,6 +797,10 @@ static func _string(s: Dictionary, h: Vector2, x: float, soul_y: float, top: boo
 	D.shot(s, {"space": "box", "x": x, "y": (edge + end) * 0.5, "collide": "rect", "w": 1.5, "h": absf(end - edge) * 0.5, "shape": "string", "arm": 30, "hold": true,
 		"life": 30 + 50, "baseX": x, "top": top})
 
+# Off the Clock: the office clock around the stopping cue. Its hands are live;
+# each has a gap to cross through, and the hub always lets you pass under them.
+# The alarm rings out from the hub until the clock stops for the cue, and the
+# hours fall inward toward the centre.
 static func _closing_time(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"w": 184.0, "h": 120.0}, 24)
@@ -806,9 +841,10 @@ static func _hand_segments(s: Dictionary) -> Array:
 	return [[CUE_AT + hd * 22.0, CUE_AT + hd * 30.0], [CUE_AT + hd * 54.0, CUE_AT + hd * 130.0],
 		[CUE_AT + md * 22.0, CUE_AT + md * 58.0], [CUE_AT + md * 80.0, CUE_AT + md * 150.0]]
 
-# Commencement: caps are tossed up from the floor on every beat (one at your
-# feet) and fall back, while everyone walks out of the centre toward the exits.
-# The tosses leave the stopping cue clear while it is open.
+# Exit Interview: it is home time. Visitor badges are tossed up from the floor
+# on every beat (one at your feet) and fall back, while everyone walks out of the
+# centre toward the exits. The tosses leave the stopping cue clear while it is
+# open.
 static func _commencement(s: Dictionary, t: int) -> void:
 	if t == 0:
 		D.box_to(s, {"w": 232.0, "h": 112.0}, 24)
@@ -975,11 +1011,11 @@ static func _draw_chairs(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 	var h: Vector2 = D.half(s)
 	var rev: String = str(s.revision)
 	for side: float in [-1.0, 1.0]:
-		var reserved: bool = (side < 0.0 and rev != "left") or (side > 0.0 and rev != "right")
+		var booked: bool = (side < 0.0 and rev != "left") or (side > 0.0 and rev != "right")
 		var inner: float = side * CHAIR_EDGE
 		var outer: float = side * (h.x + 2.0)
 		var poly: PackedVector2Array = PackedVector2Array([_bp(s, v, Vector2(inner, -h.y)), _bp(s, v, Vector2(outer, -h.y)), _bp(s, v, Vector2(outer, h.y)), _bp(s, v, Vector2(inner, h.y))])
-		if reserved:
+		if booked:
 			c.draw_colored_polygon(poly, Color(0.35, 0.13, 0.2, 0.35))
 			c.draw_line(_bp(s, v, Vector2(inner, -h.y)), _bp(s, v, Vector2(inner, h.y)), Color(ROSE, 0.7), 1)
 		var y: float = -h.y + 10.0
@@ -988,21 +1024,29 @@ static func _draw_chairs(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 			var x: float = inner + side * 10.0
 			while absf(x) < h.x - 4.0:
 				var at: Vector2 = _bp(s, v, Vector2(x, y + (row % 2) * 2.0))
-				if reserved:
+				if booked:
+					# A panel chair with its calendar hold pinned on the back.
 					_chair_icon(c, at, Color(LILAC, 0.75), false)
-					c.draw_rect(Rect2(at + Vector2(-3, -6), Vector2(6, 3)), Color(CREAM, 0.7))
+					c.draw_rect(Rect2(at + Vector2(-3, -7), Vector2(6, 4)), Color(PAPER, 0.7))
+					c.draw_line(at + Vector2(-3, -6.5), at + Vector2(3, -6.5), Color(ROSE, 0.8), 1)
 				else:
 					c.draw_line(at + Vector2(-3, 3), at + Vector2(2, -5), Color(LILAC, 0.18), 1)
 				x += side * 18.0
 			y += 16.0
 			row += 1
-		if reserved:
-			var plate: Vector2 = _bp(s, v, Vector2((inner + outer) * 0.5, 0.0))
-			c.draw_rect(Rect2(plate - Vector2(32, 8), Vector2(64, 12)), Color("1c1424"))
-			c.draw_rect(Rect2(plate - Vector2(32, 8), Vector2(64, 12)), Color(ROSE, 0.5), false, 1)
-			_text(c, v, plate + Vector2(0, 2), "RESERVED", Color(ROSE, 0.85), 12, 100.0)
-		else:
-			_text(c, v, _bp(s, v, Vector2((inner + outer) * 0.5, -h.y + 14.0)), "OPEN", Color(MINT, 0.35), 12, 100.0)
+		if not booked:
+			_text(c, v, _bp(s, v, Vector2((inner + outer) * 0.5, -h.y + 14.0)), "FREE", Color(MINT, 0.35), 12, 100.0)
+
+## The BOOKED sign on each booked field, drawn over the field's hazard cross.
+static func _draw_booked_plates(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
+	var h: Vector2 = D.half(s)
+	var rev: String = str(s.revision)
+	for side: float in [-1.0, 1.0]:
+		if (side < 0.0 and rev == "left") or (side > 0.0 and rev == "right"): continue
+		var plate: Vector2 = _bp(s, v, Vector2(side * (CHAIR_EDGE + h.x + 2.0) * 0.5, 0.0))
+		c.draw_rect(Rect2(plate - Vector2(30, 8), Vector2(60, 12)), Color("1c1424"))
+		c.draw_rect(Rect2(plate - Vector2(30, 8), Vector2(60, 12)), Color(ROSE, 0.6), false, 1)
+		_text(c, v, plate + Vector2(0, 2), "BOOKED", Color(ROSE, 0.9), 12, 100.0)
 
 static func _chair_icon(c: CanvasItem, at: Vector2, col: Color, flip: bool) -> void:
 	var fy: float = -1.0 if flip else 1.0
@@ -1029,8 +1073,11 @@ static func _draw_chart(c: CanvasItem, s: Dictionary, v: Node2D, t: int) -> void
 			var inner: Rect2 = r.grow(-2.0)
 			var poly: PackedVector2Array = PackedVector2Array([_bp(s, v, inner.position), _bp(s, v, Vector2(inner.end.x, inner.position.y)), _bp(s, v, inner.end), _bp(s, v, Vector2(inner.position.x, inner.end.y))])
 			if live:
-				c.draw_colored_polygon(poly, Color(0.55, 0.2, 0.3, 0.55))
-				_chair_icon(c, _bp(s, v, r.get_center() + Vector2(0, 2)), CREAM, false)
+				# A booked meeting block: colour stripe, title line and a chair.
+				c.draw_colored_polygon(poly, Color(0.55, 0.2, 0.3, 0.6))
+				c.draw_line(poly[0] + Vector2(1, 0), poly[3] + Vector2(1, 0), ROSE, 2)
+				c.draw_line(poly[0] + Vector2(4, 3), poly[0] + Vector2(minf(16.0, inner.size.x - 3.0), 3), Color(PAPER, 0.85), 1)
+				_chair_icon(c, _bp(s, v, r.get_center() + Vector2(1, 4)), CREAM, false)
 			else:
 				var pulse: float = 0.5 + 0.5 * sin(float(before) * 0.6)
 				c.draw_colored_polygon(poly, Color(ROSE, 0.06 + 0.10 * pulse))
@@ -1055,20 +1102,28 @@ static func _draw_clock(c: CanvasItem, s: Dictionary, v: Node2D, t: int) -> void
 
 static func draw_over(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 	var h: Vector2 = D.half(s)
+	if int(s.stage) == 2: _draw_booked_plates(c, s, v)
 	match str(s.patternId):
 		"roll_call":
 			for side: float in [-1.0, 1.0]:
 				var at: Vector2 = _bp(s, v, Vector2(side * (h.x + 14.0), -h.y + 22.0))
 				var calling: bool = absf(float(s.get("caller", 0.0)) - side) < 0.1 and int(s.bannerTicks) > 0
-				c.draw_rect(Rect2(at + Vector2(-7, -2), Vector2(14, 22)), Color("3a2c22"))
+				# A hiring-panel desk with a laptop that lights up as it calls.
+				c.draw_rect(Rect2(at + Vector2(-7, -2), Vector2(14, 22)), Color("2a2f44"))
 				c.draw_rect(Rect2(at + Vector2(-7, -2), Vector2(14, 22)), GOLD if calling else Color(GOLD, 0.4), false, 1)
-				c.draw_rect(Rect2(at + Vector2(-9, -5), Vector2(18, 4)), Color("5a4430"))
-				if calling: c.draw_arc(at + Vector2(0, -10), 5.0, PI * 1.1, PI * 1.9, 8, Color(CREAM, 0.8), 1)
+				c.draw_rect(Rect2(at + Vector2(-9, -5), Vector2(18, 4)), Color("3e4664"))
+				c.draw_rect(Rect2(at + Vector2(-5, -13), Vector2(10, 7)), Color(MINT, 0.9) if calling else Color("1c2030"))
+				c.draw_rect(Rect2(at + Vector2(-5, -13), Vector2(10, 7)), Color(CREAM, 0.7), false, 1)
+				c.draw_line(at + Vector2(-7, -5.5), at + Vector2(7, -5.5), Color(CREAM, 0.7), 1)
+				c.draw_rect(Rect2(at + Vector2(-5, 4), Vector2(10, 3)), Color(PAPER, 0.5))
+				if calling: c.draw_arc(at + Vector2(0, -16), 5.0, PI * 1.1, PI * 1.9, 8, Color(CREAM, 0.8), 1)
 		"perfect_record", "loved_by_all", "needs_nobody":
 			_draw_ideals(c, s, v)
 		"tassel":
+			# The lanyard's clip at the top of the swing.
 			var pv: Vector2 = _bp(s, v, PIVOT)
-			c.draw_circle(pv, 3.0, GOLD)
+			c.draw_rect(Rect2(pv + Vector2(-4, -3), Vector2(8, 5)), Color(LANYARD, 0.9))
+			c.draw_circle(pv, 2.5, GOLD)
 		"commencement":
 			for side: float in [-1.0, 1.0]:
 				var at2: Vector2 = _bp(s, v, Vector2(side * (h.x + 10.0), 0.0))
@@ -1079,12 +1134,14 @@ static func draw_over(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 				if not b.has("baseX"): continue
 				var top: bool = b.top
 				var edge: Vector2 = _bp(s, v, Vector2(float(b.x), -h.y - 6.0 if top else h.y + 6.0))
+				# The cord's jack on the frame.
 				var col: Color = Color(CREAM, 0.9 if int(b.age) > int(b.arm) else 0.4)
-				c.draw_line(edge + Vector2(-7, 0), edge + Vector2(7, 0), col, 2)
-				c.draw_line(edge + Vector2(0, -4), edge + Vector2(0, 4), col, 1)
+				c.draw_rect(Rect2(edge + Vector2(-5, -3), Vector2(10, 6)), Color("262a3a"))
+				c.draw_rect(Rect2(edge + Vector2(-5, -3), Vector2(10, 6)), col, false, 1)
+				c.draw_line(edge + Vector2(-1.5, 0), edge + Vector2(1.5, 0), col, 2)
 
-## Stage 1: the three ideal portraits VAL holds up over the box. A rejected
-## ideal is shown torn.
+## Stage 1: the three impossible candidate profiles Val holds up over the box
+## (resumes with a photo). A rejected one is shown torn.
 static func _draw_ideals(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 	var h: Vector2 = D.half(s)
 	var ids: Array[String] = ["jules", "imani", "walt"]
@@ -1093,41 +1150,68 @@ static func _draw_ideals(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 		var at: Vector2 = _bp(s, v, Vector2((i - 1) * 40.0, -h.y - 32.0))
 		var torn: bool = ids[i] in s.rejected
 		var col: Color = GOLD if i == focus else Color(GOLD, 0.45)
-		c.draw_rect(Rect2(at - Vector2(9, 10), Vector2(18, 20)), Color("1c1a28"))
+		var paper: Color = Color(PAPER, 0.9 if i == focus else 0.55)
+		c.draw_rect(Rect2(at - Vector2(9, 10), Vector2(18, 20)), paper)
 		c.draw_rect(Rect2(at - Vector2(9, 10), Vector2(18, 20)), col, false, 1)
-		c.draw_circle(at + Vector2(0, -2), 3.0, Color(CREAM, 0.6))
-		c.draw_rect(Rect2(at + Vector2(-4, 2), Vector2(8, 6)), Color(CREAM, 0.6))
+		c.draw_rect(Rect2(at + Vector2(-7, -8), Vector2(7, 8)), SUIT)
+		c.draw_circle(at + Vector2(-3.5, -5.5), 1.8, Color(CREAM, 0.95))
+		c.draw_rect(Rect2(at + Vector2(-6, -3.5), Vector2(5, 3.5)), Color("2c3350"))
+		for k: int in range(2):
+			c.draw_line(at + Vector2(1, -6 + k * 3), at + Vector2(7, -6 + k * 3), Color(BOARD, 0.8), 1)
+		for k: int in range(3):
+			c.draw_line(at + Vector2(-7, 2.5 + k * 2.5), at + Vector2(7 - k * 3, 2.5 + k * 2.5), Color(BOARD, 0.6), 1)
+		if i == focus: c.draw_circle(at + Vector2(6, 7), 1.5, GOLD)
 		if torn:
 			c.draw_polyline(PackedVector2Array([at + Vector2(-9, -6), at + Vector2(-2, -1), at + Vector2(1, -5), at + Vector2(9, 4)]), ROSE, 1)
 
 static func draw_bullet(c: CanvasItem, b: Dictionary, at: Vector2, turn: float, alpha: float, _v: Node2D) -> bool:
 	var armed: bool = int(b.age) > int(b.arm)
 	match str(b.shape):
-		"cap":
-			var bob: float = 0.0
-			if b.has("march"): bob = -1.5 * absf(sin(float(b.age) * 0.21 + float(b.get("bob", 0)) * 0.6))
+		"applicant":
+			# An applicant in a suit, resume held up in front, marching in step.
+			var bob: float = -1.5 * absf(sin(float(b.age) * 0.21 + float(b.get("bob", 0)) * 0.6))
 			var p: Vector2 = at + Vector2(0, bob)
-			var top: PackedVector2Array = PackedVector2Array([p + Vector2(-6.5, -1).rotated(turn), p + Vector2(0, -4.5).rotated(turn), p + Vector2(6.5, -1).rotated(turn), p + Vector2(0, 2.5).rotated(turn)])
-			c.draw_colored_polygon(PackedVector2Array([p + Vector2(-3.5, 0).rotated(turn), p + Vector2(3.5, 0).rotated(turn), p + Vector2(3.5, 4).rotated(turn), p + Vector2(-3.5, 4).rotated(turn)]), Color(BOARD, alpha))
-			c.draw_colored_polygon(top, Color(Color("4a4363"), alpha))
-			c.draw_polyline(top + PackedVector2Array([top[0]]), Color(CREAM, alpha), 1)
-			c.draw_line(p + Vector2(0, -1).rotated(turn), p + Vector2(5, 3).rotated(turn), Color(GOLD, alpha), 1)
-			c.draw_circle(p + Vector2(5, 4).rotated(turn), 1.2, Color(GOLD, alpha))
-		"scroll":
-			c.draw_colored_polygon(_quad(at, 6.0, 2.5, turn), Color(CREAM, alpha))
-			c.draw_line(at + Vector2(-6, -2.5).rotated(turn), at + Vector2(-6, 2.5).rotated(turn), Color(Color("b8a882"), alpha), 2)
-			c.draw_line(at + Vector2(0, -3).rotated(turn), at + Vector2(0, 3).rotated(turn), Color(INK_RED, alpha), 2)
-		"ribbon":
-			c.draw_colored_polygon(_quad(at, float(b.w), float(b.h), turn), Color(INK_RED, 0.9 * alpha))
-			c.draw_line(at + Vector2(-float(b.w), 0).rotated(turn), at + Vector2(float(b.w), 0).rotated(turn), Color(GOLD, alpha), 1)
-		"star":
-			var a_star: float = alpha * (1.0 if armed else 0.35)
-			var pts: PackedVector2Array = []
-			for i: int in range(10):
-				var rad: float = 4.5 if i % 2 == 0 else 1.9
-				pts.append(at + Vector2.from_angle(-PI * 0.5 + i * PI / 5.0 + float(b.age) * 0.03) * rad)
-			c.draw_colored_polygon(pts, Color(GOLD, a_star))
-			c.draw_circle(at, 1.0, Color(Color("fff6dc"), a_star))
+			var face: float = signf(float(b.get("march", 1.0)))
+			var step: float = sin(float(b.age) * 0.42 + float(b.get("bob", 0))) * 1.5
+			c.draw_line(p + Vector2(-1.5, 3.5), p + Vector2(-1.5 - step, 6.5), Color(CREAM, alpha), 1)
+			c.draw_line(p + Vector2(1.5, 3.5), p + Vector2(1.5 + step, 6.5), Color(CREAM, alpha), 1)
+			c.draw_colored_polygon(PackedVector2Array([p + Vector2(-3.5, -1.5), p + Vector2(3.5, -1.5), p + Vector2(3, 4), p + Vector2(-3, 4)]), Color(SUIT, alpha))
+			c.draw_line(p + Vector2(0, -1.5), p + Vector2(0, 1.5), Color(INK_RED, alpha), 1)
+			c.draw_circle(p + Vector2(0, -4), 2.3, Color(CREAM, alpha))
+			c.draw_rect(Rect2(p + Vector2(face * 3.0 - 2.0, -4.0), Vector2(4, 5)), Color(PAPER, alpha))
+			c.draw_line(p + Vector2(face * 3.0 - 1.0, -2.5), p + Vector2(face * 3.0 + 1.0, -2.5), Color(BOARD, alpha), 1)
+			c.draw_line(p + Vector2(face * 3.0 - 1.0, -1.0), p + Vector2(face * 3.0 + 1.0, -1.0), Color(BOARD, alpha), 1)
+		"resume":
+			# A one-page resume: photo square, name line and a few lines of text.
+			c.draw_colored_polygon(_quad(at, 3.5, 4.5, turn), Color(PAPER, alpha))
+			c.draw_colored_polygon(_quad(at + Vector2(-1.5, -2.5).rotated(turn), 1.3, 1.3, turn), Color(SUIT, alpha))
+			var ink: Color = Color(Color("7a7064"), alpha)
+			c.draw_line(at + Vector2(0.5, -3.2).rotated(turn), at + Vector2(2.6, -3.2).rotated(turn), Color(INK_RED, alpha), 1)
+			c.draw_line(at + Vector2(0.5, -1.6).rotated(turn), at + Vector2(2.6, -1.6).rotated(turn), ink, 1)
+			for k: int in range(3):
+				c.draw_line(at + Vector2(-2.6, 0.6 + k * 1.5).rotated(turn), at + Vector2(2.6 - k, 0.6 + k * 1.5).rotated(turn), ink, 1)
+		"tape":
+			# Red tape unrolling along the floor.
+			var tw: float = float(b.w); var th: float = float(b.h)
+			c.draw_colored_polygon(_quad(at, tw, th, turn), Color(INK_RED, 0.9 * alpha))
+			c.draw_line(at + Vector2(-tw, -th).rotated(turn), at + Vector2(tw, -th).rotated(turn), Color(Color("ffb0a0"), alpha), 1)
+			for k: int in [-1, 1]:
+				c.draw_line(at + Vector2(k * 2.5, -th).rotated(turn), at + Vector2(k * 2.5 + 1.5, th).rotated(turn), Color(Color("8a2020"), alpha), 1)
+		"briefcase":
+			# The whole applicant pool, falling as briefcases.
+			c.draw_polyline(PackedVector2Array([at + Vector2(-2, -2.5), at + Vector2(-2, -4.5), at + Vector2(2, -4.5), at + Vector2(2, -2.5)]), Color(Color("d8b080"), alpha), 1)
+			c.draw_rect(Rect2(at + Vector2(-5, -2.5), Vector2(10, 7)), Color(Color("8a5a3a"), alpha))
+			c.draw_rect(Rect2(at + Vector2(-5, -2.5), Vector2(10, 7)), Color(CREAM, 0.8 * alpha), false, 1)
+			c.draw_line(at + Vector2(-5, 0.5), at + Vector2(5, 0.5), Color(Color("5a3a24"), alpha), 1)
+			c.draw_rect(Rect2(at + Vector2(-1, -0.5), Vector2(2, 2)), Color(GOLD, alpha))
+		"deadline":
+			# A due date: a calendar page with its red header and binder rings.
+			var a_dl: float = alpha * (1.0 if armed else 0.35)
+			c.draw_rect(Rect2(at + Vector2(-3.5, -3.5), Vector2(7, 7)), Color(PAPER, a_dl))
+			c.draw_rect(Rect2(at + Vector2(-3.5, -3.5), Vector2(7, 2.5)), Color(INK_RED, a_dl))
+			c.draw_line(at + Vector2(-1.5, -4.5), at + Vector2(-1.5, -2.5), Color(BOARD, a_dl), 1)
+			c.draw_line(at + Vector2(1.5, -4.5), at + Vector2(1.5, -2.5), Color(BOARD, a_dl), 1)
+			c.draw_rect(Rect2(at + Vector2(-1.5, 0), Vector2(3, 2)), Color(BOARD, a_dl))
 		"pen":
 			var hw: float = float(b.w)
 			var dir: Vector2 = Vector2.RIGHT.rotated(turn)
@@ -1148,7 +1232,7 @@ static func draw_bullet(c: CanvasItem, b: Dictionary, at: Vector2, turn: float, 
 				for i: int in range(segs):
 					var a0: float = gap_at + gw + (TAU - 2.0 * gw) * float(i) / float(segs)
 					if i % 2 == 0: c.draw_arc(at, rr, a0, a0 + (TAU - 2.0 * gw) / float(segs), 3, Color(INK_RED, 0.55 * alpha), 1)
-			if rr > 10.0: _text(c, _v, at + Vector2(0, -rr - 3.0), "SEE ME", Color(INK_RED, 0.8 * alpha), 12, 60.0)
+			if rr > 10.0: _text(c, _v, at + Vector2(0, -rr - 3.0), "THIS GAP?", Color(INK_RED, 0.8 * alpha), 12, 90.0)
 		"heart":
 			var col: Color = Color(Color("f08a9a"), alpha)
 			c.draw_circle(at + Vector2(-1.6, -1), 2.0, col)
@@ -1174,25 +1258,49 @@ static func draw_bullet(c: CanvasItem, b: Dictionary, at: Vector2, turn: float, 
 				c.draw_circle(cuff, 3.5, Color(Color("e8c0a0"), alpha))
 				x += 12.0
 			c.draw_line(at + Vector2(-float(b.w), edge_y).rotated(turn), at + Vector2(float(b.w), edge_y).rotated(turn), Color(ROSE, alpha), 1)
+			# The panel's applause is printed with what they love to hear.
+			var words: String = ""
+			var first: int = 0 if float(b.clap) < 0.0 else 2
+			for k: int in range(BUZZWORDS.size()):
+				words += ("  " if k > 0 else "") + BUZZWORDS[(first + k) % BUZZWORDS.size()]
+			var row_y: float = edge_y - 9.0 if float(b.clap) < 0.0 else edge_y + 17.0
+			var font: Variant = _v.get("font")
+			if font is Font:
+				c.draw_string(font, at + Vector2(-float(b.w) + 6.0, row_y), words, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(PAPER, 0.55 * alpha))
+				c.draw_string(font, at + Vector2(-float(b.w) - 34.0, row_y + (-16.0 if float(b.clap) < 0.0 else 16.0)), words, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(PAPER, 0.3 * alpha))
 		"door":
+			# A cubicle wall: fabric panel, metal trim on the leading edge and a
+			# little nameplate.
 			var q2: PackedVector2Array = _quad(at, float(b.w), float(b.h), turn)
-			c.draw_colored_polygon(q2, Color(WOOD, alpha))
-			c.draw_polyline(q2 + PackedVector2Array([q2[0]]), Color(GOLD, alpha), 1)
-			var knob_y: float = float(b.h) - 6.0 if b.doorTop else -float(b.h) + 6.0
-			c.draw_circle(at + Vector2(2, knob_y).rotated(turn), 1.3, Color(GOLD, alpha))
+			c.draw_colored_polygon(q2, Color(CUBICLE, alpha))
+			c.draw_polyline(q2 + PackedVector2Array([q2[0]]), Color(Color("c4ccdc"), alpha), 1)
+			c.draw_line(at + Vector2(0, -float(b.h)).rotated(turn), at + Vector2(0, float(b.h)).rotated(turn), Color(Color("56607a"), alpha), 1)
+			var lead: float = float(b.h) if b.doorTop else -float(b.h)
+			c.draw_line(at + Vector2(-float(b.w), lead).rotated(turn), at + Vector2(float(b.w), lead).rotated(turn), Color(Color("e0e6f0"), alpha), 2)
+			var plate_y: float = float(b.h) - 7.0 if b.doorTop else -float(b.h) + 5.0
+			c.draw_rect(Rect2(at + Vector2(-3, plate_y), Vector2(6, 2.5)), Color(PAPER, alpha))
 		"cord":
+			# Val's lanyard, printed with little logos.
 			var cd: Vector2 = Vector2.RIGHT.rotated(turn) * float(b.w)
 			var ca: float = alpha * (1.0 if armed else 0.4)
-			c.draw_line(at - cd, at + cd, Color(GOLD, 0.95 * ca), 3)
-			c.draw_line(at - cd, at + cd, Color(Color("fff0c0"), ca), 1)
+			c.draw_line(at - cd, at + cd, Color(LANYARD, 0.95 * ca), 4)
+			_dashed(c, at - cd, at + cd, Color(PAPER, 0.7 * ca), 3.0)
 		"bob":
+			# The offer pen hanging nib-down from the lanyard, with its reach.
 			var ba: float = alpha * (1.0 if armed else 0.4)
 			var down: Vector2 = Vector2.DOWN
-			var across: Vector2 = Vector2.RIGHT
-			c.draw_circle(at, 5.0, Color(GOLD, ba))
-			for k: int in range(-3, 4):
-				c.draw_line(at + across * k * 1.5, at + across * k * 2.2 + down * 9.0, Color(GOLD, 0.9 * ba), 1)
-			c.draw_circle(at - down * 4.0, 2.5, Color(Color("c88a3a"), ba))
+			var sv: Variant = _v.get("pattern")
+			if sv is Dictionary: down = (at - _bp(sv, _v, PIVOT)).normalized()
+			var side: Vector2 = Vector2(-down.y, down.x)
+			c.draw_circle(at, 7.0, Color(GOLD, 0.12 * ba))
+			c.draw_arc(at, 7.0, 0, TAU, 20, Color(GOLD, 0.45 * ba), 1)
+			var body: PackedVector2Array = PackedVector2Array([at - down * 10.0 + side * 3.5, at + down * 2.0 + side * 3.5, at + down * 2.0 - side * 3.5, at - down * 10.0 - side * 3.5])
+			c.draw_colored_polygon(body, Color(Color("e8e2f4"), ba))
+			c.draw_polyline(body + PackedVector2Array([body[0]]), Color(Color("2c3350"), ba), 1)
+			c.draw_line(at - down * 4.0 + side * 3.5, at - down * 4.0 - side * 3.5, Color(GOLD, ba), 2)
+			c.draw_line(at - down * 9.0 + side * 1.0, at - down * 4.0 + side * 1.0, Color(LANYARD, ba), 1)
+			c.draw_colored_polygon(PackedVector2Array([at + down * 2.0 + side * 3.5, at + down * 9.0, at + down * 2.0 - side * 3.5]), Color(GOLD, ba))
+			c.draw_line(at + down * 3.5, at + down * 7.5, Color(Color("2c3350"), ba), 1)
 		"hand":
 			var hd: Vector2 = Vector2.RIGHT.rotated(turn) * float(b.w)
 			var minute: bool = int(b.hand) >= 2
@@ -1205,34 +1313,56 @@ static func draw_bullet(c: CanvasItem, b: Dictionary, at: Vector2, turn: float, 
 		"chair":
 			var colc: Color = Color(CREAM, alpha)
 			_chair_icon(c, at, colc, bool(b.get("flipY", false)))
-		"card":
-			var colk: Color = Color(CREAM, alpha * (1.0 if armed else 0.6))
-			c.draw_colored_polygon(_quad(at, 4.5, 3.0, turn + (0.0 if armed else sin(float(b.age) * 0.4) * 0.3)), colk)
-			c.draw_line(at + Vector2(-3, -0.8).rotated(turn), at + Vector2(3, -0.8).rotated(turn), Color(INK_RED, alpha), 1)
-			c.draw_line(at + Vector2(-3, 1).rotated(turn), at + Vector2(1, 1).rotated(turn), Color(LILAC, alpha), 1)
+		"invite":
+			# A calendar invite: white card, red header, a line of agenda.
+			var colk: Color = Color(PAPER, alpha * (1.0 if armed else 0.6))
+			var tk: float = turn + (0.0 if armed else sin(float(b.age) * 0.4) * 0.3)
+			c.draw_colored_polygon(_quad(at, 4.5, 3.0, tk), colk)
+			c.draw_colored_polygon(_quad(at + Vector2(0, -2.0).rotated(tk), 4.5, 1.0, tk), Color(INK_RED, alpha * (1.0 if armed else 0.6)))
+			c.draw_line(at + Vector2(-3, 1).rotated(tk), at + Vector2(1, 1).rotated(tk), Color(LILAC, alpha), 1)
 		"ghost":
+			# A five-year-plan future of yours, drifting in with its label.
 			var ga: float = alpha * (0.75 if armed else 0.3)
 			c.draw_circle(at + Vector2(0, -3), 2.8, Color(LILAC, ga))
 			c.draw_colored_polygon(PackedVector2Array([at + Vector2(-4, 5), at + Vector2(-3, -1), at + Vector2(3, -1), at + Vector2(4, 5), at + Vector2(2, 3.5), at + Vector2(0, 5), at + Vector2(-2, 3.5)]), Color(LILAC, ga))
-			c.draw_line(at + Vector2(-4.5, -6), at + Vector2(4.5, -6), Color(CREAM, ga), 1)
-		"thread":
+			c.draw_line(at + Vector2(0, -0.5), at + Vector2(0, 3), Color(Color("2c3350"), ga), 1)
+			# The label shows as it drifts in, then fades so the floor stays readable.
+			var tag: float = clampf(1.0 - float(int(b.age) - 50) / 30.0, 0.0, 1.0)
+			if tag > 0.0: _text(c, _v, at + Vector2(0, -8), FUTURES[int(b.get("future", 0)) % FUTURES.size()], Color(LILAC, 0.75 * tag * alpha), 12, 100.0)
+		"ink":
+			# Ink flicked off the pen.
 			var vel: Vector2 = Vector2(float(b.vx), float(b.vy)).normalized()
-			c.draw_line(at - vel * 4.0, at + vel * 1.0, Color(GOLD, alpha), 1)
-			c.draw_circle(at, 1.2, Color(Color("fff0c0"), alpha))
+			c.draw_line(at - vel * 4.0, at, Color(INK_BLUE, 0.7 * alpha), 1)
+			c.draw_circle(at, 2.0, Color(INK_BLUE, alpha))
+			c.draw_circle(at + Vector2(-0.6, -0.6), 0.7, Color(PAPER, alpha))
 		"string":
+			# A coiled headset cord; a dashed line while it is still dropping.
 			var top_edge: Vector2 = at + Vector2(0, -float(b.h)).rotated(turn)
 			var bottom_edge: Vector2 = at + Vector2(0, float(b.h)).rotated(turn)
 			if armed:
-				c.draw_line(top_edge, bottom_edge, Color(CREAM, alpha), 2)
+				var along: Vector2 = bottom_edge - top_edge
+				var length: float = along.length()
+				var dir2: Vector2 = along / maxf(0.001, length)
+				var across2: Vector2 = Vector2(-dir2.y, dir2.x)
+				var coil: PackedVector2Array = []
+				var d: float = 0.0
+				while d <= length:
+					coil.append(top_edge + dir2 * d + across2 * 2.0 * sin(d * 1.6))
+					d += 1.0
+				c.draw_polyline(coil, Color(CREAM, alpha), 1)
 				var end_pt: Vector2 = bottom_edge if b.top else top_edge
-				c.draw_circle(end_pt, 2.0, Color(GOLD, alpha))
+				c.draw_circle(end_pt, 2.5, Color(Color("2c3350"), alpha))
+				c.draw_arc(end_pt, 2.5, 0, TAU, 10, Color(GOLD, alpha), 1)
 			else:
 				_dashed(c, top_edge, bottom_edge, Color(CREAM, 0.2 + 0.5 * float(b.age) / maxf(1.0, float(b.arm))), 3.0)
-		"bead":
-			c.draw_circle(at, 2.5, Color(LILAC, alpha))
-			c.draw_circle(at + Vector2(-0.8, -0.8), 0.8, Color(CREAM, alpha))
-		"word":
-			c.draw_circle(at, 2.0, Color(CREAM, 0.85 * alpha))
+		"coil":
+			# A loose loop of unplugged cord.
+			c.draw_arc(at, 2.2, float(b.age) * 0.2, float(b.age) * 0.2 + PI * 1.6, 8, Color(LILAC, alpha), 1.5)
+			c.draw_circle(at, 0.8, Color(CREAM, alpha))
+		"typing":
+			# One dot of Val's "..." typing bubble; three drift in together.
+			c.draw_rect(Rect2(at - Vector2(4.5, 4), Vector2(9, 8)), Color(SUIT, 0.4 * alpha))
+			c.draw_circle(at, 2.0, Color(CREAM, 0.9 * alpha))
 		"numeral":
 			var na: float = alpha * (1.0 if armed else 0.35)
 			c.draw_line(at + Vector2(-2, -4).rotated(turn), at + Vector2(-2, 4).rotated(turn), Color(CREAM, na), 2)
@@ -1246,6 +1376,24 @@ static func draw_bullet(c: CanvasItem, b: Dictionary, at: Vector2, turn: float, 
 			c.draw_colored_polygon(PackedVector2Array([at + Vector2(-3, -1.5), at + Vector2(3, -1.5), at + Vector2(2.5, 3), at + Vector2(-2.5, 3)]), Color(Color("8fb3ea"), wa))
 			c.draw_line(at + Vector2(-1, 3), at + Vector2(-1 - step, 6.5), Color(CREAM, wa), 1)
 			c.draw_line(at + Vector2(1, 3), at + Vector2(1 + step, 6.5), Color(CREAM, wa), 1)
+			# Heading home, bag in hand.
+			var hand_x: float = -3.5 if bool(b.get("flipX", false)) else 3.5
+			c.draw_rect(Rect2(at + Vector2(hand_x - 1.5, 1.5), Vector2(3, 2.5)), Color(Color("8a5a3a"), wa))
+		"badge":
+			# A visitor badge on its lanyard, tossed up at home time.
+			c.draw_polyline(PackedVector2Array([at + Vector2(-2.5, -4.5).rotated(turn), at + Vector2(0, -7).rotated(turn), at + Vector2(2.5, -4.5).rotated(turn)]), Color(LANYARD, alpha), 1)
+			c.draw_colored_polygon(_quad(at, 3.5, 4.5, turn), Color(PAPER, alpha))
+			c.draw_colored_polygon(_quad(at + Vector2(0, -3.3).rotated(turn), 3.5, 1.2, turn), Color(LANYARD, alpha))
+			c.draw_colored_polygon(_quad(at + Vector2(-1.3, 0.2).rotated(turn), 1.4, 1.6, turn), Color(SUIT, alpha))
+			c.draw_line(at + Vector2(0.8, -0.5).rotated(turn), at + Vector2(2.6, -0.5).rotated(turn), Color(BOARD, alpha), 1)
+			c.draw_line(at + Vector2(0.8, 1.0).rotated(turn), at + Vector2(2.6, 1.0).rotated(turn), Color(BOARD, alpha), 1)
+			c.draw_line(at + Vector2(-2.6, 3.0).rotated(turn), at + Vector2(2.6, 3.0).rotated(turn), Color(BOARD, alpha), 1)
+		"crumple":
+			# A crumpled draft of the offer, bouncing along the floor.
+			c.draw_circle(at, 5.0, Color(Color("ddd5c2"), alpha))
+			c.draw_arc(at, 5.0, 0, TAU, 14, Color(Color("8a8070"), alpha), 1)
+			c.draw_polyline(PackedVector2Array([at + Vector2(-3.5, -1).rotated(turn), at + Vector2(-1, 1).rotated(turn), at + Vector2(1, -2).rotated(turn), at + Vector2(3.5, 0.5).rotated(turn)]), Color(Color("8a8070"), alpha), 1)
+			c.draw_line(at + Vector2(-1, 1).rotated(turn), at + Vector2(-0.5, 4).rotated(turn), Color(Color("8a8070"), alpha), 1)
 		"burst":
 			var k3: float = float(b.age) / maxf(1.0, float(b.life))
 			c.draw_circle(at, float(b.r) * (0.6 + 0.4 * k3), Color(1.0, 1.0, 0.95, 0.8 * (1.0 - k3)))

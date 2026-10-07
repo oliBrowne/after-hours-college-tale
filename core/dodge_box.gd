@@ -343,7 +343,16 @@ static func _pattern_tick(p: Dictionary) -> void:
 	if int(p.clock) >= int(p.duration):
 		p.done = true
 		p.bullets = []; p.warnings = []; p.telegraphs = []
-	p.promiseComplete = script.promise_complete(p)
+	var complete: bool = bool(script.promise_complete(p))
+	# Keeping a promise ends the attack early: it winds down about 1.7 s later, so nobody gets
+	# knocked out in "extra time" after the job is done. Only an objective that was open and
+	# then got done counts (one that starts complete, like "never touch X", runs full length).
+	if bool(p.promised) and t >= 0:
+		if not complete: p.promiseOpen = true
+		elif bool(p.get("promiseOpen", false)) and not bool(p.get("keptEarly", false)):
+			p.keptEarly = true
+			p.duration = mini(int(p.duration), int(p.clock) + 100)
+	p.promiseComplete = complete
 
 static func _wind_down(p: Dictionary) -> void:
 	p.wind = Vector2.ZERO

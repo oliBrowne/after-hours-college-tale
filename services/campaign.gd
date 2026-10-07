@@ -6,6 +6,8 @@ static func migrate(before: Dictionary) -> Dictionary:
 	var s: Dictionary=before.duplicate(true)
 	# The test-floor boss LOADBEARER became Professor Eric (2026-10-07); carry his outcome over.
 	if s.has("flags") and s.flags.has("loadbearer_resolution") and not s.flags.has("eric_resolution"): s.flags.eric_resolution = s.flags.loadbearer_resolution
+	# The garden boss EMPTY CHAIR became Chad the networker (2026-10-07); carry his outcome over.
+	if s.has("flags") and s.flags.has("empty_chair_resolution") and not s.flags.has("chad_resolution"): s.flags.chad_resolution = s.flags.empty_chair_resolution
 	if str(s.party[2].id)=="cal":
 		s.party[2]=BattleRules.initial_party()[2].duplicate(true)
 		s.flags.roster_revision="jules-imani-walt"
@@ -46,7 +48,7 @@ static func handle(game: Node, object: Dictionary) -> bool:
 		game.dialogue([["Cal","I'm staying here to disconnect the signal. Dev needs my hands at Engineering later.","neutral"],["Walt","We can take the smaller job downstairs.","neutral"],["Cal","Take the service key. It opens bowling and lost property. My repair work is not your homework.","warm"]],func() -> void:
 			f.cal_key_received=true;f.cal_joined=true;game.persist();game.resume_world());return true
 	if id=="rook":
-		var lines: Array=[["Rook","Emergency exit. For emergencies. Leaving also qualifies.","neutral"],["Jules","Do you work here?","neutral"],["Rook","Night marshal. Key lender. Occasional folding-chair enthusiast.","warm"],["Rook","The volunteers keep being called back. Take the side passage. I lent them a key; they need an ending.","concern"]]
+		var lines: Array=[["Rook","Evening. Night marshal. Key lender. Occasional folding-chair enthusiast.","warm"],["Jules","You work here? This late?","neutral"],["Rook","Someone has to hold the doors. Leaving is allowed, by the way. People forget.","neutral"],["Rook","The volunteers keep being called back. Take the side passage. I lent them a key; they need an ending.","concern"]]
 		if f.get("rook_met",false): lines=[["Rook","You've got three people and one plan. Bold ratio.","warm"],["Walt","And a lantern. We can see where the plan ends.","neutral"]]
 		game.dialogue(lines,func() -> void: f.rook_met=true;game.persist();game.resume_world());return true
 	if id=="volunteers":
@@ -54,7 +56,7 @@ static func handle(game: Node, object: Dictionary) -> bool:
 			game.dialogue([["Imani","The same three volunteers have folded this tent twice.","concern"],["Jules","Then we agree on one last task, with an end.","neutral"],["Walt","Tie the dry canvas; leave the wet one for daylight. Nobody owes a storm their whole evening.","neutral"],["Imani","Done. They're going home. I'll tell the stage that rest counts.","warm"]],func() -> void: f.volunteers_released=true;game.persist();game.resume_world());return true
 		game.dialogue([["Jules","The canvas is tied. Their empty mugs are drying.","warm"]],game.resume_world);return true
 	if id=="consent":
-		game.dialogue([["Imani","The poster says everyone must perform. My name is already printed.","concern"],["Walt","Printing it isn't asking.","neutral"],["Imani","I choose one verse, my unfinished one. Or an instrumental. Then I stop.","warm"]],game.resume_world,[game.option("Imani chooses her honest verse.",func() -> void: f.imani_performance="honest";game.persist();game.resume_world()),game.option("Imani chooses an instrumental.",func() -> void: f.imani_performance="instrumental";game.persist();game.resume_world())]);return true
+		game.dialogue([["Imani","The poster says everyone must perform. My name is already printed.","concern"],["Walt","Printing it isn't asking.","neutral"],["Imani","I choose one song. My unfinished one, or an instrumental. Three verses, then I stop.","warm"]],game.resume_world,[game.option("Imani chooses her unfinished song.",func() -> void: f.imani_performance="honest";game.persist();game.resume_world()),game.option("Imani chooses an instrumental.",func() -> void: f.imani_performance="instrumental";game.persist();game.resume_world())]);return true
 	if id=="encore":
 		if f.has("encore_resolution"): game.dialogue([["ENCORE","The lights can go out. Somebody heard the ending.","warm"]],game.resume_world);return true
 		if not f.has("chip_resolution") or not f.get("volunteers_released",false) or not f.has("imani_performance"):

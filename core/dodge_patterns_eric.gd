@@ -55,7 +55,7 @@ static func setup(s: Dictionary) -> void:
 			s.events = []
 		"ground_bounce":
 			s.phaseName = "Ground Bounce"
-			s.hint = "Blue soul: up or Z jumps. When every output switches, the floor bounces. Probe mid-air."
+			s.hint = "Turned blue: up or confirm jumps. When every output switches, the floor bounces. Probe mid-air."
 			s.rule = "~1 nH PER mm OF LEAD"
 			s.pinAt = [-99, -99, -99, -99, -99, -99, -99, -99, -99]
 			s.soul.x = 0.0

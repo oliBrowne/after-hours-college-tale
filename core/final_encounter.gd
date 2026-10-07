@@ -1,17 +1,17 @@
 class_name NativeFinalEncounter
 extends RefCounted
-const IDS: Array[String]=["cone","empty_chair","rook","val"]
+const IDS: Array[String]=["cone","chad","rook","val"]
 static func create(id: String, seed: int, phase: int, music_tick: int) -> Dictionary:
 	var p: Dictionary=EncounterDirector.create("flyer",seed,phase,music_tick)
 	p.encounterId=id;p.hazards=[];p.telegraphs=[];p.markers=[];p.musicBase=music_tick
-	p.duration=int(p.leadIn)+(360 if id=="empty_chair" else 450 if id=="cone" else [600,480,540,420][clampi(phase,0,3)] if id=="val" else 540)
-	p.phase=clampi(phase,0,3);p.phaseName="One Marked Route" if id=="cone" else "Leave an Empty Space" if id=="empty_chair" else ["Keys and Exits","Two Impossible Jobs","One Shift Together"][clampi(phase,0,2)] if id=="rook" else ["Familiar Promises","Nobody Has To Be Ideal","Unreserve the Chairs","An Ordinary Voice"][clampi(phase,0,3)]
+	p.duration=int(p.leadIn)+(360 if id=="chad" else 450 if id=="cone" else [600,480,540,420][clampi(phase,0,3)] if id=="val" else 540)
+	p.phase=clampi(phase,0,3);p.phaseName="One Marked Route" if id=="cone" else "Let's Circle Back" if id=="chad" else ["Keys and Exits","Two Impossible Jobs","One Shift Together"][clampi(phase,0,2)] if id=="rook" else ["Familiar Promises","Nobody Has To Be Ideal","Unreserve the Chairs","An Ordinary Voice"][clampi(phase,0,3)]
 	p.wardTicks=0;p.wardPocket=Rect2(104,82,48,34);p.revision="";p.rejected=[]
 	p.objectiveCount=0;p.objectiveChanged=false;p.routesKept=0;p.lastRoute=-1;p.routeNumber=0;p.safeLane=24.0;p.cancelledLane=-1.0
 	p.quietPocket=Rect2(22,70,58,40);p.emptySpace=Rect2(104,32,48,56);p.chairEntered=false;p.quietTicks=0
 	p.keyHeld=false;p.exitReached=false;p.chosenExit=48.0;p.exitHold=0;p.sharedCues=0;p.lastCue=-1;p.cueOpen=false;p.cueNumber=0
 	p.sharedPocket=Rect2(104,38,48,54);p.sharedTicks=0;p.chairs=[];p.openColumn=128.0;p.seatsHold=0;p.finalCues=0;p.valTask=0
-	if id=="empty_chair":p.cursor={"x":48.0,"y":90.0}
+	if id=="chad":p.cursor={"x":48.0,"y":90.0}
 	return p
 static func _tell(p: Dictionary,x: float,y: float,vx: float,vy: float,w: float,h: float,delay: int=75) -> void:NativeNewEncounter._tell(p,x,y,vx,vy,w,h,delay)
 static func step(before: Dictionary, axis: Vector2, precision: bool, assist: float, slow: bool, promised: bool, pressed: bool) -> Dictionary:
@@ -47,7 +47,7 @@ static func step(before: Dictionary, axis: Vector2, precision: bool, assist: flo
 					if relative%150==0:
 						for y: float in [24.0,60.0,96.0]:
 							if y!=p.safeLane:_tell(p,-16,y,2.5,0,5,12,75)
-				"empty_chair":
+				"chad":
 					if p.emptySpace.has_point(at):p.chairEntered=true
 					if promised and p.quietPocket.has_point(at) and not p.chairEntered:p.quietTicks=int(p.quietTicks)+1
 					p.markers=[{"id":0,"x":48.0,"y":90.0,"active":true,"collected":int(p.quietTicks)>=120}]
@@ -106,7 +106,7 @@ static func step(before: Dictionary, axis: Vector2, precision: bool, assist: flo
 			else:pending.append(tell)
 		p.telegraphs=pending
 		var live: Array=[]
-		var protected: bool=int(p.wardTicks)>0 and p.wardPocket.has_point(at) or p.encounterId=="empty_chair" and p.quietPocket.has_point(at) or p.encounterId=="rook" and int(p.phase)==2 and p.sharedPocket.has_point(at)
+		var protected: bool=int(p.wardTicks)>0 and p.wardPocket.has_point(at) or p.encounterId=="chad" and p.quietPocket.has_point(at) or p.encounterId=="rook" and int(p.phase)==2 and p.sharedPocket.has_point(at)
 		for chair: Rect2 in p.chairs:
 			if chair.has_point(at) and not protected:EncounterDirector._hit(p)
 		for h: Dictionary in p.hazards:
@@ -119,18 +119,18 @@ static func step(before: Dictionary, axis: Vector2, precision: bool, assist: flo
 			live.append(h)
 		p.hazards=live;p.clock=int(p.clock)+1
 		if int(p.clock)>=int(p.duration):p.done=true;p.telegraphs=[];p.hazards=[]
-	var threshold: int=120 if p.encounterId=="empty_chair" else 60 if p.encounterId=="rook" and int(p.phase)==1 else 90 if p.encounterId=="val" and int(p.phase) in [1,2] else 0
+	var threshold: int=120 if p.encounterId=="chad" else 60 if p.encounterId=="rook" and int(p.phase)==1 else 90 if p.encounterId=="val" and int(p.phase) in [1,2] else 0
 	p.objectiveChanged=int(p.objectiveCount)>=threshold and count_before<threshold if threshold>0 else int(p.objectiveCount)>count_before
 	p.promiseComplete=false
 	match str(p.encounterId):
 		"cone":p.promiseComplete=int(p.routesKept)>=3
-		"empty_chair":p.promiseComplete=int(p.quietTicks)>=120 and not p.chairEntered
+		"chad":p.promiseComplete=int(p.quietTicks)>=120 and not p.chairEntered
 		"rook":p.promiseComplete=p.exitReached if int(p.phase)==0 else int(p.exitHold)>=60 and p.revision in ["west","east"] if int(p.phase)==1 else int(p.sharedCues)>=2 and p.revision in ["west","east"]
 		"val":p.promiseComplete=int(p.valTask)>=3 if int(p.phase)==0 else int(p.sharedTicks)>=90 and p.rejected.size()==3 if int(p.phase)==1 else int(p.seatsHold)>=90 and p.revision in ["left","right"] if int(p.phase)==2 else int(p.finalCues)>=2
 	return p
 static func progress(p: Dictionary) -> String:
 	match str(p.encounterId):
 		"cone":return "Marked routes %d/3\nCrossed-out calls cancelled" % mini(3,int(p.routesKept))
-		"empty_chair":return "Quiet time %d/120\nLeave the empty seat clear" % mini(120,int(p.quietTicks))
+		"chad":return "Quiet time %d/120\nKeep the slot FREE" % mini(120,int(p.quietTicks))
 		"rook":return "Key %s / exit %s" % ["held" if p.keyHeld else "open","reached" if p.exitReached else "open"] if int(p.phase)==0 else "CONNECT > REVISE\nChoose one exit; decline one" if str(p.revision).is_empty() else "Chosen exit held %d/60" % mini(60,int(p.exitHold)) if int(p.phase)==1 else "Shared stopping cues %d/2" % mini(2,int(p.sharedCues))
 		_:return "One return / one stop %d/3" % mini(3,int(p.valTask)) if int(p.phase)==0 else "Own ideals rejected %d/3\nShared space %d/90" % [p.rejected.size(),mini(90,int(p.sharedTicks))] if int(p.phase)==1 else "REVISE the reserved seats\nOpen passage %d/90" % mini(90,int(p.seatsHold)) if int(p.phase)==2 else "Ordinary stopping cues %d/2\nThen choose an ending" % mini(2,int(p.finalCues))

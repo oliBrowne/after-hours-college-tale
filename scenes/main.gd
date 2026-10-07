@@ -1,6 +1,6 @@
 extends Node2D
 
-enum Mode { TITLE, WORLD, DIALOGUE, MENU, BATTLE, TIMING, TELEGRAPH, DODGE, RESULT, PAUSE, RESOLVE, GALLERY, INTRO, MAP }
+enum Mode { TITLE, WORLD, DIALOGUE, MENU, BATTLE, TIMING, TELEGRAPH, DODGE, RESULT, PAUSE, RESOLVE, GALLERY, INTRO, MAP, BANNER }
 const INK: Color = Color("0d101c")
 const CREAM: Color = Color("e6d6b1")
 const AMBER: Color = Color("e8b45c")
@@ -497,7 +497,6 @@ func world_tick(delta: float) -> void:
 	state.x = player.position.x
 	state.y = player.position.y
 	NativeJakerson.world_step(self,moved)
-	if NativeImaniJoin.world_step(self): return
 	if pointer_goal != Vector2.INF:
 		pointer_stall = pointer_stall + 1 if moved < 0.05 and axis.length_squared() > 0 else 0
 		if pointer_stall > 60:
@@ -733,8 +732,13 @@ func interact(object: Dictionary) -> void:
 		pick_up_keepsake(str(object.keepsake)); return
 	if NativeCampaign.handle(self, object): return
 	if object.kind in ["battle", "challenge"] and not state.flags.get("walt_joined", false):
-		dialogue([["Jules", "The escaped voice went under Broadway. We should check on Walt and his lantern in the underpass first.", "concern"]], resume_world)
-		return
+		if not state.flags.get("imani_joined", false):
+			# The poster has its own line; everything else waits on the mixer.
+			if str(object.id) != "flyer":
+				dialogue([["Jules", "Not now. Imani's mixer comes first.", "neutral"]], resume_world); return
+		else:
+			dialogue([["Jules", "The voice went under Broadway. We should follow it to the underpass first.", "concern"]], resume_world)
+			return
 	if object.kind == "door":
 		use_door(object); return
 	var discovery: Dictionary = NativeDiscoveries.scene(str(object.id), state, living_speakers())
@@ -771,7 +775,7 @@ func interact(object: Dictionary) -> void:
 			if object.id == "flyer" and not state.flags.get("imani_joined", false):
 				dialogue([["Flyerer", "RETURN FIRST. RECRUIT LATER. RETURN FIRST!", "concern"]], resume_world); return
 			boss_id = "" if object.id == "flyer" else str(object.id)
-			var intro: Dictionary = {"flyer": [["Flyerer", "ONE PAGE! JUST ONE! THE CLUB CANNOT CLOSE IF NOBODY READS!", "concern"], ["Imani", "That poster was flat a minute ago. We should probably discuss that.", "concern"], ["Jules", "We can read one invitation. Or make enough room to walk past.", "neutral"]], "pinpal": [["Pin Pal", "RETURN SERVICE! RETURN SERVICE!", "warm"], ["Walt", "A bowling pin practicing returns. One ball at a time. I respect a clear job.", "warm"]], "claim": [["CLAIM", "TAKE A NUMBER. TAKE A COAT. TAKE A RESPONSIBILITY. EVERYTHING HAS AN OWNER.", "concern"], ["Jules", "That glove looks like it is waving.", "concern"], ["Imani", "We can carry one thing. We cannot be the owner of every forgotten thing.", "warm"]]}
+			var intro: Dictionary = {"flyer": [["Flyerer", "ONE PAGE! JUST ONE! THE CLUB CANNOT CLOSE IF NOBODY READS!", "concern"], ["Imani", "That poster was just a poster a minute ago. Now it has opinions. We should probably discuss that.", "concern"], ["Jules", "We can read one invitation. Or make enough room to walk past.", "neutral"]], "pinpal": [["Pin Pal", "RETURN SERVICE! RETURN SERVICE!", "warm"], ["Walt", "A bowling pin practicing returns. One ball at a time. I respect a clear job.", "warm"]], "claim": [["CLAIM", "TAKE A NUMBER. TAKE A COAT. TAKE A RESPONSIBILITY. EVERYTHING HAS AN OWNER.", "concern"], ["Jules", "That glove looks like it is waving.", "concern"], ["Imani", "We can carry one thing. We cannot be the owner of every forgotten thing.", "warm"]]}
 			dialogue(intro[str(object.id)], start_battle)
 		_:
 			if object.id == "squirrel": audio.combat("squirrel")
@@ -927,9 +931,15 @@ func advance_dialogue() -> void:
 		dialogue_choices = []
 		dialogue_callback.call()
 		if not choices.is_empty():
-			open_menu(Mode.MENU, "How does Jules answer?", choices)
+			open_menu(Mode.MENU, choice_caption(choices), choices)
 	input_lock = maxi(input_lock, 2)
 	ui_dirty = true
+
+## Choices that all begin with a party member's name are that person's to make.
+func choice_caption(choices: Array) -> String:
+	for who: String in ["Imani", "Walt", "Pip"]:
+		if choices.all(func(c: Dictionary) -> bool: return str(c.label).begins_with(who + " ")): return "What does %s choose?" % who
+	return "How does Jules answer?"
 
 func message(text: String) -> void:
 	notice = text
@@ -1258,15 +1268,17 @@ func begin_battle() -> void:
 	last_promise_result = ""
 	battle.rook_stage=0;battle.revision="";battle.val_revision="";battle.rejected=[];battle.val_stage=0;battle.final_ready=false;battle.val_force=false
 	battle.lantern_kept = false; battle.final_cue = false; battle.campus_promise = false
-	battle.hp = ({"cone":100,"empty_chair":70,"rook":240,"val":200}[boss_id]) if boss_id in NativeFinalEncounter.IDS else (240 if boss_id=="index" else 100) if boss_id in NativeChapterTwo.BOSSES else 30 if boss_id == "jakerson" else 150 if boss_id == "jakerson_final" else 76 if boss_id == "walt" else 220 if boss_id == "encore" else 190 if boss_id == "claim" else 70 if boss_id == "pinpal" else int(BossDirector.profile(boss_id).maxHp) if not boss_id.is_empty() else 48
-	foe.sprite_frames = NativeCastArt.frames(boss_id.trim_suffix("_final") if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "empty_chair", "rook", "val", "jakerson", "jakerson_final"] else "flyer")
-	foe.play("idle_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "empty_chair", "rook", "val", "jakerson", "jakerson_final"] else "idle")
+	battle.hp = ({"cone":100,"chad":70,"rook":240,"val":200}[boss_id]) if boss_id in NativeFinalEncounter.IDS else (240 if boss_id=="index" else 100) if boss_id in NativeChapterTwo.BOSSES else 30 if boss_id == "jakerson" else 150 if boss_id == "jakerson_final" else 76 if boss_id == "walt" else 220 if boss_id == "encore" else 190 if boss_id == "claim" else 70 if boss_id == "pinpal" else int(BossDirector.profile(boss_id).maxHp) if not boss_id.is_empty() else 48
+	foe.sprite_frames = NativeCastArt.frames(boss_id.trim_suffix("_final") if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "flyer")
+	foe.play("idle_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "idle")
 	NativeCastArt.fit(foe, foe_height())
 	claim_art.set_pose("idle"); pin_art.set_pose("idle")
 	plan = []; actor = 0; target = 0; retreating = false; notice_ticks = 0
 	var full_hp: int = int(battle.hp)
+	var resumed: bool = false
 	if boss_id=="val":
 		if NativeFinalCampaign.restore_checkpoint(self):
+			resumed = true
 			# A phase checkpoint keeps the party it was saved with; bring it up to the story's growth.
 			battle.party = PartyGrowth.apply(battle.party, state.flags)
 			for i: int in range(1, 3):
@@ -1287,15 +1299,22 @@ func begin_battle() -> void:
 	audio.ambient("")
 	if actor >= battle.party.size():
 		battle.outcome = "defeat"; defeat_menu(); return
-	if boss_id == "jakerson": NativeJakerson.coach(self)
-	else: command_menu()
+	var opening: Callable = func() -> void:
+		if boss_id == "jakerson": NativeJakerson.coach(self)
+		else: command_menu()
+	# Story bosses make an entrance first, like a gym leader; random fights start straight away,
+	# and so does a fight resumed from a mid-fight checkpoint.
+	if NativeBossIntro.has_card(boss_id) and not resumed:
+		mode = Mode.BANNER; caption = ""; menu_options = []; ui_dirty = true
+		NativeBossIntro.play(self, boss_id, opening)
+	else: opening.call()
 
 func command_menu() -> void:
 	open_menu(Mode.BATTLE, str(battle.party[actor].id).capitalize() + " / Choose an action", [option("STRIKE", func() -> void: queue_command({"actor": actor, "kind": "strike"})), option("CONNECT", connect_menu), option("TALENT", talent_menu), option("ITEM", item_menu), option("GUARD", func() -> void: queue_command({"actor": actor, "kind": "guard"})), option("RETREAT", retreat)])
 
 func connect_menu() -> void:
 	if boss_id in NativeFinalEncounter.IDS:final_connect_menu();return
-	var names: Dictionary = {"": ["Read the club's purpose", "Read one invitation", "Only one page tonight"], "chip": ["Ask for a small rehearsal", "Follow three called columns", "Applause can be quiet"], "deion": ["Ask for a clean handoff", "Carry the relay flag", "Practice, then take a break"], "todd": ["Ask what the form consents to", "Sign two consent boxes", "Allow unanswered questions"], "pinpal": ["Ask what needs returning", "Return three balls", "One ball at a time"], "claim": ["Identify Pip, the unclaimed glove", "Carry one numbered tag", "Return ONE thing; leave a note"]}
+	var names: Dictionary = {"": ["Read the club's purpose", "Read one invitation", "Only one page tonight"], "chip": ["Ask for a small rehearsal", "Follow three called columns", "Applause can be quiet"], "deion": ["Ask for a clean handoff", "Carry the relay flag", "Practice, then take a break"], "todd": ["Ask what the form consents to", "Sign two consent boxes", "Allow unanswered questions"], "pinpal": ["Ask what needs returning", "Return three balls", "One ball at a time"], "claim": ["Identify the unclaimed glove", "Carry one numbered tag", "Return ONE thing; leave a note"]}
 	names.jakerson_final = ["Ask what he'll miss", "Sign three diploma lines", "We stay friends after this"]
 	names.jakerson = ["Ask what he's building", "Catch three green commits", "Spar's over when I say so"]
 	names.walt = ["Ask how the lantern helps", "Keep the light through three gusts", "We can clear one path"]
@@ -1309,20 +1328,20 @@ func connect_menu() -> void:
 	if boss_id != "claim" or bool(claim_needs.tagDelivered):
 		choices.append(option(str(lines[2]), func() -> void: queue_command({"actor": actor, "kind": "guard", "boundary": true, "label": str(lines[2])})))
 	if int(battle.openness) >= 100 and release_ready():
-		choices.append(option("RELEASE / enough for tonight", func() -> void: queue_command({"actor": actor, "kind": "release"})))
+		choices.append(option("RELEASE / good game" if boss_id == "jakerson_final" else "RELEASE / enough for tonight", func() -> void: queue_command({"actor": actor, "kind": "release"})))
 	choices.append(option("Back", command_menu))
 	open_menu(Mode.BATTLE, "Connect / a concrete promise", choices)
 
 func final_connect_menu() -> void:
 	var choices: Array=[]
-	var names: Dictionary={"cone":["Ask for one route","Follow three marked rows"],"empty_chair":["Ask what space is needed","Keep the empty seat clear"],"rook":["Ask what one shift needs","Carry one key to one exit"],"val":["Hear the ordinary person","One return and one stopping cue"]}
+	var names: Dictionary={"cone":["Ask for one route","Follow three marked rows"],"chad":["Ask what he actually wants","Protect one free hour"],"rook":["Ask what one shift needs","Carry one key to one exit"],"val":["Ask who's really hiring","One answer, one full stop"]}
 	choices.append(option(names[boss_id][0],func() -> void:queue_command({"actor":actor,"kind":"connect","label":names[boss_id][0]})))
 	if boss_id=="rook" and boss_stage>=1:
 		choices.append(option("REVISE / keep west exit; decline east",func() -> void:queue_command({"actor":actor,"kind":"promise","revision":"west","label":"One west exit"})))
 		choices.append(option("REVISE / keep east exit; decline west",func() -> void:queue_command({"actor":actor,"kind":"promise","revision":"east","label":"One east exit"})))
 	elif boss_id=="val" and boss_stage==1:
 		var id: String=str(battle.party[actor].id)
-		var line: String={"jules":"Jules: I can disappoint and still belong","imani":"Imani: I cannot be loved by everyone","walt":"Walt: I can choose to need company"}[id]
+		var line: String={"jules":"Jules: I'll miss deadlines. I still belong","imani":"Imani: Not every manager will love me","walt":"Walt: I work better with a team"}[id]
 		choices.append(option(line,func() -> void:queue_command({"actor":actor,"kind":"connect","reject":id,"label":line})))
 	elif boss_id=="val" and boss_stage==2:
 		choices.append(option("REVISE / unreserve the left chairs",func() -> void:queue_command({"actor":actor,"kind":"promise","revision":"left","label":"Open the left passage"})))
@@ -1333,12 +1352,13 @@ func final_connect_menu() -> void:
 	if int(battle.openness)>=100 and release_ready():
 		if boss_id=="val":
 			choices.clear()
-			choices.append(option("RELEASE / let impossible futures go",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"release","label":"RELEASE the futures"})))
-			choices.append(option("REWRITE / one finite gathering",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"rewrite","label":"REWRITE a finite gathering"})))
-			choices.append(option("BREAK / stop the frame; repair the room",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"break","label":"BREAK the mechanism"})))
+			choices.append(option("RELEASE / let every other future go",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"release","label":"RELEASE the other futures"})))
+			choices.append(option("REWRITE / one real offer, with hours",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"rewrite","label":"REWRITE one real offer"})))
+			choices.append(option("BREAK / walk out; fix the stage later",func() -> void:queue_command({"actor":actor,"kind":"release","ending":"break","label":"BREAK off the interview"})))
 		else:choices.append(option("RELEASE / enough for tonight",func() -> void:queue_command({"actor":actor,"kind":"release"})))
 	choices.append(option("Back",command_menu))
-	open_menu(Mode.BATTLE,"Connect / choose a finite promise",choices)
+	var ending_now: bool=boss_id=="val" and int(battle.openness)>=100 and release_ready()
+	open_menu(Mode.BATTLE,"Connect / this choice decides the ending" if ending_now else "Connect / choose a finite promise",choices)
 
 func talent_menu() -> void:
 	var options: Array = []
@@ -1472,12 +1492,18 @@ func resolve_plan() -> void:
 	present_action(); ui_dirty = true
 
 func complete_resolution() -> void:
+	var asked: bool = plan.any(func(c: Dictionary) -> bool: return c.kind == "connect" and not c.has("reject") and not c.has("joint"))
 	battle = pending_battle; pending_battle = {}; shown_enemy_hp = int(battle.hp)
 	foe.modulate = Color.WHITE
 	plan.clear()
 	if boss_id=="val" and battle.outcome=="forceful" and boss_stage<3:NativeFinalCampaign.force_advance(self);return
 	if battle.outcome != "active": finish_battle(); return
 	rest_party_poses()
+	# Asking a boss something gets an answer (once a fight) before its next attack.
+	var reply: Array = NativeBossIntro.answer(boss_id) if asked and not bool(battle.get("answered", false)) else []
+	if not reply.is_empty():
+		battle.answered = true
+		dialogue([reply], start_phase); return
 	start_phase()
 
 func rest_party_poses() -> void:
@@ -1509,11 +1535,14 @@ func start_phase() -> void:
 	pattern.wardTicks = (270 if PartyGrowth.has_perk(state.flags, "lantern_wick") else 180) if battle.get("ward", false) else 0
 	pattern.wardPocket = Rect2(104, 82, 48, 34)
 	pattern.boundary = boundary_active
+	# A limit set with CONNECT makes the boss ease off for this attack.
+	battle.eased = boundary_active and not retreating
 	mode = Mode.TELEGRAPH; phase_ticks = 60
-	target = 0
-	while target < 3 and int(battle.party[target].hp) <= 0: target += 1
+	# Hits go around the party, starting with a different person each round.
+	target = posmod(int(battle.turn), 3)
+	next_target(false)
 	dodge_goal = Vector2.INF; beat_defend = false
-	foe.play("interact_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "empty_chair", "rook", "val", "jakerson", "jakerson_final"] else "tell")
+	foe.play("interact_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "tell")
 	claim_art.set_pose("tell"); pin_art.set_pose("tell")
 	NativeBattleJuice.windup(claim_art if boss_id == "claim" else pin_art if boss_id == "pinpal" else foe)
 	audio.combat("whistle" if boss_id == "deion" else "stamp" if boss_id == "todd" else "warning")
@@ -1578,11 +1607,9 @@ func dodge_tick() -> void:
 		if lost > 0:
 			NativeBattleJuice.flinch(battle_sprites[target], Vector2.LEFT, lost); NativeBattleJuice.flash(battle_sprites[target], 6)
 			NativeBattleJuice.kick([battle_scenery, foe, claim_art, pin_art] + battle_sprites, 1.0 if lost < 12 else 2.0, 8)
-		if int(battle.party[target].hp) <= 0:
-			target = 0
-			while target < 3 and int(battle.party[target].hp) <= 0: target += 1
-			pattern.invulnerability = 60
+		if int(battle.party[target].hp) <= 0: pattern.invulnerability = 60
 		if battle.outcome == "defeat": defeat_menu(); return
+		next_target(true)
 	for sprite: AnimatedSprite2D in battle_sprites: sprite.modulate = sprite.modulate.lerp(Color.WHITE, 0.16)
 	if retreating and int(pattern.clock) >= 180:
 		merge_party(battle.party); state.inventory = battle.inventory.duplicate(true)
@@ -1616,6 +1643,14 @@ func dodge_tick() -> void:
 		elif boss_id == "jakerson" and battle.outcome == "active":NativeJakerson.coach(self)
 		else:command_menu()
 	ui_dirty = true
+
+## Moves the hit target to the next conscious party member (or keeps it, if it is still up and
+## advance is false).
+func next_target(advance: bool) -> void:
+	if advance: target = (target + 1) % 3
+	for _i: int in range(3):
+		if int(battle.party[target].hp) > 0: return
+		target = (target + 1) % 3
 
 func retreat() -> void:
 	reset_pointer_controls()
@@ -1676,7 +1711,7 @@ func show_aftermath(resolved_id: String) -> void:
 	var peaceful: bool = str(state.flags.get(resolved_id + "_resolution", "")) == "peaceful"
 	boss_id = ""
 	enter_room(str(state.room), Vector2(float(state.x), float(state.y)), false)
-	var aftermath: Dictionary = {"flyer": [["Flyerer", "One reader. One page. We can close now.", "warm"], ["Imani", "We did not promise forever. And it worked.", "warm"], ["Jules", "Now the atrium booth. I need to know why it used my voice.", "concern"]] if peaceful else [["Imani", "The stand's bent. I've left a note by the hinge.", "concern"], ["Jules", "Then we check that voice in the atrium.", "neutral"]], "pinpal": [["Pin Pal", "RETURN RECEIVED. THANK YOU FOR PLAYING.", "warm"]] if peaceful else [["Walt", "The housing's cracked. Leave it switched off.", "concern"], ["Jules", "I'll put the ball on the rack.", "neutral"]], "claim": [["CLAIM", "ONE RETURN. ONE NOTE. THE REST CAN WAIT.", "warm"], ["Pip", "I am coming with you. I can point. That is a surprisingly useful glove skill.", "warm"], ["Jules", "The booth has a maker. We find them, then find a way home.", "warm"], ["Mags", "Last Light is not over. But tonight, you learned how to leave something unfinished.", "warm"]] if peaceful else [["Mags", "The ticket spool broke. I will sort it. Leave the glove with me?", "concern"], ["Pip", "Actually, I would like to come with them.", "warm"], ["Jules", "Then we find who made that booth. Together.", "warm"]]}
+	var aftermath: Dictionary = {"flyer": [["Flyerer", "One reader. One page. We can close now.", "warm"], ["Imani", "We did not promise forever. And it worked.", "warm"], ["Imani", "Now the atrium booth. I want to know why it used my voice.", "concern"]] if peaceful else [["Imani", "The stand's bent. I've left a note by the hinge.", "concern"], ["Jules", "Then we check that voice in the atrium.", "neutral"]], "pinpal": [["Pin Pal", "RETURN RECEIVED. THANK YOU FOR PLAYING.", "warm"]] if peaceful else [["Walt", "The housing's cracked. Leave it switched off.", "concern"], ["Jules", "I'll put the ball on the rack.", "neutral"]], "claim": [["CLAIM", "ONE RETURN. ONE NOTE. THE REST CAN WAIT.", "warm"], ["Pip", "I am coming with you. I can point. That is a surprisingly useful glove skill.", "warm"], ["Jules", "The booth has a maker. We find them, then find a way home.", "warm"], ["Mags", "Mags, from the cart out front. I heard all of that. Leaving something unfinished on purpose is harder than it looks.", "warm"]] if peaceful else [["Mags", "Mags, from the cart out front. The ticket spool broke; I'll sort it. Leave the glove with me?", "concern"], ["Pip", "Actually, I would like to come with them.", "warm"], ["Jules", "Then we find who made that booth. Together.", "warm"]]}
 	dialogue(aftermath.get(resolved_id, [[resolved_id.capitalize(), "Good practice. Remember to rest.", "warm"]]), func() -> void:
 		state.flags.aftermath_pending = ""
 		persist()
@@ -1863,7 +1898,7 @@ func render_ui() -> void:
 			label(caption, Rect2(88, 36 + quiz, 464, 46), 12, AMBER)
 			fill(Rect2(88, 82 + quiz, 464, 1), LINE)
 			render_options(Rect2(88, 91 + quiz, 464, (194 if mode == Mode.MENU else 239) - quiz))
-	elif mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESOLVE, Mode.RESULT]:
+	elif mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESOLVE, Mode.RESULT, Mode.BANNER]:
 		render_battle_ui()
 	if notice_ticks > 0 and mode == Mode.WORLD:
 		var width: float = minf(text_width(notice) + 28, 616)
@@ -1982,7 +2017,8 @@ func render_battle_ui() -> void:
 	# Foe card: name, then real meters instead of bare numbers.
 	panel(Rect2(392, 8, 236, 62))
 	label(name, Rect2(404, 13, 212, 16), 12, AMBER)
-	if BattleRules.desperate(battle) and battle.outcome == "active" and boss_id not in ["jakerson", "jakerson_final"]: right_label("HITTING HARDER", Rect2(404, 13, 214, 16), Color("e8837b"))
+	if bool(battle.get("eased", false)) and battle.outcome == "active" and mode in [Mode.TELEGRAPH, Mode.DODGE]: right_label("EASING UP", Rect2(404, 13, 214, 16), MINT)
+	elif BattleRules.desperate(battle) and int(battle.openness) < 100 and battle.outcome == "active" and boss_id not in ["jakerson", "jakerson_final"]: right_label("DESPERATE", Rect2(404, 13, 214, 16), Color("e8837b"))
 	label("WIND" if boss_id == "walt" else "HP", Rect2(404, 31, 44, 16), 12, CREAM)
 	meter(Rect2(450, 36, 124, 5), float(shown_enemy_hp) / maxf(1.0, float(battle.get("max_hp", shown_enemy_hp))), AMBER)
 	right_label(str(shown_enemy_hp), Rect2(576, 31, 42, 16))
@@ -2040,9 +2076,9 @@ func render_battle_ui() -> void:
 	elif mode in [Mode.TELEGRAPH, Mode.DODGE]:
 		var instructions: Dictionary = {"": "Move through the paper gaps. Confirm briefly pushes paper away.", "chip": "Tap left / right to hop. Match the called safe column.", "deion": "%s: jump. %s: duck. Or use the buttons." % [binding_label("confirm"), binding_label("run")], "todd": "Move between stamps. RED AUDIT: stay still. Confirm signs boxes.", "pinpal": "Move left / right. Confirm near a ball to flip it back.", "claim": "Carry the outlined tag." if boss_stage == 0 else "Return one item. Confirm at a destination; leave the other a note."}
 		instructions.cone="Follow each green row. Crossed-out rows are cancelled calls."
-		instructions.empty_chair="Leave the outlined seat empty. Rest in the lantern pocket."
+		instructions.chad="Keep the FREE slot empty. Rest in the Do Not Disturb bubble."
 		instructions.rook=["Confirm at the key, then the exit.","CONNECT > REVISE chooses one exit. Hold its green box.","Move into each green cue and confirm together."][mini(2,boss_stage)]
-		instructions.val=["Confirm the top return, right stop, then left note.","Each ally rejects their own ideal in CONNECT. Hold shared green space.","CONNECT > REVISE removes one side of the chairs. Hold its passage.","Confirm at two green stopping cues. Then choose an ending."][mini(3,boss_stage)]
+		instructions.val=["Confirm at RETURN, then STOP, then NOTE.","In CONNECT, each of you turns down your own perfect resume. Hold the shared space.","CONNECT > REVISE frees one side of the booked chairs. Hold the way out.","Confirm at two green stopping cues. Then choose an ending."][mini(3,boss_stage)]
 		instructions.jakerson_final = "Everything he taught you. With a promise, sign each green line with confirm."
 		instructions.jakerson = "Dodge the code. With a promise, stand in each green commit and press confirm."
 		instructions.walt = "Stay in the gold shelter. Confirm at the lantern as gusts warn. Dodge debris."
@@ -2090,7 +2126,7 @@ func _draw() -> void:
 			var anchor := Vector2(hovered.x, hovered.y)
 			draw_arc(anchor, 17, 0, TAU, 24, AMBER, 2)
 	var defending: bool = mode in [Mode.DODGE, Mode.TELEGRAPH] or pause_context and pause_mode in [Mode.DODGE, Mode.TELEGRAPH]
-	var fighting: bool = mode==Mode.DIALOGUE and not world.visible or mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESULT, Mode.RESOLVE]
+	var fighting: bool = mode==Mode.DIALOGUE and not world.visible or mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESULT, Mode.RESOLVE, Mode.BANNER]
 	if (fighting or pause_context and pause_mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESULT, Mode.RESOLVE]) and battle_scenery.visible:
 		# Dim the room behind the fight; deeper below the fighters where the menus sit. A painted
 		# battle backdrop carries its own shading.
@@ -2257,7 +2293,7 @@ func stage_dialogue() -> void:
 	for prop: Node2D in environment.foreground_nodes:
 		if prop is NativeSpatialProp and prop.definition.get("object") == "booth": prop.set_pose("tell" if speaker == "Booth" else "idle")
 	pip.set_pose("wave" if speaker == "Pip" else "idle")
-	var identities: Dictionary = {"Cal":"cal", "Mags":"mags", "Nell":"nell", "Dev":"dev", "Rook":"rook", "Walt":"walt", "ENCORE":"encore", "ERRATA":"errata", "INDEX":"index", "LOADBEARER":"loadbearer", "Professor Eric":"eric", "VAL":"val", "Val":"val_small", "CONE COMMITTEE":"cone", "EMPTY CHAIR":"empty_chair", "Jakerson":"jakerson", "Mara":"mara", "Eli":"eli", "Chip":"chip", "Deion Sanders":"deion", "Todd Saliman":"todd", "Flyerer":"flyer"}
+	var identities: Dictionary = {"Cal":"cal", "Mags":"mags", "Nell":"nell", "Dev":"dev", "Rook":"rook", "Walt":"walt", "ENCORE":"encore", "ERRATA":"errata", "INDEX":"index", "LOADBEARER":"loadbearer", "Professor Eric":"eric", "VAL":"val", "Val":"val_small", "CONE COMMITTEE":"cone", "Chad":"chad", "Jakerson":"jakerson", "Mara":"mara", "Eli":"eli", "Chip":"chip", "Deion Sanders":"deion", "Todd Saliman":"todd", "Flyerer":"flyer"}
 	if speaker != "Booth": NativeTalkMotion.stage(self, speaker, identities)
 	if speaker == "Booth":
 		strange_ticks = 120
@@ -2368,7 +2404,7 @@ func draw_final_arena(offset: Vector2) -> void:
 			var y: float=float(pattern.cancelledLane)
 			draw_line(offset+Vector2(0,y),offset+Vector2(256,y),PLUM,1)
 			draw_line(offset+Vector2(116,y-7),offset+Vector2(140,y+7),CREAM,2);draw_line(offset+Vector2(116,y+7),offset+Vector2(140,y-7),CREAM,2)
-	if boss_id=="empty_chair":
+	if boss_id=="chad" and pattern.get("engine","")!="box":
 		draw_rect(Rect2(offset+pattern.emptySpace.position,pattern.emptySpace.size),Color("6b526a"),false,2)
 		draw_line(offset+pattern.emptySpace.position,offset+pattern.emptySpace.end,PLUM,1)
 		draw_rect(Rect2(offset+pattern.quietPocket.position,pattern.quietPocket.size),MINT,false,2)

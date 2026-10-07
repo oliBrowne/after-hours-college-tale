@@ -4984,7 +4984,7 @@
     "fixed_blocks": []
   },
   "N05": {
-    "name": "Margin garden / room for an empty space",
+    "name": "Margin garden / one free hour",
     "cue": "campus",
     "objects": [
       {
@@ -5038,13 +5038,13 @@
         "sprite": "npc-rook"
       },
       {
-        "id": "empty_chair",
-        "name": "EMPTY CHAIR / respect a missing person",
+        "id": "chad",
+        "name": "Chad / networking legend",
         "x": 280,
         "y": 365,
         "kind": "talk",
         "lines": [],
-        "sprite": "npc-empty-chair"
+        "sprite": "npc-chad"
       },
       {
         "id": "garden_birds",
@@ -7356,8 +7356,8 @@
       {
         "id": "todd",
         "name": "Todd Saliman / the finite-plan desk",
-        "x": 440,
-        "y": 300,
+        "x": 322,
+        "y": 388,
         "kind": "battle",
         "lines": [],
         "sprite": "npc-todd"

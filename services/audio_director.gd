@@ -25,9 +25,9 @@ const VOICED_SPEAKERS: Array[String] = ["jules", "imani", "cal", "mags", "todd",
 ## distinct pitch/register. These are not unique recordings or performed speech.
 const DIALOGUE_REUSE: Dictionary = {
 	"jakerson":{"family":"cal","pitch":1.08,"gain":0.8},
-	"val":{"family":"flyer","pitch":0.73,"gain":0.8,"mechanical":true},
+	"val":{"family":"mags","pitch":1.08,"gain":0.85},
 	"cone committee":{"family":"todd","pitch":1.25,"gain":0.8},
-	"empty chair":{"family":"flyer","pitch":0.56,"gain":0.6,"mechanical":true},
+	"chad":{"family":"cal","pitch":1.12,"gain":0.85},
 	"mom":{"family":"mags","pitch":0.92,"gain":0.85},
 	"nell":{"family":"mags","pitch":1.1,"gain":0.85},
 	"dev":{"family":"cal","pitch":1.2,"gain":0.85},

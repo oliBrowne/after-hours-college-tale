@@ -168,7 +168,7 @@ static func resolve_plan(before: Dictionary, commands: Array) -> Dictionary:
 
 ## Damage per enemy hit before defence. "" is the Flyerer. Opening bosses are
 ## gentle; each chapter's bosses hit harder as the party's story stats grow.
-const ENEMY_DAMAGE: Dictionary = {"": 8, "jakerson": 3, "walt": 8, "pinpal": 8, "claim": 8, "deion": 8, "chip": 14, "encore": 14, "cone": 14, "errata": 18, "loadbearer": 18, "eric": 18, "index": 18, "empty_chair": 18, "todd": 20, "rook": 22, "val": 24, "jakerson_final": 12}
+const ENEMY_DAMAGE: Dictionary = {"": 8, "jakerson": 3, "walt": 8, "pinpal": 8, "claim": 8, "deion": 8, "chip": 14, "encore": 14, "cone": 14, "errata": 18, "loadbearer": 18, "eric": 18, "index": 18, "chad": 18, "todd": 20, "rook": 22, "val": 24, "jakerson_final": 12}
 const PROMISE_OPENNESS: int = 45
 
 ## A boss is desperate once Openness reaches 50 or its HP falls to half, so the
@@ -177,9 +177,11 @@ static func desperate(battle: Dictionary) -> bool:
 	var max_hp: int = int(battle.get("max_hp", 0))
 	return int(battle.get("openness", 0)) >= 50 or (max_hp > 0 and int(battle.get("hp", 0)) * 2 <= max_hp)
 
+## A limit set with CONNECT (battle.eased) softens the next attack instead.
 static func enemy_damage(boss_id: String, battle: Dictionary, assist: bool = false) -> int:
 	var damage: float = float(ENEMY_DAMAGE.get(boss_id, 10))
-	if desperate(battle): damage *= 1.25
+	if bool(battle.get("eased", false)): damage *= 0.6
+	elif desperate(battle): damage *= 1.25
 	if assist: damage /= 2.0
 	return ceili(damage)
 

@@ -373,6 +373,8 @@ func _fight(id: String) -> void:
 				else: await _frame()
 			MENU:
 				_assert(false, "Unexpected battle interruption " + str(game.caption) + " save=" + str(game.saves.last_error))
+			# A boss answering a CONNECT question.
+			DIALOGUE: await _settle()
 			_:
 				_release(); await _frame()
 	_release()
@@ -536,7 +538,7 @@ func _recording() -> bool:
 		"eric":
 			return room == "E03" and int(game.mode) != WORLD
 		"graduation":
-			return f.get("graduation_day", false) and (not f.get("graduation_complete", false) or int(game.mode) == MENU and str(game.caption).begins_with("Morning"))
+			return f.get("graduation_day", false) and (not f.get("graduation_complete", false) or int(game.mode) == MENU and str(game.caption).begins_with("The End"))
 	return true
 ## Box-engine defenses (core/dodge_box.gd) are flown by DodgeBot with ordinary
 ## inputs: directions, run for precision/duck, and confirm.

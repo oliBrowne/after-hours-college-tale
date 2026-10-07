@@ -77,7 +77,7 @@ static func setup(s: Dictionary) -> void:
 	s.tagSpot = tag
 	s.destSpots = dest
 	if phase == 0:
-		s.hint = "Carry the outlined tag to its owner. CLAIM SWEEPs: wait at the gap in the coats. " + hint
+		s.hint = "Carry the outlined tag to its owner. When CLAIM sweeps, wait at the gap in the coats. " + hint
 		s.markers = [{"id": 0, "x": 80.0, "y": 60.0, "collected": false, "active": true, "noted": false}, {"id": 1, "x": 204.0, "y": 36.0, "collected": false, "active": false, "noted": false}]
 		D.objective(s, {"kind": "touch", "r": 10.0, "label": "tag"})
 		D.objective(s, {"kind": "touch", "r": 12.0, "label": "owner", "active": false})

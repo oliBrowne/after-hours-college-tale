@@ -5,7 +5,7 @@ extends RefCounted
 ## at runtime; scene sprites keep their planted foot pivot and nearest filtering.
 const PEOPLE = ["Mara", "Eli", "Chip", "Deion Sanders", "Todd Saliman"]
 const OBJECTS = ["Flyerer", "Pip", "Pin Pal", "CLAIM", "Booth"]
-const IDS = ["cal", "mags", "jakerson", "mara", "eli", "chip", "deion", "todd", "walt", "encore", "rook", "nell", "dev", "errata", "index", "eric", "cone", "empty_chair", "val", "val_small"]
+const IDS = ["cal", "mags", "jakerson", "mara", "eli", "chip", "deion", "todd", "walt", "encore", "rook", "nell", "dev", "errata", "index", "eric", "cone", "chad", "val", "val_small"]
 const OBJECT_IDS = ["flyer", "pip", "pinpal", "claim", "booth"]
 const BODY_REGIONS = {"mara": [[70, 0, 165, 256], [299, 0, 188, 256], [525, 0, 179, 256], [753, 0, 167, 256], [983, 0, 132, 256], [1155, 0, 161, 256]], "eli": [[55, 256, 175, 240], [292, 256, 213, 240], [521, 256, 194, 240], [745, 256, 199, 240], [990, 256, 128, 240], [1157, 256, 166, 240]], "chip": [[44, 496, 189, 235], [285, 496, 222, 235], [508, 496, 211, 235], [747, 496, 196, 235], [965, 496, 165, 235], [1148, 496, 194, 235]], "deion": [[55, 731, 158, 241], [299, 731, 199, 241], [521, 731, 190, 241], [747, 731, 186, 241], [995, 731, 131, 241], [1165, 731, 160, 241]], "todd": [[59, 11, 306, 608], [423, 11, 366, 608], [874, 11, 347, 608], [60, 644, 365, 578], [532, 627, 191, 600], [895, 632, 287, 595]], "flyer": [[29, 21, 269, 313], [339, 15, 280, 319], [662, 21, 271, 313]], "pip": [[53, 334, 251, 279], [351, 331, 274, 282], [696, 332, 259, 281]], "pinpal": [[66, 613, 190, 321], [368, 613, 254, 321], [714, 613, 197, 321]], "claim": [[12, 934, 297, 340], [315, 934, 351, 340], [669, 934, 292, 340]], "booth": [[12, 1275, 298, 304], [334, 1270, 303, 309], [666, 1272, 295, 307]]}
 const BODY_ANCHORS = {"mara": [[147, 253], [387.5, 253], [617, 253], [834, 253], [1054.5, 253], [1233, 253]], "eli": [[142.5, 495], [380.5, 495], [615, 495], [850.5, 495], [1057, 495], [1236, 495]], "chip": [[138, 729], [381, 729], [611.5, 729], [845.5, 729], [1052.5, 729], [1243.5, 729]], "deion": [[137, 970], [383.5, 969], [612.5, 970], [839, 969], [1054, 970], [1241, 970]], "todd": [[214.5, 609], [625, 609], [1044.5, 609], [267.5, 1212], [619.5, 1217], [1045.5, 1217]], "flyer": [[183.5, 324], [499.5, 324], [824.5, 324]], "pip": [[163.5, 610], [487, 610], [816, 610]], "pinpal": [[160.5, 925], [472, 925], [810.5, 925]], "claim": [[158.5, 1264], [484.5, 1264], [813, 1266]], "booth": [[167.5, 1569], [496.5, 1569], [832, 1569]]}
@@ -55,7 +55,9 @@ static func portrait(speaker: String,expression: int) -> Texture2D:
 static func source_portrait(speaker: String, expression: int) -> Texture2D:
 	if speaker=="Jakerson":return NativeJakersonArt.portrait(expression)
 	if speaker=="Professor Eric":return NativeEricArt.portrait(expression)
-	if speaker in ["VAL","Val","CONE COMMITTEE","EMPTY CHAIR"]:return NativeFinalArt.portrait({"VAL":"val","Val":"val_small","CONE COMMITTEE":"cone","EMPTY CHAIR":"empty_chair"}[speaker],expression)
+	if speaker in ["VAL","Val","CONE COMMITTEE"]:return NativeFinalArt.portrait({"VAL":"val","Val":"val_small","CONE COMMITTEE":"cone"}[speaker],expression)
+	# Chad borrows Eli's look until the visuals lane draws him.
+	if speaker=="Chad":return source_portrait("Eli",expression)
 	if speaker in ["Nell","Dev","ERRATA","INDEX","LOADBEARER"]:return NativeChapterArt.portrait(speaker.to_lower(),expression)
 	if speaker in ["Walt", "ENCORE", "Rook"]: return NativeExpansionArt.portrait(speaker.to_lower(), expression)
 	var face: int = clampi(expression, 0, 3)
@@ -76,7 +78,8 @@ static func body(id: String, frame: int = 0) -> Texture2D:
 	if id in ["cal","mags","todd"]:return NativeCampusSupportArt.body(id,frame)
 	if id=="jakerson":return NativeJakersonArt.body(frame)
 	if id=="eric":return NativeEricArt.body(frame)
-	if id in ["cone","empty_chair","val","val_small"]:return NativeFinalArt.body(id,frame)
+	if id in ["cone","val","val_small"]:return NativeFinalArt.body(id,frame)
+	if id=="chad":return body("eli",frame)
 	if id in NativeChapterTwo.BOSSES or id in ["nell","dev"]:return NativeChapterArt.body(id,frame)
 	if id in ["walt", "encore", "rook"]: return NativeExpansionArt.body(id, frame)
 	if not BODY_REGIONS.has(id): return null
@@ -100,7 +103,8 @@ static func frames(id: String) -> SpriteFrames:
 	if id=="walt":return NativePartyBattleArt.frames(id)
 	if id=="jakerson":return NativeJakersonArt.frames()
 	if id=="eric":return NativeEricArt.frames()
-	if id in ["cone","empty_chair","val","val_small"]:return NativeFinalArt.frames(id)
+	if id in ["cone","val","val_small"]:return NativeFinalArt.frames(id)
+	if id=="chad":return frames("eli")
 	if id in NativeChapterTwo.BOSSES or id in ["nell","dev"]:return NativeChapterArt.frames(id)
 	if id in ["walt", "encore", "rook"]: return NativeExpansionArt.world_frames(id)
 	if animations.has(id): return animations[id]

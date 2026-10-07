@@ -337,15 +337,18 @@ static func drop_lines(g: Node,id: String) -> Array:
 	var z: String=key(g,"confirm")
 	match id:
 		"party":
-			return [["Jakerson","Whoa, you two! Quick thing before you go.","warm"],
-				["Jakerson","With two of you, everyone picks an action each turn. Then you dodge together, and the hits go to whoever's up front.","warm"],
+			var basics: Array=[] if g.state.flags.has("jakerson_resolution") else [["Jakerson","You skipped my tour, so here's the thirty-second version.","warm"],
+				["Jakerson","In a fight, everyone picks one action, then you dodge in the box. STRIKE hurts. CONNECT fills OPEN, and at 100, RELEASE ends it kindly.","warm"],
+				["Jakerson","A promise like \"keep the light through three gusts\" gives you a job in the next attack. Keep it and OPEN jumps.","warm"]]
+			return [["Jakerson","Whoa, you two! Quick thing before you go.","warm"]]+basics+[
+				["Jakerson","With two of you, everyone picks an action each turn. Then you dodge together, and the hits take turns landing on each of you.","warm"],
 				["Jakerson","Imani's TALENTS run on SYNC: Steady Refrain heals or picks someone back up, Half Time slows the attack down.","warm"],
 				["Jakerson","Close dodges and GUARD charge SYNC. Okay, bye! Go get your voice back.","warm"]]
 		"lob":
-			return [["Jakerson","Hey! Just back from tennis practice. Heads up: the wind under this bridge is about to get rough.","warm"],
-				["Jakerson","Some attacks turn your heart blue. Blue means gravity: you fall.","warm"],
+			return [["Jakerson","Hey! Late hit with the tennis club. The courts have lights. Heads up: the wind under this bridge is about to get rough.","warm"],
+				["Jakerson","Some attacks turn you blue. Blue means gravity: you fall.","warm"],
 				["Jakerson","Press "+key(g,"move_up")+" or "+z+" to jump, and hold it to go higher. Like a lob: read where it lands, then move.","warm"],
-				["Jakerson","And GUARD isn't hiding. It charges SYNC for the whole team. Coach is yelling, gotta go!","warm"]]
+				["Jakerson","And GUARD isn't hiding. It charges SYNC for the whole team. My doubles partner's waiting, gotta go!","warm"]]
 		"keepsake":
 			return [["Jakerson","Ooh, a keepsake! Each one helps one person in their own way.","warm"],
 				["Jakerson","Open Pause, then Party, and choose who wears it. One each.","warm"],
@@ -459,7 +462,7 @@ static func graduation(g: Node) -> void:
 		["Jakerson","Four years ago you were running for a bus with somebody else's mixer.","warm"],
 		["Jules","And you walked me to the UMC and then made me fight you.","warm"],
 		["Jakerson","Friendly spar! Look how that turned out.","warm"],
-		["Jakerson","One more? For old times. A final exam: everything I ever taught you, all at once.","warm"]]
+		["Jakerson","One more? For old times. One last friendly set, everything I ever showed you. Loser buys the boba.","warm"]]
 	if not field:
 		say(g,lines,func() -> void:rematch_offer(g));return
 	lines.append_array([["Jakerson","I booked the courts. Give me two minutes to lose the gown.","warm"],["Imani","He's been carrying a racket under that gown all morning.","warm"]])

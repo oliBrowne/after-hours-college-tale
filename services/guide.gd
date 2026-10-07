@@ -38,7 +38,7 @@ const TARGETS: Dictionary = {
 	"Tickets are invitations / Macky cloakroom": ["M03", "attendees"],
 	"Imani chooses the ending / Macky orchestra pit": ["M04", "final_score"],
 	"Revise one last shift / Rook on the balcony": ["M05", "rook"],
-	"Make room for living people / VAL on the graduation stage": ["M06", "val"],
+	"Finish the interview / Val on the graduation stage": ["M06", "val"],
 	"Choose a morning / party at the dawn exit": ["M07", "dawn_conversation"],
 	"Thank Mags / morning UMC terrace": ["U02", "mags"],
 	"Call home / Broadway bus stop": ["U01", "bus"],
