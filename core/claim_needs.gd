@@ -1,6 +1,6 @@
 class_name ClaimNeeds
 extends RefCounted
-## CLAIM's two concrete needs are independent of conversational Openness.
+## Advisor Bev's (internal id "claim") two concrete needs are independent of conversational Openness.
 ## Pass the completed production director state, never a presentation counter.
 
 static func create() -> Dictionary:
@@ -18,7 +18,7 @@ static func can_release(needs: Dictionary) -> bool:
 static func validate_plan(needs: Dictionary, commands: Array) -> String:
 	for command: Dictionary in commands:
 		if command.get("kind", "") == "release" and not can_release(needs):
-			return "CLAIM needs one carried tag, then one return with a note."
+			return "Advisor Bev needs one carried ticket, then one return with a note."
 	return ""
 
 static func _marker(pattern: Dictionary, id: int) -> Dictionary:

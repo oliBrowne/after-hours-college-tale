@@ -1,7 +1,9 @@
 class_name ClaimActor
 extends Node2D
 
-# CLAIM's original pixel construction: rack, mismatched sleeves, ticket eyes and wheels.
+# ADVISOR BEV's world and battle body (internal id "claim"): her drawn office-chair cells through
+# NativeCastArt, or the original lost-property rack (mismatched sleeves, ticket eyes and wheels) when
+# the advisor sheet is missing.
 # Position is the bottom centre; visual extent is approximately Rect2(-34,-80,68,80).
 var pose: String = "idle"
 var elapsed: float = 0.0
@@ -32,4 +34,4 @@ func _oval(cx: int,cy: int,rx: int,ry: int,color: Color) -> void:
 		_r(cx-span,cy+yy,span*2+1,1,color)
 
 func _draw() -> void:
-	NativeCastArt.draw_body(self, "claim", pose, 88, elapsed, reduced_motion)
+	NativeCastArt.draw_body(self, "claim", pose, NativeCastArt.world_height("claim"), elapsed, reduced_motion)

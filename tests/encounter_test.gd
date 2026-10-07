@@ -161,11 +161,11 @@ func _test_audit() -> void:
 func _test_claim() -> void:
 	for phase: int in range(2):
 		var state: Dictionary = _replay("claim", phase)
-		_check(state.tick == 480 and state.promiseComplete, "CLAIM authored phase completes in 480 ticks: " + str(phase))
-		_check(state.testWarnings and state.testBounded, "CLAIM tag/sleeve threats remain readable and bounded")
-		_check(state.testHits == 0, "CLAIM carries/delivers with a safe route: " + str(phase))
+		_check(state.tick == 480 and state.promiseComplete, "Advisor Bev authored phase completes in 480 ticks: " + str(phase))
+		_check(state.testWarnings and state.testBounded, "Advisor Bev ticket/sleeve threats remain readable and bounded")
+		_check(state.testHits == 0, "Advisor Bev carries/delivers with a safe route: " + str(phase))
 		if phase == 0:
-			_check(state.carryTag and state.claimSweepPassed > 0, "CLAIM carries a picked-up tag through an actual sweep")
+			_check(state.carryTag and state.claimSweepPassed > 0, "Advisor Bev carries a picked-up ticket through an actual sweep")
 		else:
 			_check(state.delivery == 1 and state.noteLeft and not state.markers[2].collected, "Boundary returns exactly one item and leaves a note for the other")
 	var state: Dictionary = Director.create("claim", 1)
@@ -189,7 +189,7 @@ func _test_claim() -> void:
 	state.carryTag = true
 	state.hazards = [{"id": 9, "x": 128.0, "y": 60.0, "previousX": 128.0, "previousY": 60.0, "radius": 5.0, "vx": 0.0, "vy": 0.0, "grazed": false, "born": 60, "shape": "claim_tag", "collision": "circle", "friendly": false, "collided": false, "cleared": false}]
 	state = Director.step(state, Vector2.ZERO)
-	_check(state.hit and state.carryTag, "Taking damage never destroys the carried CLAIM tag")
+	_check(state.hit and state.carryTag, "Taking damage never destroys the carried Advisor Bev ticket")
 
 func _test_idle_pressure() -> void:
 	for corner: Vector2 in [Vector2(8, 8), Vector2(248, 8), Vector2(8, 112), Vector2(248, 112)]:

@@ -43,7 +43,7 @@ func run(main: Node) -> bool:
 	_assert(game.state.flags.get("cal_key_received",false) and game.state.party[2].id=="walt","Cal gives key without replacing Walt")
 	await _door("connection_stairs","U06");await _door("lost_property","U07")
 	await _object("claim");await _fight("claim")
-	_assert(game.state.flags.get("pip_joined",false),"Pip stays a companion after CLAIM")
+	_assert(game.state.flags.get("pip_joined",false),"Pip stays a companion after Advisor Bev")
 	await _door("connection","U06");await _door("atrium","U05");await _door("atrium","U03")
 	await _door("farrand_gate","F01");await _capture("02-farrand")
 	# Open the persistent mouse map button, select a district and close through input.

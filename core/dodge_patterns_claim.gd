@@ -1,23 +1,28 @@
 extends RefCounted
-## CLAIM / Lost Property: a ticket booth that thinks everything forgotten is
-## its responsibility. Five handmade attacks, one per turn, cycling in order.
+## ADVISOR BEV (internal id "claim"): the lost-property desk is her advising office, and she
+## thinks every lost thing and every undecided student is her responsibility. She hands out
+## take-a-number tickets, runs degree audits and keeps unrolling a four-year plan.
+## Five handmade attacks, one per turn, cycling in order: Degree Audit (checklist cards on a
+## belt), Take a Number (a ribbon of tickets), Syllabus Week (rolled syllabi that pop open into
+## rings of due dates), Advising Hold (sticky notes and HOLD stamps) and The Rolodex (index
+## cards circling a Rolodex, pencils from the corners).
 ## The promise and its fields are the old encounter's, unchanged, because
 ## core/claim_needs.gd record_defense() and main.gd read them:
 ##   encounterId, done, promiseComplete, phase, carryTag, claimSweepPassed,
 ##   delivery, noteLeft, boundary (set by main.gd after create) and
 ##   markers [{id, x, y, collected, active, noted}] (x, y in arena space).
-## Phase 0 "Hold On To This": marker 0 is the tag (touch while promised sets
-## carryTag), marker 1 the owner (active once carrying, touch). A CLAIM SWEEP
-## (a rail of coats with one gap) crosses the box twice; each one that passes
-## fully while you carry the tag adds to claimSweepPassed.
-## Phase 1 "One Thing Now": marker 0 is the tag (touch), markers 1 and 2 are
+## Phase 0 "Hold On To This": marker 0 is the numbered ticket (touch while promised sets
+## carryTag), marker 1 the owner's pigeonhole (active once carrying, touch). The FOUR-YEAR PLAN
+## (a wall of plan pages with one free-elective gap) unrolls across the box twice; each one
+## that passes fully while you carry the ticket adds to claimSweepPassed.
+## Phase 1 "One Thing Now": marker 0 is the ticket (touch), markers 1 and 2 are
 ## two returns (confirm), usable only with the boundary set and no delivery
 ## yet. Confirming at one sets delivery = its id and noteLeft, and leaves a
 ## note (noted) on the other, which stays uncollected.
 ## The markers are drawn and steered through objectives 0..2 (same ids).
 
 const D = preload("res://core/dodge_box.gd")
-const ORDER: Array[String] = ["baggage", "take_a_number", "umbrellas", "many_hands", "coat_rack"]
+const ORDER: Array[String] = ["degree_audit", "take_a_number", "syllabus_week", "advising_hold", "rolodex"]
 const PHASES: Array[int] = [0, 1]
 const SWEEP_SPEED: float = 2.0
 const SWEEP_TIMES: Array[int] = [80, 230]
@@ -30,7 +35,11 @@ const ROSE: Color = Color("e8837b")
 const LILAC: Color = Color("a68db8")
 const PLUM: Color = Color("292638")
 const TICKET_RED: Color = Color("c8505a")
-const COATS: Array[Color] = [Color("6c5a4a"), Color("4a5a7a"), Color("7a4a5a"), Color("5a6a4a"), Color("8a7a5a")]
+const TEAL: Color = Color("2f9c99")
+const PARCH: Color = Color("ecdcae")
+const STICKY: Color = Color("f2dc7a")
+## Header tints for audit cards and plan pages (fall rust, spring teal, summer mustard, mauve, slate).
+const TINTS: Array[Color] = [Color("a8584a"), Color("2f9c99"), Color("d8a43c"), Color("a66a8c"), Color("5a6c8a")]
 
 static func setup(s: Dictionary) -> void:
 	var id: String = ORDER[int(s.turn) % ORDER.size()]
@@ -54,22 +63,22 @@ static func setup(s: Dictionary) -> void:
 	var dest: Array = [Vector2(0.62, -0.45)] if phase == 0 else [Vector2(-0.6, -0.45), Vector2(0.6, 0.5)]
 	var hint: String = ""
 	match id:
-		"baggage":
-			s.attackName = "Baggage Carousel"
-			hint = "Suitcases ride the belt. A shaking one is flung along its red line."
+		"degree_audit":
+			s.attackName = "Degree Audit"
+			hint = "Audit cards ride the belt. A shaking card is flung along its red line."
 		"take_a_number":
 			s.attackName = "Take a Number"
-			hint = "The ticket ribbon winds through the box. NOW SERVING fires tickets at you."
-		"umbrellas":
-			s.attackName = "Lost Umbrellas"
-			hint = "Umbrellas fall, shake, then pop open into a ring of rain. Find the ring's gap."
-		"many_hands":
-			s.attackName = "Many Hands"
-			hint = "Gloves clap shut along the red row. Pointing gloves stamp the red column."
+			hint = "The ticket ribbon winds around. NEXT, SWEETIE fires a fan of tickets."
+		"syllabus_week":
+			s.attackName = "Syllabus Week"
+			hint = "Rolled syllabi fall, shake, then open into a ring of due dates. Find the gap."
+		"advising_hold":
+			s.attackName = "Advising Hold"
+			hint = "Sticky notes slap shut on the red row. HOLD stamps drop down the red column."
 			if phase == 1: dest = [Vector2(-0.6, -0.6), Vector2(0.6, 0.6)]
-		"coat_rack":
-			s.attackName = "Coat Rack"
-			hint = "Hangers circle the stand and breathe in and out. Slip through the gaps. Hats come from the corners."
+		"rolodex":
+			s.attackName = "The Rolodex"
+			hint = "Index cards circle the Rolodex and breathe. Pencils fly from the corners."
 			if phase == 0:
 				tag = Vector2(-0.48, 0.35); dest = [Vector2(0.7, -0.62)]
 			else:
@@ -77,14 +86,14 @@ static func setup(s: Dictionary) -> void:
 	s.tagSpot = tag
 	s.destSpots = dest
 	if phase == 0:
-		s.hint = "Carry the outlined tag to its owner. When CLAIM sweeps, wait at the gap in the coats. " + hint
+		s.hint = "Carry the ticket to its pigeonhole. When the FOUR-YEAR PLAN unrolls, wait in the gap. " + hint
 		s.markers = [{"id": 0, "x": 80.0, "y": 60.0, "collected": false, "active": true, "noted": false}, {"id": 1, "x": 204.0, "y": 36.0, "collected": false, "active": false, "noted": false}]
-		D.objective(s, {"kind": "touch", "r": 10.0, "label": "tag"})
+		D.objective(s, {"kind": "touch", "r": 10.0, "label": "ticket"})
 		D.objective(s, {"kind": "touch", "r": 12.0, "label": "owner", "active": false})
 	else:
-		s.hint = "Take the tag. Confirm at ONE return; the other gets a note. " + hint
+		s.hint = "Take the ticket. Confirm at ONE return; the other gets a note. " + hint
 		s.markers = [{"id": 0, "x": 128.0, "y": 60.0, "collected": false, "active": true, "noted": false}, {"id": 1, "x": 56.0, "y": 36.0, "collected": false, "active": false, "noted": false}, {"id": 2, "x": 200.0, "y": 100.0, "collected": false, "active": false, "noted": false}]
-		D.objective(s, {"kind": "touch", "r": 10.0, "label": "tag"})
+		D.objective(s, {"kind": "touch", "r": 10.0, "label": "ticket"})
 		D.objective(s, {"kind": "confirm", "r": 13.0, "label": "return", "active": false})
 		D.objective(s, {"kind": "confirm", "r": 13.0, "label": "return", "active": false})
 	_sync(s)
@@ -104,7 +113,7 @@ static func promise_complete(s: Dictionary) -> bool:
 static func progress(s: Dictionary) -> String:
 	var markers: Array = s.get("markers", [])
 	if int(s.get("phase", 0)) == 0:
-		return "Tag %s / sweep %s\ndelivered %s" % ["held" if s.get("carryTag", false) else "open", "clear" if int(s.get("claimSweepPassed", 0)) > 0 else "open", "yes" if markers.size() > 1 and markers[1].get("collected", false) else "open"]
+		return "Ticket %s / plan %s\ndelivered %s" % ["held" if s.get("carryTag", false) else "open", "clear" if int(s.get("claimSweepPassed", 0)) > 0 else "open", "yes" if markers.size() > 1 and markers[1].get("collected", false) else "open"]
 	return "One return %s / note %s\nboundary %s" % ["done" if int(s.get("delivery", 0)) > 0 else "open", "left" if s.get("noteLeft", false) else "open", "kept" if s.get("boundary", false) and s.get("promiseComplete", false) else "offered" if s.get("boundary", false) else "open"]
 
 ## The old marker rules, carried by objectives with the same ids.
@@ -117,7 +126,7 @@ static func _sync(s: Dictionary) -> void:
 		objs[i].x = at.x; objs[i].y = at.y
 	if objs[0].done and not bool(s.carryTag):
 		s.carryTag = true
-		D.banner(s, "TAG HELD", 40)
+		D.banner(s, "TICKET HELD", 40)
 	if int(s.phase) == 0:
 		objs[1].active = bool(s.carryTag) and not objs[1].done
 	else:
@@ -143,18 +152,18 @@ static func tick(s: Dictionary, t: int) -> void:
 		for at: int in SWEEP_TIMES:
 			if t == at - 50: _sweep_start(s, t)
 	match str(s.patternId):
-		"baggage": _baggage(s, t, phase)
+		"degree_audit": _degree_audit(s, t, phase)
 		"take_a_number": _take_a_number(s, t, phase)
-		"umbrellas": _umbrellas(s, t, phase)
-		"many_hands": _many_hands(s, t, phase)
-		"coat_rack": _coat_rack(s, t, phase)
+		"syllabus_week": _syllabus_week(s, t, phase)
+		"advising_hold": _advising_hold(s, t, phase)
+		"rolodex": _rolodex(s, t, phase)
 	_run_queue(s, t)
 	_sync(s)
 
 static func after(s: Dictionary, t: int) -> void:
 	_sync(s)
 	if t < 0: return
-	# Claim sweeps: count each one that has fully passed while you carry the tag.
+	# Plan sweeps: count each one that has fully passed while you carry the ticket.
 	var h: Vector2 = D.half(s)
 	for sweep: Dictionary in s.sweeps:
 		sweep.x = float(sweep.x) + float(sweep.vx)
@@ -163,17 +172,17 @@ static func after(s: Dictionary, t: int) -> void:
 			if bool(s.carryTag):
 				s.claimSweepPassed = int(s.claimSweepPassed) + 1
 				s.objectiveChanged = true
-				D.banner(s, "SWEEP CLEARED", 40)
+				D.banner(s, "ELECTIVE FOUND", 40)
 				D.effect(s, "kept", D.soul_world(s), 30)
 	var spawns: Array = []
 	for b: Dictionary in s.bullets:
 		if b.has("fade"): continue
-		# Clapping gloves meet in the middle and pull back.
+		# Clapping sticky notes meet in the middle and pull back.
 		if b.has("clap") and not b.get("clapped", false) and absf(float(b.x)) <= 11.0:
 			b.clapped = true
 			b.vx = -float(b.vx) * 0.55
 			if float(b.x) < 0.0: D.effect(s, "pulse", D.to_world(s, Vector2(0, float(b.y))), 14)
-		# Umbrellas pop open into a ring of rain.
+		# Rolled syllabi pop open into a ring of due dates.
 		if b.has("popAt") and int(b.age) >= int(b.popAt):
 			spawns.append(b)
 	for b: Dictionary in spawns:
@@ -192,12 +201,12 @@ static func _run_queue(s: Dictionary, t: int) -> void:
 		match str(e.kind):
 			"fling": _fling(s, e)
 			"fan": _fan(s, e)
-			"hat": _hat(s, e)
+			"pencil": _pencil(s, e)
 			"stamp":
-				D.shot(s, {"space": "box", "x": float(e.x), "y": -D.half(s).y - 8.0, "vy": 3.0, "collide": "rect", "w": 6.0, "h": 4.0, "shape": "stamp", "life": 160})
+				D.shot(s, {"space": "box", "x": float(e.x), "y": -D.half(s).y - 8.0, "vy": 3.0, "collide": "rect", "w": 6.0, "h": 4.0, "shape": "hold_stamp", "life": 160})
 			"belt":
 				var on: Vector2 = _belt_point(s, float(e.u) + float(s.spin[0]))
-				D.shot(s, {"space": "box", "x": on.x, "y": on.y, "belt": float(e.u), "collide": "rect", "w": 8.0, "h": 5.5, "shape": "suitcase", "hue": int(e.hue), "life": 2000, "arm": 12})
+				D.shot(s, {"space": "box", "x": on.x, "y": on.y, "belt": float(e.u), "collide": "rect", "w": 8.0, "h": 5.5, "shape": "audit_card", "hue": int(e.hue), "life": 2000, "arm": 12})
 				D.effect(s, "mode", D.to_world(s, on), 16)
 
 static func _sweeping(s: Dictionary) -> bool:
@@ -206,7 +215,8 @@ static func _sweeping(s: Dictionary) -> bool:
 		if float(sweep.x) < h.x + 30.0 and float(sweep.x) > -h.x - 20.0: return true
 	return false
 
-## CLAIM SWEEP: a rail of coats crosses right to left with a two-coat gap.
+## The FOUR-YEAR PLAN: a wall of plan pages crosses right to left with a two-page gap, the one
+## free elective.
 static func _sweep_start(s: Dictionary, t: int) -> void:
 	var h: Vector2 = D.half(s)
 	var step: float = 15.0
@@ -217,17 +227,17 @@ static func _sweep_start(s: Dictionary, t: int) -> void:
 	var id: int = s.sweeps.size()
 	for i: int in range(slots):
 		if i == k or i == k + 1: continue
-		D.shot(s, {"space": "box", "x": x, "y": top + i * step, "vx": -SWEEP_SPEED, "collide": "rect", "w": 6.0, "h": 6.5, "shape": "coat", "hue": (i + id) % COATS.size(), "life": 420, "sweep": id})
+		D.shot(s, {"space": "box", "x": x, "y": top + i * step, "vx": -SWEEP_SPEED, "collide": "rect", "w": 6.0, "h": 6.5, "shape": "plan_page", "hue": (i + id) % TINTS.size(), "life": 420, "sweep": id})
 	s.sweeps.append({"x": x, "vx": -SWEEP_SPEED, "gapY": top + (float(k) + 0.5) * step, "counted": false, "born": t, "id": id})
-	D.banner(s, "CLAIM SWEEP", 50)
+	D.banner(s, "THE FOUR-YEAR PLAN", 50)
 	s.telegraphs.append({"ticksRemaining": 50})
 
 # ---------------------------------------------------------------- attacks
 
-# Baggage Carousel: suitcases ride a belt around the inside of the box. A
-# suitcase shakes and shows a red line, then is flung along it (aimed at you)
-# and a new one drops onto the belt. Phase 1 flings two at a time and the belt
-# reverses halfway.
+# Degree Audit: audit cards ride a belt around the inside of the box. A card
+# shakes and shows a red line (a requirement left unchecked), then is flung along
+# it (aimed at you) and a new one drops onto the belt. Phase 1 flings two at a
+# time and the belt reverses halfway.
 static func _belt_point(s: Dictionary, u: float) -> Vector2:
 	var h: Vector2 = D.half(s) - Vector2(11, 11)
 	var lengths: Array[float] = [h.x * 2.0, h.y * 2.0, h.x * 2.0, h.y * 2.0]
@@ -241,17 +251,17 @@ static func _belt_point(s: Dictionary, u: float) -> Vector2:
 	d -= lengths[2]
 	return Vector2(-h.x, h.y - d)
 
-static func _baggage(s: Dictionary, t: int, phase: int) -> void:
+static func _degree_audit(s: Dictionary, t: int, phase: int) -> void:
 	var h: Vector2 = D.half(s)
 	if t == 0:
 		D.box_to(s, {"w": 240.0, "h": 124.0}, 24)
 		var total: float = 4.0 * (120.0 - 11.0 + 62.0 - 11.0)
 		for i: int in range(16):
 			if i % 4 == 3: continue
-			D.shot(s, {"space": "box", "belt": total * float(i) / 16.0, "collide": "rect", "w": 8.0, "h": 5.5, "shape": "suitcase", "hue": i % COATS.size(), "life": 2000})
+			D.shot(s, {"space": "box", "belt": total * float(i) / 16.0, "collide": "rect", "w": 8.0, "h": 5.5, "shape": "audit_card", "hue": i % TINTS.size(), "life": 2000})
 	if phase > 0 and t == 220:
 		D.warn(s, {"kind": "spin", "dir": -1.0}, 40, true)
-		D.banner(s, "THE BELT TURNS BACK", 40)
+		D.banner(s, "THE AUDIT RE-RUNS", 40)
 	var speed: float = 0.8 if phase == 0 else 1.1
 	if phase > 0 and t >= 260: speed = -1.1
 	if phase > 0 and t > 220 and t < 260: speed = 0.0
@@ -300,7 +310,7 @@ static func _fling(s: Dictionary, e: Dictionary) -> void:
 		return
 
 # Take a Number: a ribbon of numbered tickets unrolls from the dispenser and
-# winds through the box like a snake. NOW SERVING: the dispenser lights, shows
+# winds through the box like a snake. NEXT, SWEETIE: the dispenser lights, shows
 # its aim, and fires a fan of tickets. Phase 1 adds a second ribbon from a
 # second dispenser.
 static func _ribbon_head(s: Dictionary, r: Dictionary, tau: float) -> Vector2:
@@ -348,10 +358,10 @@ static func _fan(s: Dictionary, e: Dictionary) -> void:
 		var a: float = float(e.aim) + (float(i) - float(count - 1) * 0.5) * 0.28
 		D.shot(s, {"space": "box", "x": float(e.x), "y": float(e.y), "vx": cos(a) * 2.2, "vy": sin(a) * 2.2, "collide": "rect", "w": 5.0, "h": 3.5, "rot": a, "shape": "ticket", "life": 220, "number": 50 + i})
 
-# Lost Umbrellas: closed umbrellas fall (every other one over you), shake, then
-# pop open into a ring of rain with one gap. Phase 1 umbrellas spin as they
+# Syllabus Week: rolled syllabi fall (every other one over you), shake, then
+# pop open into a ring of due dates with one gap. Phase 1 syllabi spin as they
 # open and sprinkle a spiral.
-static func _umbrellas(s: Dictionary, t: int, phase: int) -> void:
+static func _syllabus_week(s: Dictionary, t: int, phase: int) -> void:
 	var h: Vector2 = D.half(s)
 	if t == 0:
 		D.box_to(s, {"w": 220.0, "h": 124.0}, 24)
@@ -361,14 +371,14 @@ static func _umbrellas(s: Dictionary, t: int, phase: int) -> void:
 		var aimed: bool = int(t / every) % 2 == 0
 		var x: float = clampf(float(s.soul.x) + D.rand_range(s, -12.0, 12.0), -h.x + 12.0, h.x - 12.0) if aimed else D.rand_range(s, -h.x + 14.0, h.x - 14.0)
 		var spin: bool = phase > 0 and int(t / every) % 2 == 1
-		D.shot(s, {"space": "box", "x": x, "y": -h.y - 10.0, "vy": 1.0, "collide": "rect", "w": 2.5, "h": 9.0, "shape": "umbrella", "popAt": int(D.rand_range(s, 62.0, 80.0)), "spinPop": spin, "life": 400, "hue": int(D.rand(s) * 4.0)})
+		D.shot(s, {"space": "box", "x": x, "y": -h.y - 10.0, "vy": 1.0, "collide": "rect", "w": 2.5, "h": 9.0, "shape": "syllabus", "popAt": int(D.rand_range(s, 62.0, 80.0)), "spinPop": spin, "life": 400, "hue": int(D.rand(s) * 4.0)})
 	# Phase 1 sprinklers.
 	for b: Dictionary in s.bullets:
 		if b.get("sprinkle", 0) > 0 and t % 4 == 0:
 			b.sprinkle = int(b.sprinkle) - 1
 			for k: int in range(2):
 				var a: float = float(b.rot) + k * PI
-				D.shot(s, {"space": "box", "x": float(b.x), "y": float(b.y), "vx": cos(a) * 1.5, "vy": sin(a) * 1.5, "r": 2.0, "shape": "drop", "life": 160})
+				D.shot(s, {"space": "box", "x": float(b.x), "y": float(b.y), "vx": cos(a) * 1.5, "vy": sin(a) * 1.5, "r": 2.0, "shape": "due_date", "life": 160})
 
 static func _pop(s: Dictionary, b: Dictionary) -> void:
 	b.erase("popAt")
@@ -382,8 +392,8 @@ static func _pop(s: Dictionary, b: Dictionary) -> void:
 	for i: int in range(count):
 		if i == gap or i == (gap + 1) % count: continue
 		var a: float = float(i) * TAU / float(count)
-		D.shot(s, {"space": "box", "x": from.x, "y": from.y, "vx": cos(a) * 1.4, "vy": sin(a) * 1.4, "r": 2.2, "shape": "drop", "life": 200})
-	b.shape = "canopy"
+		D.shot(s, {"space": "box", "x": from.x, "y": from.y, "vx": cos(a) * 1.4, "vy": sin(a) * 1.4, "r": 2.2, "shape": "due_date", "life": 200})
+	b.shape = "unrolled"
 	b.collide = "none"
 	b.friendly = true
 	b.vx = 0.0; b.vy = -0.5
@@ -392,10 +402,10 @@ static func _pop(s: Dictionary, b: Dictionary) -> void:
 	if b.get("spinPop", false): b.sprinkle = 9
 	D.effect(s, "pulse", D.to_world(s, from), 14)
 
-# Many Hands: gloves clap shut from both sides along a red row at your height,
-# then pull back. Pointing gloves stamp CLAIMED down a red column. Phase 1
-# claps two rows at once and the box squeezes while they do.
-static func _many_hands(s: Dictionary, t: int, phase: int) -> void:
+# Advising Hold: sticky notes slap shut from both sides along a red row at your
+# height, then pull back. A HOLD stamp comes down a red column. Phase 1 slaps
+# two rows at once and the box squeezes while they do.
+static func _advising_hold(s: Dictionary, t: int, phase: int) -> void:
 	var h: Vector2 = D.half(s)
 	if t == 0:
 		D.box_to(s, {"w": 196.0, "h": 132.0}, 24)
@@ -412,7 +422,7 @@ static func _many_hands(s: Dictionary, t: int, phase: int) -> void:
 			D.warn(s, {"kind": "lane", "y": D.centre(s).y + row, "h": 9.0, "horizontal": true}, 38, row == rows[0])
 			for side: float in [-1.0, 1.0]:
 				var speed: float = 3.2
-				D.shot(s, {"space": "box", "x": side * (h.x + 14.0 + speed * 38.0), "y": row, "vx": -side * speed, "collide": "rect", "w": 11.0, "h": 8.0, "shape": "glove", "clap": true, "side": side, "life": 200})
+				D.shot(s, {"space": "box", "x": side * (h.x + 14.0 + speed * 38.0), "y": row, "vx": -side * speed, "collide": "rect", "w": 11.0, "h": 8.0, "shape": "sticky", "clap": true, "side": side, "life": 200})
 	var point_every: int = 90 if phase == 0 else 70
 	if t % point_every == 60 and t < int(s.length) - 90 and not _sweeping(s):
 		var xs: Array[float] = [clampf(float(s.soul.x), -h.x + 8.0, h.x - 8.0)]
@@ -422,10 +432,10 @@ static func _many_hands(s: Dictionary, t: int, phase: int) -> void:
 			s.flash[str(x)] = {"x": x, "until": int(s.clock) + 36}
 			s.queue.append({"at": t + 30, "kind": "stamp", "x": x})
 
-# Coat Rack: two rings of hangers circle the stand in the middle, in opposite
-# directions, breathing in and out. Hats are tossed from the corners at you.
-# Phase 1 reverses the rings halfway and hangers fly off the outer ring.
-static func _coat_rack(s: Dictionary, t: int, phase: int) -> void:
+# The Rolodex: two rings of index cards circle the Rolodex in the middle, in
+# opposite directions, breathing in and out. Pencils are tossed from the corners
+# at you. Phase 1 reverses the rings halfway and cards fly off the outer ring.
+static func _rolodex(s: Dictionary, t: int, phase: int) -> void:
 	var h: Vector2 = D.half(s)
 	if t == 0:
 		D.box_to(s, {"w": 208.0, "h": 132.0}, 24)
@@ -434,11 +444,11 @@ static func _coat_rack(s: Dictionary, t: int, phase: int) -> void:
 			for k: int in range(counts[ring]):
 				if ring == 0 and k >= 7: continue
 				if ring == 1 and k >= 13: continue
-				D.shot(s, {"space": "box", "collide": "rect", "w": 6.0, "h": 2.5, "shape": "hanger", "ring": ring, "slot": k, "slots": counts[ring], "life": 2000})
-		D.shot(s, {"space": "box", "x": 0.0, "y": 0.0, "r": 7.0, "shape": "stand", "hold": true, "life": 2000})
+				D.shot(s, {"space": "box", "collide": "rect", "w": 6.0, "h": 2.5, "shape": "index_card", "ring": ring, "slot": k, "slots": counts[ring], "life": 2000})
+		D.shot(s, {"space": "box", "x": 0.0, "y": 0.0, "r": 7.0, "shape": "rolodex_hub", "hold": true, "life": 2000})
 	if phase > 0 and t == 200:
 		D.warn(s, {"kind": "spin", "dir": -1.0}, 40, true)
-		D.banner(s, "THE RACK TURNS BACK", 40)
+		D.banner(s, "ROLODEX SPINS BACK", 40)
 	var rates: Array = s.spinRate
 	if phase > 0 and t >= 200 and t < 240: rates = [0.0, 0.0]
 	elif phase > 0 and t >= 240: rates = [-0.012, 0.010]
@@ -471,25 +481,29 @@ static func _coat_rack(s: Dictionary, t: int, phase: int) -> void:
 		var soul: Vector2 = Vector2(float(s.soul.x), float(s.soul.y))
 		var dir: Vector2 = (soul - corner * (h - Vector2(4, 4))).normalized()
 		D.warn(s, {"kind": "edge", "space": "box", "x": corner.x * (h.x - 6.0), "y": corner.y * (h.y - 6.0), "dir": dir}, 32)
-		s.queue.append({"at": t + 32, "kind": "hat", "cx": corner.x, "cy": corner.y})
+		s.queue.append({"at": t + 32, "kind": "pencil", "cx": corner.x, "cy": corner.y})
 
-static func _hat(s: Dictionary, e: Dictionary) -> void:
+static func _pencil(s: Dictionary, e: Dictionary) -> void:
 	var h: Vector2 = D.half(s)
 	var from: Vector2 = Vector2(float(e.cx) * (h.x + 6.0), float(e.cy) * (h.y + 6.0))
 	var dir: Vector2 = (Vector2(float(s.soul.x), float(s.soul.y)) - from).normalized()
-	D.shot(s, {"space": "box", "x": from.x, "y": from.y, "vx": dir.x * 2.0, "vy": dir.y * 2.0, "r": 5.0, "shape": "hat", "spin": 0.2, "life": 200})
+	D.shot(s, {"space": "box", "x": from.x, "y": from.y, "vx": dir.x * 2.0, "vy": dir.y * 2.0, "r": 5.0, "shape": "pencil", "spin": 0.2, "life": 200})
 
 # ---------------------------------------------------------------- drawing
+
+static func _pt(at: Vector2, turn: float, x: float, y: float) -> Vector2:
+	return at + Vector2(x, y).rotated(turn)
 
 static func draw_under(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 	var h: Vector2 = D.half(s)
 	var t: int = int(s.clock) - int(s.leadIn)
-	# Lost-property shelving: faint pigeonholes.
-	var x: float = -h.x + 32.0
-	while x < h.x:
-		c.draw_line(v.box_point(Vector2(x, -h.y)), v.box_point(Vector2(x, h.y)), Color(LILAC, 0.05), 1)
-		x += 32.0
-	if s.patternId == "baggage":
+	# A degree audit printout: faint ruled lines and a red margin.
+	var y: float = -h.y + 14.0
+	while y < h.y:
+		c.draw_line(v.box_point(Vector2(-h.x, y)), v.box_point(Vector2(h.x, y)), Color(LILAC, 0.05), 1)
+		y += 14.0
+	c.draw_line(v.box_point(Vector2(-h.x + 12.0, -h.y)), v.box_point(Vector2(-h.x + 12.0, h.y)), Color(ROSE, 0.07), 1)
+	if s.patternId == "degree_audit":
 		var inset: Vector2 = h - Vector2(11, 11)
 		for grow: float in [-7.0, 7.0]:
 			var r: Rect2 = Rect2(-inset - Vector2(grow, grow), (inset + Vector2(grow, grow)) * 2.0)
@@ -511,7 +525,7 @@ static func draw_under(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 				while d < 260.0:
 					c.draw_line(v.box_point(from + a * d), v.box_point(from + a * (d + 6.0)), Color(ROSE, blink), 1)
 					d += 12.0
-	if s.patternId == "coat_rack":
+	if s.patternId == "rolodex":
 		var centre: Vector2 = v.box_point(Vector2.ZERO)
 		for ring: int in range(2):
 			var base: float = 34.0 if ring == 0 else 60.0
@@ -523,7 +537,7 @@ static func draw_under(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 		for k: int in [-1, 0, 1]:
 			var dk: Vector2 = dir.rotated(k * 0.28 * (2.0 if int(s.phase) > 0 else 1.0))
 			c.draw_line(v.box_point(from2 + dk * 14.0), v.box_point(from2 + dk * 200.0), Color(ROSE, blink2 * (1.0 if k == 0 else 0.5)), 1)
-	# The tag, the owner and the returns, under their mint outlines.
+	# The ticket, the owner's pigeonhole and the returns, under their mint outlines.
 	var objs: Array = s.objectives
 	if bool(s.promised):
 		var tag: Dictionary = objs[0]
@@ -532,24 +546,29 @@ static func draw_under(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 			var o: Dictionary = objs[i]
 			var at: Vector2 = v.box_point(Vector2(float(o.x), float(o.y)))
 			if s.markers[i].get("noted", false):
-				c.draw_colored_polygon(v.quad(at, 7.0, 8.0, -0.1), Color(Color("f2ede0"), 0.9))
+				# A sticky note left on the pigeonhole.
+				c.draw_colored_polygon(v.quad(at, 7.0, 8.0, -0.1), Color(STICKY, 0.92))
 				for k: int in range(3):
-					c.draw_line(at + Vector2(-4, -4 + k * 3.5), at + Vector2(4 - k * 2, -4 + k * 3.5), Color(LILAC, 0.9), 1)
+					c.draw_line(at + Vector2(-4, -4 + k * 3.5), at + Vector2(4 - k * 2, -4 + k * 3.5), Color(Color("8a6a3c"), 0.9), 1)
 			elif o.active and not o.done:
-				# A coat hook: where a thing belongs.
-				c.draw_arc(at + Vector2(0, 1), 3.5, 0, PI, 8, Color(CREAM, 0.8), 2)
-				c.draw_line(at + Vector2(3.5, 1), at + Vector2(3.5, -5), Color(CREAM, 0.8), 2)
+				# A pigeonhole with a label card: where a thing belongs.
+				c.draw_polyline(PackedVector2Array([at + Vector2(-4.5, -4), at + Vector2(-4.5, 4), at + Vector2(4.5, 4), at + Vector2(4.5, -4)]), Color(CREAM, 0.8), 2)
+				c.draw_rect(Rect2(at + Vector2(-2.5, 5.5), Vector2(5, 2)), Color(CREAM, 0.8))
 
+## The numbered ticket you carry: a gold take-a-number stub with notched sides.
 static func _draw_tag(c: CanvasItem, at: Vector2, turn: float, alpha: float) -> void:
-	var q: PackedVector2Array = PackedVector2Array([at + Vector2(-5, -3).rotated(turn), at + Vector2(3, -3).rotated(turn), at + Vector2(6, 0).rotated(turn), at + Vector2(3, 3).rotated(turn), at + Vector2(-5, 3).rotated(turn)])
+	var q: PackedVector2Array = PackedVector2Array([
+		_pt(at, turn, -6, -3.5), _pt(at, turn, 6, -3.5), _pt(at, turn, 6, -1.2), _pt(at, turn, 4.6, 0), _pt(at, turn, 6, 1.2),
+		_pt(at, turn, 6, 3.5), _pt(at, turn, -6, 3.5), _pt(at, turn, -6, 1.2), _pt(at, turn, -4.6, 0), _pt(at, turn, -6, -1.2)])
 	c.draw_colored_polygon(q, Color(AMBER, alpha))
-	c.draw_circle(at + Vector2(3, 0).rotated(turn), 1.0, Color(INK, alpha))
-	c.draw_line(at + Vector2(-3, 0).rotated(turn), at + Vector2(0, 0).rotated(turn), Color(INK, alpha), 1)
+	c.draw_line(_pt(at, turn, -2.5, -1.2), _pt(at, turn, 2.0, -1.2), Color(INK, alpha), 1)
+	c.draw_line(_pt(at, turn, -2.5, 1.4), _pt(at, turn, 0.5, 1.4), Color(INK, alpha), 1)
+	c.draw_line(_pt(at, turn, 3.6, -2.5), _pt(at, turn, 3.6, 2.5), Color(INK, 0.5 * alpha), 1)
 
 static func draw_over(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 	var h: Vector2 = D.half(s)
 	var t: int = int(s.clock) - int(s.leadIn)
-	# The carried tag dangles from the soul.
+	# The carried ticket dangles from the soul.
 	if bool(s.carryTag) and not bool(s.done):
 		var soul: Vector2 = v.arena_point(D.soul_world(s))
 		var sway: float = sin(float(s.clock) * 0.15) * 2.0
@@ -561,7 +580,7 @@ static func draw_over(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 			var o: Dictionary = s.objectives[i]
 			var inward: float = -signf(float(o.x)) * 18.0
 			v.text(c, v.box_point(Vector2(float(o.x) + inward, float(o.y) - 12.0)), "note left", LILAC, 80)
-	# Sweep telegraph at the right edge: coats waiting, the gap in mint.
+	# Plan telegraph at the right edge: pages waiting, the free elective in mint.
 	for sweep: Dictionary in s.sweeps:
 		if float(sweep.x) <= h.x + 8.0: continue
 		var gy: float = float(sweep.gapY)
@@ -581,103 +600,139 @@ static func draw_over(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 			c.draw_rect(Rect2(at + Vector2(-12, -10), Vector2(24, 16)), CREAM, false, 1)
 			c.draw_rect(Rect2(at + Vector2(-6, 4), Vector2(12, 3)), INK)
 		if s.has("serving") and t < int(s.serving.until) + 20:
-			v.text(c, v.box_point(Vector2(0, -h.y - 2.0)) + Vector2(0, -24), "NOW SERVING %d" % int(s.serving.number), AMBER, 160)
-	if s.patternId == "many_hands":
+			v.text(c, v.box_point(Vector2(0, -h.y - 2.0)) + Vector2(0, -24), "NEXT, SWEETIE: %d" % int(s.serving.number), AMBER, 200)
+	if s.patternId == "advising_hold":
 		for key: String in s.flash:
 			var f: Dictionary = s.flash[key]
 			if int(s.clock) >= int(f.until): continue
 			var at2: Vector2 = v.box_point(Vector2(float(f.x), -h.y - 9.0))
-			_draw_glove(c, at2, PI * 0.5, 1.0, true)
+			_draw_stamper(c, at2, 1.0)
 
-static func _draw_glove(c: CanvasItem, at: Vector2, turn: float, alpha: float, pointing: bool) -> void:
-	var col: Color = Color(Color("f2ede0"), alpha)
-	var palm: PackedVector2Array = []
-	for i: int in range(10):
-		var a: float = i * TAU / 10.0
-		palm.append(at + Vector2(cos(a) * 6.0, sin(a) * 5.0).rotated(turn))
-	c.draw_colored_polygon(palm, col)
-	if pointing:
-		c.draw_line(at + Vector2(4, 0).rotated(turn), at + Vector2(11, 0).rotated(turn), col, 3)
-	else:
-		for k: int in range(4):
-			var y: float = -4.5 + k * 3.0
-			c.draw_line(at + Vector2(4, y).rotated(turn), at + Vector2(10, y).rotated(turn), col, 2)
-	c.draw_line(at + Vector2(-2, 4).rotated(turn), at + Vector2(3, 7).rotated(turn), col, 2)
-	c.draw_arc(at, 6.0, 0, TAU, 12, Color(INK, 0.5 * alpha), 1)
+## A rubber stamp hovering over the red column, base down.
+static func _draw_stamper(c: CanvasItem, at: Vector2, alpha: float) -> void:
+	var wood: Color = Color(Color("8a5a3c"), alpha)
+	c.draw_circle(at + Vector2(0, -12), 3.0, wood)
+	c.draw_rect(Rect2(at + Vector2(-1.5, -10), Vector2(3, 7)), wood)
+	c.draw_rect(Rect2(at + Vector2(-6, -3), Vector2(12, 5)), Color(TICKET_RED, alpha))
+	c.draw_rect(Rect2(at + Vector2(-6, -3), Vector2(12, 5)), Color(CREAM, alpha), false, 1)
+
+## A sticky note (the old clapping hand): pale yellow, a curled corner and a scribbled "see me".
+static func _draw_sticky(c: CanvasItem, at: Vector2, turn: float, alpha: float) -> void:
+	c.draw_colored_polygon(PackedVector2Array([_pt(at, turn, -9, -6.5), _pt(at, turn, 9, -6.5), _pt(at, turn, 9, 3.5), _pt(at, turn, 5.5, 6.5), _pt(at, turn, -9, 6.5)]), Color(STICKY, alpha))
+	c.draw_colored_polygon(PackedVector2Array([_pt(at, turn, 9, 3.5), _pt(at, turn, 5.5, 6.5), _pt(at, turn, 5.5, 3.5)]), Color(Color("c8a850"), alpha))
+	c.draw_line(_pt(at, turn, -9, -4.5), _pt(at, turn, 9, -4.5), Color(Color("d8bc58"), alpha), 1)
+	c.draw_line(_pt(at, turn, -6, -1.5), _pt(at, turn, 5, -1.5), Color(Color("8a6a3c"), alpha), 1)
+	c.draw_line(_pt(at, turn, -6, 1.2), _pt(at, turn, 1, 1.2), Color(Color("8a6a3c"), alpha), 1)
+	c.draw_line(_pt(at, turn, -6, 3.8), _pt(at, turn, -1, 3.8), Color(TICKET_RED, alpha), 1)
+	c.draw_polyline(PackedVector2Array([_pt(at, turn, -9, -6.5), _pt(at, turn, 9, -6.5), _pt(at, turn, 9, 3.5), _pt(at, turn, 5.5, 6.5), _pt(at, turn, -9, 6.5), _pt(at, turn, -9, -6.5)]), Color(INK, 0.45 * alpha), 1)
 
 static func draw_bullet(c: CanvasItem, b: Dictionary, at: Vector2, turn: float, alpha: float, v: Node2D) -> bool:
 	match str(b.shape):
-		"coat":
-			var col: Color = Color(COATS[int(b.get("hue", 0)) % COATS.size()], alpha)
-			c.draw_line(at + Vector2(0, -9), at + Vector2(0, -6.5), Color(CREAM, alpha), 1)
-			c.draw_colored_polygon(PackedVector2Array([at + Vector2(-3, -6.5), at + Vector2(3, -6.5), at + Vector2(6, 6.5), at + Vector2(-6, 6.5)]), col)
-			c.draw_line(at + Vector2(0, -6), at + Vector2(0, 6), Color(INK, 0.5 * alpha), 1)
-			c.draw_polyline(PackedVector2Array([at + Vector2(-3, -6.5), at + Vector2(3, -6.5), at + Vector2(6, 6.5), at + Vector2(-6, 6.5), at + Vector2(-3, -6.5)]), Color(CREAM, 0.6 * alpha), 1)
+		"plan_page":
+			# One page of the four-year plan: a tinted semester header and three lines of fine print.
+			var tint: Color = TINTS[int(b.get("hue", 0)) % TINTS.size()]
+			c.draw_colored_polygon(v.quad(at, 6.0, 6.5, turn), Color(PARCH, alpha))
+			c.draw_colored_polygon(v.quad(_pt(at, turn, 0, -4.8), 6.0, 1.7, turn), Color(tint, alpha))
+			for k: int in range(3):
+				c.draw_line(_pt(at, turn, -4, -0.8 + k * 2.6), _pt(at, turn, 4 - k * 1.5, -0.8 + k * 2.6), Color(INK, 0.55 * alpha), 1)
+			c.draw_polyline(v.quad(at, 6.0, 6.5, turn) + PackedVector2Array([v.quad(at, 6.0, 6.5, turn)[0]]), Color(CREAM, 0.6 * alpha), 1)
 			return true
-		"suitcase":
-			var hue: Color = COATS[int(b.get("hue", 0)) % COATS.size()].lightened(0.15)
+		"audit_card":
+			# A degree audit card: tinted header, two requirement lines and a checkbox. The card about
+			# to be flung shows an unchecked red box and shakes.
+			var tint2: Color = TINTS[int(b.get("hue", 0)) % TINTS.size()]
+			var flagged: bool = b.has("shake")
 			var shake: Vector2 = Vector2.ZERO
-			if b.has("shake") and b.has("belt"):
+			if flagged and b.has("belt"):
 				shake = Vector2(sin(float(b.age) * 1.9), cos(float(b.age) * 2.3)) * 1.5
-			var q: PackedVector2Array = v.quad(at + shake, float(b.w), float(b.h), turn)
-			c.draw_colored_polygon(q, Color(hue, alpha))
-			c.draw_polyline(q + PackedVector2Array([q[0]]), Color(ROSE if b.has("shake") else CREAM, alpha), 1)
-			c.draw_line(at + shake + Vector2(-3, -float(b.h)).rotated(turn), at + shake + Vector2(-3, -float(b.h) - 2.0).rotated(turn), Color(CREAM, alpha), 1)
-			c.draw_line(at + shake + Vector2(3, -float(b.h)).rotated(turn), at + shake + Vector2(3, -float(b.h) - 2.0).rotated(turn), Color(CREAM, alpha), 1)
-			c.draw_line(at + shake + Vector2(-3, -float(b.h) - 2.0).rotated(turn), at + shake + Vector2(3, -float(b.h) - 2.0).rotated(turn), Color(CREAM, alpha), 1)
+			var base: Vector2 = at + shake
+			var hw: float = float(b.w)
+			var hh: float = float(b.h)
+			var q: PackedVector2Array = v.quad(base, hw, hh, turn)
+			c.draw_colored_polygon(q, Color(PARCH, alpha))
+			c.draw_colored_polygon(v.quad(_pt(base, turn, 0, -hh + 1.5), hw, 1.5, turn), Color(tint2, alpha))
+			c.draw_line(_pt(base, turn, -1.0, 0.0), _pt(base, turn, hw - 1.5, 0.0), Color(INK, 0.6 * alpha), 1)
+			c.draw_line(_pt(base, turn, -1.0, 2.6), _pt(base, turn, hw - 3.5, 2.6), Color(INK, 0.6 * alpha), 1)
+			var box_at: Vector2 = _pt(base, turn, -hw + 3.4, 1.3)
+			var bq: PackedVector2Array = v.quad(box_at, 1.5, 1.5, turn)
+			c.draw_polyline(bq + PackedVector2Array([bq[0]]), Color(ROSE if flagged else TEAL, alpha), 1)
+			if flagged:
+				c.draw_line(_pt(box_at, turn, -1.2, -1.2), _pt(box_at, turn, 1.2, 1.2), Color(ROSE, alpha), 1)
+				c.draw_line(_pt(box_at, turn, 1.2, -1.2), _pt(box_at, turn, -1.2, 1.2), Color(ROSE, alpha), 1)
+			else:
+				c.draw_polyline(PackedVector2Array([_pt(box_at, turn, -1.0, 0.0), _pt(box_at, turn, -0.2, 1.0), _pt(box_at, turn, 1.4, -1.4)]), Color(TEAL, alpha), 1)
+			c.draw_polyline(q + PackedVector2Array([q[0]]), Color(ROSE if flagged else CREAM, alpha), 1)
 			return true
 		"ticket":
+			# A take-a-number ticket: red body, perforation and a printed number.
 			var q2: PackedVector2Array = v.quad(at, 5.0, 3.5, turn)
-			c.draw_colored_polygon(q2, Color(Color("f2ede0"), alpha))
-			c.draw_line(at + Vector2(-2, -3.5).rotated(turn), at + Vector2(-2, 3.5).rotated(turn), Color(TICKET_RED, alpha), 1)
-			c.draw_line(at + Vector2(0.5, -1).rotated(turn), at + Vector2(3.5, -1).rotated(turn), Color(INK, alpha), 1)
-			c.draw_line(at + Vector2(0.5, 1).rotated(turn), at + Vector2(2.5, 1).rotated(turn), Color(INK, alpha), 1)
+			c.draw_colored_polygon(q2, Color(TICKET_RED, alpha))
+			c.draw_line(_pt(at, turn, -2, -3.5), _pt(at, turn, -2, 3.5), Color(CREAM, 0.85 * alpha), 1)
+			c.draw_line(_pt(at, turn, 0.5, -1), _pt(at, turn, 3.5, -1), Color(CREAM, alpha), 1)
+			c.draw_line(_pt(at, turn, 0.5, 1), _pt(at, turn, 2.5, 1), Color(CREAM, alpha), 1)
+			c.draw_polyline(q2 + PackedVector2Array([q2[0]]), Color(Color("f2ede0"), 0.55 * alpha), 1)
 			return true
-		"umbrella":
-			var col2: Color = [ROSE, LILAC, AMBER, Color("6c8aa8")][int(b.get("hue", 0)) % 4]
+		"syllabus":
+			# A rolled syllabus: parchment tube, wooden ends and a red ribbon. It shakes before it opens.
 			var shake2: float = 0.0
 			if b.has("popAt") and int(b.age) > int(b.popAt) - 20: shake2 = sin(float(b.age) * 1.6) * 0.25
 			var tt: float = turn + shake2
-			c.draw_colored_polygon(PackedVector2Array([at + Vector2(0, -9).rotated(tt), at + Vector2(3, 4).rotated(tt), at + Vector2(-3, 4).rotated(tt)]), Color(col2, alpha))
-			c.draw_line(at + Vector2(0, 4).rotated(tt), at + Vector2(0, 9).rotated(tt), Color(CREAM, alpha), 1)
-			c.draw_arc(at + Vector2(-1.5, 9).rotated(tt), 1.5, tt, tt + PI, 6, Color(CREAM, alpha), 1)
+			c.draw_colored_polygon(v.quad(at, 2.6, 7.5, tt), Color(PARCH, alpha))
+			c.draw_colored_polygon(v.quad(_pt(at, tt, 0, -8.2), 3.4, 1.0, tt), Color(Color("8a5a3c"), alpha))
+			c.draw_colored_polygon(v.quad(_pt(at, tt, 0, 8.2), 3.4, 1.0, tt), Color(Color("8a5a3c"), alpha))
+			c.draw_colored_polygon(v.quad(_pt(at, tt, 0, -1.5), 2.9, 1.1, tt), Color(TICKET_RED, alpha))
+			c.draw_line(_pt(at, tt, -1.2, 2.5), _pt(at, tt, 1.2, 2.5), Color(INK, 0.5 * alpha), 1)
+			c.draw_line(_pt(at, tt, -1.2, 4.5), _pt(at, tt, 0.8, 4.5), Color(INK, 0.5 * alpha), 1)
 			if shake2 != 0.0: c.draw_arc(at, 11.0, 0, TAU, 14, Color(ROSE, 0.5 * alpha), 1)
 			return true
-		"canopy":
-			var col3: Color = [ROSE, LILAC, AMBER, Color("6c8aa8")][int(b.get("hue", 0)) % 4]
-			var pts: PackedVector2Array = []
-			for i: int in range(9):
-				var a: float = PI + i * PI / 8.0
-				pts.append(at + Vector2(cos(a) * 11.0, sin(a) * 7.0).rotated(turn))
-			c.draw_colored_polygon(pts, Color(col3, 0.7 * alpha))
-			c.draw_line(at, at + Vector2(0, 8).rotated(turn), Color(CREAM, alpha), 1)
+		"unrolled":
+			# The syllabus opened flat: a long page of due dates, curling at both ends.
+			c.draw_colored_polygon(v.quad(at, 11.0, 6.5, turn), Color(PARCH, 0.75 * alpha))
+			for k: int in range(4):
+				c.draw_line(_pt(at, turn, -8, -4.2 + k * 2.8), _pt(at, turn, 8 - k * 2.0, -4.2 + k * 2.8), Color(INK, 0.4 * alpha), 1)
+			c.draw_line(_pt(at, turn, -11, -6.5), _pt(at, turn, -11, 6.5), Color(Color("8a5a3c"), alpha), 2)
+			c.draw_line(_pt(at, turn, 11, -6.5), _pt(at, turn, 11, 6.5), Color(Color("8a5a3c"), alpha), 2)
 			return true
-		"glove":
-			var side: float = float(b.get("side", 1.0))
-			_draw_glove(c, at, turn + (PI if side > 0.0 else 0.0), alpha, false)
+		"due_date":
+			# A due date: a little calendar square with a red edge.
+			var dq: PackedVector2Array = v.quad(at, 2.4, 2.4, turn)
+			c.draw_colored_polygon(dq, Color(PARCH, alpha))
+			c.draw_polyline(dq + PackedVector2Array([dq[0]]), Color(ROSE, alpha), 1)
+			c.draw_line(_pt(at, turn, -1.2, -0.4), _pt(at, turn, 1.2, -0.4), Color(INK, 0.6 * alpha), 1)
 			return true
-		"stamp":
+		"sticky":
+			_draw_sticky(c, at, turn, alpha)
+			return true
+		"hold_stamp":
+			# ADVISING HOLD: a red block with a cream border and a struck-through account line.
 			c.draw_rect(Rect2(at - Vector2(6, 4), Vector2(12, 8)), Color(TICKET_RED, alpha))
 			c.draw_rect(Rect2(at - Vector2(6, 4), Vector2(12, 8)), Color(CREAM, alpha), false, 1)
-			c.draw_line(at + Vector2(-3, 0), at + Vector2(3, 0), Color(CREAM, alpha), 1)
+			c.draw_line(at + Vector2(-3.5, -1.5), at + Vector2(3.5, -1.5), Color(CREAM, alpha), 1)
+			c.draw_line(at + Vector2(-3.5, 1.5), at + Vector2(3.5, 1.5), Color(CREAM, alpha), 1)
 			return true
-		"hanger":
-			var tri: PackedVector2Array = PackedVector2Array([at + Vector2(-6, 2.5).rotated(turn), at + Vector2(6, 2.5).rotated(turn), at + Vector2(0, -2.5).rotated(turn)])
-			c.draw_polyline(tri + PackedVector2Array([tri[0]]), Color(CREAM, alpha), 1)
-			c.draw_arc(at + Vector2(0, -4).rotated(turn), 1.5, turn - PI, turn + 0.5, 6, Color(CREAM, alpha), 1)
+		"index_card":
+			# An index card on the Rolodex ring: cream, a red top rule and a teal tab line.
+			var cq: PackedVector2Array = v.quad(at, 6.0, 2.5, turn)
+			c.draw_colored_polygon(cq, Color(PARCH, alpha))
+			c.draw_line(_pt(at, turn, -6, -1.3), _pt(at, turn, 6, -1.3), Color(TICKET_RED, alpha), 1)
+			c.draw_line(_pt(at, turn, -5, 0.9), _pt(at, turn, 3, 0.9), Color(TEAL, 0.8 * alpha), 1)
+			c.draw_polyline(cq + PackedVector2Array([cq[0]]), Color(CREAM, 0.7 * alpha), 1)
 			if b.has("detachAt"): c.draw_arc(at, 8.0, 0, TAU, 12, Color(ROSE, 0.6 * alpha), 1)
 			return true
-		"stand":
-			c.draw_circle(at, 7.0, Color(Color("5a4636"), alpha))
+		"rolodex_hub":
+			c.draw_circle(at, 7.0, Color(Color("4a2f3a"), alpha))
 			c.draw_arc(at, 7.0, 0, TAU, 16, Color(AMBER, alpha), 1)
-			for k: int in range(4):
-				var a2: float = k * PI * 0.5 + float(v.pattern.clock) * 0.01
-				c.draw_line(at + Vector2.from_angle(a2) * 3.0, at + Vector2.from_angle(a2) * 9.0, Color(AMBER, alpha), 1)
+			for k: int in range(8):
+				var a2: float = k * PI * 0.25 + float(v.pattern.clock) * 0.01
+				c.draw_line(at + Vector2.from_angle(a2) * 3.5, at + Vector2.from_angle(a2) * 9.0, Color(PARCH, alpha), 1)
+			c.draw_circle(at, 2.0, Color(AMBER, alpha))
 			return true
-		"hat":
-			c.draw_circle(at, 5.0, Color(Color("3a3448"), alpha))
-			c.draw_arc(at, 5.0, 0, TAU, 14, Color(LILAC, alpha), 1)
-			c.draw_circle(at, 2.5, Color(Color("4a4458"), alpha))
-			c.draw_line(at + Vector2(-2.5, 0).rotated(turn), at + Vector2(2.5, 0).rotated(turn), Color(ROSE, alpha), 1)
+		"pencil":
+			# A sharpened pencil, tumbling: yellow barrel, wood tip, graphite point, eraser and band.
+			c.draw_colored_polygon(v.quad(at, 4.5, 1.5, turn), Color(Color("e8c040"), alpha))
+			c.draw_colored_polygon(PackedVector2Array([_pt(at, turn, 4.5, -1.5), _pt(at, turn, 7.5, 0), _pt(at, turn, 4.5, 1.5)]), Color(PARCH, alpha))
+			c.draw_line(_pt(at, turn, 6.6, 0), _pt(at, turn, 7.8, 0), Color(INK, alpha), 1)
+			c.draw_colored_polygon(v.quad(_pt(at, turn, -5.8, 0), 1.3, 1.5, turn), Color(ROSE, alpha))
+			c.draw_line(_pt(at, turn, -4.4, -1.5), _pt(at, turn, -4.4, 1.5), Color(CREAM, alpha), 1)
 			return true
 	return false

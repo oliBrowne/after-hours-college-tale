@@ -726,7 +726,7 @@ func living_speakers() -> Array[String]:
 		var name: String = names.get(str(npc.get_meta("id", "")), "")
 		if not name.is_empty() and not name in present: present.append(name)
 	for prop: Node2D in scene_props:
-		var name: String = {"claim":"CLAIM", "pinpal":"Pin Pal"}.get(str(prop.get_meta("id", "")), "")
+		var name: String = {"claim":"Advisor Bev", "pinpal":"Pin Pal"}.get(str(prop.get_meta("id", "")), "")
 		if not name.is_empty(): present.append(name)
 	return present
 
@@ -781,7 +781,7 @@ func interact(object: Dictionary) -> void:
 			if object.id == "flyer" and not state.flags.get("imani_joined", false):
 				dialogue([["Flyerer", "RETURN FIRST. RECRUIT LATER. RETURN FIRST!", "concern"]], resume_world); return
 			boss_id = "" if object.id == "flyer" else str(object.id)
-			var intro: Dictionary = {"flyer": [["Flyerer", "ONE PAGE! JUST ONE! THE CLUB CANNOT CLOSE IF NOBODY READS!", "concern"], ["Imani", "That poster was just a poster a minute ago. Now it has opinions. We should probably discuss that.", "concern"], ["Jules", "We can read one invitation. Or make enough room to walk past.", "neutral"]], "pinpal": [["Pin Pal", "RETURN SERVICE! RETURN SERVICE!", "warm"], ["Walt", "A bowling pin practicing returns. One ball at a time. I respect a clear job.", "warm"]], "claim": [["CLAIM", "TAKE A NUMBER. TAKE A COAT. TAKE A RESPONSIBILITY. EVERYTHING HAS AN OWNER.", "concern"], ["Jules", "That glove looks like it is waving.", "concern"], ["Imani", "We can carry one thing. We cannot be the owner of every forgotten thing.", "warm"]]}
+			var intro: Dictionary = {"flyer": [["Flyerer", "ONE PAGE! JUST ONE! THE CLUB CANNOT CLOSE IF NOBODY READS!", "concern"], ["Imani", "That poster was just a poster a minute ago. Now it has opinions. We should probably discuss that.", "concern"], ["Jules", "We can read one invitation. Or make enough room to walk past.", "neutral"]], "pinpal": [["Pin Pal", "RETURN SERVICE! RETURN SERVICE!", "warm"], ["Walt", "A bowling pin practicing returns. One ball at a time. I respect a clear job.", "warm"]], "claim": [["Advisor Bev", "HAVE YOU CHECKED YOUR DEGREE AUDIT, SWEETIE? TAKE A NUMBER. TAKE A FOLDER. EVERYTHING HERE HAS AN ADVISOR.", "concern"], ["Jules", "That glove looks like it is waving.", "concern"], ["Advisor Bev", "PAGE ONE OF THE FOUR-YEAR PLAN! ITEM 41, UNCLAIMED CREDIT! I HAVE SCHEDULED IT FOR SPRING OF NEVER.", "concern"], ["Imani", "Her desk plate says BEV. We can carry one thing, Bev. We cannot be the advisor of every forgotten thing.", "warm"]]}
 			dialogue(intro[str(object.id)], start_battle)
 		_:
 			if object.id == "squirrel": audio.combat("squirrel")
@@ -1329,7 +1329,7 @@ func command_menu() -> void:
 
 func connect_menu() -> void:
 	if boss_id in NativeFinalEncounter.IDS:final_connect_menu();return
-	var names: Dictionary = {"": ["Read the club's purpose", "Read one invitation", "Only one page tonight"], "chip": ["Ask for a small rehearsal", "Follow three called columns", "Applause can be quiet"], "deion": ["Ask for a clean handoff", "Carry the relay flag", "Practice, then take a break"], "todd": ["Ask what the form consents to", "Sign two consent boxes", "Allow unanswered questions"], "pinpal": ["Ask what needs returning", "Return three balls", "One ball at a time"], "claim": ["Identify the unclaimed glove", "Carry one numbered tag", "Return ONE thing; leave a note"]}
+	var names: Dictionary = {"": ["Read the club's purpose", "Read one invitation", "Only one page tonight"], "chip": ["Ask for a small rehearsal", "Follow three called columns", "Applause can be quiet"], "deion": ["Ask for a clean handoff", "Carry the relay flag", "Practice, then take a break"], "todd": ["Ask what the form consents to", "Sign two consent boxes", "Allow unanswered questions"], "pinpal": ["Ask what needs returning", "Return three balls", "One ball at a time"], "claim": ["Ask why the glove is on page one", "Carry one numbered ticket", "Return ONE thing; leave a note"]}
 	names.jakerson_final = ["Ask what he'll miss", "Sign three diploma lines", "We stay friends after this"]
 	names.jakerson = ["Ask what he's building", "Catch three green commits", "Spar's over when I say so"]
 	names.walt = ["Ask how the lantern helps", "Keep the light through three gusts", "We can clear one path"]
@@ -1726,7 +1726,7 @@ func show_aftermath(resolved_id: String) -> void:
 	var peaceful: bool = str(state.flags.get(resolved_id + "_resolution", "")) == "peaceful"
 	boss_id = ""
 	enter_room(str(state.room), Vector2(float(state.x), float(state.y)), false)
-	var aftermath: Dictionary = {"flyer": [["Flyerer", "One reader. One page. We can close now.", "warm"], ["Imani", "We did not promise forever. And it worked.", "warm"], ["Imani", "Now the atrium booth. I want to know why it used my voice.", "concern"]] if peaceful else [["Imani", "The stand's bent. I've left a note by the hinge.", "concern"], ["Jules", "Then we check that voice in the atrium.", "neutral"]], "pinpal": [["Pin Pal", "RETURN RECEIVED. THANK YOU FOR PLAYING.", "warm"]] if peaceful else [["Walt", "The housing's cracked. Leave it switched off.", "concern"], ["Jules", "I'll put the ball on the rack.", "neutral"]], "claim": [["CLAIM", "ONE RETURN. ONE NOTE. THE REST CAN WAIT.", "warm"], ["Pip", "I am coming with you. I can point. That is a surprisingly useful glove skill.", "warm"], ["Jules", "The booth has a maker. We find them, then find a way home.", "warm"], ["Mags", "Mags, from the cart out front. I heard all of that. Leaving something unfinished on purpose is harder than it looks.", "warm"]] if peaceful else [["Mags", "Mags, from the cart out front. The ticket spool broke; I'll sort it. Leave the glove with me?", "concern"], ["Pip", "Actually, I would like to come with them.", "warm"], ["Jules", "Then we find who made that booth. Together.", "warm"]]}
+	var aftermath: Dictionary = {"flyer": [["Flyerer", "One reader. One page. We can close now.", "warm"], ["Imani", "We did not promise forever. And it worked.", "warm"], ["Imani", "Now the atrium booth. I want to know why it used my voice.", "concern"]] if peaceful else [["Imani", "The stand's bent. I've left a note by the hinge.", "concern"], ["Jules", "Then we check that voice in the atrium.", "neutral"]], "pinpal": [["Pin Pal", "RETURN RECEIVED. THANK YOU FOR PLAYING.", "warm"]] if peaceful else [["Walt", "The housing's cracked. Leave it switched off.", "concern"], ["Jules", "I'll put the ball on the rack.", "neutral"]], "claim": [["Advisor Bev", "ONE RETURN. ONE NOTE. THE REST OF THE FOUR-YEAR PLAN CAN WAIT UNTIL OFFICE HOURS, SWEETIE.", "warm"], ["Pip", "I am coming with you. I can point. That is a surprisingly useful glove skill.", "warm"], ["Advisor Bev", "PIP, SWEETIE: I HAVE MOVED YOU FROM 'UNCLAIMED' TO 'UNDECLARED.' IT IS THE BEST MAJOR.", "warm"], ["Jules", "The booth has a maker. We find them, then find a way home.", "warm"], ["Mags", "Mags, from the cart out front. I heard all of that. Leaving something unfinished on purpose is harder than it looks.", "warm"]] if peaceful else [["Mags", "Mags, from the cart out front. The ticket spool broke; I'll sort it. Leave the glove with me?", "concern"], ["Pip", "Actually, I would like to come with them.", "warm"], ["Jules", "Then we find who made that booth. Together.", "warm"]]}
 	dialogue(aftermath.get(resolved_id, [[resolved_id.capitalize(), "Good practice. Remember to rest.", "warm"]]), func() -> void:
 		state.flags.aftermath_pending = ""
 		persist()
@@ -2028,7 +2028,7 @@ func command_summary(command: Dictionary) -> String:
 	return text
 
 func render_battle_ui() -> void:
-	var name: String = "FLYERER" if boss_id.is_empty() else "COACH PRIME" if boss_id == "deion" else "HOLD THE LIGHT" if boss_id == "walt" else "JAKERSON" if boss_id == "jakerson_final" else boss_id.to_upper()
+	var name: String = "FLYERER" if boss_id.is_empty() else "COACH PRIME" if boss_id == "deion" else "HOLD THE LIGHT" if boss_id == "walt" else "JAKERSON" if boss_id == "jakerson_final" else {"claim":"ADVISOR BEV"}.get(boss_id, boss_id.to_upper())
 	# Foe card: name, then real meters instead of bare numbers.
 	panel(Rect2(392, 8, 236, 62))
 	label(name, Rect2(404, 13, 212, 16), 12, AMBER)
@@ -2059,7 +2059,7 @@ func render_battle_ui() -> void:
 	if mode in [Mode.TELEGRAPH, Mode.DODGE]: progress = live_promise_progress() if battle.promise else "No promise this turn"
 	elif mode == Mode.BATTLE: progress = last_promise_result
 	if boss_id == "claim":
-		progress += ("\n" if not progress.is_empty() else "") + "Tag%s / Return%s / Boundary%s" % ["+" if claim_needs.tagDelivered else "-", "+" if claim_needs.oneReturned else "-", "+" if claim_needs.boundaryKept else "-"]
+		progress += ("\n" if not progress.is_empty() else "") + "Ticket%s / Return%s / Boundary%s" % ["+" if claim_needs.tagDelivered else "-", "+" if claim_needs.oneReturned else "-", "+" if claim_needs.boundaryKept else "-"]
 	if mode == Mode.BATTLE:
 		panel(Rect2(12, 166, 616, 142))
 		label(battle_error if not battle_error.is_empty() else caption.replace("Choose an action", "your turn"), Rect2(26, 175, 330, 16), 12, Color("e8837b") if not battle_error.is_empty() else AMBER)
@@ -2089,7 +2089,7 @@ func render_battle_ui() -> void:
 		panel(Rect2(12, 166, 616, 34))
 		label(action_text, Rect2(26, 175, 588, 16), 12, AMBER)
 	elif mode in [Mode.TELEGRAPH, Mode.DODGE]:
-		var instructions: Dictionary = {"": "Move through the paper gaps. Confirm briefly pushes paper away.", "chip": "Tap left / right to hop. Match the called safe column.", "deion": "%s: jump. %s: duck. Or use the buttons." % [binding_label("confirm"), binding_label("run")], "todd": "Move between stamps. RED AUDIT: stay still. Confirm signs boxes.", "pinpal": "Move left / right. Confirm near a ball to flip it back.", "claim": "Carry the outlined tag." if boss_stage == 0 else "Return one item. Confirm at a destination; leave the other a note."}
+		var instructions: Dictionary = {"": "Move through the paper gaps. Confirm briefly pushes paper away.", "chip": "Tap left / right to hop. Match the called safe column.", "deion": "%s: jump. %s: duck. Or use the buttons." % [binding_label("confirm"), binding_label("run")], "todd": "Move between stamps. RED AUDIT: stay still. Confirm signs boxes.", "pinpal": "Move left / right. Confirm near a ball to flip it back.", "claim": "Carry the outlined ticket." if boss_stage == 0 else "Return one item. Confirm at a pigeonhole; leave the other a note."}
 		instructions.cone="Follow each green row. Crossed-out rows are cancelled calls."
 		instructions.chad="Keep the FREE slot empty. Rest in the Do Not Disturb bubble."
 		instructions.rook=["Confirm at the key, then the exit.","CONNECT > REVISE chooses one exit. Hold its green box.","Move into each green cue and confirm together."][mini(2,boss_stage)]
@@ -2103,8 +2103,8 @@ func render_battle_ui() -> void:
 		instructions.autocomplete="Confirm at the green suggestion, then at the STOP box. Slip through the gaps."
 		var instruction: String = "Get ready" if mode == Mode.TELEGRAPH else str(pattern.get("phaseName", "Defense"))
 		if boss_id == "claim" and mode == Mode.DODGE:
-			instruction = "Tag carried / move to the outlined destination" if pattern.get("carryTag", false) else "Pick up the outlined tag"
-			if pattern.promiseComplete: instruction = "Tag delivered through the sweep." if int(pattern.phase) == 0 else "One return, one note. Promise kept." if battle.promise else "One return, one note completed."
+			instruction = "Ticket carried / move to the outlined pigeonhole" if pattern.get("carryTag", false) else "Pick up the outlined ticket"
+			if pattern.promiseComplete: instruction = "Ticket delivered through the plan." if int(pattern.phase) == 0 else "One return, one note. Promise kept." if battle.promise else "One return, one note completed."
 		if pattern.get("audit", false): instruction = "RED AUDIT / HOLD STILL"
 		# Three columns: how to play | arena | what the promise needs.
 		panel(Rect2(12, 166, 172, 120))
@@ -2304,7 +2304,7 @@ func present_impact() -> void:
 func stage_dialogue() -> void:
 	var speaker: String = str(dialogue_lines[line_index][0])
 	for prop: Node2D in scene_props:
-		if str(prop.get_meta("id", "")) == {"CLAIM":"claim", "Pin Pal":"pinpal"}.get(speaker, ""):
+		if str(prop.get_meta("id", "")) == {"Advisor Bev":"claim", "Pin Pal":"pinpal"}.get(speaker, ""):
 			prop.set_pose("tell")
 	for prop: Node2D in environment.foreground_nodes:
 		if prop is NativeSpatialProp and prop.definition.get("object") == "booth": prop.set_pose("tell" if speaker == "Booth" else "idle")
@@ -2409,7 +2409,7 @@ func live_promise_progress() -> String:
 		"pinpal": return "Balls returned %d/3" % mini(3, int(pattern.get("deflections", 0)))
 		"claim":
 			if int(pattern.get("phase", boss_stage)) == 0:
-				return "Tag %s / sweep %s\ndelivered %s" % ["held" if pattern.get("carryTag", false) else "open", "clear" if int(pattern.get("claimSweepPassed", 0)) > 0 else "open", "yes" if markers.size() > 1 and markers[1].get("collected", false) else "open"]
+				return "Ticket %s / plan %s\ndelivered %s" % ["held" if pattern.get("carryTag", false) else "open", "clear" if int(pattern.get("claimSweepPassed", 0)) > 0 else "open", "yes" if markers.size() > 1 and markers[1].get("collected", false) else "open"]
 			return "One return %s / note %s\nboundary %s" % ["done" if int(pattern.get("delivery", 0)) > 0 else "open", "left" if pattern.get("noteLeft", false) else "open", "kept" if claim_needs.boundaryKept or pattern.get("boundary", false) and pattern.get("promiseComplete", false) else "offered" if pattern.get("boundary", false) else "open"]
 	return ""
 

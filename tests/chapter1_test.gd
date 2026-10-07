@@ -83,7 +83,7 @@ func run() -> void:
 	for i: int in range(40):
 		if main.mode!=main.Mode.DIALOGUE:break
 		main.reveal=10000;main.advance_dialogue()
-	check(main.state.room=="U07" and main.state.flags.aftermath_pending=="" and main.state.flags.legacy_aftermath_pending=="","Resumed tutorial also completes the original pending CLAIM scene")
+	check(main.state.room=="U07" and main.state.flags.aftermath_pending=="" and main.state.flags.legacy_aftermath_pending=="","Resumed tutorial also completes the original pending Advisor Bev scene")
 	main.state=NativeState.fresh();main.state.flags.encore_resolution="peaceful"
 	NativeCampaign.aftermath(main,"encore")
 	for i: int in range(20):

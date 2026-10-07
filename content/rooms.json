@@ -1333,7 +1333,7 @@
         "lines": [
           [
             "Mags",
-            "Lost property has been returning things nobody remembers losing.",
+            "Lost property has been returning things nobody remembers losing. And somebody in there keeps asking about degree audits.",
             "neutral"
           ],
           [
@@ -2082,7 +2082,7 @@
       },
       {
         "id": "claim",
-        "name": "CLAIM / the coat rack",
+        "name": "Advisor Bev / the lost-property desk",
         "x": 660,
         "y": 212,
         "kind": "battle",
