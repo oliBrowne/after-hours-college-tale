@@ -4532,7 +4532,7 @@
       },
       {
         "id": "bookmark",
-        "name": "Bookmark / leave a useful place",
+        "name": "Bookmark / a place to stop",
         "x": 230,
         "y": 310,
         "kind": "inspect",
@@ -5213,7 +5213,7 @@
     "fixed_blocks": []
   },
   "N06": {
-    "name": "Closed archive / INDEX has not finished",
+    "name": "Closed archive / AUTOCOMPLETE is still typing",
     "cue": "umc",
     "objects": [
       {
@@ -5241,17 +5241,17 @@
           400
         ],
         "requires": [
-          "index_resolution"
+          "autocomplete_resolution"
         ]
       },
       {
-        "id": "index",
-        "name": "INDEX / every possible name",
+        "id": "autocomplete",
+        "name": "AUTOCOMPLETE / every possible sentence",
         "x": 480,
         "y": 345,
         "kind": "battle",
         "lines": [],
-        "sprite": "npc-index"
+        "sprite": "npc-autocomplete"
       },
       {
         "id": "reservation_ledger",

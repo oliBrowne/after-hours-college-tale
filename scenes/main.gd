@@ -721,7 +721,7 @@ func living_speakers() -> Array[String]:
 	var present: Array[String] = ["Jules"]
 	for member: String in ["imani", "walt", "pip"]:
 		if state.flags.get(member + "_joined", false): present.append(member.capitalize())
-	var names: Dictionary = {"jakerson":"Jakerson", "mara":"Mara", "eli":"Eli", "chip":"Chip", "deion":"Deion Sanders", "todd":"Todd Saliman", "flyer":"Flyerer", "mags":"Mags", "mags_cleanup":"Mags", "imani":"Imani", "cal":"Cal", "walt":"Walt", "encore":"ENCORE", "rook":"Rook", "nell":"Nell", "dev":"Dev", "errata":"ERRATA", "index":"INDEX", "loadbearer":"LOADBEARER", "eric":"Professor Eric"}
+	var names: Dictionary = {"jakerson":"Jakerson", "mara":"Mara", "eli":"Eli", "chip":"Chip", "deion":"Deion Sanders", "todd":"Todd Saliman", "flyer":"Flyerer", "mags":"Mags", "mags_cleanup":"Mags", "imani":"Imani", "cal":"Cal", "walt":"Walt", "encore":"ENCORE", "rook":"Rook", "nell":"Nell", "dev":"Dev", "errata":"ERRATA", "autocomplete":"AUTOCOMPLETE", "loadbearer":"LOADBEARER", "eric":"Professor Eric"}
 	for npc: AnimatedSprite2D in world_npcs:
 		var name: String = names.get(str(npc.get_meta("id", "")), "")
 		if not name.is_empty() and not name in present: present.append(name)
@@ -1283,9 +1283,9 @@ func begin_battle() -> void:
 	last_promise_result = ""
 	battle.rook_stage=0;battle.revision="";battle.val_revision="";battle.rejected=[];battle.val_stage=0;battle.final_ready=false;battle.val_force=false
 	battle.lantern_kept = false; battle.final_cue = false; battle.campus_promise = false
-	battle.hp = ({"cone":100,"chad":70,"rook":240,"val":200}[boss_id]) if boss_id in NativeFinalEncounter.IDS else (240 if boss_id=="index" else 100) if boss_id in NativeChapterTwo.BOSSES else 30 if boss_id == "jakerson" else 150 if boss_id == "jakerson_final" else 76 if boss_id == "walt" else 220 if boss_id == "encore" else 190 if boss_id == "claim" else 70 if boss_id == "pinpal" else int(BossDirector.profile(boss_id).maxHp) if not boss_id.is_empty() else 48
-	foe.sprite_frames = NativeCastArt.frames(boss_id.trim_suffix("_final") if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "flyer")
-	foe.play("idle_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "idle")
+	battle.hp = ({"cone":100,"chad":70,"rook":240,"val":200}[boss_id]) if boss_id in NativeFinalEncounter.IDS else (240 if boss_id=="autocomplete" else 100) if boss_id in NativeChapterTwo.BOSSES else 30 if boss_id == "jakerson" else 150 if boss_id == "jakerson_final" else 76 if boss_id == "walt" else 220 if boss_id == "encore" else 190 if boss_id == "claim" else 70 if boss_id == "pinpal" else int(BossDirector.profile(boss_id).maxHp) if not boss_id.is_empty() else 48
+	foe.sprite_frames = NativeCastArt.frames(boss_id.trim_suffix("_final") if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "flyer")
+	foe.play("idle_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "idle")
 	NativeCastArt.fit(foe, foe_height())
 	claim_art.set_pose("idle"); pin_art.set_pose("idle")
 	plan = []; actor = 0; target = 0; retreating = false; notice_ticks = 0
@@ -1336,7 +1336,7 @@ func connect_menu() -> void:
 	names.encore = ["Ask who gets to stop", "Answer two stopping cues", "A song can have an ending"]
 	names.errata=["Ask whose sentence it is", "Keep one sentence through three pauses", "Suggestions need consent"]
 	names.eric=["Ask what he's measuring", "Probe three test points", "The demo can ship as is"]
-	names.index=["Ask for the original voice", "Deliver one useful bookmark", "The other pages can wait"]
+	names.autocomplete=["Ask for the original voice", "Accept one useful suggestion", "Let the rest stay unwritten"]
 	var lines: Array = names[boss_id]
 	hint = "A promise creates a real objective in the next defense."
 	var choices: Array = [option(str(lines[0]), func() -> void: queue_command({"actor": actor, "kind": "connect", "label": str(lines[0])})), option(str(lines[1]), func() -> void: queue_command({"actor": actor, "kind": "promise", "label": str(lines[1])}))]
@@ -1411,7 +1411,7 @@ func item_menu() -> void:
 
 func release_ready() -> bool:
 	if boss_id in NativeFinalEncounter.IDS:return bool(battle.get("final_ready",false)) and (boss_stage==3 if boss_id=="val" else boss_stage==2 and battle.get("revision","") in ["west","east"] if boss_id=="rook" else true)
-	if boss_id in NativeChapterTwo.BOSSES:return bool(battle.get("campus_promise",false)) and boss_stage >= (2 if boss_id=="index" else 0)
+	if boss_id in NativeChapterTwo.BOSSES:return bool(battle.get("campus_promise",false)) and boss_stage >= (2 if boss_id=="autocomplete" else 0)
 	if boss_id == "claim": return ClaimNeeds.can_release(claim_needs)
 	if boss_id == "walt": return bool(battle.get("lantern_kept", false))
 	if boss_id == "encore": return boss_stage >= 2 and bool(battle.get("final_cue", false))
@@ -1534,7 +1534,7 @@ func start_phase() -> void:
 	elif boss_id == "claim":
 		boss_stage = ClaimNeeds.combat_phase(claim_needs, int(battle.hp), bool(battle.promise))
 		if battle.hp <= 70: peak_music = true
-	elif boss_id == "encore" or boss_id=="index":
+	elif boss_id == "encore" or boss_id=="autocomplete":
 		boss_stage = mini(2, boss_rounds)
 	elif boss_id in ["chip", "deion", "todd"]:
 		boss_stage = BossDirector.next_phase(boss_stage, int(battle.hp), int(BossDirector.profile(boss_id).maxHp), mini(2, boss_rounds))
@@ -1557,7 +1557,7 @@ func start_phase() -> void:
 	target = posmod(int(battle.turn), 3)
 	next_target(false)
 	dodge_goal = Vector2.INF; beat_defend = false
-	foe.play("interact_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "tell")
+	foe.play("interact_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "tell")
 	claim_art.set_pose("tell"); pin_art.set_pose("tell")
 	NativeBattleJuice.windup(claim_art if boss_id == "claim" else pin_art if boss_id == "pinpal" else foe)
 	audio.combat("whistle" if boss_id == "deion" else "stamp" if boss_id == "todd" else "warning")
@@ -1636,7 +1636,7 @@ func dodge_tick() -> void:
 		var success: bool = bool(pattern.promiseComplete)
 		var final_advanced: bool=NativeFinalCampaign.record_defense(self,success,bool(battle.promise)) if boss_id in NativeFinalEncounter.IDS else false
 		if battle.promise and success:
-			if boss_id in NativeChapterTwo.BOSSES and (boss_id!="index" or boss_stage==2):battle.campus_promise=true
+			if boss_id in NativeChapterTwo.BOSSES and (boss_id!="autocomplete" or boss_stage==2):battle.campus_promise=true
 			if boss_id == "walt": battle.lantern_kept = true
 			if boss_id == "encore" and boss_stage == 2: battle.final_cue = true
 		last_promise_result = ("Promise kept\n" if success else "Promise unfinished\n") + live_promise_progress() if battle.promise else ""
@@ -2100,7 +2100,7 @@ func render_battle_ui() -> void:
 		instructions.encore = "Follow the lit lane. When the cue box opens, move into it and confirm."
 		instructions.errata="Keep the sentence. Confirm in its green box during three marked pauses."
 		instructions.eric="Dodge the traces. With a promise, stand on each test point and press confirm to probe it."
-		instructions.index="Confirm at the top bookmark, then at the outlined return slot. Read moving margins."
+		instructions.autocomplete="Confirm at the green suggestion, then at the STOP box. Slip through the gaps."
 		var instruction: String = "Get ready" if mode == Mode.TELEGRAPH else str(pattern.get("phaseName", "Defense"))
 		if boss_id == "claim" and mode == Mode.DODGE:
 			instruction = "Tag carried / move to the outlined destination" if pattern.get("carryTag", false) else "Pick up the outlined tag"
@@ -2225,7 +2225,7 @@ func use_door(object: Dictionary) -> void:
 	for required: String in object.get("requires", []):
 		if not state.flags.get(required, false):
 			player.position += Vector2(0, 12)
-			message(str({"cal_key_received":"Ask Cal for the service key on the repair landing.", "walt_joined":"Find Walt in the underpass under Broadway first.", "claim_resolution":"Follow the voice into lost property first.", "chip_resolution":"Meet Chip on the audience lawn first.", "volunteers_released":"Finish one task with the volunteers in the tent.", "imani_performance":"Let Imani choose her song backstage.", "chapter1_complete":"Finish ENCORE on Farrand main stage.", "library_pass":"Speak to Nell at the checkout desk.", "stacks_shifted":"Turn the crank in the moving stacks.", "bookmark_found":"Pick up the bookmark in the reading room.", "errata_resolution":"Settle ERRATA in the moving stacks.", "dev_met":"Speak to Dev in the workshop.", "bridge_ready":"After Professor Eric's test, return to Dev to install the bridge.", "index_resolution":"Bring the source reel back to INDEX.", "playback_heard":"Listen to the reel in the playback room.", "chapter2_complete":"Hear the full reel in Norlin playback.", "notice_limits":"Read the notices in Old Main hall.", "booth_origin":"Read the original directory in the empty office.","rook_confessed":"Hear Rook in Old Main courtyard.","chapter3_complete":"Complete Todd\'s audit in Old Main.","attendees_freed":"Give the cloakroom guests a choice.","music_ready":"Let Imani finish the score in the orchestra pit.","rook_resolution":"Finish Rook\'s last shift on the balcony.","val_resolution":"Choose an ending on the graduation stage.","dawn_talk_read":"Talk with the party at the dawn exit."}.get(required, "Return the mixer, then help the living invitation.")))
+			message(str({"cal_key_received":"Ask Cal for the service key on the repair landing.", "walt_joined":"Find Walt in the underpass under Broadway first.", "claim_resolution":"Follow the voice into lost property first.", "chip_resolution":"Meet Chip on the audience lawn first.", "volunteers_released":"Finish one task with the volunteers in the tent.", "imani_performance":"Let Imani choose her song backstage.", "chapter1_complete":"Finish ENCORE on Farrand main stage.", "library_pass":"Speak to Nell at the checkout desk.", "stacks_shifted":"Turn the crank in the moving stacks.", "bookmark_found":"Pick up the bookmark in the reading room.", "errata_resolution":"Settle ERRATA in the moving stacks.", "dev_met":"Speak to Dev in the workshop.", "bridge_ready":"After Professor Eric's test, return to Dev to install the bridge.", "autocomplete_resolution":"Bring the source reel back to AUTOCOMPLETE.", "playback_heard":"Listen to the reel in the playback room.", "chapter2_complete":"Hear the full reel in Norlin playback.", "notice_limits":"Read the notices in Old Main hall.", "booth_origin":"Read the original directory in the empty office.","rook_confessed":"Hear Rook in Old Main courtyard.","chapter3_complete":"Complete Todd\'s audit in Old Main.","attendees_freed":"Give the cloakroom guests a choice.","music_ready":"Let Imani finish the score in the orchestra pit.","rook_resolution":"Finish Rook\'s last shift on the balcony.","val_resolution":"Choose an ending on the graduation stage.","dawn_talk_read":"Talk with the party at the dawn exit."}.get(required, "Return the mixer, then help the living invitation.")))
 			return
 	if object.to == "U05" and not state.flags.get("booth_seen", false):
 		message("Imani points to the NEXT YEAR booth. Check that voice first."); return
@@ -2309,7 +2309,7 @@ func stage_dialogue() -> void:
 	for prop: Node2D in environment.foreground_nodes:
 		if prop is NativeSpatialProp and prop.definition.get("object") == "booth": prop.set_pose("tell" if speaker == "Booth" else "idle")
 	pip.set_pose("wave" if speaker == "Pip" else "idle")
-	var identities: Dictionary = {"Cal":"cal", "Mags":"mags", "Nell":"nell", "Dev":"dev", "Rook":"rook", "Walt":"walt", "ENCORE":"encore", "ERRATA":"errata", "INDEX":"index", "LOADBEARER":"loadbearer", "Professor Eric":"eric", "VAL":"val", "Val":"val_small", "CONE COMMITTEE":"cone", "Chad":"chad", "Jakerson":"jakerson", "Mara":"mara", "Eli":"eli", "Chip":"chip", "Deion Sanders":"deion", "Todd Saliman":"todd", "Flyerer":"flyer"}
+	var identities: Dictionary = {"Cal":"cal", "Mags":"mags", "Nell":"nell", "Dev":"dev", "Rook":"rook", "Walt":"walt", "ENCORE":"encore", "ERRATA":"errata", "AUTOCOMPLETE":"autocomplete", "LOADBEARER":"loadbearer", "Professor Eric":"eric", "VAL":"val", "Val":"val_small", "CONE COMMITTEE":"cone", "Chad":"chad", "Jakerson":"jakerson", "Mara":"mara", "Eli":"eli", "Chip":"chip", "Deion Sanders":"deion", "Todd Saliman":"todd", "Flyerer":"flyer"}
 	if speaker != "Booth": NativeTalkMotion.stage(self, speaker, identities)
 	if speaker == "Booth":
 		strange_ticks = 120
