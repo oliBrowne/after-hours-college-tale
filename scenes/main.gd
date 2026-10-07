@@ -680,9 +680,9 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 			world.add_child(npc); world_npcs.append(npc)
 	NativeRoomScenes.reset()
 	NativeJakerson.on_enter(self, id)
-	NativeMoveIn.on_enter(self, id)
 	NativeSpatialProp.room_left = float(camera.limit_left); NativeSpatialProp.room_size = Vector2(float(camera.limit_right), float(camera.limit_bottom))
 	NativeSpatialProp.watch = [player, pip] + followers + world_npcs
+	NativeMoveIn.on_enter(self, id)
 	for source: Array in rooms[id].lights:
 		var pos := Vector2(source[0], source[1])
 		var light: PointLight2D = PointLight2D.new()

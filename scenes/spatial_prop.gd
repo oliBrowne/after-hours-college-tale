@@ -26,6 +26,7 @@ static var watch: Array = []
 static var room_size: Vector2 = Vector2(640, 360)
 static var room_left: float = 0.0
 var label_alpha: float = 1.0
+var art_seasons: Dictionary = {}
 
 ## Painted rooms hand props a sprite (drawn at its floor anchor) or mark them as already painted.
 func use_art(art: Dictionary, painted: bool) -> void:
@@ -33,6 +34,10 @@ func use_art(art: Dictionary, painted: bool) -> void:
 	if art.is_empty(): return
 	art_texture = NativeRoomArt.texture(str(art.texture))
 	art_anchor = Vector2(float(art.anchor[0]), float(art.anchor[1]))
+	# Season variants ("texture_winter", "flag_texture_spring", ...) follow flags.season.
+	for season: String in NativeSeason.SEASONS:
+		for key: String in ["texture", "flag_texture"]:
+			if art.has(key + "_" + season): art_seasons[key + "_" + season] = NativeRoomArt.texture(str(art[key + "_" + season]))
 	if art.has("flag"):
 		art_flag = str(art.flag); art_flag_texture = NativeRoomArt.texture(str(art.flag_texture))
 	queue_redraw()
@@ -92,7 +97,10 @@ func _draw() -> void:
 		exit_label(label, -width / 2, -h - 9, Color("c46a5c") if locked else AMBER, true)
 		return
 	if art_texture != null:
-		draw_texture(art_flag_texture if not art_flag.is_empty() and flags.get(art_flag, false) else art_texture, -art_anchor)
+		var key: String = "flag_texture" if not art_flag.is_empty() and flags.get(art_flag, false) else "texture"
+		var shown: Texture2D = art_flag_texture if key == "flag_texture" else art_texture
+		if not art_seasons.is_empty(): shown = art_seasons.get(key + "_" + NativeSeason.current(flags), shown)
+		draw_texture(shown, -art_anchor)
 		_draw_state_details(kind, w, h, l)
 		return
 	r(l + 2, -1, w, 3, Color(INK, 0.35))

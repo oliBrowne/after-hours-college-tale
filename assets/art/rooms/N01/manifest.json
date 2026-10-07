@@ -8,42 +8,54 @@
    "anchor": [
     94,
     71
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/N01/prop-0-winter.png",
+   "texture_fall": "res://assets/art/rooms/N01/prop-0-fall.png",
+   "texture_spring": "res://assets/art/rooms/N01/prop-0-spring.png"
   },
   "1": {
    "texture": "res://assets/art/rooms/N01/prop-1.png",
    "anchor": [
     78,
     35
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/N01/prop-1-winter.png"
   },
   "2": {
    "texture": "res://assets/art/rooms/N01/prop-2.png",
    "anchor": [
     69,
     138
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/N01/prop-2-winter.png",
+   "texture_fall": "res://assets/art/rooms/N01/prop-2-fall.png",
+   "texture_spring": "res://assets/art/rooms/N01/prop-2-spring.png"
   },
   "3": {
    "texture": "res://assets/art/rooms/N01/prop-3.png",
    "anchor": [
     74,
     150
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/N01/prop-3-winter.png",
+   "texture_fall": "res://assets/art/rooms/N01/prop-3-fall.png",
+   "texture_spring": "res://assets/art/rooms/N01/prop-3-spring.png"
   },
   "4": {
    "texture": "res://assets/art/rooms/N01/prop-4.png",
    "anchor": [
     13,
     70
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/N01/prop-4-winter.png"
   },
   "5": {
    "texture": "res://assets/art/rooms/N01/prop-5.png",
    "anchor": [
     36,
     51
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/N01/prop-5-winter.png"
   }
  },
  "label_only": [],
@@ -388,6 +400,13 @@
      12
     ]
    }
-  ]
- }
+  ],
+  "far_winter": "res://assets/art/rooms/N01/battle-far-winter.png",
+  "near_winter": "res://assets/art/rooms/N01/battle-near-winter.png",
+  "near_fall": "res://assets/art/rooms/N01/battle-near-fall.png",
+  "near_spring": "res://assets/art/rooms/N01/battle-near-spring.png"
+ },
+ "background_winter": "res://assets/art/rooms/N01/background-winter.png",
+ "background_fall": "res://assets/art/rooms/N01/background-fall.png",
+ "background_spring": "res://assets/art/rooms/N01/background-spring.png"
 }

@@ -154,7 +154,7 @@ texture. Room names that used to be printed at (25, 138) are dropped.
 | U07 | Pip's glove table is code (pip_table). Shelf 1 (lost_labels) and ticket 5 draw claim_resolution states. |
 | N04 | Sign "MARKED PASSAGE / OPEN" when `stacks_shifted`, "MARKED PASSAGE / TURN CRANK" otherwise. Shelves slide (see above). |
 | N05 | Birds in the garden (the old drawing had a small flock). |
-| N06 | Static sign "POSSIBLE LIVES / CLOSED ARCHIVE". |
+| N06 | AUTOCOMPLETE's lair: static toggle sign "AUTOCOMPLETE ENABLED" over the wall of screens (chat window titled SUGGESTED). |
 | N07 | A playback waveform animating on a screen (blink layers or several rect frames). |
 | E05 | "SOURCE RECOVERED" on the booth screen when `source_reel` is set. |
 | F02 | "SHIFT FINISHED" on the tent when `volunteers_released`. |

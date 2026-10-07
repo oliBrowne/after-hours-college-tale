@@ -7,18 +7,26 @@ extends Node2D
 const LEAF_COLORS: Array[Color] = [Color("c8682e"), Color("a83c32"), Color("d9a441"), Color("8c4a2a")]
 
 var spec: Dictionary = {}
+var flags: Dictionary = {}
 var elapsed: float = 0.0
 var reduced_motion: bool = false
 
 static func available(room_id: String) -> bool:
 	return NativeRoomArt.manifest(room_id).has("battle")
 
-func configure(room_id: String, flags: Dictionary = {}) -> void:
-	spec = NativeRoomArt.manifest(room_id).get("battle", {}).duplicate()
-	# Dawn variants replace the night images once the sun is up.
-	if bool(flags.get("dawn_started", false)):
-		for key: String in ["far", "near"]:
-			if spec.has(key + "_dawn"): spec[key] = spec[key + "_dawn"]
+func configure(room_id: String, room_flags: Dictionary = {}) -> void:
+	var source: Dictionary = NativeRoomArt.manifest(room_id).get("battle", {})
+	spec = source.duplicate()
+	flags = room_flags
+	# Dawn variants replace the night images once the sun is up; the season paints its changes
+	# over them (far_winter, near_winter, near_dawn_winter, ...: NativeSeason.overlay).
+	var dawn: bool = bool(room_flags.get("dawn_started", false))
+	for key: String in ["far", "near"]:
+		if not source.has(key): continue
+		spec[key] = source[key + "_dawn"] if dawn and source.has(key + "_dawn") else source[key]
+		var layer: Variant = NativeSeason.overlay(source, key, room_flags)
+		if layer != null: spec[key + "_season"] = layer
+	spec["layers"] = NativeSeason.adapt_layers(source.get("layers", []), room_flags)
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
 	queue_redraw()
 
@@ -31,9 +39,12 @@ func _draw() -> void:
 	# Reduced motion holds one still frame, picked so lights read as lit.
 	var t: float = 1.3 if reduced_motion else elapsed
 	draw_texture(NativeRoomArt.texture(str(spec.far)), Vector2.ZERO)
+	if spec.has("far_season"): draw_texture(NativeRoomArt.texture(str(spec.far_season)), Vector2.ZERO)
 	_draw_layers("far", t)
 	if spec.has("near"): draw_texture(NativeRoomArt.texture(str(spec.near)), Vector2.ZERO)
+	if spec.has("near_season"): draw_texture(NativeRoomArt.texture(str(spec.near_season)), Vector2.ZERO)
 	_draw_layers("near", t)
+	NativeSeason.draw_weather(self, flags, elapsed, reduced_motion, Vector2(640, 360))
 
 func _draw_layers(depth: String, t: float) -> void:
 	for layer: Dictionary in spec.get("layers", []):
@@ -140,6 +151,11 @@ static func _particles(c: CanvasItem, layer: Dictionary, t: float) -> void:
 				var y: float = area.position.y + _h(i, 8) * area.size.y + sin(t * 1.4 + i) * 2.0
 				c.draw_rect(Rect2(Vector2(area.position.x + x, y).round(), Vector2(length, 1)), Color(1, 0.94, 0.86, 0.22))
 				c.draw_rect(Rect2(Vector2(area.position.x + x + length * 0.3, y + 1).round(), Vector2(length * 0.4, 1)), Color(1, 0.94, 0.86, 0.12))
+			"petal":
+				var p: float = fposmod(t * float(speed[0]) * pace * 0.5 / area.size.x + _h(i, 2), 1.0)
+				var y: float = fposmod(_h(i, 4) * area.size.y + t * float(speed[1]) * pace * 0.6, area.size.y)
+				var at := (area.position + Vector2(p * area.size.x, y + sin(t * 1.6 + i) * 4.0)).round()
+				c.draw_rect(Rect2(at, Vector2.ONE if int(t * 3.0 + i) % 4 != 0 else Vector2(2, 1)), NativeSeason.SPRING_PETALS[i % NativeSeason.SPRING_PETALS.size()])
 			"dust":
 				var y: float = area.end.y - fposmod(t * float(speed[1]) * pace + _h(i, 4) * area.size.y, area.size.y)
 				var x: float = area.position.x + _h(i, 2) * area.size.x + sin(t * 0.7 + i) * 4.0
