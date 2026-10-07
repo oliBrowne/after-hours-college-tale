@@ -112,11 +112,13 @@ static func frames(id: String) -> SpriteFrames:
 		var idle: int = 0 if direction == "down" or object else 5 if direction == "up" else 4
 		poses["idle_" + direction] = [idle]
 		poses["walk_" + direction] = [idle, idle]
+		poses["run_" + direction] = [idle, idle]
 		poses["interact_" + direction] = [0, 1] if direction == "down" else [idle]
 	for name: String in poses:
 		result.add_animation(name)
 		result.set_animation_speed(name, 3.0)
 		for index: int in poses[name]: result.add_frame(name, body(id, index))
+	if id in ["mara", "eli", "chip", "deion"]: result.set_meta("walk_key", id); result.set_meta("walk_mirror_left", true)  # stepping cycles from tools/walk_cycle
 	animations[id] = result
 	return result
 

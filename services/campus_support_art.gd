@@ -21,8 +21,9 @@ static func frames(id: String) -> SpriteFrames:
 	var poses: Dictionary={"idle":[0],"tell":[2],"reaction":[3],"settled":[0],"hit":[3],"down":[3]}
 	for direction: String in ["down","up","right","left"]:
 		var base: int=5 if direction=="up" else 4 if direction in ["left","right"] else 0
-		poses["idle_"+direction]=[base];poses["interact_"+direction]=[0,2] if direction=="down" else [base]
+		poses["idle_"+direction]=[base];poses["walk_"+direction]=[base];poses["run_"+direction]=[base];poses["interact_"+direction]=[0,2] if direction=="down" else [base]
 	for name: String in poses:
 		frames.add_animation(name);frames.set_animation_speed(name,3);frames.set_animation_loop(name,str(name).begins_with("idle"))
 		for index: int in poses[name]:frames.add_frame(name,body(id,index))
+	frames.set_meta("walk_key",id);frames.set_meta("walk_mirror_left",true)  # stepping cycles from tools/walk_cycle
 	frame_cache[id]=frames;return frames

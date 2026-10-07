@@ -262,5 +262,423 @@
         52
       ]
     }
+  },
+  "cal": {
+    "right": {
+      "file": "cal-right.png",
+      "frames": 8,
+      "size": [
+        69,
+        59
+      ],
+      "foot": [
+        34,
+        56
+      ]
+    },
+    "down": {
+      "file": "cal-down.png",
+      "frames": 8,
+      "size": [
+        69,
+        59
+      ],
+      "foot": [
+        34,
+        56
+      ]
+    },
+    "up": {
+      "file": "cal-up.png",
+      "frames": 8,
+      "size": [
+        69,
+        59
+      ],
+      "foot": [
+        34,
+        56
+      ]
+    }
+  },
+  "mags": {
+    "right": {
+      "file": "mags-right.png",
+      "frames": 8,
+      "size": [
+        72,
+        61
+      ],
+      "foot": [
+        35,
+        57
+      ]
+    },
+    "down": {
+      "file": "mags-down.png",
+      "frames": 8,
+      "size": [
+        72,
+        61
+      ],
+      "foot": [
+        35,
+        57
+      ]
+    },
+    "up": {
+      "file": "mags-up.png",
+      "frames": 8,
+      "size": [
+        72,
+        61
+      ],
+      "foot": [
+        35,
+        57
+      ]
+    }
+  },
+  "mara": {
+    "right": {
+      "file": "mara-right.png",
+      "frames": 8,
+      "size": [
+        43,
+        58
+      ],
+      "foot": [
+        21,
+        55
+      ]
+    },
+    "down": {
+      "file": "mara-down.png",
+      "frames": 8,
+      "size": [
+        43,
+        58
+      ],
+      "foot": [
+        21,
+        55
+      ]
+    },
+    "up": {
+      "file": "mara-up.png",
+      "frames": 8,
+      "size": [
+        43,
+        58
+      ],
+      "foot": [
+        21,
+        55
+      ]
+    }
+  },
+  "eli": {
+    "right": {
+      "file": "eli-right.png",
+      "frames": 8,
+      "size": [
+        56,
+        58
+      ],
+      "foot": [
+        26,
+        56
+      ]
+    },
+    "down": {
+      "file": "eli-down.png",
+      "frames": 8,
+      "size": [
+        56,
+        58
+      ],
+      "foot": [
+        26,
+        56
+      ]
+    },
+    "up": {
+      "file": "eli-up.png",
+      "frames": 8,
+      "size": [
+        56,
+        58
+      ],
+      "foot": [
+        26,
+        56
+      ]
+    }
+  },
+  "chip": {
+    "right": {
+      "file": "chip-right.png",
+      "frames": 8,
+      "size": [
+        60,
+        61
+      ],
+      "foot": [
+        27,
+        58
+      ]
+    },
+    "down": {
+      "file": "chip-down.png",
+      "frames": 8,
+      "size": [
+        60,
+        61
+      ],
+      "foot": [
+        27,
+        58
+      ]
+    },
+    "up": {
+      "file": "chip-up.png",
+      "frames": 8,
+      "size": [
+        60,
+        61
+      ],
+      "foot": [
+        27,
+        58
+      ]
+    }
+  },
+  "deion": {
+    "right": {
+      "file": "deion-right.png",
+      "frames": 8,
+      "size": [
+        53,
+        62
+      ],
+      "foot": [
+        24,
+        59
+      ]
+    },
+    "down": {
+      "file": "deion-down.png",
+      "frames": 8,
+      "size": [
+        53,
+        62
+      ],
+      "foot": [
+        24,
+        59
+      ]
+    },
+    "up": {
+      "file": "deion-up.png",
+      "frames": 8,
+      "size": [
+        53,
+        62
+      ],
+      "foot": [
+        24,
+        59
+      ]
+    }
+  },
+  "todd": {
+    "right": {
+      "file": "todd-right.png",
+      "frames": 8,
+      "size": [
+        44,
+        77
+      ],
+      "foot": [
+        23,
+        71
+      ]
+    },
+    "down": {
+      "file": "todd-down.png",
+      "frames": 8,
+      "size": [
+        44,
+        77
+      ],
+      "foot": [
+        23,
+        71
+      ]
+    },
+    "up": {
+      "file": "todd-up.png",
+      "frames": 8,
+      "size": [
+        44,
+        77
+      ],
+      "foot": [
+        23,
+        71
+      ]
+    }
+  },
+  "nell": {
+    "right": {
+      "file": "nell-right.png",
+      "frames": 8,
+      "size": [
+        41,
+        54
+      ],
+      "foot": [
+        20,
+        52
+      ]
+    },
+    "down": {
+      "file": "nell-down.png",
+      "frames": 8,
+      "size": [
+        41,
+        54
+      ],
+      "foot": [
+        20,
+        52
+      ]
+    },
+    "up": {
+      "file": "nell-up.png",
+      "frames": 8,
+      "size": [
+        41,
+        54
+      ],
+      "foot": [
+        20,
+        52
+      ]
+    }
+  },
+  "dev": {
+    "right": {
+      "file": "dev-right.png",
+      "frames": 8,
+      "size": [
+        41,
+        57
+      ],
+      "foot": [
+        21,
+        54
+      ]
+    },
+    "down": {
+      "file": "dev-down.png",
+      "frames": 8,
+      "size": [
+        41,
+        57
+      ],
+      "foot": [
+        21,
+        54
+      ]
+    },
+    "up": {
+      "file": "dev-up.png",
+      "frames": 8,
+      "size": [
+        41,
+        57
+      ],
+      "foot": [
+        21,
+        54
+      ]
+    }
+  },
+  "rook": {
+    "right": {
+      "file": "rook-right.png",
+      "frames": 8,
+      "size": [
+        66,
+        67
+      ],
+      "foot": [
+        33,
+        62
+      ]
+    },
+    "down": {
+      "file": "rook-down.png",
+      "frames": 8,
+      "size": [
+        66,
+        67
+      ],
+      "foot": [
+        33,
+        62
+      ]
+    },
+    "up": {
+      "file": "rook-up.png",
+      "frames": 8,
+      "size": [
+        66,
+        67
+      ],
+      "foot": [
+        33,
+        62
+      ]
+    }
+  },
+  "val_small": {
+    "right": {
+      "file": "val_small-right.png",
+      "frames": 8,
+      "size": [
+        48,
+        60
+      ],
+      "foot": [
+        24,
+        58
+      ]
+    },
+    "down": {
+      "file": "val_small-down.png",
+      "frames": 8,
+      "size": [
+        48,
+        60
+      ],
+      "foot": [
+        24,
+        58
+      ]
+    },
+    "up": {
+      "file": "val_small-up.png",
+      "frames": 8,
+      "size": [
+        48,
+        60
+      ],
+      "foot": [
+        24,
+        58
+      ]
+    }
   }
 }

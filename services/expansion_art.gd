@@ -46,5 +46,6 @@ static func world_frames(id: String) -> SpriteFrames:
 	for name: String in poses:
 		frames.add_animation(name); frames.set_animation_speed(name,6.0)
 		for index: int in poses[name]: frames.add_frame(name, body(id,index))
+	if id=="rook": frames.set_meta("walk_key",id); frames.set_meta("walk_mirror_left",true)  # stepping cycles from tools/walk_cycle
 	frame_cache[id] = frames
 	return frames
