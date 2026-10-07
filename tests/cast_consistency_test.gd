@@ -21,12 +21,18 @@ func run() -> void:
 		for y: int in range(maxi(0,int(anchor.y)-floori(height*0.30)+1),base.get_height()):
 			for x: int in range(base.get_width()):unchanged=unchanged and base.get_pixel(x,y)==breathed.get_pixel(x,y)
 		check(unchanged,id+" feet/lower legs identical across breathing states")
-		var swaps: int=0;var last: int=0
+		# Breathing stays restrained; blinks and sway frames (NativeIdleArt extras, frame 2+) are counted apart.
+		var swaps: int=0;var last: int=0;var blink_ticks: int=0;var longest_blink: int=0;var run: int=0
+		var extras: Dictionary=frames.get_meta("idle_extras",{})
 		for tick: int in range(360):
 			NativeIdleMotion.apply(sprite,height,tick/60.0,false)
-			if sprite.frame!=last:swaps+=1;last=sprite.frame
+			var breath: int=1 if sprite.frame==1 else 0
+			if breath!=last:swaps+=1;last=breath
+			if extras.has("blink") and sprite.frame==int(extras.blink):blink_ticks+=1;run+=1;longest_blink=maxi(longest_blink,run)
+			else:run=0
 			check(sprite.position==at and sprite.offset==foot and sprite.scale==Vector2.ONE and sprite.rotation==0,id+" idle has no transform shimmer at tick "+str(tick))
-		check(swaps==2,id+" restrained idle makes only two held-pose transitions in six seconds")
+		check(swaps==2 or not (extras.get("sway",[]) as Array).is_empty(),id+" restrained idle makes only two held-pose transitions in six seconds (a swaying lantern owns its idle instead)")
+		if extras.has("blink"):check(blink_ticks>0 and longest_blink<=12,id+" blinks within six seconds and each blink is short")
 		NativeIdleMotion.apply(sprite,height,5.0,true)
 		check(sprite.frame==0 and not sprite.is_playing(),id+" reduced motion holds the neutral idle")
 		var size: Vector2=frames.get_frame_texture(idle,0).get_size()
