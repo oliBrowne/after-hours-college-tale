@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dg4pnpcmy4t0"
-path="res://.godot/imported/battle-drawer.png-eda7da5954c2ce0ab107302e963b2f28.ctex"
+uid="uid://bsjn2t2h24thq"
+path="res://.godot/imported/ghost-lawyer.png-ad27bd5881dae6b489db7be4e6693715.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/rooms/N06/battle-drawer.png"
-dest_files=["res://.godot/imported/battle-drawer.png-eda7da5954c2ce0ab107302e963b2f28.ctex"]
+source_file="res://assets/art/rooms/N06/ghost-lawyer.png"
+dest_files=["res://.godot/imported/ghost-lawyer.png-ad27bd5881dae6b489db7be4e6693715.ctex"]
 
 [params]
 

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dtl5dmpp5koog"
-path="res://.godot/imported/drawer-out.png-6d561a3002b4342ab54e9a8dc77917bf.ctex"
+uid="uid://bu7q4t4rh0kwb"
+path="res://.godot/imported/battle-ghost-accepted.png-c86ec5827fc2224dfc4a6248159e2558.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/art/rooms/N06/drawer-out.png"
-dest_files=["res://.godot/imported/drawer-out.png-6d561a3002b4342ab54e9a8dc77917bf.ctex"]
+source_file="res://assets/art/rooms/N06/battle-ghost-accepted.png"
+dest_files=["res://.godot/imported/battle-ghost-accepted.png-c86ec5827fc2224dfc4a6248159e2558.ctex"]
 
 [params]
 

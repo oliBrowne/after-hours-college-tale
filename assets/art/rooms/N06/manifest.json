@@ -6,14 +6,14 @@
   "0": {
    "texture": "res://assets/art/rooms/N06/prop-0.png",
    "anchor": [
-    77,
+    78,
     124
    ]
   },
   "1": {
    "texture": "res://assets/art/rooms/N06/prop-1.png",
    "anchor": [
-    77,
+    78,
     124
    ]
   },
@@ -79,283 +79,498 @@
  "layers": [
   {
    "kind": "blink",
-   "pattern": "1000000000",
-   "rate": 1.3,
-   "flag": "index_resolution",
-   "when": false,
-   "texture": "res://assets/art/rooms/N06/drawer-out.png",
-   "x": 24,
-   "y": 66
-  },
-  {
-   "kind": "blink",
-   "pattern": "0100000000",
-   "rate": 1.3,
-   "flag": "index_resolution",
-   "when": false,
-   "texture": "res://assets/art/rooms/N06/drawer-out.png",
-   "x": 706,
-   "y": 87
-  },
-  {
-   "kind": "blink",
-   "pattern": "0010000000",
-   "rate": 1.3,
-   "flag": "index_resolution",
-   "when": false,
-   "texture": "res://assets/art/rooms/N06/drawer-out.png",
-   "x": 760,
-   "y": 73
-  },
-  {
-   "kind": "blink",
-   "pattern": "0001000000",
-   "rate": 1.3,
-   "flag": "index_resolution",
-   "when": false,
-   "texture": "res://assets/art/rooms/N06/drawer-out.png",
-   "x": 696,
-   "y": 66
-  },
-  {
-   "kind": "blink",
-   "pattern": "0000100000",
-   "rate": 1.3,
-   "flag": "index_resolution",
-   "when": false,
-   "texture": "res://assets/art/rooms/N06/drawer-out.png",
-   "x": 78,
-   "y": 52
-  },
-  {
-   "kind": "blink",
-   "pattern": "0000010000",
-   "rate": 1.3,
-   "flag": "index_resolution",
-   "when": false,
-   "texture": "res://assets/art/rooms/N06/drawer-out.png",
-   "x": 750,
-   "y": 38
-  },
-  {
-   "kind": "blink",
-   "pattern": "0000001000",
-   "rate": 1.3,
-   "flag": "index_resolution",
-   "when": false,
-   "texture": "res://assets/art/rooms/N06/drawer-out.png",
-   "x": 760,
-   "y": 80
-  },
-  {
-   "kind": "blink",
-   "pattern": "0000000100",
-   "rate": 1.3,
-   "flag": "index_resolution",
-   "when": false,
-   "texture": "res://assets/art/rooms/N06/drawer-out.png",
-   "x": 696,
-   "y": 45
-  },
-  {
-   "kind": "blink",
-   "pattern": "0000000010",
-   "rate": 1.3,
-   "flag": "index_resolution",
-   "when": false,
-   "texture": "res://assets/art/rooms/N06/drawer-out.png",
-   "x": 696,
-   "y": 38
-  },
-  {
-   "kind": "blink",
-   "pattern": "0000000001",
-   "rate": 1.3,
-   "flag": "index_resolution",
-   "when": false,
-   "texture": "res://assets/art/rooms/N06/drawer-out.png",
-   "x": 112,
-   "y": 66
-  },
-  {
-   "kind": "blink",
-   "pattern": "10000000",
-   "rate": 5.0,
-   "flag": "index_resolution",
-   "when": false,
+   "pattern": "1101",
+   "rate": 3.0,
    "rects": [
     [
-     554,
-     18,
-     4,
-     3,
-     "f6ecd2"
+     445,
+     136,
+     1,
+     1,
+     "60f480"
     ],
     [
-     554,
-     18,
-     4,
+     697,
+     115,
      1,
-     "fff8e6"
+     1,
+     "ffbe40"
+    ],
+    [
+     412,
+     137,
+     1,
+     1,
+     "60f480"
     ],
     [
      555,
-     19,
-     2,
+     112,
      1,
-     "b0382e"
+     1,
+     "60f480"
+    ],
+    [
+     407,
+     132,
+     1,
+     1,
+     "ffbe40"
+    ],
+    [
+     89,
+     131,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     430,
+     128,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     496,
+     128,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     361,
+     133,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     562,
+     134,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     88,
+     69,
+     1,
+     1,
+     "6ab4ff"
+    ],
+    [
+     392,
+     137,
+     1,
+     1,
+     "ffbe40"
     ]
    ]
   },
   {
    "kind": "blink",
-   "pattern": "01000000",
-   "rate": 5.0,
-   "flag": "index_resolution",
-   "when": false,
+   "pattern": "0110",
+   "rate": 4.5,
    "rects": [
     [
-     554,
-     34,
-     4,
-     3,
-     "f6ecd2"
-    ],
-    [
-     554,
-     34,
-     4,
+     473,
+     137,
      1,
-     "fff8e6"
+     1,
+     "ffbe40"
     ],
     [
-     555,
-     35,
+     712,
+     120,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     450,
+     136,
+     1,
+     1,
+     "6ab4ff"
+    ],
+    [
+     710,
+     78,
+     1,
+     1,
+     "6ab4ff"
+    ],
+    [
+     480,
+     127,
+     1,
+     1,
+     "ffbe40"
+    ],
+    [
+     402,
+     132,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     478,
+     137,
+     1,
+     1,
+     "6ab4ff"
+    ],
+    [
+     397,
+     137,
+     1,
+     1,
+     "6ab4ff"
+    ],
+    [
+     327,
+     136,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     317,
+     131,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     495,
+     123,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     371,
+     134,
+     1,
+     1,
+     "60f480"
+    ]
+   ]
+  },
+  {
+   "kind": "blink",
+   "pattern": "1011",
+   "rate": 2.2,
+   "rects": [
+    [
+     562,
+     113,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     349,
+     133,
+     1,
+     1,
+     "ffbe40"
+    ],
+    [
+     561,
+     69,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     435,
+     136,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     468,
+     127,
+     1,
+     1,
+     "ffbe40"
+    ],
+    [
+     88,
+     62,
+     1,
+     1,
+     "6ab4ff"
+    ],
+    [
+     450,
+     128,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     711,
+     90,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     90,
+     62,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     440,
+     128,
+     1,
+     1,
+     "ffbe40"
+    ],
+    [
+     88,
+     49,
+     1,
+     1,
+     "6ab4ff"
+    ]
+   ]
+  },
+  {
+   "kind": "blink",
+   "pattern": "1110010",
+   "rate": 6.0,
+   "rects": [
+    [
+     549,
+     63,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     307,
+     131,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     445,
+     128,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     392,
+     132,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     707,
+     115,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     355,
+     133,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     562,
+     84,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     562,
+     47,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     407,
+     137,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     440,
+     136,
+     1,
+     1,
+     "60f480"
+    ],
+    [
+     554,
+     63,
+     1,
+     1,
+     "60f480"
+    ]
+   ]
+  },
+  {
+   "kind": "blink",
+   "pattern": "10",
+   "rate": 2.0,
+   "rects": [
+    [
+     386,
+     65,
      2,
-     1,
-     "b0382e"
+     9,
+     "e2fff6"
     ]
    ]
   },
   {
    "kind": "blink",
    "pattern": "00100000",
-   "rate": 5.0,
+   "rate": 1.2,
+   "texture": "res://assets/art/rooms/N06/ghost-lawyer.png",
+   "x": 394,
+   "y": 64,
    "flag": "index_resolution",
-   "when": false,
-   "rects": [
-    [
-     554,
-     50,
-     4,
-     3,
-     "f6ecd2"
-    ],
-    [
-     554,
-     50,
-     4,
-     1,
-     "fff8e6"
-    ],
-    [
-     555,
-     51,
-     2,
-     1,
-     "b0382e"
-    ]
-   ]
-  },
-  {
-   "kind": "blink",
-   "pattern": "00010000",
-   "rate": 5.0,
-   "flag": "index_resolution",
-   "when": false,
-   "rects": [
-    [
-     554,
-     66,
-     4,
-     3,
-     "f6ecd2"
-    ],
-    [
-     554,
-     66,
-     4,
-     1,
-     "fff8e6"
-    ],
-    [
-     555,
-     67,
-     2,
-     1,
-     "b0382e"
-    ]
-   ]
+   "when": false
   },
   {
    "kind": "blink",
    "pattern": "00001000",
-   "rate": 5.0,
+   "rate": 1.2,
+   "texture": "res://assets/art/rooms/N06/ghost-ceo.png",
+   "x": 394,
+   "y": 64,
    "flag": "index_resolution",
-   "when": false,
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "00000011",
+   "rate": 1.2,
+   "texture": "res://assets/art/rooms/N06/ghost-accepted.png",
+   "x": 394,
+   "y": 64,
+   "flag": "index_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "1000",
+   "rate": 5.0,
    "rects": [
     [
-     554,
-     82,
-     4,
-     3,
-     "f6ecd2"
+     480,
+     52,
+     2,
+     2,
+     "fafaff"
     ],
     [
-     554,
-     82,
-     4,
-     1,
-     "fff8e6"
-    ],
-    [
-     555,
-     83,
+     480,
+     54,
      2,
      1,
-     "b0382e"
+     "ccceec"
     ]
    ]
   },
   {
    "kind": "blink",
-   "pattern": "00000100",
+   "pattern": "0100",
    "rate": 5.0,
-   "flag": "index_resolution",
-   "when": false,
    "rects": [
     [
-     554,
-     98,
-     4,
-     3,
-     "f6ecd2"
+     485,
+     52,
+     2,
+     2,
+     "fafaff"
     ],
     [
-     554,
-     98,
-     4,
-     1,
-     "fff8e6"
-    ],
-    [
-     555,
-     99,
+     485,
+     54,
      2,
      1,
-     "b0382e"
+     "ccceec"
     ]
    ]
+  },
+  {
+   "kind": "blink",
+   "pattern": "0010",
+   "rate": 5.0,
+   "rects": [
+    [
+     490,
+     52,
+     2,
+     2,
+     "fafaff"
+    ],
+    [
+     490,
+     54,
+     2,
+     1,
+     "ccceec"
+    ]
+   ]
+  },
+  {
+   "kind": "movers",
+   "from": [
+    62,
+    21
+   ],
+   "to": [
+    290,
+    21
+   ],
+   "count": 3,
+   "period": 2.6,
+   "size": [
+    2,
+    2
+   ],
+   "color": "6eecd0",
+   "ease": "out"
+  },
+  {
+   "kind": "movers",
+   "from": [
+    742,
+    21
+   ],
+   "to": [
+    510,
+    21
+   ],
+   "count": 2,
+   "period": 2.2,
+   "size": [
+    2,
+    2
+   ],
+   "color": "6eecd0",
+   "ease": "out"
   },
   {
    "kind": "twinkle",
@@ -385,16 +600,16 @@
      1
     ],
     [
-     370,
-     65,
-     "fde9b6",
-     1
-    ],
-    [
      95,
      252,
      "fff0c4",
      2
+    ],
+    [
+     336,
+     21,
+     "96ecda",
+     1
     ]
    ],
    "rate": 1.1,
@@ -414,7 +629,7 @@
     1,
     2
    ],
-   "color": "fde9b6"
+   "color": "c8f4e8"
   }
  ],
  "battle": {
@@ -422,93 +637,346 @@
   "layers": [
    {
     "kind": "blink",
-    "pattern": "100000000",
-    "rate": 1.4,
-    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
-    "x": 496,
-    "y": 120
+    "pattern": "1101",
+    "rate": 3.0,
+    "rects": [
+     [
+      175,
+      66,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      454,
+      71,
+      1,
+      1,
+      "ffbe40"
+     ],
+     [
+      182,
+      65,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      99,
+      46,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      179,
+      42,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      295,
+      110,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      99,
+      28,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      91,
+      121,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      322,
+      104,
+      1,
+      1,
+      "ffbe40"
+     ]
+    ]
    },
    {
     "kind": "blink",
-    "pattern": "010000000",
-    "rate": 1.4,
-    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
-    "x": 19,
-    "y": 40
+    "pattern": "0110",
+    "rate": 4.4,
+    "rects": [
+     [
+      322,
+      109,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      89,
+      31,
+      1,
+      1,
+      "6ab4ff"
+     ],
+     [
+      362,
+      110,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      175,
+      127,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      186,
+      71,
+      1,
+      1,
+      "ffbe40"
+     ],
+     [
+      99,
+      12,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      175,
+      10,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      95,
+      28,
+      1,
+      1,
+      "ffbe40"
+     ]
+    ]
    },
    {
     "kind": "blink",
-    "pattern": "001000000",
-    "rate": 1.4,
-    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
-    "x": 19,
-    "y": 100
+    "pattern": "1011",
+    "rate": 2.3,
+    "rects": [
+     [
+      175,
+      72,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      333,
+      105,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      465,
+      72,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      333,
+      110,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      87,
+      47,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      176,
+      51,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      355,
+      109,
+      1,
+      1,
+      "ffbe40"
+     ],
+     [
+      94,
+      46,
+      1,
+      1,
+      "60f480"
+     ]
+    ]
    },
    {
     "kind": "blink",
-    "pattern": "000100000",
-    "rate": 1.4,
-    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
-    "x": 134,
-    "y": 73
+    "pattern": "1110010",
+    "rate": 6.0,
+    "rects": [
+     [
+      88,
+      68,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      186,
+      126,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      87,
+      13,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      182,
+      71,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      545,
+      121,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      95,
+      121,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      458,
+      71,
+      1,
+      1,
+      "60f480"
+     ],
+     [
+      94,
+      12,
+      1,
+      1,
+      "60f480"
+     ]
+    ]
    },
    {
     "kind": "blink",
-    "pattern": "000010000",
-    "rate": 1.4,
-    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
-    "x": 454,
-    "y": 87
+    "pattern": "10",
+    "rate": 2.0,
+    "rects": [
+     [
+      320,
+      75,
+      2,
+      9,
+      "e2fff6"
+     ]
+    ]
    },
    {
     "kind": "blink",
-    "pattern": "000001000",
-    "rate": 1.4,
-    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
-    "x": 41,
-    "y": 47
+    "pattern": "00100000",
+    "rate": 1.2,
+    "texture": "res://assets/art/rooms/N06/battle-ghost-lawyer.png",
+    "x": 327,
+    "y": 74
    },
    {
     "kind": "blink",
-    "pattern": "000000100",
-    "rate": 1.4,
-    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
-    "x": 570,
-    "y": 100
+    "pattern": "00001000",
+    "rate": 1.2,
+    "texture": "res://assets/art/rooms/N06/battle-ghost-ceo.png",
+    "x": 327,
+    "y": 74
    },
    {
     "kind": "blink",
-    "pattern": "000000010",
-    "rate": 1.4,
-    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
-    "x": 102,
-    "y": 114
+    "pattern": "00000011",
+    "rate": 1.2,
+    "texture": "res://assets/art/rooms/N06/battle-ghost-accepted.png",
+    "x": 327,
+    "y": 74
+   },
+   {
+    "kind": "movers",
+    "from": [
+     274,
+     7
+    ],
+    "to": [
+     292,
+     42
+    ],
+    "count": 3,
+    "period": 1.8,
+    "size": [
+     3,
+     1
+    ],
+    "color": "6eecd0",
+    "ease": "out"
+   },
+   {
+    "kind": "movers",
+    "from": [
+     366,
+     7
+    ],
+    "to": [
+     348,
+     42
+    ],
+    "count": 3,
+    "period": 1.8,
+    "size": [
+     3,
+     1
+    ],
+    "color": "6eecd0",
+    "ease": "out"
    },
    {
     "kind": "twinkle",
     "points": [
      [
-      278,
-      42,
-      "fde9b6",
-      1
-     ],
-     [
-      362,
-      42,
-      "fde9b6",
-      1
-     ],
-     [
-      263,
-      23,
-      "fde9b6",
-      1
-     ],
-     [
-      377,
-      23,
-      "fde9b6",
+      261,
+      41,
+      "96ecda",
       1
      ],
      [
@@ -524,9 +992,9 @@
       1
      ],
      [
-      309,
-      61,
-      "f6cf7a",
+      320,
+      76,
+      "96ecda",
       0
      ]
     ],
@@ -547,7 +1015,7 @@
      1,
      2
     ],
-    "color": "fde9b6"
+    "color": "c8f4e8"
    },
    {
     "kind": "fauna",

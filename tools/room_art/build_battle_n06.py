@@ -1,13 +1,15 @@
-"""Battle backdrop for the closed archive (N06): INDEX's hall of possible lives.
+"""Battle backdrop for the closed archive (N06): down AUTOCOMPLETE's aisle.
 
-Behind the fighters a wall of card-index drawers runs floor to cornice, a few drawers pulled out
-and bristling with cards. In the middle it opens into a long gallery, its walls drawers too, where
-rows of oak ceremony chairs - roped with a red sash, a RESERVED card on every back - wait on both
-sides of a crimson aisle for a ceremony that never starts. At the far end the closed archive's
-lattice grille glows faintly, chained shut; the enamelled board POSSIBLE LIVES / CLOSED ARCHIVE
-hangs over the aisle on chains from a coffered ceiling, green-shaded pendants above the chairs.
-A brass catalogue rose is let into the floor where INDEX stands. Drawers slide out and back,
-index cards drift down through the lamplight, the lamps breathe."""
+Behind the fighters the archive's stacks run floor to cornice, every few bays split by a server
+rack forced in between the books, LEDs flickering. In the middle the wall opens into a long aisle
+whose walls are the same: oak shelves of books alternating with racks. Two ladder cable trays run
+along the ceiling toward the far end, data pulses racing down them, and over the aisle hangs the lit
+settings toggle AUTOCOMPLETE ENABLED. At the end of the aisle, where the closed archive's grille
+was, the wall of screens glows: the big chat window (SUGGESTED, > I WANT TO / BECOME A, the cursor
+blinking before a ghost suggestion that keeps changing, suggestion chips) between narrow
+monitors, rack units along its foot. The floor down the aisle is raised data-floor tiles lit teal
+by the screens, stone flags either side, cables taped along the edges; a teal ring marks the spot
+where AUTOCOMPLETE stands. Library lamps hang at the front; loose pages drift toward the screens."""
 import paths
 import os
 import sys
@@ -16,30 +18,32 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import numpy as np
 from pixel import Canvas, C, shade, text, text_width
 from props import OUT, IRON
-from lib_norlin import stone_wall, shade_pendant, ceiling_band, OAK, OAK_DARK, BRASS, PAGE, GILT, STONE_N, LIME, LAMP_GREEN
-from lib_norlin2 import (index_wall, index_wall_slots, drawer_out, archive_cage, two_line_plaque, chair_row_back,
-                         VAULT, SASH)
-from persp import View, hash2, fog, pal_array, rgba_of, warm_light, texture_lookup, ROOM_TO_BATTLE
+from lib_norlin import stone_wall, shade_pendant, OAK_DARK, STONE_N
+from lib_norlin2 import VAULT
+from n06_lib import (stacks_texture, far_screens, toggle_sign, RACK, TEAL, SCREEN, LED, GLOW, GLOW_HI, GHOST2, CORDS, CABLE)
+from persp import View, hash2, fog, pal_array, rgba_of, warm_light, texture_lookup
 
 ROOM = "N06"
 INK = "#10121e"
-HAZE = "#17131a"
-Z_NEAR = 430.0            # the drawer wall behind the fighters
-Z_END = 860.0             # the closed archive's grille wall
-GAL = 150.0               # half width of the gallery
-WALL_H = 172.0            # drawers up to the cornice
-CEIL = 246.0              # coffered ceiling over the gallery
-SIDE = 720.0              # how far the front drawer wall runs out sideways
-CHAIR_ROWS = [500.0, 570.0, 640.0, 710.0, 780.0]
-PENDANTS = [(-92.0, 520.0), (92.0, 520.0), (-92.0, 700.0), (92.0, 700.0)]
+HAZE = "#11161e"
+Z_NEAR = 430.0            # the stacks wall behind the fighters
+Z_END = 860.0             # the wall of screens
+GAL = 170.0               # half width of the aisle
+WALL_H = 172.0            # stacks up to the cornice
+CEIL = 200.0              # ceiling over the aisle
+SIDE = 720.0              # how far the front stacks wall runs out sideways
+AISLE = 66.0              # half width of the raised data floor
+TRAYS = [-74.0, 74.0]     # cable trays along the ceiling (X)
 FRONT_LAMPS = [(-250.0, 372.0), (250.0, 372.0)]
-ROSE = (173.0, 352.0)     # under INDEX
-DW, DH = 12, 8            # drawer size in world units (about 9 x 6 px on the near wall)
+SPOT = (173.0, 352.0)     # under AUTOCOMPLETE
+TEAL_LIGHT = "#54cabc"
+SIDE_LAYOUT = [("shelf", 70), ("rack", 30), ("shelf", 96), ("rack", 30), ("rack", 30), ("shelf", 84), ("rack", 30), ("shelf", 120)]
+FRONT_LAYOUT = [("rack", 34), ("shelf", 84), ("rack", 34), ("shelf", 120), ("rack", 34), ("shelf", 96)]
 
 
 def floor_shader(X, Z):
-    """Chequered stone flags, the crimson aisle between the chair rows, the brass rose under INDEX,
-    lamp pools."""
+    """Stone flags either side, raised perforated data-floor tiles down the aisle with a teal edge,
+    cables along its sides, the teal ring under AUTOCOMPLETE, lamp pools and the screens' glow."""
     v = pal_array(VAULT)
     size = 40.0
     i, j = np.floor(X / size), np.floor(Z / size)
@@ -49,185 +53,210 @@ def floor_shader(X, Z):
     rgb[(gx < 0.04) | (gz < 0.05)] = v[1]
     grain = hash2(np.floor(X / 3), np.floor(Z / 4), 9) > 0.88
     rgb[grain] *= 0.94
-    # the aisle runner
-    red = pal_array(["#1e0e12", "#3a141a", "#5a1a22", "#7a2a2e", "#c0884a", "#e0b26a"])
+    # the raised data floor down the aisle
+    r = pal_array(RACK)
     ax = np.abs(X)
-    run = (ax < 34) & (Z > Z_NEAR - 30) & (Z < Z_END)
-    rgb[run] = red[2]
-    rgb[run & (ax > 29)] = red[1]
-    rgb[run & (np.abs(ax - 26) < 1.3)] = red[4]
-    lz = (Z % 46.0) - 23
-    rgb[run & (ax + np.abs(lz) * 0.8 < 12)] = red[3]
-    rgb[run & (ax + np.abs(lz) * 0.8 < 3)] = red[5]
-    # brass catalogue rose under INDEX
-    rx, rz = ROSE
-    d = np.hypot((X - rx) / 1.0, (Z - rz) * 1.25)
-    brass = pal_array(BRASS)
-    rgb[np.abs(d - 70) < 2.2] = brass[2]
-    rgb[np.abs(d - 60) < 1.4] = brass[1]
+    aisle = (ax < AISLE) & (Z > Z_NEAR - 40)
+    ts = 2 * AISLE / 4
+    ti, tj = np.floor((X + AISLE) / ts), np.floor(Z / ts)
+    perf = ((ti + tj) % 2 == 0)
+    tile = np.where(perf[:, None], r[2], r[3])
+    lx, lz = ((X + AISLE) / ts) % 1, (Z / ts) % 1
+    tile[(lx < 0.05) | (lz < 0.06)] = r[4]
+    tile[(lx > 0.95) | (lz > 0.94)] = r[1]
+    holes = perf & (np.floor(X / 3) % 2 == 0) & (np.floor(Z / 3) % 2 == 0) & (lx > 0.12) & (lx < 0.88) & (lz > 0.12) & (lz < 0.88)
+    tile[holes] = r[1]
+    rgb[aisle] = tile[aisle]
+    teal = pal_array(TEAL)
+    edge = (np.abs(ax - AISLE) < 1.6) & (Z > Z_NEAR - 40)
+    rgb[edge] = teal[3]
+    # cable runs taped along both edges of the aisle
+    for c, off in ((CABLE[1], 6.0), (CORDS[0], 10.0), (CABLE[2], 13.0)):
+        rgb[(np.abs(ax - AISLE - off) < 1.3) & (Z > Z_NEAR - 40)] = np.array(C(c)[:3])
+    tape = (np.abs(ax - AISLE - 9.5) < 5) & ((Z % 60.0) < 5) & (Z > Z_NEAR - 40)
+    rgb[tape] = np.array(C("#3a3846")[:3])
+    # the ring under AUTOCOMPLETE
+    rx, rz = SPOT
+    d = np.hypot(X - rx, (Z - rz) * 1.25)
+    rgb[np.abs(d - 66) < 2.0] = teal[3]
+    rgb[np.abs(d - 58) < 1.2] = teal[1]
     ang = np.arctan2((Z - rz) * 1.25, X - rx)
-    ticks = (d > 60) & (d < 70) & (np.abs(((ang / (2 * np.pi) * 24) % 1) - 0.5) > 0.42)
-    rgb[ticks] = brass[2]
-    for (lx, lz_) in PENDANTS:
-        warm_light(rgb, np.hypot(X - lx, (Z - lz_) * 0.7), 150, strength=0.3)
-    for (lx, lz_) in FRONT_LAMPS:
-        warm_light(rgb, np.hypot(X - lx, (Z - lz_) * 0.8), 170, strength=0.3)
-    warm_light(rgb, np.hypot(X, (Z - Z_END) * 0.6), 110, strength=0.22)
+    ticks = (d > 58) & (d < 66) & (np.abs(((ang / (2 * np.pi) * 16) % 1) - 0.5) > 0.4)
+    rgb[ticks] = teal[2]
+    for (lx_, lz_) in FRONT_LAMPS:
+        warm_light(rgb, np.hypot(X - lx_, (Z - lz_) * 0.8), 170, strength=0.3)
+    warm_light(rgb, np.hypot(X * 0.8, (Z - Z_END) * 0.5), 200, colour=TEAL_LIGHT, strength=0.3)
+    warm_light(rgb, np.hypot(X - rx, (Z - rz) * 1.25), 80, colour=TEAL_LIGHT, strength=0.18)
     out = rgba_of(rgb)
-    fog(out, Z, HAZE, 600, 1200, amount=0.5)
+    fog(out, Z, HAZE, 620, 1200, amount=0.45)
     return out
 
 
 def ceiling_shader(X, Z):
-    """Coffered oak ceiling over the gallery: deep beams across and along, dark panels."""
+    """Dark ceiling panels, two ladder cable trays running toward the screens, a teal light strip
+    down the middle."""
     rgb = np.zeros((X.shape[0], 3), np.float32)
     rgb[:] = np.array(C(OAK_DARK[2])[:3])
-    cx, cz = (X / 50.0 + 0.5) % 1, (Z / 70.0) % 1
-    panel = (cx > 0.16) & (cz > 0.16)
-    rgb[panel] = np.array(C(OAK_DARK[1])[:3])
-    rgb[panel & (cx < 0.24)] = np.array(C(OAK_DARK[3])[:3])
-    rgb[~panel & ((cx < 0.06) | (cz < 0.06))] = np.array(C(OAK[3])[:3])
-    rgb[(cz > 0.16) & (cz < 0.2) & panel] = np.array(C("#7a3646")[:3])
-    for (lx, lz) in PENDANTS:
-        warm_light(rgb, np.hypot(X - lx, (Z - lz) * 0.8), 90, strength=0.3)
+    cz = (Z / 60.0) % 1
+    rgb[cz < 0.08] = np.array(C(OAK_DARK[3])[:3])
+    for tx in TRAYS:
+        d = np.abs(X - tx)
+        tray = d < 14
+        rgb[tray] = np.array(C(CABLE[1])[:3])
+        rgb[tray & (d > 11.5)] = np.array(C(RACK[3])[:3])                          # rails
+        rgb[tray & (d < 11.5) & ((Z % 14.0) < 2.2)] = np.array(C(RACK[2])[:3])      # rungs
+        for k, (c, off) in enumerate(((CORDS[0], -6.0), (CABLE[2], -2.0), (CORDS[1], 3.0), (CABLE[0], 7.0))):
+            rgb[np.abs(X - tx - off) < 1.6] = np.array(C(c)[:3])
+    strip = np.abs(X) < 3.5
+    rgb[strip] = np.array(C(TEAL[3])[:3])
+    rgb[strip & ((Z % 40.0) < 4)] = np.array(C(TEAL[1])[:3])
+    warm_light(rgb, np.hypot(X, (Z - Z_END) * 0.5), 140, colour=TEAL_LIGHT, strength=0.25)
     out = rgba_of(rgb)
-    fog(out, Z, HAZE, 500, 1100, amount=0.6)
+    fog(out, Z, HAZE, 520, 1100, amount=0.55)
     return out
 
 
-def drawer_texture(length, height, seed=0, dim=0.0):
-    """A card-index wall laid flat: cornice, banks of drawers between oak stiles, a plinth."""
-    cv = Canvas(length, height + 12, seed=seed)
-    cv.rect(0, 0, length, height + 12, OAK[2])
-    index_wall(cv, 4, 10, length - 8, height + 12, seed=seed, dw=DW, dh=DH, open_rate=0.025)
-    if dim:
-        cv.a[..., :3] *= (1 - dim)
-    return cv.a
-
-
-def far_wall(Wp, Hp):
-    """The grille wall at the end of the gallery, at its on-screen size: dark sandstone, the
-    closed archive's lattice and stone surround, chained shut."""
-    cv = Canvas(Wp, Hp, seed=3)
-    stone_wall(cv, 0, 0, Wp, Hp, pal=[shade(c, -0.3) for c in STONE_N], seed=12, course=4)
-    gw = int(Wp * 0.62)
-    archive_cage(cv, Wp // 2 - gw // 2, int(Hp * 0.3), gw, Hp, seed=5)
-    cv.a[..., :3] *= 0.92
+def ghost_frame(crop, word, colour):
+    cv = Canvas(crop.shape[1], crop.shape[0])
+    cv.a[:] = crop
+    text(cv, word, 0, 0, colour)
     return cv
 
 
 def build(project):
     out = os.path.join(project, f"assets/art/rooms/{ROOM}")
+    os.makedirs(out, exist_ok=True)
+    res = f"res://assets/art/rooms/{ROOM}/"
     v = View(horizon=98, cam=52, fill="#0e0c12")
     v.ground(ceiling_shader, y_from=0, y_to=v.h0, height=CEIL, z_max=Z_END)
     v.ground(floor_shader, z_max=Z_END)
-    # far wall
+    # far wall: dark stone first (the screens go on crisp after the reduction)
     s = v.scale(Z_END)
     Wp = int(round(2 * GAL * s)) + 2
     Hp = int(round(CEIL * s))
-    fw = far_wall(Wp, Hp)
-    v.strip(fw.a, int(round(v.ground_y(Z_END) - Hp)), int(round(v.vx - Wp / 2)))
-    # gallery side walls: drawers to the cornice, stone above
-    side_tex = drawer_texture(int(Z_END - Z_NEAR) + 20, int(WALL_H), seed=21)
+    fw = Canvas(Wp, Hp, seed=3)
+    stone_wall(fw, 0, 0, Wp, Hp, pal=[shade(c, -0.36) for c in STONE_N], seed=12, course=4)
+    far_x, far_y = int(round(v.vx - Wp / 2)), int(round(v.ground_y(Z_END) - Hp))
+    v.strip(fw.a, far_y, far_x)
+    # aisle walls: stacks and racks to the cornice, stone above
+    side_tex, side_leds = stacks_texture(int(Z_END - Z_NEAR) + 20, int(WALL_H) + 12, seed=21, layout=SIDE_LAYOUT)
+    for (u, vv, key) in side_leds:                     # LEDs fat enough to survive the distance
+        side_tex.rect(u, vv, 2, 1, LED[key])
     stone = Canvas(400, 80, seed=4)
-    stone_wall(stone, 0, 0, 400, 80, pal=[shade(c, -0.2) for c in STONE_N], seed=14, course=6)
+    stone_wall(stone, 0, 0, 400, 80, pal=[shade(c, -0.25) for c in STONE_N], seed=14, course=6)
     for side in (-1, 1):
         def shade_side(u, Y, Z, side=side):
-            o = texture_lookup(side_tex, u, WALL_H + 12 - Y, wrap=False)
+            o = texture_lookup(side_tex.a, u, WALL_H + 12 - Y, wrap=False)
             up = Y > WALL_H + 10
             if up.any():
                 o[up] = texture_lookup(stone.a, u[up], CEIL - Y[up], wrap=True)
+            o[..., 3] = 1
             o[..., :3] *= 0.84 if side < 0 else 0.76
-            for (lx, lz) in PENDANTS:
-                warm_light(o[..., :3], np.hypot((Z - lz) * 0.9, (Y - 140) * 0.9), 120, strength=0.32)
+            warm_light(o[..., :3], np.hypot((Z - Z_END) * 0.6, (Y - 60) * 0.8), 220, colour=TEAL_LIGHT, strength=0.22)
             return fog(o, Z, HAZE, 600, 1200, amount=0.5)
         v.plane((side * GAL, Z_NEAR), (side * GAL, Z_END), shade_side, y_max=CEIL)
-    # the chair rows, far to near, either side of the aisle
-    row = chair_row_back(3, 18, seed=2)
-    for z in sorted(CHAIR_ROWS, reverse=True):
-        for side in (-1, 1):
-            v.sprite(row.a, side * (40 + row.w * ROOM_TO_BATTLE / 2), z, scale=ROOM_TO_BATTLE)
-    # the front drawer wall behind the fighters, either side of the gallery mouth
-    front_tex = drawer_texture(int(SIDE), int(WALL_H), seed=31, dim=0.12)
+    # the front stacks wall behind the fighters, either side of the aisle mouth
+    front_tex, front_leds = stacks_texture(int(SIDE), int(WALL_H) + 12, seed=31, layout=FRONT_LAYOUT)
     upper = Canvas(1440, 140, seed=5)
-    stone_wall(upper, 0, 0, 1440, 140, pal=[shade(c, -0.1) for c in STONE_N], seed=16, course=6)
+    stone_wall(upper, 0, 0, 1440, 140, pal=[shade(c, -0.12) for c in STONE_N], seed=16, course=6)
+
     def front(X, Y):
         o = np.zeros(X.shape + (4,), np.float32)
         low = Y <= WALL_H + 12
         u = np.abs(X) - GAL
-        o[low] = texture_lookup(front_tex, u[low] if True else u[low], WALL_H + 12 - Y[low], wrap=False)
+        o[low] = texture_lookup(front_tex.a, u[low], WALL_H + 12 - Y[low], wrap=False)
         o[~low] = texture_lookup(upper.a, X[~low] + 720, 400 - Y[~low], wrap=True)
         o[..., 3] = 1
         for (lx, lz) in FRONT_LAMPS:
             warm_light(o[..., :3], np.hypot(X - lx, (Y - 150) * 1.1), 200, strength=0.26)
-        o[..., :3] *= 0.92
+        o[..., :3] *= 0.9
         return o
     v.back(Z_NEAR, front, region=lambda X, Y: (np.abs(X) > GAL) & (Y >= 0))
-    # the lintel over the gallery mouth
     v.back(Z_NEAR, lambda X, Y: texture_lookup(upper.a, X + 720, 400 - Y, wrap=True),
            region=lambda X, Y: (np.abs(X) <= GAL) & (Y > CEIL - 4))
     v.rows(156, 360, INK, 0.0, 0.62)
     cv = v.reduce(112)
 
-    # Crisp pieces at 1:1: the gallery mouth's oak frame, pendants, the hung board, front lamps.
+    # Crisp pieces at 1:1: the screens at the end of the aisle, the mouth's frame, the hung sign,
+    # the front lamps.
+    scr, pts = far_screens(Wp - 2, Hp - 2, seed=7)
+    cv.paste(scr, far_x + 1, far_y + 1)
     glows = []
     for side in (-1, 1):
         x, _ = v.project(side * GAL, 0, Z_NEAR)
         x = int(round(x))
         _, yb = v.project(0, 0, Z_NEAR)
         cv.rect(x - 3 if side > 0 else x - 2, 0, 5, int(round(yb)), OUT)
-        cv.rect(x - 2 if side > 0 else x - 1, 0, 3, int(round(yb)), OAK[3]); cv.vline(x - 1 if side < 0 else x - 2, 0, int(round(yb)), OAK[5])
-    for (lx, lz) in sorted(PENDANTS, key=lambda p: -p[1]):
-        x, y = v.project(lx, 176, lz)
-        _, yt = v.project(lx, CEIL, lz)
-        shade_pendant(cv, int(round(x)), int(round(y)), chain_top=max(0, int(round(yt))), w=12 if lz < 600 else 10)
-        glows.append([int(round(x)), int(round(y)) + 1, "fde9b6", 1])
-    # the board, hung on chains from the coffers over the aisle
+        cv.rect(x - 2 if side > 0 else x - 1, 0, 3, int(round(yb)), RACK[3])
+        cv.vline(x - 1 if side < 0 else x - 2, 0, int(round(yb)), RACK[5])
+        for yy in range(2, int(round(yb)), 5):
+            cv.px(x - 1 if side < 0 else x - 1, yy, RACK[1])
+    # the toggle sign hung over the aisle on chains from the ceiling
     bz = 600.0
-    bx, by = v.project(0, 214, bz)
+    bx, by = v.project(0, 178, bz)
     _, btop = v.project(0, CEIL, bz)
-    board = Canvas(120, 40)
-    x0, y0, w, h = two_line_plaque(board, 60, 2, ["POSSIBLE LIVES", "CLOSED ARCHIVE"], fg=GILT, bg="#1c1622", frame=BRASS)
-    px_, py_ = int(round(bx - 60)), int(round(by))
+    board = Canvas(160, 22)
+    x0, y0, w, h = toggle_sign(board, 80, 2, "AUTOCOMPLETE ENABLED", compact=True, halo=False)
+    px_, py_ = int(round(bx - 80)), int(round(by))
     for hx in (x0 + 8, x0 + w - 9):
-        for yy in range(int(round(btop)), py_ + 2, 2):
+        for yy in range(max(0, int(round(btop))), py_ + 2, 2):
             cv.px(px_ + hx, yy, IRON[3]); cv.px(px_ + hx, yy + 1, IRON[1])
     cv.paste(board, px_, py_)
+    glows.append([px_ + x0 + 12, py_ + y0 + 8, "96ecda", 1])
     for (lx, lz) in FRONT_LAMPS:
         x, y = v.project(lx, 150, lz)
         shade_pendant(cv, int(round(x)), int(round(y)), chain_top=0, w=18)
         glows.append([int(round(x)), int(round(y)) + 1, "fde9b6", 1])
-    # the glow of the single bulb inside the closed archive
-    gx, gy = v.project(-GAL * 0.2, CEIL * 0.62, Z_END - 2)
-    glows.append([int(round(gx)), int(round(gy)), "f6cf7a", 0])
-    os.makedirs(out, exist_ok=True)
-    cv.save(os.path.join(out, "battle-far.png"))
-    res = f"res://assets/art/rooms/{ROOM}/"
 
-    # restless drawers on the front wall: each slides out in turn
-    d = drawer_out(9, 6)
-    d.save(os.path.join(out, "battle-drawer.png"))
-    slots = index_wall_slots(4, 10, int(SIDE) - 8, int(WALL_H) + 12, dw=DW, dh=DH)
+    # the ghost suggestion after the cursor: DOCTOR painted, the others as frames
+    gx, gy = pts["ghost"]
+    gx, gy = gx + far_x + 1, gy + far_y + 1
+    crop = cv.a[gy:gy + 10, gx:gx + 38].copy()
+    text(cv, "DOCTOR", gx, gy, GHOST2)
+    for name, word, col in (("battle-ghost-lawyer.png", "LAWYER", GHOST2), ("battle-ghost-ceo.png", "CEO", GHOST2),
+                            ("battle-ghost-accepted.png", "DOCTOR", GLOW)):
+        ghost_frame(crop, word, col).save(os.path.join(out, name))
+    # front-wall LEDs: half lit in the painting, the rest flicker in layers
     s0 = v.scale(Z_NEAR)
-    rng = np.random.default_rng(9)
-    layers = []
-    picks = []
-    for (u, vv) in slots:
+    screen_leds = []
+    for (u, vv, key) in front_leds:
         for side in (-1, 1):
-            X = side * (GAL + u + DW / 2)
-            Y = WALL_H + 12 - (vv + DH / 2)
+            X = side * (GAL + u + 0.5)
+            Y = WALL_H + 12 - (vv + 0.5)
             sx, sy = v.project(X, Y, Z_NEAR)
-            if (12 <= sx <= 628) and 30 <= sy <= 128 and not (380 <= sx <= 640 and sy <= 74) and not (sx <= 70 and sy <= 30):
-                picks.append((int(round(sx - 5)), int(round(sy - 6))))
-    idx = rng.choice(len(picks), 8, replace=False)
-    for k, i in enumerate(idx):
-        pattern = ["0"] * 9
-        pattern[k] = "1"
-        layers.append({"kind": "blink", "pattern": "".join(pattern), "rate": 1.4, "texture": res + "battle-drawer.png",
-                       "x": picks[int(i)][0], "y": picks[int(i)][1]})
+            sx, sy = int(round(sx)), int(round(sy))
+            if 0 <= sx < 640 and 0 <= sy < 136 and not (392 <= sx <= 628 and sy <= 70) and not (sx <= 66 and sy <= 26):
+                screen_leds.append((sx, sy, key))
+    for (sx, sy, key) in pts["leds"]:
+        screen_leds.append((sx + far_x + 1, sy + far_y + 1, key))
+    rng = np.random.default_rng(12)
+    order = rng.permutation(len(screen_leds))
+    steady = [screen_leds[int(i)] for i in order[: len(order) // 2]]
+    busy = [screen_leds[int(i)] for i in order[len(order) // 2:]]
+    for (sx, sy, key) in steady:
+        cv.px(sx, sy, LED[key])
+    cv.save(os.path.join(out, "battle-far.png"))
+
+    layers = []
+    for k, (pattern, rate) in enumerate((("1101", 3.0), ("0110", 4.4), ("1011", 2.3), ("1110010", 6.0))):
+        layers.append({"kind": "blink", "pattern": pattern, "rate": rate,
+                       "rects": [[x, y, 1, 1, LED[key][1:]] for (x, y, key) in busy[k::4]]})
+    cx_, cy_, cw_, ch_ = pts["cursor"]
+    layers.append({"kind": "blink", "pattern": "10", "rate": 2.0,
+                   "rects": [[cx_ + far_x + 1, cy_ + far_y + 1, cw_, ch_, GLOW_HI[1:]]]})
+    for name, pattern in (("battle-ghost-lawyer.png", "00100000"), ("battle-ghost-ceo.png", "00001000"),
+                          ("battle-ghost-accepted.png", "00000011")):
+        layers.append({"kind": "blink", "pattern": pattern, "rate": 1.2, "texture": res + name, "x": gx, "y": gy})
+    # data pulses racing down the ceiling trays toward the screens
+    for tx in TRAYS:
+        a = v.project(tx, CEIL, 520.0)
+        b = v.project(tx, CEIL, Z_END - 10)
+        layers.append({"kind": "movers", "from": [round(a[0]), round(a[1])], "to": [round(b[0]), round(b[1])],
+                       "count": 3, "period": 1.8, "size": [3, 1], "color": GLOW[1:], "ease": "out"})
+    glows.append([int(v.vx), int(round(v.project(0, CEIL * 0.55, Z_END)[1])), "96ecda", 0])
     layers += [
         {"kind": "twinkle", "points": glows, "rate": 1.2, "min": 0.55},
-        {"kind": "particles", "style": "dust", "count": 20, "rect": [180, 30, 280, 110], "speed": [1, 2], "color": "fde9b6"},
+        {"kind": "particles", "style": "dust", "count": 20, "rect": [180, 30, 280, 110], "speed": [1, 2], "color": "c8f4e8"},
         {"kind": "fauna", "fauna": [{"kind": "loose_page", "x": 160, "y": 40, "fly": 7.0, "rate": 3.0},
                                     {"kind": "loose_page", "x": 420, "y": 92, "fly": 5.0, "rate": 2.6},
                                     {"kind": "loose_page", "x": 300, "y": 20, "fly": 9.0, "rate": 3.4}]},
