@@ -14,7 +14,7 @@ const WORLD_HEIGHT: Dictionary={"val":54,"autocomplete":60,"chad":52,"advisor":5
 const WALK_KEY: Dictionary={"val":"val_vp"}
 ## Internal boss ids whose art is filed under another id: the fight, flags and saves keep the old id
 ## (errata) while the sheet, entrance pose and portraits are Gwen the Red's ("ta").
-const ART_ALIAS: Dictionary={"errata":"ta"}
+const ART_ALIAS: Dictionary={"errata":"ta","claim":"advisor","cone":"peloton"}
 static var metadata: Dictionary={}
 static var textures: Dictionary={}
 static var animations: Dictionary={}

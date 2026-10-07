@@ -4,8 +4,8 @@ extends Node2D
 ## across, the boss slides in, and a title banner lands with their name and catchphrase.
 ## Random path fights don't get one, so the bosses stand out. The first meeting in a session
 ## plays the full card; rematches and checkpoint retries play a short one. Confirm skips.
-## Art hook: res://assets/art/entrance/<id>.png, when it exists, replaces the boss's idle pose
-## (feet at the bottom centre of the image).
+## Art hook: res://assets/art/entrance/<art id>.png, when it exists, replaces the boss's idle pose
+## (feet at the bottom centre of the image). The art id is the card id unless ART_IDS renames it.
 
 ## id: [title, name, catchphrase, accent colour]
 const CARDS: Dictionary = {
@@ -14,11 +14,11 @@ const CARDS: Dictionary = {
 	"walt": ["THE BRIDGE KEEPER", "WALT", "The wind is doing the talking now. Keep your light up.", "e8b45c"],
 	"flyer": ["CLUB FAIR MENACE", "FLYERER", "ONE PAGE! JUST ONE! THE CLUB CANNOT CLOSE IF NOBODY READS!", "e6d6b1"],
 	"pinpal": ["RETURN SERVICE", "PIN PAL", "RETURN SERVICE! RETURN SERVICE!", "e8837b"],
-	"claim": ["LOST PROPERTY", "CLAIM", "TAKE A NUMBER. TAKE A COAT. EVERYTHING HAS AN OWNER.", "a68db8"],
+	"claim": ["ACADEMIC ADVISOR", "ADVISOR BEV", "HAVE YOU CHECKED YOUR DEGREE AUDIT, SWEETIE?", "c98aa8"],
 	"chip": ["STAGE MANAGER", "CHIP", "Places, everyone! Policies are for people without an ENCORE!", "e8b45c"],
 	"deion": ["COACH PRIME", "DEION SANDERS", "You can sprint forever, or you can hand it to a teammate.", "cfb87c"],
 	"todd": ["THE PRESIDENT", "TODD SALIMAN", "A plan with limits. Let's see if it survives an audit.", "cfb87c"],
-	"cone": ["ONE MARKED ROUTE", "CONE COMMITTEE", "LEFT. RIGHT. BOTH. SAFETY HAS FORMED A COMMITTEE.", "e8a05c"],
+	"cone": ["PELOTON CAPTAIN", "CAPTAIN LANCE", "ON YOUR LEFT! ON YOUR RIGHT! ON BOTH SIDES! SAFETY HAS FORMED A PELOTON.", "b6e63c"],
 	"encore": ["THE SHOW THAT WON'T END", "ENCORE", "THE SONG HAS NO AGREEMENT. AGAIN!", "e8837b"],
 	"eric": ["RULE OF THUMB", "PROFESSOR ERIC", "Hold this probe. One more measurement and we'll know everything.", "9fe0a8"],
 	"errata": ["SEVENTH-YEAR TEACHING ASSISTANT", "GWEN THE RED", "SEE ME AFTER CLASS.", "e0343c"],
@@ -36,7 +36,7 @@ const ANSWERS: Dictionary = {
 	"walt": ["Walt", "It doesn't stop the wind. It just shows you where your feet are. That's usually enough."],
 	"flyer": ["Flyerer", "IT SAYS... 'A PLACE TO MAKE NOISE TOGETHER.' OH. NOT 'EVERYONE, FOREVER.'"],
 	"pinpal": ["Pin Pal", "THREE BALLS. NOBODY BROUGHT THEM BACK. I KEEP SERVING SO SOMEONE WILL."],
-	"claim": ["CLAIM", "ITEM 41: ONE GLOVE. NO OWNER ON FILE. IT KEEPS WAVING AT YOU."],
+	"claim": ["Advisor Bev", "I CHOSE ADVISING SO NOBODY WOULD GET LOST. THEN I STARTED FILING EVERYTHING. THE GLOVE IS ON PAGE ONE."],
 	"chip": ["Chip", "A SMALL one? ...Okay. Three columns, one bow, then we let people go home. Maybe."],
 	"deion": ["Deion Sanders", "That's the right question. Nobody runs the whole field alone. Show me you can hand it off."],
 	"todd": ["Todd Saliman", "Good. Read the fine print. This one says 'everything, indefinitely'. That's not consent. That's a typo."],
@@ -44,13 +44,15 @@ const ANSWERS: Dictionary = {
 	"errata": ["Gwen the Red", "...THE STUDENT'S. I MARKED IT FIRST SO THE REAL GRADER COULD NOT HURT THEM. I KEPT MARKING UNTIL NOTHING WAS LEFT."],
 	"eric": ["Professor Eric", "The return path! Everyone watches the signal. Nobody asks where the current comes home. Rule of thumb: always ask."],
 	"autocomplete": ["AUTOCOMPLETE", "THE ORIGINAL IS... ONE STUDENT, HUMMING. I COMPLETED SIX HUNDRED ENDINGS ON TOP OF IT."],
-	"cone": ["CONE COMMITTEE", "ONE ROUTE. WE HAD THREE PROPOSALS. NOBODY WANTED TO CANCEL THE OTHERS."],
+	"cone": ["Captain Lance", "ONE LINE. WE HAD THREE CALLS. NOBODY WANTED TO CANCEL THEIRS. I JUST DON'T WANT ANYONE HIT ON THE PATH."],
 	"chad": ["Chad", "...Honestly? A friend who doesn't need anything from me. Wild, right? Let's circle back on that."],
 	"rook": ["Rook", "One shift. One exit. And somebody to tell me when it ends."],
 	"val": ["VAL", "WHO'S HIRING? ...I AM. I THINK. SOMEONE TOLD ME TO FILL EVERY SEAT, AND I NEVER ASKED WHO."],
 	"tanner": ["Tanner", "...The bid is a couch, a group chat with nine hundred messages, and people who'd notice if I wasn't around. Don't tell the brothers I said that."],
 	"kyle": ["Kyle", "Customers! ...Right now it's me, my mom, and a man named Dennis who signed up by accident. Dennis is very loyal."],
 }
+## Bosses whose internal id is older than their art: card id -> art id (entrance pose and sheet).
+const ART_IDS: Dictionary = {"claim": "advisor", "cone": "peloton"}
 const FULL: int = 150
 const SHORT: int = 80
 const INK: Color = Color("0d101c")

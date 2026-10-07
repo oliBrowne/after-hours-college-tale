@@ -89,7 +89,7 @@ func run(main: Node) -> bool:
 	if "--qa-discoveries" in OS.get_cmdline_user_args(): await _object("lost_labels"); await _settle()
 	await _object("claim")
 	await _fight("claim")
-	_assert(game.state.flags.get("claim_resolution", "") == ("forceful" if force_claim else "peaceful"), "CLAIM expected resolution")
+	_assert(game.state.flags.get("claim_resolution", "") == ("forceful" if force_claim else "peaceful"), "Advisor Bev expected resolution")
 	_assert(pause_checked, "Defense pause/resume exercised through menus")
 	if fail_promise: _assert(failed_promise_checked, "Failed promise observed before successful recovery")
 	if retry_route: _assert(retry_checked, "Defeat and normal Retry exercised")
@@ -400,10 +400,10 @@ func _fight(id: String) -> void:
 				if int(game.battle.turn) != turn_logged:
 					turn_logged = int(game.battle.turn); _log("Battle " + id + " turn=" + str(turn_logged) + " openness=" + str(game.battle.openness))
 					if id == "claim" and observe_claim and turn_logged >= 2 and not observations_checked:
-						_assert(not bool(game.claim_needs.tagDelivered) and not ClaimNeeds.can_release(game.claim_needs) and int(game.battle.openness) == 0, "Repeated legal observation cannot complete CLAIM needs or unlock RELEASE")
+						_assert(not bool(game.claim_needs.tagDelivered) and not ClaimNeeds.can_release(game.claim_needs) and int(game.battle.openness) == 0, "Repeated legal observation cannot complete Advisor Bev needs or unlock RELEASE")
 						observations_checked = not failed
 					if id == "claim" and observe_claim and turn_logged >= 3 and not claim_failed_checked:
-						_assert(not bool(game.claim_needs.tagDelivered) and not bool(game.pattern.promiseComplete) and int(game.battle.openness) == 0, "Missed CLAIM tag promise remains recoverable and does not advance needs")
+						_assert(not bool(game.claim_needs.tagDelivered) and not bool(game.pattern.promiseComplete) and int(game.battle.openness) == 0, "Missed Advisor Bev ticket promise remains recoverable and does not advance needs")
 						claim_failed_checked = not failed
 					if id == "flyer" and fail_promise and turn_logged == 1:
 						_assert(not bool(game.pattern.promiseComplete) and not bool(game.battle.promise), "Missed promise fails cleanly and clears pending objective")
@@ -422,8 +422,8 @@ func _fight(id: String) -> void:
 					for choice: Dictionary in game.menu_options:
 						if str(choice.label).begins_with("RELEASE"): release = true
 					if id == "claim" and observe_claim and turn_logged < 2:
-						_assert(not release, "Uncompleted CLAIM has no RELEASE menu")
-						await _choose("Identify Pip")
+						_assert(not release, "Uncompleted Advisor Bev has no RELEASE menu")
+						await _choose("Ask why the glove")
 					elif release and int(game.actor) == 0: await _choose("RELEASE")
 					elif id == "claim" and int(game.actor) == 1: await _choose("Return ONE")
 					else: await _choose("Carry one" if id == "claim" else "Read one invitation")
@@ -468,7 +468,7 @@ func _write_trace() -> void:
 	if file: file.store_string("\n".join(trace)); file.close()
 
 func _interrupt(at: String) -> void:
-	_assert(game.state.flags.get("opening_finished", false) and game.state.flags.get("pip_joined", false) and game.state.flags.get("aftermath_pending", "") == "claim", "CLAIM atomic completion and resumable aftermath at " + at)
+	_assert(game.state.flags.get("opening_finished", false) and game.state.flags.get("pip_joined", false) and game.state.flags.get("aftermath_pending", "") == "claim", "Advisor Bev atomic completion and resumable aftermath at " + at)
 	await _capture("10-interrupt-" + at)
 	if at == "result":
 		while game.qa_record != null: await _frame()
@@ -481,7 +481,7 @@ func _interrupt(at: String) -> void:
 
 func _reload_claim() -> bool:
 	await _choose("Continue")
-	_assert(int(game.mode) == DIALOGUE and game.state.flags.get("aftermath_pending", "") == "claim", "New process resumes CLAIM aftermath")
+	_assert(int(game.mode) == DIALOGUE and game.state.flags.get("aftermath_pending", "") == "claim", "New process resumes Advisor Bev aftermath")
 	_assert(game.state.flags.get("opening_finished", false) and game.state.flags.get("pip_joined", false) and game.pip.visible and game.environment.glove_claimed, "Reload restores completed opening, Pip and changed room")
 	var inventory: Dictionary = game.state.inventory.duplicate(true)
 	var party: Array = game.state.party.duplicate(true)

@@ -26,7 +26,8 @@ const VOICED_SPEAKERS: Array[String] = ["jules", "imani", "cal", "mags", "todd",
 const DIALOGUE_REUSE: Dictionary = {
 	"jakerson":{"family":"cal","pitch":1.08,"gain":0.8},
 	"val":{"family":"mags","pitch":1.08,"gain":0.85},
-	"cone committee":{"family":"todd","pitch":1.25,"gain":0.8},
+	"captain lance":{"family":"todd","pitch":1.25,"gain":0.8},
+	"peloton":{"family":"todd","pitch":1.4,"gain":0.8},
 	"chad":{"family":"cal","pitch":1.12,"gain":0.85},
 	"mom":{"family":"mags","pitch":0.92,"gain":0.85},
 	"nell":{"family":"mags","pitch":1.1,"gain":0.85},
@@ -42,7 +43,7 @@ const DIALOGUE_REUSE: Dictionary = {
 	"mara": {"family":"mags", "pitch":0.9, "gain":0.9},
 	"eli": {"family":"cal", "pitch":1.12, "gain":0.85},
 	"booth": {"family":"jules", "pitch":0.86, "gain":0.85},
-	"claim": {"family":"flyer", "pitch":0.7, "gain":0.95, "mechanical":true},
+	"advisor bev": {"family":"mags", "pitch":0.96, "gain":0.9},
 	"pinpal": {"family":"todd", "pitch":0.92, "gain":0.9},
 	"pip": {"family":"chip", "pitch":1.34, "gain":0.8},
 }
@@ -553,7 +554,7 @@ func voiced_blip(speaker: String, mood: String = "neutral") -> void:
 	if _paused or not _enabled or _voice_volume <= 0.0:
 		return
 	var key: String = speaker.strip_edges().to_lower()
-	key = str({"jules navarro":"jules", "imani bell":"imani", "cal rhee":"cal", "mags venn":"mags", "todd saliman":"todd", "deion sanders":"deion", "coach":"deion", "coach deion":"deion", "chip the buffalo":"chip", "pin pal":"pinpal", "booth voice":"booth", "claim / lost property":"claim"}.get(key, key))
+	key = str({"jules navarro":"jules", "imani bell":"imani", "cal rhee":"cal", "mags venn":"mags", "todd saliman":"todd", "deion sanders":"deion", "coach":"deion", "coach deion":"deion", "chip the buffalo":"chip", "pin pal":"pinpal", "booth voice":"booth", "claim":"advisor bev"}.get(key, key))
 	if key not in VOICED_SPEAKERS and not DIALOGUE_REUSE.has(key):
 		blip(speaker)
 		return

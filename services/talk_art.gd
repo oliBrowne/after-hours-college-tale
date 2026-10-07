@@ -6,7 +6,7 @@ const DIR: String = "res://assets/art/talk/"
 static var cache: Dictionary = {}
 
 static func slug(speaker: String) -> String:
-	return "val_vp" if speaker == "VAL" and ResourceLoader.exists(DIR + "val_vp-0.png") else "val_boss" if speaker == "VAL" else {"Advisor Bev": "advisor", "Gwen the Red": "ta"}.get(speaker, speaker.to_lower().replace(" ", "_"))
+	return "val_vp" if speaker == "VAL" and ResourceLoader.exists(DIR + "val_vp-0.png") else "val_boss" if speaker == "VAL" else {"Advisor Bev": "advisor", "Gwen the Red": "ta", "Captain Lance": "peloton", "PELOTON": "peloton"}.get(speaker, speaker.to_lower().replace(" ", "_"))
 
 ## Small object portraits for voices that are not people (a loudspeaker, a phone, a directory):
 ## assets/art/talk/<speaker>-icon0.png (idle) and -icon1.png (glowing while the line types).

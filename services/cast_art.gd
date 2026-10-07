@@ -59,9 +59,13 @@ static func source_portrait(speaker: String, expression: int) -> Texture2D:
 	if speaker=="Jakerson":return NativeJakersonArt.portrait(expression)
 	if speaker=="Professor Eric":return NativeEricArt.portrait(expression)
 	if speaker=="VAL" and NativeBossArt.drawn("val"):return NativeBossArt.portrait("val",expression)
-	if speaker in ["VAL","Val","CONE COMMITTEE"]:return NativeFinalArt.portrait({"VAL":"val","Val":"val_small","CONE COMMITTEE":"cone"}[speaker],expression)
+	# CAPTAIN LANCE and his PELOTON (the old CONE COMMITTEE, internal id "cone") have their own sheet; without it the old committee portraits stand in.
+	if speaker in ["Captain Lance","PELOTON"]:return NativeBossArt.portrait("peloton",expression) if NativeBossArt.drawn("peloton") else NativeFinalArt.portrait("cone",expression)
+	if speaker in ["VAL","Val"]:return NativeFinalArt.portrait({"VAL":"val","Val":"val_small"}[speaker],expression)
 	# VAL (the VP) and Chad have their own sheets; Chad falls back to Eli's look without his.
 	if speaker=="Chad":return NativeBossArt.portrait("chad",expression) if NativeBossArt.drawn("chad") else source_portrait("Eli",expression)
+	# ADVISOR BEV (CLAIM's replacement, internal id "claim") has her own sheet; without it the old CLAIM portraits stand in.
+	if speaker=="Advisor Bev":return NativeBossArt.portrait("advisor",expression) if NativeBossArt.drawn("advisor") else source_portrait("CLAIM",expression)
 	# AUTOCOMPLETE (INDEX's replacement) has its own sheet; without it the old INDEX portraits stand in.
 	if speaker=="AUTOCOMPLETE" and NativeBossArt.drawn("autocomplete"):return NativeBossArt.portrait("autocomplete",expression)
 	# Gwen the Red (ERRATA's replacement) has her own sheet; without it the old ERRATA portraits stand in.
@@ -88,6 +92,9 @@ static func body(id: String, frame: int = 0) -> Texture2D:
 	if id=="eric":return NativeEricArt.body(frame)
 	if id in ["val","chad","autocomplete"] and NativeBossArt.drawn(id):return NativeBossArt.body(id,frame)
 	if id=="chad":return body("eli",frame)
+	# The object cells run 0 idle, 1 alarm, 2 settled; Bev's sheet runs 0 front, 1 talking, 2 tell, 3 reaction.
+	if id=="claim" and NativeBossArt.drawn("advisor"):return NativeBossArt.body("advisor",[0,2,1,3][clampi(frame,0,3)])
+	if id=="cone" and NativeBossArt.drawn("peloton"):return NativeBossArt.body("peloton",frame)
 	if id in ["cone","val","val_small"]:return NativeFinalArt.body(id,frame)
 	if id=="errata" and NativeBossArt.drawn("ta"):return NativeBossArt.body("ta",frame)
 	if id in NativeChapterTwo.BOSSES or id in ["nell","dev"]:return NativeChapterArt.body(id,frame)
@@ -114,6 +121,7 @@ static func frames(id: String) -> SpriteFrames:
 	if id=="jakerson":return NativeJakersonArt.frames()
 	if id=="eric":return NativeEricArt.frames()
 	if id in ["val","chad","autocomplete"] and NativeBossArt.drawn(id):return NativeBossArt.frames(id)
+	if id=="cone" and NativeBossArt.drawn("peloton"):return NativeBossArt.frames("peloton")
 	if id in ["cone","val","val_small"]:return NativeFinalArt.frames(id)
 	if id=="chad":return frames("eli")
 	if id=="errata" and NativeBossArt.drawn("ta"):return NativeBossArt.frames("ta")
@@ -142,6 +150,8 @@ static func world_height(id: String) -> float:
 	if id=="autocomplete":return NativeBossArt.world_height(id) if NativeBossArt.drawn(id) else 56.0
 	if NativeBossArt.encounter_cast(id):return NativeBossArt.world_height(id)
 	if id=="errata":return NativeBossArt.world_height("ta") if NativeBossArt.drawn("ta") else 56.0
+	if id=="claim" and NativeBossArt.drawn("advisor"):return 82.0  # her battle cells are drawn at 82px: 1:1, no resampling
+	if id=="cone" and NativeBossArt.drawn("peloton"):return NativeBossArt.world_height("peloton")
 	return float({"jules":52,"imani":50,"walt":52,"cal":52,"mags":54,"mara":52,"eli":54,"nell":50,"dev":52,"eric":46,"val_small":34,"rook":56,"jakerson":60,"flyer":64,"pip":36,"pinpal":76,"claim":88}.get(id,56))
 static func fit(sprite: AnimatedSprite2D,height: float) -> void:
 	NativePixelCast.fit(sprite,roundi(height))
@@ -150,6 +160,7 @@ static func draw_body(node: Node2D, id: String, pose: String, height: float, ela
 	var frame: int = 2 if pose in ["resolved", "settled"] else 1 if pose in ["tell", "windup", "active", "hit", "wave", "interact"] else 0
 	# Booth's middle pose is alarm; its open grille conveys a speaking response.
 	if id == "booth" and pose in ["tell", "interact", "wave"]: frame = 2
+	if id == "claim" and pose in ["hit", "down"] and NativeBossArt.drawn("advisor"): frame = 3
 	var texture: Texture2D = NativePixelCast.texture(body(id,frame),roundi(height),float(body(id,0).get_meta("body_height")))
 	if texture == null: return
 	var scale: float = 1.0

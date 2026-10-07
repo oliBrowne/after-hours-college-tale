@@ -58,7 +58,7 @@ static func scene(id: String, state: Dictionary, speakers: Array[String]) -> Dic
 			var peaceful: bool = f[id + "_resolution"] == "peaceful"
 			if id == "flyer": lines = [["Flyerer", "ONE PAGE. STILL READ." if peaceful else "STAND OUT OF ORDER.", "warm" if peaceful else "neutral"]]
 			elif id == "pinpal": lines = [["Pin Pal", "NEXT PLAYER.", "warm"]] if peaceful else [["Walt", "Still unplugged. The ball's on the rack.", "neutral"]]
-			else: lines = [["CLAIM", "NEXT ITEM. AFTER TEA.", "warm"]] if peaceful else [["Jules", "The ticket mechanism's stopped.", "neutral"]]
+			else: lines = [["Advisor Bev", "NEXT, SWEETIE. AFTER TEA.", "warm"]] if peaceful else [["Jules", "The ticket mechanism's stopped.", "neutral"]]
 		"invitation":
 			if f.get("flyer_resolution", "") == "peaceful": lines = [["Imani", "They've put the sign-up sheet away.", "warm"], ["Jules", "Left the page out, though.", "neutral"]]
 			elif f.has("flyer_resolution"): lines = [["Jules", "The club page is readable. The hinge is still bent.", "neutral"]]

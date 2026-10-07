@@ -1367,7 +1367,7 @@
         "lines": [
           [
             "Mags",
-            "Lost property has been returning things nobody remembers losing.",
+            "Lost property has been returning things nobody remembers losing. And somebody in there keeps asking about degree audits.",
             "neutral"
           ],
           [
@@ -2116,7 +2116,7 @@
       },
       {
         "id": "claim",
-        "name": "CLAIM / the coat rack",
+        "name": "Advisor Bev / the lost-property desk",
         "x": 660,
         "y": 212,
         "kind": "battle",
@@ -2708,19 +2708,19 @@
       },
       {
         "id": "route_notice",
-        "name": "Crossed-out route notice",
+        "name": "Crossed-out club notice",
         "x": 540,
         "y": 235,
         "kind": "inspect",
         "lines": [
           [
             "Jules",
-            "EVERYONE THIS WAY is crossed out. Below: pick one route.",
+            "EVERYONE THIS WAY is crossed out. Below, in neon marker: pick one line.",
             "neutral"
           ],
           [
             "Walt",
-            "An instruction that can admit a mistake. Promising.",
+            "A club notice that can admit a mistake. Promising.",
             "warm"
           ]
         ]
@@ -2742,7 +2742,7 @@
       },
       {
         "id": "cone",
-        "name": "CONE COMMITTEE / one marked route",
+        "name": "Captain Lance / the paceline",
         "x": 515,
         "y": 315,
         "kind": "battle",
