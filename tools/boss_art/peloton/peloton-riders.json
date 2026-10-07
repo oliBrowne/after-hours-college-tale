@@ -1,0 +1,14 @@
+{
+ "path": "peloton-riders.png",
+ "size": [
+  172,
+  124
+ ],
+ "anchor": [
+  40,
+  123
+ ],
+ "anchor_is": "Lance's battle foot point (cells 0-5) in this image",
+ "z": "behind",
+ "battle_only": true
+}

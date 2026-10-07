@@ -10,7 +10,7 @@ extends RefCounted
 ## autocomplete, chad, advisor, ta; peloton, sunbeam, tanner, kyle and the encounter cast follow.
 ## An optional atlas "walk" entry ({"right":[cells]}) lists extra step cells, and a step cycle in
 ## assets/art/walk under walk_key replaces them (NativeWalkArt).
-const WORLD_HEIGHT: Dictionary={"val":54,"autocomplete":60,"chad":52,"advisor":50,"ta":52,"peloton":56,"sunbeam":52,"tanner":52,"kyle":52}
+const WORLD_HEIGHT: Dictionary={"val":54,"autocomplete":60,"chad":52,"advisor":50,"ta":52,"peloton":54,"sunbeam":52,"tanner":52,"kyle":52}
 const WALK_KEY: Dictionary={"val":"val_vp"}
 static var metadata: Dictionary={}
 static var textures: Dictionary={}

@@ -1,0 +1,78 @@
+{
+ "world_height": 54,
+ "battle_height": 84,
+ "cells": {
+  "peloton-world-0.png": {
+   "size": [
+    56,
+    57
+   ],
+   "foot": [
+    28,
+    56
+   ],
+   "height": 54,
+   "battle_cell": 0
+  },
+  "peloton-world-1.png": {
+   "size": [
+    56,
+    57
+   ],
+   "foot": [
+    28,
+    56
+   ],
+   "height": 54,
+   "battle_cell": 1
+  },
+  "peloton-world-2.png": {
+   "size": [
+    56,
+    57
+   ],
+   "foot": [
+    28,
+    56
+   ],
+   "height": 54,
+   "battle_cell": 2
+  },
+  "peloton-world-3.png": {
+   "size": [
+    56,
+    57
+   ],
+   "foot": [
+    28,
+    56
+   ],
+   "height": 54,
+   "battle_cell": 3
+  },
+  "peloton-world-4.png": {
+   "size": [
+    56,
+    57
+   ],
+   "foot": [
+    28,
+    56
+   ],
+   "height": 54,
+   "battle_cell": 4
+  },
+  "peloton-world-5.png": {
+   "size": [
+    56,
+    57
+   ],
+   "foot": [
+    28,
+    56
+   ],
+   "height": 54,
+   "battle_cell": 5
+  }
+ }
+}
