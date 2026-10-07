@@ -1,0 +1,38 @@
+{
+ "deion": {
+  "size": [
+   100,
+   99
+  ],
+  "foot": [
+   51.0,
+   98
+  ],
+  "height": 80,
+  "source_cell_used": "assets/art/native-clean/64x82-e89f9760a2c5eb17.png (cell 2 tell, fists up) kit-bashed 1:1; front ref 54x82-416f28ddfc448b38"
+ },
+ "todd": {
+  "size": [
+   112,
+   124
+  ],
+  "foot": [
+   38.0,
+   123
+  ],
+  "height": 80,
+  "source_cell_used": "assets/art/native-clean/52x105-45c274d09cb7ff66.png (cell 2 tell, grin + folder) kit-bashed 1:1; front ref 52x105-0f1914db562db0c4"
+ },
+ "eric": {
+  "size": [
+   128,
+   124
+  ],
+  "foot": [
+   62.0,
+   123
+  ],
+  "height": 80,
+  "source_cell_used": "assets/art/eric-v1.png cell 0 (front, 76x88), redrawn with tools/eric_art/draw_eric.py's engine"
+ }
+}
