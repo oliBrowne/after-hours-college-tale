@@ -4797,7 +4797,7 @@
       },
       {
         "id": "errata",
-        "name": "ERRATA / one surviving sentence",
+        "name": "Gwen the Red / one surviving sentence",
         "x": 470,
         "y": 425,
         "kind": "battle",
@@ -4813,7 +4813,7 @@
         "lines": [
           [
             "Jules",
-            "I came back because I said I would. The pencil wants to replace SAID with MUST.",
+            "I came back because I said I would. The red pen wants to replace SAID with MUST.",
             "concern"
           ],
           [

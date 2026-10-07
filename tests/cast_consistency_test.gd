@@ -72,7 +72,7 @@ func run() -> void:
 		for y: int in range(lower,original.get_height()):
 			for x: int in range(original.get_width()):stable=stable and original.get_pixel(x,y)==moved.get_pixel(x,y)
 		check(stable,id+" procedural idle keeps all lower pixels planted")
-	var speakers: Array=["Jules","Imani","Walt","Cal","Mags","Jakerson","Mara","Eli","Chip","Deion Sanders","Todd Saliman","Rook","Nell","Dev","ENCORE","ERRATA","AUTOCOMPLETE","LOADBEARER","Professor Eric","CONE COMMITTEE","Chad","VAL","Val","Flyerer","Pip","Pin Pal","CLAIM","Booth"]
+	var speakers: Array=["Jules","Imani","Walt","Cal","Mags","Jakerson","Mara","Eli","Chip","Deion Sanders","Todd Saliman","Rook","Nell","Dev","ENCORE","Gwen the Red","AUTOCOMPLETE","LOADBEARER","Professor Eric","CONE COMMITTEE","Chad","VAL","Val","Flyerer","Pip","Pin Pal","CLAIM","Booth"]
 	for speaker: String in speakers:
 		var first: Texture2D=NativeCastArt.portrait(speaker,0)
 		for expression: int in range(4):

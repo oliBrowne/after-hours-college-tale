@@ -22,7 +22,7 @@ const TARGETS: Dictionary = {
 	"Imani chooses her recording / reading room": ["N03", "recording_choice"],
 	"Choose a useful stopping point / reading-room bookmark": ["N03", "bookmark"],
 	"Open a passage / crank in the moving stacks": ["N04", "stack_crank"],
-	"Keep one sentence / ERRATA in the moving stacks": ["N04", "errata"],
+	"Keep one sentence / Gwen the Red in the moving stacks": ["N04", "errata"],
 	"Source reel / meet Cal and Dev across the quad at Engineering": ["E02", "dev"],
 	"Revise the suspended model / upstairs from the test floor": ["E04", "model_plan"],
 	"Probe the test points / Professor Eric on the test floor": ["E03", "eric"],

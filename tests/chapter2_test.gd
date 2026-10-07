@@ -40,6 +40,10 @@ func run() -> void:
 	var earned: Dictionary=moved.duplicate(true);earned.flags.autocomplete_resolution="forceful"
 	check(NativeCampaign.migrate(earned).flags.autocomplete_resolution=="forceful","Migration never overwrites an AUTOCOMPLETE outcome")
 	for id: String in NativeChapterTwo.BOSSES:check(NativeBossIntro.has_card(id) and not NativeBossIntro.answer(id).is_empty() and DodgeBox.handles(id),id+" has an intro card, a CONNECT answer and a DodgeBox script")
+	# ERRATA became Gwen the Red: the id stays, the card, voice and drawn art are hers.
+	check(NativeBossIntro.CARDS.errata[1]=="GWEN THE RED" and NativeBossIntro.CARDS.errata[2]=="SEE ME AFTER CLASS." and NativeBossIntro.answer("errata")[0]=="Gwen the Red","Gwen the Red has the card name, her catchphrase and her CONNECT answer")
+	check(NativeBossArt.art_id("errata")=="ta" and NativeBossArt.art_id("eric")=="eric" and ResourceLoader.exists("res://assets/art/entrance/"+NativeBossArt.art_id("errata")+".png"),"The errata card looks up Gwen's entrance pose by her art id")
+	check(NativeCastArt.body("errata",0)==NativeBossArt.body("ta",0) and NativeCastArt.frames("errata")==NativeBossArt.frames("ta") and NativeCastArt.source_portrait("Gwen the Red",1)==NativeBossArt.portrait("ta",1) and is_equal_approx(NativeCastArt.world_height("errata"),NativeBossArt.world_height("ta")),"The errata id and the speaker Gwen the Red route to the ta sheet")
 	var rooms: Dictionary=JSON.parse_string(FileAccess.get_file_as_string("res://content/rooms.json"))
 	for shifted: bool in [false,true]:
 		for room: Dictionary in rooms.values():NativeCampusWorld.prepare(room,{"stacks_shifted":shifted})
@@ -80,6 +84,14 @@ func run() -> void:
 		drain(g)
 		check(g.state.flags.aftermath_pending=="",id+" hook clears after full dialogue")
 		if id=="playback":check(g.state.flags.chapter2_complete and g.state.flags.playback_heard,"Playback marks chapter only after twist finishes")
+	# Nell's walking red pencil comes home once Gwen the Red is settled, and the keeper line names her.
+	g.state.flags.merge({"library_pass":true},true);g.state.flags.erase("errata_resolution")
+	g.enter_room("N02",Vector2(120,400),false);NativeChapterTwo.handle(g,{"id":"nell"})
+	check(not str(g.dialogue_lines[0][1]).contains("red pencil"),"Nell asks nothing about the pencil before Gwen the Red is settled");drain(g)
+	g.state.flags.errata_resolution="peaceful";NativeChapterTwo.handle(g,{"id":"nell"})
+	check(g.mode==g.Mode.DIALOGUE and str(g.dialogue_lines[0][0])=="Nell" and str(g.dialogue_lines[0][1]).contains("red pencil"),"Nell gets her red pencil back once Gwen the Red is settled");drain(g)
+	NativeChapterTwo.handle(g,{"id":"errata"})
+	check(g.mode==g.Mode.DIALOGUE and str(g.dialogue_lines[0][0])=="Gwen the Red","The settled errata object speaks as Gwen the Red");drain(g)
 	g.state.room="E04";g.state.x=900;g.state.y=470
 	check(NativeSaveService.validate_state(g.state),"960-wide Chapter 2 room saves validate")
 	g.state.x=INF;check(not NativeSaveService.validate_state(g.state),"Nonfinite position rejected")

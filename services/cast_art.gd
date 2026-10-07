@@ -61,6 +61,8 @@ static func source_portrait(speaker: String, expression: int) -> Texture2D:
 	if speaker=="Chad":return NativeBossArt.portrait("chad",expression) if NativeBossArt.drawn("chad") else source_portrait("Eli",expression)
 	# AUTOCOMPLETE (INDEX's replacement) has its own sheet; without it the old INDEX portraits stand in.
 	if speaker=="AUTOCOMPLETE" and NativeBossArt.drawn("autocomplete"):return NativeBossArt.portrait("autocomplete",expression)
+	# Gwen the Red (ERRATA's replacement) has her own sheet; without it the old ERRATA portraits stand in.
+	if speaker=="Gwen the Red":return NativeBossArt.portrait("ta",expression) if NativeBossArt.drawn("ta") else NativeChapterArt.portrait("errata",expression)
 	if speaker in ["Nell","Dev","ERRATA","AUTOCOMPLETE","LOADBEARER"]:return NativeChapterArt.portrait(speaker.to_lower(),expression)
 	if speaker in ["Walt", "ENCORE", "Rook"]: return NativeExpansionArt.portrait(speaker.to_lower(), expression)
 	var face: int = clampi(expression, 0, 3)
@@ -84,6 +86,7 @@ static func body(id: String, frame: int = 0) -> Texture2D:
 	if id in ["val","chad","autocomplete"] and NativeBossArt.drawn(id):return NativeBossArt.body(id,frame)
 	if id=="chad":return body("eli",frame)
 	if id in ["cone","val","val_small"]:return NativeFinalArt.body(id,frame)
+	if id=="errata" and NativeBossArt.drawn("ta"):return NativeBossArt.body("ta",frame)
 	if id in NativeChapterTwo.BOSSES or id in ["nell","dev"]:return NativeChapterArt.body(id,frame)
 	if id in ["walt", "encore", "rook"]: return NativeExpansionArt.body(id, frame)
 	if not BODY_REGIONS.has(id): return null
@@ -110,6 +113,7 @@ static func frames(id: String) -> SpriteFrames:
 	if id in ["val","chad","autocomplete"] and NativeBossArt.drawn(id):return NativeBossArt.frames(id)
 	if id in ["cone","val","val_small"]:return NativeFinalArt.frames(id)
 	if id=="chad":return frames("eli")
+	if id=="errata" and NativeBossArt.drawn("ta"):return NativeBossArt.frames("ta")
 	if id in NativeChapterTwo.BOSSES or id in ["nell","dev"]:return NativeChapterArt.frames(id)
 	if id in ["walt", "encore", "rook"]: return NativeExpansionArt.world_frames(id)
 	if animations.has(id): return animations[id]
@@ -133,6 +137,7 @@ static func frames(id: String) -> SpriteFrames:
 
 static func world_height(id: String) -> float:
 	if id=="autocomplete":return NativeBossArt.world_height(id) if NativeBossArt.drawn(id) else 56.0
+	if id=="errata":return NativeBossArt.world_height("ta") if NativeBossArt.drawn("ta") else 56.0
 	return float({"jules":52,"imani":50,"walt":52,"cal":52,"mags":54,"mara":52,"eli":54,"nell":50,"dev":52,"eric":46,"val_small":34,"rook":56,"jakerson":60,"flyer":64,"pip":36,"pinpal":76,"claim":88}.get(id,56))
 static func fit(sprite: AnimatedSprite2D,height: float) -> void:
 	NativePixelCast.fit(sprite,roundi(height))

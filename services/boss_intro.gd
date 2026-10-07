@@ -21,7 +21,7 @@ const CARDS: Dictionary = {
 	"cone": ["ONE MARKED ROUTE", "CONE COMMITTEE", "LEFT. RIGHT. BOTH. SAFETY HAS FORMED A COMMITTEE.", "e8a05c"],
 	"encore": ["THE SHOW THAT WON'T END", "ENCORE", "THE SONG HAS NO AGREEMENT. AGAIN!", "e8837b"],
 	"eric": ["RULE OF THUMB", "PROFESSOR ERIC", "Hold this probe. One more measurement and we'll know everything.", "9fe0a8"],
-	"errata": ["FIX EVERY LINE", "ERRATA", "REPLACE UNCERTAINTY. ERASE HESITATION.", "e8837b"],
+	"errata": ["SEVENTH-YEAR TEACHING ASSISTANT", "GWEN THE RED", "SEE ME AFTER CLASS.", "e0343c"],
 	"autocomplete": ["EVERY POSSIBLE SENTENCE", "AUTOCOMPLETE", "LET ME FINISH THAT FOR YOU. AND THEN YOU WILL...", "b9d5bc"],
 	"chad": ["NETWORKING LEGEND", "CHAD", "Let's circle back. Coffee chat? Coffee chat.", "7fb2e8"],
 	"rook": ["NIGHT MARSHAL", "ROOK", "LAST CALL. No one leaves until everyone is accounted for.", "a68db8"],
@@ -39,7 +39,7 @@ const ANSWERS: Dictionary = {
 	"deion": ["Deion Sanders", "That's the right question. Nobody runs the whole field alone. Show me you can hand it off."],
 	"todd": ["Todd Saliman", "Good. Read the fine print. This one says 'everything, indefinitely'. That's not consent. That's a typo."],
 	"encore": ["ENCORE", "STOP? THE CROWD STOPS WHEN... WHEN THEY WANT TO? NOBODY TOLD ME THAT WAS ALLOWED."],
-	"errata": ["ERRATA", "...THE WRITER'S. I ONLY MEANT TO HELP. I KEPT HELPING UNTIL NOTHING WAS LEFT."],
+	"errata": ["Gwen the Red", "...THE STUDENT'S. I MARKED IT FIRST SO THE REAL GRADER COULD NOT HURT THEM. I KEPT MARKING UNTIL NOTHING WAS LEFT."],
 	"eric": ["Professor Eric", "The return path! Everyone watches the signal. Nobody asks where the current comes home. Rule of thumb: always ask."],
 	"autocomplete": ["AUTOCOMPLETE", "THE ORIGINAL IS... ONE STUDENT, HUMMING. I COMPLETED SIX HUNDRED ENDINGS ON TOP OF IT."],
 	"cone": ["CONE COMMITTEE", "ONE ROUTE. WE HAD THREE PROPOSALS. NOBODY WANTED TO CANCEL THE OTHERS."],
@@ -95,7 +95,7 @@ func begin(g: Node, which: String, then: Callable) -> void:
 	seen[id] = true
 	hold_mode = int(g.mode)
 	texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
-	var entrance: String = "res://assets/art/entrance/%s.png" % id
+	var entrance: String = "res://assets/art/entrance/%s.png" % NativeBossArt.art_id(id)
 	if ResourceLoader.exists(entrance):
 		var still := Sprite2D.new()
 		still.texture = load(entrance)
