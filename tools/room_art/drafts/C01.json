@@ -1,0 +1,949 @@
+{
+ "id": "C01",
+ "name": "Fountain Court / everyone passes through",
+ "cue": "campus",
+ "dimensions": [
+  1920,
+  540
+ ],
+ "walk_bounds": [
+  20,
+  212,
+  1880,
+  300
+ ],
+ "entry": [
+  1100,
+  420
+ ],
+ "arrivals": {
+  "U03": [
+   1100,
+   238
+  ],
+  "C02": [
+   860,
+   234
+  ],
+  "C03": [
+   1340,
+   234
+  ],
+  "D03": [
+   1770,
+   234
+  ],
+  "H01": [
+   74,
+   392
+  ],
+  "M01": [
+   590,
+   248
+  ],
+  "O01": [
+   684,
+   248
+  ],
+  "N01": [
+   1550,
+   248
+  ],
+  "F01": [
+   1846,
+   400
+  ],
+  "E01": [
+   1540,
+   486
+  ]
+ },
+ "npc_spots": [
+  [
+   150,
+   290
+  ],
+  [
+   250,
+   292
+  ],
+  [
+   320,
+   300
+  ],
+  [
+   460,
+   300
+  ],
+  [
+   110,
+   420
+  ],
+  [
+   300,
+   410
+  ],
+  [
+   470,
+   420
+  ],
+  [
+   690,
+   300
+  ],
+  [
+   700,
+   470
+  ],
+  [
+   820,
+   330
+  ],
+  [
+   840,
+   470
+  ],
+  [
+   1000,
+   410
+  ],
+  [
+   1180,
+   410
+  ],
+  [
+   1100,
+   480
+  ],
+  [
+   1240,
+   260
+  ],
+  [
+   960,
+   262
+  ],
+  [
+   1370,
+   470
+  ],
+  [
+   1520,
+   360
+  ],
+  [
+   1560,
+   300
+  ],
+  [
+   1700,
+   400
+  ],
+  [
+   1800,
+   360
+  ],
+  [
+   1830,
+   470
+  ],
+  [
+   1460,
+   470
+  ],
+  [
+   620,
+   360
+  ],
+  [
+   380,
+   470
+  ],
+  [
+   1380,
+   280
+  ]
+ ],
+ "blocks": [],
+ "fixed_blocks": [],
+ "placements": [
+  {
+   "kind": "door",
+   "x": 860,
+   "y": 212,
+   "w": 52,
+   "h": 72,
+   "depth": 0,
+   "object": "book_store",
+   "label": "BOOK STORE",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "door",
+   "x": 1100,
+   "y": 216,
+   "w": 56,
+   "h": 76,
+   "depth": 0,
+   "object": "umc_doors",
+   "label": "UMC",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "door",
+   "x": 1340,
+   "y": 212,
+   "w": 52,
+   "h": 72,
+   "depth": 0,
+   "object": "career_center",
+   "label": "CAREER CENTER",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "door",
+   "x": 1770,
+   "y": 212,
+   "w": 50,
+   "h": 72,
+   "depth": 0,
+   "object": "farrand_hall",
+   "label": "FARRAND HALL",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "threshold",
+   "x": 34,
+   "y": 392,
+   "w": 40,
+   "h": 30,
+   "depth": 0,
+   "object": "hill",
+   "label": "< THE HILL",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "threshold",
+   "x": 590,
+   "y": 228,
+   "w": 46,
+   "h": 18,
+   "depth": 0,
+   "object": "macky",
+   "label": "MACKY",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "threshold",
+   "x": 684,
+   "y": 228,
+   "w": 46,
+   "h": 18,
+   "depth": 0,
+   "object": "old_main",
+   "label": "OLD MAIN",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "threshold",
+   "x": 1550,
+   "y": 228,
+   "w": 56,
+   "h": 18,
+   "depth": 0,
+   "object": "norlin",
+   "label": "NORLIN",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "threshold",
+   "x": 1886,
+   "y": 400,
+   "w": 40,
+   "h": 30,
+   "depth": 0,
+   "object": "farrand_field",
+   "label": "FARRAND FIELD >",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "threshold",
+   "x": 1540,
+   "y": 508,
+   "w": 62,
+   "h": 18,
+   "depth": 0,
+   "object": "engineering",
+   "label": "ENGINEERING",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "fountain",
+   "x": 1100,
+   "y": 366,
+   "w": 300,
+   "h": 84,
+   "depth": 62,
+   "object": "fountain_plaque",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "truck",
+   "x": 106,
+   "y": 240,
+   "w": 140,
+   "h": 100,
+   "depth": 22,
+   "object": "truck_chile",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "truck",
+   "x": 272,
+   "y": 240,
+   "w": 140,
+   "h": 100,
+   "depth": 22,
+   "object": "truck_dumplings",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "truck",
+   "x": 438,
+   "y": 240,
+   "w": 140,
+   "h": 100,
+   "depth": 22,
+   "object": "truck_waffles",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "cart",
+   "x": 1446,
+   "y": 340,
+   "w": 72,
+   "h": 74,
+   "depth": 18,
+   "object": "coffee_cart",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "sign",
+   "x": 540,
+   "y": 300,
+   "w": 56,
+   "h": 58,
+   "depth": 8,
+   "object": "campus_map",
+   "label": "CAMPUS MAP",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "kiosk",
+   "x": 1664,
+   "y": 332,
+   "w": 36,
+   "h": 72,
+   "depth": 14,
+   "object": "event_kiosk",
+   "label": "UMC EVENTS",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 176,
+   "y": 336,
+   "w": 110,
+   "h": 30,
+   "depth": 16,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 386,
+   "y": 352,
+   "w": 110,
+   "h": 30,
+   "depth": 16,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "bench",
+   "x": 925,
+   "y": 452,
+   "w": 96,
+   "h": 34,
+   "depth": 14,
+   "object": "fountain_bench",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "bench",
+   "x": 1275,
+   "y": 452,
+   "w": 96,
+   "h": 34,
+   "depth": 14,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 776,
+   "y": 256,
+   "w": 18,
+   "h": 62,
+   "depth": 8,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 1424,
+   "y": 256,
+   "w": 18,
+   "h": 62,
+   "depth": 8,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 922,
+   "y": 308,
+   "w": 18,
+   "h": 62,
+   "depth": 8,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 1278,
+   "y": 308,
+   "w": 18,
+   "h": 62,
+   "depth": 8,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 604,
+   "y": 432,
+   "w": 18,
+   "h": 62,
+   "depth": 8,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 1602,
+   "y": 432,
+   "w": 18,
+   "h": 62,
+   "depth": 8,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 1842,
+   "y": 300,
+   "w": 18,
+   "h": 62,
+   "depth": 8,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "rack",
+   "x": 1690,
+   "y": 250,
+   "w": 84,
+   "h": 34,
+   "depth": 10,
+   "object": "bike_rack",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "tree",
+   "x": 252,
+   "y": 480,
+   "w": 70,
+   "h": 120,
+   "depth": 18,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "tree",
+   "x": 1732,
+   "y": 488,
+   "w": 60,
+   "h": 130,
+   "depth": 16,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "bins",
+   "x": 532,
+   "y": 248,
+   "w": 40,
+   "h": 30,
+   "depth": 10,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "sign",
+   "x": 70,
+   "y": 302,
+   "w": 66,
+   "h": 50,
+   "depth": 8,
+   "object": "truck_sign",
+   "label": "TRUCKS",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "planter",
+   "x": 520,
+   "y": 344,
+   "w": 70,
+   "h": 44,
+   "depth": 18,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "book_store",
+   "name": "CU Book Store",
+   "x": 860,
+   "y": 212,
+   "kind": "door",
+   "to": "C02",
+   "spawn": null,
+   "requires": [],
+   "note": "spawn = just inside that room's exit back to C01; set it when that room's layout exists"
+  },
+  {
+   "id": "umc_doors",
+   "name": "Into the UMC atrium",
+   "x": 1100,
+   "y": 216,
+   "kind": "door",
+   "to": "U03",
+   "spawn": [
+    360,
+    420
+   ],
+   "requires": []
+  },
+  {
+   "id": "career_center",
+   "name": "Career Center",
+   "x": 1340,
+   "y": 212,
+   "kind": "door",
+   "to": "C03",
+   "spawn": null,
+   "requires": [],
+   "note": "spawn = just inside that room's exit back to C01; set it when that room's layout exists"
+  },
+  {
+   "id": "farrand_hall",
+   "name": "Farrand Hall (the dorms)",
+   "x": 1770,
+   "y": 212,
+   "kind": "door",
+   "to": "D03",
+   "spawn": [
+    262,
+    204
+   ],
+   "requires": []
+  },
+  {
+   "id": "hill",
+   "name": "Across Broadway to the Hill",
+   "x": 34,
+   "y": 392,
+   "kind": "door",
+   "to": "H01",
+   "spawn": null,
+   "requires": [],
+   "note": "spawn = just inside that room's exit back to C01; set it when that room's layout exists"
+  },
+  {
+   "id": "macky",
+   "name": "North path to Macky",
+   "x": 590,
+   "y": 228,
+   "kind": "door",
+   "to": "M01",
+   "spawn": [
+    120,
+    460
+   ],
+   "requires": []
+  },
+  {
+   "id": "old_main",
+   "name": "North path to Old Main",
+   "x": 684,
+   "y": 228,
+   "kind": "door",
+   "to": "O01",
+   "spawn": [
+    120,
+    445
+   ],
+   "requires": []
+  },
+  {
+   "id": "norlin",
+   "name": "Path to Norlin Quad",
+   "x": 1550,
+   "y": 228,
+   "kind": "door",
+   "to": "N01",
+   "spawn": [
+    120,
+    300
+   ],
+   "requires": []
+  },
+  {
+   "id": "farrand_field",
+   "name": "East to Farrand Field",
+   "x": 1886,
+   "y": 400,
+   "kind": "door",
+   "to": "F01",
+   "spawn": [
+    120,
+    400
+   ],
+   "requires": []
+  },
+  {
+   "id": "engineering",
+   "name": "South walk to Engineering",
+   "x": 1540,
+   "y": 508,
+   "kind": "door",
+   "to": "E01",
+   "spawn": [
+    105,
+    440
+   ],
+   "requires": []
+  },
+  {
+   "id": "fountain_plaque",
+   "name": "Dalton Trumbo Fountain Court",
+   "x": 1100,
+   "y": 378,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A bronze plaque on the rim: DALTON TRUMBO FOUNTAIN COURT. The jets keep going whether anyone watches or not.",
+   "lines": [
+    [
+     "Jules",
+     "A bronze plaque on the rim: DALTON TRUMBO FOUNTAIN COURT. The jets keep going whether anyone watches or not.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "truck_chile",
+   "name": "Green chile truck",
+   "x": 106,
+   "y": 262,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "GREEN CHILE. Smells like roasting peppers and a deadline.",
+   "lines": [
+    [
+     "Jules",
+     "GREEN CHILE. Smells like roasting peppers and a deadline.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "truck_dumplings",
+   "name": "Dumpling truck",
+   "x": 272,
+   "y": 262,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "DUMPLINGS. Steam rolls out of the hatch into the cold.",
+   "lines": [
+    [
+     "Jules",
+     "DUMPLINGS. Steam rolls out of the hatch into the cold.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "truck_waffles",
+   "name": "Waffle truck",
+   "x": 438,
+   "y": 262,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "WAFFLES. The menu is mostly toppings and optimism.",
+   "lines": [
+    [
+     "Jules",
+     "WAFFLES. The menu is mostly toppings and optimism.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "coffee_cart",
+   "name": "Coffee cart",
+   "x": 1446,
+   "y": 352,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A coffee cart under a striped umbrella. Open late, for reasons.",
+   "lines": [
+    [
+     "Jules",
+     "A coffee cart under a striped umbrella. Open late, for reasons.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "campus_map",
+   "name": "Campus map",
+   "x": 540,
+   "y": 312,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "YOU ARE HERE. Every path on campus starts at this fountain, apparently.",
+   "lines": [
+    [
+     "Jules",
+     "YOU ARE HERE. Every path on campus starts at this fountain, apparently.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "event_kiosk",
+   "name": "UMC events column",
+   "x": 1664,
+   "y": 344,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Posters three deep: club fair, a cappella, a career fair nobody feels ready for.",
+   "lines": [
+    [
+     "Jules",
+     "Posters three deep: club fair, a cappella, a career fair nobody feels ready for.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "bike_rack",
+   "name": "Bike rack",
+   "x": 1690,
+   "y": 262,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Bikes locked to everything, including one locked to another bike.",
+   "lines": [
+    [
+     "Jules",
+     "Bikes locked to everything, including one locked to another bike.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "truck_sign",
+   "name": "Sandwich board",
+   "x": 70,
+   "y": 314,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "TRUCKS / OPEN LATE / CASH OR CARD. Somebody drew a chile pepper on it.",
+   "lines": [
+    [
+     "Jules",
+     "TRUCKS / OPEN LATE / CASH OR CARD. Somebody drew a chile pepper on it.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "chalk_welcome",
+   "name": "Chalk on the paving",
+   "x": 748,
+   "y": 452,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Someone chalked WELCOME HOME, BUFFS in four colours.",
+   "lines": [
+    [
+     "Jules",
+     "Someone chalked WELCOME HOME, BUFFS in four colours.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "fountain_bench",
+   "name": "Fountain bench / save",
+   "x": 925,
+   "y": 466,
+   "kind": "save",
+   "requires": [],
+   "suggested": "A bench facing the fountain. A good place to stop.",
+   "lines": [
+    [
+     "Jules",
+     "A bench facing the fountain. A good place to stop.",
+     "neutral"
+    ]
+   ]
+  }
+ ]
+}
