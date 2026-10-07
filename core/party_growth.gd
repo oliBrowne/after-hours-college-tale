@@ -58,6 +58,8 @@ static func stats(member: String, flags: Dictionary) -> Dictionary:
 	var result: Dictionary = {"max": int(row[0]), "power": int(row[1]), "defence": int(row[2]), "sync": 0}
 	var id: String = equipped(flags, member)
 	if not id.is_empty(): result[KEEPSAKES[id].stat] = int(result[KEEPSAKES[id].stat]) + int(KEEPSAKES[id].amount)
+	# LinkedOut endorsements: small permanent boosts for the whole party (SYNC is added once, in starting_sync).
+	for stat: String in ["max", "power", "defence"]: result[stat] = int(result[stat]) + LinkedOut.bonus(flags, stat)
 	return result
 
 ## Returns the party with derived max/power/defence. When heal is true (a new
@@ -88,4 +90,4 @@ static func starting_sync(flags: Dictionary) -> int:
 	for member: String in MEMBERS:
 		if member != "jules" and not bool(flags.get(member + "_joined", false)): continue
 		bonus += int(stats(member, flags).sync)
-	return bonus
+	return bonus + LinkedOut.bonus(flags, "sync")

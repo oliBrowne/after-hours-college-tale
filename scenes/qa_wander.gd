@@ -23,6 +23,8 @@ func run(main: Node) -> bool:
 	game.enter_room("F04",SPOT)
 	await _quiet()
 	_assert(str(game.state.room)=="F04" and not NativeRandomFights.near_something(game),"Standing on open ground on the lawn")
+	if "--qa-li-only" in OS.get_cmdline_user_args():
+		await _linkedout();return not failed
 	await _walk_around(120)
 	_assert(int(game.mode)==WORLD and NativeRandomFights.walked>0.0,"Walking builds up the fight counter without starting one early")
 	# Win one peacefully.
@@ -63,6 +65,7 @@ func run(main: Node) -> bool:
 	_assert(gain>=1 and gain<=int(NativeRandomFights.FIGHTS[second].bucks[1]),"A forceful win still pays, a little less (%d)"%gain)
 	_assert(NativeRandomFights.count(game.state.flags,"wander_wins")==2,"Two wins counted")
 	await _capture("02-after-forceful-win")
+	await _linkedout()
 	_log("PASS wandering fights route")
 	return not failed
 
@@ -126,3 +129,28 @@ func _wander_fight(id: String,peaceful: bool) -> void:
 	await _capture("03-result-"+expected)
 	await _choose("Continue")
 	await _settle()
+
+## LinkedOut through the pause menu: requests from flags, accepting one, the feed, the notice.
+func _linkedout() -> void:
+	for _i: int in range(240):await _frame()
+	game.state.flags.walt_resolution="peaceful";game.state.flags.chip_resolution="forceful";game.state.flags.dev_met=true
+	var max_before: int=int(game.state.party[0].max)
+	await _press("menu")
+	_assert(game.menu_options.any(func(o: Dictionary) -> bool:return str(o.label)=="LinkedOut (3 new)"),"The pause menu shows LinkedOut with three new requests (the Flyerer, Walt and Dev)")
+	await _choose("LinkedOut")
+	_assert(str(game.caption).begins_with("LinkedOut / 0 connections / 3 requests"),"LinkedOut counts the requests: "+str(game.caption))
+	await _choose("Accept Walt")
+	_assert(str(game.caption).begins_with("LinkedOut / 1 connections / 2 requests") and int(game.state.party[0].max)==max_before+4,"Accepting Walt adds +4 max HP and keeps the app open (%d to %d)"%[max_before,int(game.state.party[0].max)])
+	_assert(game.state.flags.get("li_walt","")=="yes","The acceptance is saved as a flag")
+	await _choose("Profile feed")
+	_assert(str(game.caption).begins_with("Feed 1/2 / Thrilled to announce"),"The feed leads with the new connection: "+str(game.caption))
+	await _capture("04-linkedout-feed-1")
+	await _choose("Older post")
+	_assert(str(game.caption).contains("Chip viewed your profile"),"The forceful ending left a viewed-your-profile post")
+	await _capture("04-linkedout-feed")
+	await _choose("Back to LinkedOut");await _choose("Back");await _choose("Resume");await _quiet()
+	_assert(int(game.mode)==WORLD,"Back in the world")
+	for _i: int in range(240):await _frame()
+	game.state.flags.deion_resolution="peaceful"
+	game.resume_world()
+	_assert(str(game.notice).begins_with("LinkedOut: new connection request"),"A new request announces itself once control returns: "+str(game.notice))

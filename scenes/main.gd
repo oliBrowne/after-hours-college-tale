@@ -733,6 +733,7 @@ func living_speakers() -> Array[String]:
 
 func interact(object: Dictionary) -> void:
 	audio.combat("pick")
+	NativeLinkedOutMenu.met(self, object)
 	if NativeMoveIn.handle(self, object): return
 	if NativeJakerson.handle(self,object):return
 	if object.kind == "keepsake":
@@ -839,6 +840,7 @@ func complete_mixer(response: String) -> void:
 func resume_world() -> void:
 	mode = Mode.WORLD
 	refresh_growth()
+	NativeLinkedOutMenu.notify(self)
 	for npc: AnimatedSprite2D in world_npcs:
 		var id: String = str(npc.get_meta("id", ""))
 		if str(npc.get_meta("art_id",id)) in NativeCastArt.IDS or id == "flyer": npc.play("settled" if state.flags.get(id + "_resolution", "") == "peaceful" else "down" if state.flags.has(id + "_resolution") else "idle_down")
@@ -1064,7 +1066,7 @@ func open_pause() -> void:
 
 func pause_menu() -> void:
 	var options: Array = [option("Resume", resume_pause)]
-	if pause_mode == Mode.WORLD: options.append_array([option("Campus map", open_map), option("Party / keepsakes", party_menu)])
+	if pause_mode == Mode.WORLD: options.append_array([option("Campus map", open_map), option("Party / keepsakes", party_menu), option("LinkedOut" + NativeLinkedOutMenu.badge(state.flags), func() -> void: NativeLinkedOutMenu.open(self))])
 	options.append_array([option("Settings", settings_menu), option("Saves / import / export", func() -> void: save_menu(false)), option("Return to title", show_title)])
 	open_menu(Mode.PAUSE, "Paused", options)
 
