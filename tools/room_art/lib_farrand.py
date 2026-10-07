@@ -159,34 +159,50 @@ def trodden_patch(cv, cx, cy, rx, ry, seed=0, mask=None, strength=1.0):
             cv.px(px_, py_ + 1, "#2f3a26")
 
 
-def puddle(cv, cx, cy, rx, ry, seed=0, reflect=("#f6cf7a",), sky=("#3a3458", "#5a4a78", "#8a5a84")):
-    """Rainwater lying in a dip: the dusk sky reflected in stepped bands (darker toward us),
-    a pale lip on the far edge, wet dark grass on the near edge, warm lamp streaks."""
+def puddle(cv, cx, cy, rx, ry, seed=0, reflect=("#f6cf7a",), sky=("#1e2840", "#2c3d5e", "#4d6488")):
+    """Rainwater lying in a dip in the lawn or on the mats: ragged-edged and a little broken up, dusk
+    sky reflected as slate-blue bands (darker toward us) with a few ripple glints, a pale far lip,
+    wet dark grass round it, grass blades poking over the near rim, and short lamp streaks (not bars)."""
     rng = _rng(seed)
-    field = _soft_field(cv.w, cv.h, 5, rng)
+    field = _soft_field(cv.w, cv.h, 4, rng)
     ys, xs = np.mgrid[0:cv.h, 0:cv.w]
     d = ((xs - cx) / max(1, rx)) ** 2 + ((ys - cy) / max(1, ry)) ** 2
-    water = d + (field - 0.5) * 0.45 < 1
-    wet = (d + (field - 0.5) * 0.45 < 1.5) & ~water
-    cv.fill_mask(wet, C("#0d0b16", 0.25))
+    water = d + (field - 0.5) * 0.85 < 1
+    wet = (d + (field - 0.5) * 0.85 < 1.6) & ~water
+    cv.fill_mask(wet, C("#0d0b16", 0.3))
     rel = (ys - (cy - ry)) / max(1, 2 * ry)
     cv.fill_mask(water & (rel >= 0.55), sky[0])
     cv.fill_mask(water & (rel < 0.55), sky[1])
-    cv.fill_mask(water & (rel < 0.25), sky[2])
+    cv.fill_mask(water & (rel < 0.28), sky[2])
     far_lip = np.zeros_like(water)
     far_lip[:-1] = water[1:] & ~water[:-1]
     near_lip = np.zeros_like(water)
     near_lip[1:] = water[:-1] & ~water[1:]
-    cv.fill_mask(far_lip, "#9a8aa8")
-    cv.fill_mask(near_lip, "#1a1826")
+    cv.fill_mask(far_lip, "#7d93a8")
+    cv.fill_mask(near_lip, "#141a24")
+    # ripple glints: short pale dashes scattered over the surface
+    for _ in range(max(3, rx // 4)):
+        gx = cx + int(rng.integers(-rx, rx + 1)); gy = cy + int(rng.integers(-ry, ry + 1))
+        if 0 <= gy < cv.h and 0 <= gx + 2 < cv.w and water[gy, gx] and water[gy, gx + 2]:
+            cv.px(gx, gy, sky[2]); cv.px(gx + 1, gy, sky[2])
+    # lamp light: a short broken vertical streak, not a bar
     for c in reflect:
-        rx_ = cx + int(rng.integers(-rx // 2, rx // 2 + 1))
-        for k in range(3):
-            yy = cy - ry // 3 + k * 2
-            ln = max(2, rx // 2 - k * 3)
-            for xx in range(rx_ - ln // 2, rx_ + ln // 2):
-                if 0 <= yy < cv.h and 0 <= xx < cv.w and water[yy, xx]:
-                    cv.px(xx, yy, mix(c, sky[0], 0.15 + 0.25 * k))
+        sx = cx + int(rng.integers(-rx // 2, rx // 2 + 1))
+        for k in range(ry + 1):
+            yy = cy - ry // 2 + k
+            if 0 <= yy < cv.h and 0 <= sx < cv.w and water[yy, sx] and k % 3 != 2:
+                cv.px(sx, yy, mix(c, sky[1], 0.35 + 0.15 * k))
+                if k == 0 and sx + 1 < cv.w and water[yy, sx + 1]: cv.px(sx + 1, yy, mix(c, sky[1], 0.55))
+    # grass blades standing over the near rim
+    blades = ("#2c4a3c", "#3d6048", "#4d7a56")
+    for _ in range(max(4, rx // 2)):
+        bx = cx + int(rng.integers(-rx, rx + 1))
+        col = np.where(water[:, bx])[0] if 0 <= bx < cv.w else []
+        if len(col) == 0: continue
+        by = int(col.max())
+        tall = int(rng.integers(2, 5))
+        for k in range(tall):
+            if 0 <= by - k < cv.h: cv.px(bx, by - k, blades[(k + bx) % 3])
 
 
 def litter(cv, x, y, kind, seed=0):

@@ -24,6 +24,13 @@ var font: Font
 var frame: Node2D
 var inner: Node2D
 var over: Node2D
+## Where the box may be drawn: between the side panels (screen x 172 and 468), under the foe card
+## and above the action button (y 291). A box turned or grown past it is drawn shifted and, if
+## still too big, scaled down about its centre, so it never covers the HUD. Only the drawing moves:
+## the pattern's own geometry (and so the fight) is unchanged.
+const SAFE: Rect2 = Rect2(174, 112, 292, 176)
+var fit_scale: float = 1.0
+var fit_shift: Vector2 = Vector2.ZERO
 
 func _ready() -> void:
 	z_index = 210
@@ -42,11 +49,41 @@ func _ready() -> void:
 
 func show_pattern(next: Dictionary, at: Vector2) -> void:
 	pattern = next; offset = at
+	_fit()
 	visible = true
 	frame.queue_redraw(); inner.queue_redraw(); over.queue_redraw()
 
 func hide_box() -> void:
 	visible = false
+	fit_scale = 1.0; fit_shift = Vector2.ZERO
+	position = Vector2.ZERO; scale = Vector2.ONE
+
+## Screen bounds of the turned box outline.
+func _bounds() -> Rect2:
+	var points: PackedVector2Array = D.corners(pattern)
+	var bounds: Rect2 = Rect2(points[0] + offset, Vector2.ZERO)
+	for point: Vector2 in points: bounds = bounds.expand(point + offset)
+	return bounds
+
+func _fit() -> void:
+	var bounds: Rect2 = _bounds()
+	var centre: Vector2 = offset + D.centre(pattern)
+	var target: float = minf(1.0, minf(SAFE.size.x / maxf(1.0, bounds.size.x), SAFE.size.y / maxf(1.0, bounds.size.y)))
+	var scaled: Rect2 = Rect2(centre + (bounds.position - centre) * target, bounds.size * target)
+	var shift: Vector2 = Vector2.ZERO
+	if scaled.end.y > SAFE.end.y: shift.y = SAFE.end.y - scaled.end.y
+	if scaled.position.y + shift.y < SAFE.position.y: shift.y = SAFE.position.y - scaled.position.y
+	if scaled.end.x > SAFE.end.x: shift.x = SAFE.end.x - scaled.end.x
+	if scaled.position.x + shift.x < SAFE.position.x: shift.x = SAFE.position.x - scaled.position.x
+	# Ease toward the fit so a turning box glides rather than jumps.
+	fit_scale = lerpf(fit_scale, target, 0.35) if absf(fit_scale - target) > 0.002 else target
+	fit_shift = fit_shift.lerp(shift, 0.35) if fit_shift.distance_to(shift) > 0.2 else shift
+	scale = Vector2(fit_scale, fit_scale)
+	position = (centre * (1.0 - fit_scale) + fit_shift).round() if fit_scale == 1.0 else centre * (1.0 - fit_scale) + fit_shift
+
+## Screen point -> arena point, undoing the fit (for pointer steering).
+func to_arena(screen: Vector2) -> Vector2:
+	return (screen - position) / maxf(0.01, fit_scale) - offset
 
 func _w(p: Vector2) -> Vector2:
 	return offset + p
@@ -128,8 +165,8 @@ func _draw_warning_inner(c: CanvasItem, w: Dictionary) -> void:
 	match str(w.kind):
 		"lane":
 			var r: Rect2 = Rect2(_w(Vector2(-200, float(w.y) - float(w.h))), Vector2(660, float(w.h) * 2.0)) if w.horizontal else Rect2(_w(Vector2(float(w.x) - float(w.w), -200)), Vector2(float(w.w) * 2.0, 520))
-			c.draw_rect(r, Color(ROSE, 0.10 + 0.12 * fade))
-			c.draw_rect(r, Color(ROSE, 0.35), false, 1)
+			c.draw_rect(r, Color(ROSE, 0.22 + 0.2 * fade))
+			c.draw_rect(r, Color(ROSE, 0.75), false, 1)
 		"edge":
 			var at: Vector2 = _box_point(Vector2(float(w.x), float(w.y)))
 			_chevron(c, at, Vector2(w.dir).rotated(float(pattern.box.rot)), Color(ROSE, 0.5 + 0.5 * fade))
@@ -397,10 +434,17 @@ func _draw_over() -> void:
 		if w.kind == "gust": _draw_gust(c, w)
 		elif w.kind == "flip" or w.kind == "curtain": _draw_squeeze(c, w)
 	if int(pattern.bannerTicks) > 0 and font != null:
-		var top: Vector2 = _w(D.centre(pattern)) + Vector2(0, -D.half(pattern).y - 8.0)
-		var blink: bool = int(pattern.bannerTicks) % 16 < 11
-		if blink:
-			c.draw_string(font, top + Vector2(-100, 0), str(pattern.banner), HORIZONTAL_ALIGNMENT_CENTER, 200, 12, Color(pattern.get("bannerColor", ROSE if pattern.encounterId == "walt" else MINT)))
+		# Attack callouts sit on their own dark plate just clear of the (turned) box outline, so
+		# the border never strikes through them and the backdrop never swallows them.
+		var colour: Color = Color(pattern.get("bannerColor", ROSE if pattern.encounterId == "walt" else MINT))
+		var words: String = str(pattern.banner)
+		var width: float = font.get_string_size(words, HORIZONTAL_ALIGNMENT_LEFT, -1, 12).x
+		var bottom: float = roundf(_bounds().position.y - 4.0)
+		var plate: Rect2 = Rect2(Vector2(roundf(_w(D.centre(pattern)).x - width * 0.5 - 6.0), bottom - 16.0), Vector2(roundf(width + 12.0), 16.0))
+		c.draw_rect(plate, Color(INK, 0.92))
+		c.draw_rect(plate, Color(colour, 0.7), false, 1)
+		if int(pattern.bannerTicks) % 16 < 11:
+			c.draw_string(font, Vector2(plate.position.x + 6.0, bottom - 4.0), words, HORIZONTAL_ALIGNMENT_LEFT, -1, 12, colour)
 	_script().draw_over(c, pattern, self)
 
 func _draw_beam(c: CanvasItem, b: Dictionary) -> void:

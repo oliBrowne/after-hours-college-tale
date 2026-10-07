@@ -103,9 +103,10 @@ static func promise_complete(s: Dictionary) -> bool:
 
 static func progress(s: Dictionary) -> String:
 	var markers: Array = s.get("markers", [])
+	# Read like the other fights' counters ("Called columns 2/3").
 	if int(s.get("phase", 0)) == 0:
-		return "Tag %s / sweep %s\ndelivered %s" % ["held" if s.get("carryTag", false) else "open", "clear" if int(s.get("claimSweepPassed", 0)) > 0 else "open", "yes" if markers.size() > 1 and markers[1].get("collected", false) else "open"]
-	return "One return %s / note %s\nboundary %s" % ["done" if int(s.get("delivery", 0)) > 0 else "open", "left" if s.get("noteLeft", false) else "open", "kept" if s.get("boundary", false) and s.get("promiseComplete", false) else "offered" if s.get("boundary", false) else "open"]
+		return "Tag carried %d/1 / Sweep passed %d/1\nTag delivered %d/1" % [1 if s.get("carryTag", false) or markers.size() > 1 and markers[1].get("collected", false) else 0, 1 if int(s.get("claimSweepPassed", 0)) > 0 else 0, 1 if markers.size() > 1 and markers[1].get("collected", false) else 0]
+	return "Item returned %d/1 / Note left %d/1\n%s" % [1 if int(s.get("delivery", 0)) > 0 else 0, 1 if s.get("noteLeft", false) else 0, "Boundary kept 1/1" if s.get("boundary", false) and s.get("promiseComplete", false) else "Boundary offered" if s.get("boundary", false) else "Boundary kept 0/1"]
 
 ## The old marker rules, carried by objectives with the same ids.
 static func _sync(s: Dictionary) -> void:
@@ -581,7 +582,8 @@ static func draw_over(c: CanvasItem, s: Dictionary, v: Node2D) -> void:
 			c.draw_rect(Rect2(at + Vector2(-12, -10), Vector2(24, 16)), CREAM, false, 1)
 			c.draw_rect(Rect2(at + Vector2(-6, 4), Vector2(12, 3)), INK)
 		if s.has("serving") and t < int(s.serving.until) + 20:
-			v.text(c, v.box_point(Vector2(0, -h.y - 2.0)) + Vector2(0, -24), "NOW SERVING %d" % int(s.serving.number), AMBER, 160)
+			# No number here: the counter on the wall behind (SERVING 07/08) is the one the room shows.
+			v.text(c, v.box_point(Vector2(0, -h.y - 2.0)) + Vector2(0, -24), "NOW SERVING", AMBER, 160)
 	if s.patternId == "many_hands":
 		for key: String in s.flash:
 			var f: Dictionary = s.flash[key]

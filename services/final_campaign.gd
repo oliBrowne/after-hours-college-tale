@@ -126,9 +126,12 @@ static func aftermath(g: Node, id: String) -> void:
 		f.aftermath_pending="";g.persist();g.resume_world())
 static func ending_menu(g: Node) -> void:
 	var title: String="The End / "+str({"release":"every other future let go","rewrite":"one real offer, with hours","break":"you walked out of the interview"}.get(str(g.state.flags.get("ending","release")),"thanks for playing"))
-	var options: Array=[g.option("Keep exploring the changed campus",g.resume_world),g.option("Return to title",g.show_title)]
-	if not g.state.flags.get("graduation_complete",false):options.insert(0,g.option("Epilogue / graduation day",func() -> void:NativeJakerson.graduation(g)))
+	var options: Array=[g.option("Keep exploring the changed campus",func() -> void:g.ending_ticks=-1;g.resume_world()),g.option("Return to title",func() -> void:g.ending_ticks=-1;g.show_title())]
+	if not g.state.flags.get("graduation_complete",false):options.insert(0,g.option("Epilogue / graduation day",func() -> void:g.ending_ticks=-1;NativeJakerson.graduation(g)))
+	# A finished story closes on a card; the epilogue's own menu (before graduation) stays a plain list.
+	g.ending_ticks=0 if g.state.flags.get("graduation_complete",false) else -1
 	g.open_menu(g.Mode.MENU,title,options)
+	if g.ending_ticks==0:g.input_lock=125
 static func objective(s: Dictionary) -> String:
 	var f: Dictionary=s.flags
 	if f.get("graduation_day",false) and not f.has("jakerson_final_resolution"):return "One friendly set / Jakerson on the tennis courts"

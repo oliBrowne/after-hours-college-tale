@@ -9,6 +9,15 @@
     30
    ]
   },
+  "0": {
+   "texture": "res://assets/art/rooms/E04/prop-0.png",
+   "anchor": [
+    150,
+    130
+   ],
+   "flag": "model_revised",
+   "flag_texture": "res://assets/art/rooms/E04/prop-0b.png"
+  },
   "2": {
    "texture": "res://assets/art/rooms/E04/prop-2.png",
    "anchor": [
