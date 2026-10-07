@@ -1840,8 +1840,13 @@ func render_ui() -> void:
 		var mood: String = str(line[2]) if line.size() > 2 else "neutral"
 		var talking: bool = reveal < str(line[1]).length()
 		var face: int = 2 if mood == "concern" else 3 if mood == "warm" else 0
-		if talking and mood != "concern" and intro_ticks % 16 < 8: face = 1
-		portrait(speaker, face, Rect2(16, top + 4, 128, 128))
+		# While a line types out the mouth flaps (closed on punctuation); portraits without drawn
+		# open mouths fall back to swapping in the talking face.
+		var open: bool = talking and intro_ticks % 10 < 5 and not str(line[1]).substr(maxi(0, floori(reveal) - 1), 1) in [".", ",", "!", "?"]
+		var mouth: Texture2D = NativeTalkArt.portrait(speaker, face) if open else null
+		if mouth == null and talking and mood != "concern" and intro_ticks % 16 < 8 and NativeTalkArt.portrait(speaker, face) == null: face = 1
+		if mouth != null: portrait_texture(mouth, Rect2(16, top + 4, 128, 128))
+		else: portrait(speaker, face, Rect2(16, top + 4, 128, 128))
 		fill(Rect2(150, top + 10, 1, height - 20), LINE)
 		# Name tab sits on the frame, so the speaker reads before the line does.
 		var tab: float = text_width(speaker) + 16
@@ -2287,7 +2292,9 @@ func qa_finish_record() -> void:
 	qa_record_finishing = false
 
 func portrait(speaker: String, expression: int, rect: Rect2) -> void:
-	var texture: Texture2D = NativeCastArt.portrait(speaker, expression)
+	portrait_texture(NativeCastArt.portrait(speaker, expression), rect)
+
+func portrait_texture(texture: Texture2D, rect: Rect2) -> void:
 	if texture == null: return
 	var node := TextureRect.new()
 	node.expand_mode = TextureRect.EXPAND_IGNORE_SIZE

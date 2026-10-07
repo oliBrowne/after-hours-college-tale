@@ -26,4 +26,5 @@ static func frames(id: String) -> SpriteFrames:
 		result.add_animation(name);result.set_animation_speed(name,4)
 		for index: int in poses[name]:result.add_frame(name,body(id,index))
 	if id=="val_small":result.set_meta("walk_key",id);result.set_meta("walk_mirror_left",true)  # stepping cycles from tools/walk_cycle
+	elif id in ["cone","empty_chair","val"]:result.set_meta("idle_key",id)  # blink and idle poses from assets/art/idle
 	frame_cache[id]=result;return result

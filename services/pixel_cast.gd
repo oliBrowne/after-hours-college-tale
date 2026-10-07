@@ -92,7 +92,7 @@ static func frames(raw: SpriteFrames,height: int) -> SpriteFrames:
 		if idle_pose(str(name)):
 			result.add_frame(name,breathing(result.get_frame_texture(name,0)))
 			result.set_animation_speed(name,1.0);result.set_animation_loop(name,true)
-	NativeWalkArt.apply(result,raw)
+	NativeWalkArt.apply(result,raw);NativeIdleArt.apply(result,raw)
 	frames_cache[key]=result;return result
 static func fit(sprite: AnimatedSprite2D,height: int) -> void:
 	if sprite.get_meta("fitting_pixels",false):return

@@ -43,7 +43,7 @@ SIDE = {
 	"deion": dict(hip=14, stride=5, thigh=6, shin=5, shoe=(7, 3)),
 	"todd": dict(hip=14, stride=5, thigh=5, shin=5, shoe=(7, 3)),
 	# Drawn facing front only: they step in place on every heading.
-	"nell": dict(hip=10), "dev": dict(hip=10), "rook": dict(hip=12), "val_small": dict(hip=10),
+	"nell": dict(hip=10), "dev": dict(hip=10), "rook": dict(hip=12), "val_small": dict(hip=6),
 }
 SIDE_CAST = ("cal", "mags", "mara", "eli", "chip", "deion", "todd")
 FRONT_CAST = ("nell", "dev", "rook", "val_small")

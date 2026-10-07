@@ -648,36 +648,36 @@
       "file": "val_small-right.png",
       "frames": 8,
       "size": [
-        48,
-        60
+        31,
+        39
       ],
       "foot": [
-        24,
-        58
+        15,
+        36
       ]
     },
     "down": {
       "file": "val_small-down.png",
       "frames": 8,
       "size": [
-        48,
-        60
+        31,
+        39
       ],
       "foot": [
-        24,
-        58
+        15,
+        36
       ]
     },
     "up": {
       "file": "val_small-up.png",
       "frames": 8,
       "size": [
-        48,
-        60
+        31,
+        39
       ],
       "foot": [
-        24,
-        58
+        15,
+        36
       ]
     }
   }
