@@ -17,3 +17,6 @@ __pycache__/
 .DS_Store
 Thumbs.db
 desktop.ini
+
+# Test runs that skip CAST_TEST_FOLDER write here
+/saves/

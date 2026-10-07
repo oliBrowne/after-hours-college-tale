@@ -8,6 +8,13 @@ static func migrate(before: Dictionary) -> Dictionary:
 	if s.has("flags") and s.flags.has("loadbearer_resolution") and not s.flags.has("eric_resolution"): s.flags.eric_resolution = s.flags.loadbearer_resolution
 	# The garden boss EMPTY CHAIR became Chad the networker (2026-10-07); carry his outcome over.
 	if s.has("flags") and s.flags.has("empty_chair_resolution") and not s.flags.has("chad_resolution"): s.flags.chad_resolution = s.flags.empty_chair_resolution
+	# The archive boss INDEX became AUTOCOMPLETE (2026-10-07); carry its outcome and a pending aftermath
+	# hook over. The old flag stays beside the new one, so the same save still opens in an older build.
+	if s.has("flags") and s.flags.has("index_resolution") and not s.flags.has("autocomplete_resolution"): s.flags.autocomplete_resolution = s.flags.index_resolution
+	if s.has("flags") and s.flags.has("index_seen") and not s.flags.has("autocomplete_seen"): s.flags.autocomplete_seen = s.flags.index_seen
+	if s.has("flags"):
+		for hook: String in ["aftermath_pending", "legacy_aftermath_pending"]:
+			if str(s.flags.get(hook, "")) == "index": s.flags[hook] = "autocomplete"
 	if str(s.party[2].id)=="cal":
 		s.party[2]=BattleRules.initial_party()[2].duplicate(true)
 		s.flags.roster_revision="jules-imani-walt"
@@ -92,6 +99,7 @@ static func aftermath(game: Node, id: String) -> void:
 			game.dialogue([["Loudspeaker","If I stop being useful, they'll stop asking me to come.","concern"],["Jules","I never recorded that.","concern"],["Imani","The signal's going toward Norlin. We'll choose what we take with us.","neutral"]],func() -> void: f.aftermath_pending="";game.persist();game.resume_world()))
 static func objective(s: Dictionary) -> String:
 	var f: Dictionary=s.flags
+	if f.get("movein_active",false):return NativeMoveIn.OBJECTIVE
 	if f.get("chapter3_complete",false) and f.get("rook_confessed",false):return NativeFinalCampaign.objective(s)
 	if f.get("chapter2_complete",false):return NativeChapterThree.objective(s)
 	if f.get("chapter1_complete",false): return NativeChapterTwo.objective(s)

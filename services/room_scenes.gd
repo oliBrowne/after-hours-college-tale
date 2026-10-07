@@ -20,6 +20,7 @@ extends RefCounted
 ##   ["wait", ticks]
 ##   ["leave", actor]                      a spawned actor walks off-screen through its last door
 ##   ["call", callable]                     runs callable(game) once
+## Lines may use {move}, {run} and {confirm} for the player's own key names.
 
 const WALK: float = 1.2
 const RUN: float = 2.6
@@ -32,6 +33,7 @@ static func reset() -> void:run = {}
 static func due(g: Node) -> String:
 	var f: Dictionary = g.state.flags
 	var room: String = str(g.state.room)
+	if room == NativeMoveIn.START and f.get("movein_active", false) and not f.get("scene_movein_meet", false): return "movein_meet"
 	if room == "U03" and not f.get("mixer_returned", false) and not f.get("scene_chip_todd", false): return "chip_todd"
 	# Not tied to its scene flag: it replays until Imani has joined, so it can never be lost.
 	if room == "U03" and f.get("mixer_returned", false) and not f.get("imani_joined", false): return "imani_booth"
@@ -46,6 +48,8 @@ static func steps(id: String) -> Array:
 	match id:
 		"imani_booth":
 			return NativeImaniJoin.steps()
+		"movein_meet":
+			return NativeMoveIn.steps()
 		"chip_todd":
 			# Chip bursts in from the Farrand gate to the president, then dashes back out.
 			return [["borrow", "todd", "todd"], ["spawn", "chip", "chip", Vector2(730, 385)],
@@ -172,7 +176,7 @@ static func _do(g: Node, s: Array) -> bool:
 			if moving: return false
 			for move: Array in s[1]:
 				var sprite2: AnimatedSprite2D = actors.get(str(move[0]))
-				if sprite2 != null and is_instance_valid(sprite2): _pose(sprite2, "idle_" + str(sprite2.get_meta("facing", "down"))); sprite2.position = _base(sprite2)
+				if sprite2 != null and is_instance_valid(sprite2): _pose(sprite2, "idle_" + str(sprite2.get_meta("facing", "down"))); sprite2.position = _base(sprite2); sprite2.remove_meta("scene_goal")
 		"face":
 			var who: AnimatedSprite2D = actors.get(str(s[1]))
 			if who != null and is_instance_valid(who): _face(who, _point(g, s[2]))
@@ -198,6 +202,11 @@ static func _do(g: Node, s: Array) -> bool:
 			(s[1] as Callable).call(g)
 	return true
 
+## Key names the player actually uses: {move}, {run} and {confirm} in a line become their bindings.
+static func keys(g: Node, text: String) -> String:
+	if not "{" in text: return text
+	return text.replace("{move}", NativeJakerson.move_keys(g)).replace("{run}", NativeJakerson.key(g, "run")).replace("{confirm}", NativeJakerson.key(g, "confirm"))
+
 ## Drops lines from party members who haven't joined yet, and lines whose flag doesn't match.
 static func _lines(g: Node, lines: Array) -> Array:
 	var f: Dictionary = g.state.flags
@@ -205,6 +214,7 @@ static func _lines(g: Node, lines: Array) -> Array:
 	for line: Array in lines:
 		var who: String = str(line[0])
 		if who in ["Imani", "Walt", "Pip"] and not f.get(who.to_lower() + "_joined", false) and not run.actors.has(who.to_lower()): continue
+		line = line.duplicate(); line[1] = keys(g, str(line[1]))
 		if line.size() > 3:
 			var flag: String = str(line[3])
 			if flag.begins_with("!") == bool(f.get(flag.trim_prefix("!"), false)): continue
@@ -231,10 +241,11 @@ static func _base(sprite: AnimatedSprite2D) -> Vector2:return Vector2(sprite.get
 ## A walk goal: a point, or "jules" for a free spot just beside Jules on the walker's side.
 static func _goal(g: Node, sprite: AnimatedSprite2D, goal: Variant) -> Vector2:
 	if goal is Vector2: return goal
-	if not sprite.has_meta("goal"):
+	# Not "goal": NativeJakerson walks any sprite carrying that key after the scene, as if it were his.
+	if not sprite.has_meta("scene_goal"):
 		var side: float = -1.0 if _base(sprite).x < g.player.position.x else 1.0
-		sprite.set_meta("goal", g.navigation.safe_point(g.player.position + Vector2(30.0 * side, 2.0)))
-	return Vector2(sprite.get_meta("goal"))
+		sprite.set_meta("scene_goal", g.navigation.safe_point(g.player.position + Vector2(30.0 * side, 2.0)))
+	return Vector2(sprite.get_meta("scene_goal"))
 
 ## One tick of walking toward goal along the room's walkable route. False once there.
 static func _walk(g: Node, sprite: AnimatedSprite2D, goal: Vector2, speed: float) -> bool:

@@ -3,8 +3,8 @@ extends RefCounted
 static func create(id: String, seed: int, phase: int, music_tick: int) -> Dictionary:
 	var p: Dictionary=EncounterDirector.create("flyer",seed,phase,music_tick)
 	p.encounterId=id;p.hazards=[];p.telegraphs=[];p.markers=[]
-	p.duration=int(p.leadIn)+(540 if id=="index" else 450 if id=="errata" else 420)
-	p.phaseName=(["Page Walls","Moving Margins","Useful Stopping Point"][clampi(phase,0,2)] if id=="index" else "Keep One Sentence" if id=="errata" else "Shared Foundations")
+	p.duration=int(p.leadIn)+(540 if id=="autocomplete" else 450 if id=="errata" else 420)
+	p.phaseName=(["Finishing Your Sentence","Context Window Closing","Where Does It Stop?"][clampi(phase,0,2)] if id=="autocomplete" else "Keep One Sentence" if id=="errata" else "Shared Foundations")
 	p.wardTicks=0;p.wardPocket=Rect2(104,82,48,34);p.musicBase=music_tick
 	p.sentencesKept=0;p.lastSentence=-1;p.sentenceWindow=false;p.sentenceX=96.0
 	p.anchorsLit=[false,false];p.currentAnchor=0;p.carryBookmark=false;p.bookmarkDelivered=false
@@ -24,7 +24,7 @@ static func step(before: Dictionary, axis: Vector2, precision: bool, assist: flo
 		elif p.encounterId=="eric" and p.get("anchorWindow",false):
 			var index: int=int(p.currentAnchor)
 			if not p.anchorsLit[index] and at.distance_to(Vector2(58 if index==0 else 198,90))<=20:p.anchorsLit[index]=true;p.objectiveCount=int(p.anchorsLit[0])+int(p.anchorsLit[1])
-		elif p.encounterId=="index":
+		elif p.encounterId=="autocomplete":
 			if not p.carryBookmark and not p.bookmarkDelivered and at.distance_to(Vector2(128,24))<=18:p.carryBookmark=true
 			elif p.carryBookmark and at.distance_to(Vector2(p.returnX,96))<=18:p.carryBookmark=false;p.bookmarkDelivered=true;p.objectiveCount=1
 	p.objectiveChanged=int(p.objectiveCount)>before_count
@@ -54,7 +54,7 @@ static func step(before: Dictionary, axis: Vector2, precision: bool, assist: flo
 					if relative%180==0 and relative<360:
 						NativeNewEncounter._tell(p,58 if int(p.currentAnchor)==0 else 198,-24,0,2.0,23,7,120)
 						NativeNewEncounter._tell(p,128,-24,0,2.0,20,7,120)
-				"index":
+				"autocomplete":
 					p.safeLane=84.0 if (relative/180)%2==0 else 36.0
 					p.markers=[{"id":0,"x":128.0,"y":24.0,"active":not p.carryBookmark and not p.bookmarkDelivered,"collected":p.carryBookmark or p.bookmarkDelivered},{"id":1,"x":p.returnX,"y":96.0,"active":p.carryBookmark,"collected":p.bookmarkDelivered}]
 					if relative%180==0:
@@ -92,4 +92,4 @@ static func progress(p: Dictionary) -> String:
 	match str(p.encounterId):
 		"errata":return "Sentence pauses %d/3\nConfirm in green box" % int(p.sentencesKept)
 		"eric":return "Foundations lit %d/2\nConfirm before weight falls" % int(p.objectiveCount)
-		_:return "Bookmark filed / done" if p.bookmarkDelivered else "Carry to outlined slot\nConfirm to file it" if p.carryBookmark else "Pick up green bookmark\nConfirm at top centre"
+		_:return "Suggestion kept / STOP reached" if p.bookmarkDelivered else "Take it to the STOP box\nConfirm to stop" if p.carryBookmark else "Accept the green suggestion\nConfirm at top centre"

@@ -1,7 +1,7 @@
 class_name NativeChapterTwo
 extends RefCounted
-const BOSSES: Array[String] = ["errata", "index", "eric"]
-const AFTERMATHS: Array[String] = ["errata", "index", "eric", "source_reel", "playback"]
+const BOSSES: Array[String] = ["errata", "autocomplete", "eric"]
+const AFTERMATHS: Array[String] = ["errata", "autocomplete", "eric", "source_reel", "playback"]
 static func say(g: Node, lines: Array, flags: Dictionary = {}) -> void:
 	g.dialogue(lines, func() -> void:
 		g.state.flags.merge(flags,true);g.persist();g.resume_world())
@@ -15,14 +15,14 @@ static func handle(g: Node, object: Dictionary) -> bool:
 	match str(object.id):
 		"nell":
 			if f.get("library_pass",false):
-				say(g,[["Nell","Reading room left. Moving stacks right. Engineering across the quad. Those are destinations, not assignments.","warm"],["Nell","The source reel unlocks INDEX. Your bookmark is a stopping point, not a duty to finish every page.","neutral"]]);return true
-			say(g,[["Nell","Closing time. Unless you're returning the voice that's been checking out entire lives.","concern"],["Imani","It borrowed mine without asking.","concern"],["Nell","Objects used when people make promises are waking up. The catalogue keeps a future for every promise.","neutral"],["Walt","And when a person changes their mind?","neutral"],["Nell","That's the part INDEX won't shelve. Take this visitor pass. Choose a bookmark in the reading room; turn the crank in the stacks.","neutral"],["Nell","Cal and Dev have the earlier recording at Engineering. Bring it back to the closed archive. I'll keep the return desk lit.","warm"]],{"library_pass":true});return true
+				say(g,[["Nell","Reading room left. Moving stacks right. Engineering across the quad. Those are destinations, not assignments.","warm"],["Nell","The source reel unlocks AUTOCOMPLETE. Your bookmark is a stopping point, not a duty to finish every sentence.","neutral"]]);return true
+			say(g,[["Nell","Closing time. Unless you're here about the voice that's been finishing everybody's sentences.","concern"],["Imani","It finished my chorus without asking. Wrongly.","concern"],["Nell","Objects used when people make promises are waking up. The new assistant in the archive has an ending ready for every promise.","neutral"],["Walt","And when a person changes their mind?","neutral"],["Nell","That's the part AUTOCOMPLETE can't predict. Take this visitor pass. Choose a bookmark in the reading room; turn the crank in the stacks.","neutral"],["Nell","Cal and Dev have the earlier recording at Engineering. Bring it back to the closed archive. I'll keep the return desk lit.","warm"]],{"library_pass":true});return true
 		"recording_choice":
 			if f.has("imani_recording"):
 				say(g,[["Imani","My rough demo stays. A shaky note still belongs to me.","warm"]]);return true
 			g.dialogue([["Loudspeaker","IMANI BELL. EVERY AUDIENCE APPROVES. EVERY NOTE ARRIVES ON TIME.","warm"],["Imani","It sounds wonderful. It also sounds like somebody who never gets tired.","concern"],["Jules","Do you want to hear it?","neutral"],["Imani","I'll choose. Mine has the missed breath before the chorus. I know why I needed it.","neutral"]],g.resume_world,[g.option("Imani keeps her rough demo.",func() -> void: say(g,[["Imani","That one's mine. We can work with the missed breath.","warm"]],{"imani_recording":"own"})),g.option("Imani listens, then chooses her demo.",func() -> void: say(g,[["Imani","I listened. I don't have to hate that version to choose my own.","warm"],["Walt","A comparison isn't a contract.","neutral"]],{"imani_recording":"compared"}))]);return true
 		"bookmark":
-			say(g,[["Jules","A bookmark with a blank line: NEXT USEFUL STEP.","neutral"],["Imani","Not THE REST OF YOUR LIFE. Much better stationery.","warm"]],{"bookmark_found":true});return true
+			say(g,[["Jules","A bookmark with one pencil line: STOP HERE. NEXT USEFUL STEP.","neutral"],["Imani","Not THE REST OF YOUR LIFE. Much better stationery.","warm"]],{"bookmark_found":true});return true
 		"stack_crank":
 			if f.get("stacks_shifted",false):say(g,[["Nell","The shelves have stopped at the marked passage. Leave that route open for the next reader.","warm"]]);return true
 			g.dialogue([["Jules","The handle moves two shelves, not the whole library.","neutral"],["Walt","Then two shelves is our job.","warm"]],func() -> void:
@@ -30,13 +30,13 @@ static func handle(g: Node, object: Dictionary) -> bool:
 		"errata":
 			if f.has("errata_resolution"):say(g,[["ERRATA","ONE SENTENCE MAY STAY IMPERFECT. THIS ONE.","warm"]]);return true
 			fight(g,"errata",[["ERRATA","REPLACE UNCERTAINTY. ERASE HESITATION. FIX EVERY LINE.","concern"],["Imani","My recording has a sentence I want to keep.","neutral"],["ERRATA","THEN DEFEND IT. THREE PAUSES. THREE CORRECTIONS. I WILL NOT MISS ONE.","neutral"],["Walt","Or clear the correction machinery. The archive has room for a repair note.","neutral"]]);return true
-		"index":
-			if f.has("index_resolution"):say(g,[["INDEX","NEXT USEFUL STEP: LISTEN. THE OTHER PAGES CAN WAIT.","warm"]]);return true
+		"autocomplete":
+			if f.has("autocomplete_resolution"):say(g,[["AUTOCOMPLETE","NEXT USEFUL STEP: LISTEN. I WILL NOT FINISH THAT FOR YOU.","warm"]]);return true
 			if not f.get("source_reel",false):
-				say(g,[["INDEX","YOUR VOICES HAVE SIX HUNDRED POSSIBLE ENDINGS. WHICH ONE IS THE ORIGINAL?","concern"],["Imani","You filed our fear as a plan.","concern"],["INDEX","BRING THE EARLIEST REEL. ENGINEERING CONTROL BOOTH. CAL AND DEV KNOW THE WAY.","neutral"],["Jules","Then we go across the quad. Not through every possible ending.","neutral"]],{"index_seen":true});return true
+				say(g,[["AUTOCOMPLETE","YOUR VOICES HAVE SIX HUNDRED POSSIBLE ENDINGS. I HAVE FINISHED ALL OF THEM. WHICH ONE IS THE ORIGINAL?","concern"],["Imani","You finished our fear like it was a plan.","concern"],["AUTOCOMPLETE","BRING THE EARLIEST REEL. ENGINEERING CONTROL BOOTH. CAL AND DEV KNOW THE WAY. [1]","neutral"],["Jules","Then we go across the quad. Not through every possible sentence.","neutral"]],{"autocomplete_seen":true});return true
 			if not f.has("imani_recording"):
 				say(g,[["Imani","Before we file anything, I need to choose my recording in the reading room.","neutral"]]);return true
-			fight(g,"index",[["INDEX","THE SOURCE HAS RETURNED. NOW FINISH EVERY FUTURE IT OPENED.","concern"],["Jules","We can leave one useful stopping point.","neutral"],["INDEX","A STOPPING POINT? EVERY PAGE CONTINUES. PROVE ONE PAGE CAN END.","neutral"],["Imani","Three verses. Then the playback room. I brought my own voice.","warm"]]);return true
+			fight(g,"autocomplete",[["AUTOCOMPLETE","THE SOURCE HAS RETURNED. I HAVE ALREADY FINISHED IT. IT ENDS WELL. [2]","concern"],["Jules","We'll take one useful suggestion. Then we stop.","neutral"],["AUTOCOMPLETE","STOP? EVERY SENTENCE HAS A NEXT WORD. PROVE ONE DOES NOT.","neutral"],["Imani","Three verses. Then the playback room. I brought my own voice. I'll finish my own sentences.","warm"]]);return true
 		"rook":
 			if room=="N05":
 				say(g,[["Rook","Margin garden. For things the page can't hold. Mostly students and sandwich crumbs.","warm"],["Walt","You lent a key at Farrand. Thanks.","warm"],["Rook","Useful people get invited back. Useful paper, too.","neutral"],["Imani","Is that why you're keeping the night going?","concern"],["Rook","I only know what I heard by the stage. Engineering is across the quad. I'll check their door.","neutral"]],{"rook_norlin":true});return true
@@ -58,10 +58,10 @@ static func handle(g: Node, object: Dictionary) -> bool:
 			fight(g,"eric",[["Professor Eric","Visitors! Perfect timing. Hold this probe. One more measurement and we'll know everything.","warm"],["Professor Eric","Rule of thumb: never trust a signal you haven't looked at. So we look. Again. And again.","concern"],["Walt","Pretty sure that bridge has been measured forty times tonight.","concern"],["Professor Eric","Forty-one is a much nicer number!","warm"],["Jules","Three clean readings, then. Maybe he'll let it be done.","neutral"]]);return true
 		"source_reel":
 			if not f.get("bridge_ready",false):say(g,[["Dev","Install the bridge with us in the workshop first.","neutral"]]);return true
-			if f.get("source_reel",false) and f.get("aftermath_pending","")!="source_reel":say(g,[["Jules","We have the source reel. Back across the repaired shortcut, then through the stacks to INDEX.","neutral"]]);return true
+			if f.get("source_reel",false) and f.get("aftermath_pending","")!="source_reel":say(g,[["Jules","We have the source reel. Back across the repaired shortcut, then through the stacks to AUTOCOMPLETE.","neutral"]]);return true
 			f.source_reel=true;f.aftermath_pending="source_reel";g.persist();aftermath(g,"source_reel");return true
 		"playback":
-			if not f.has("index_resolution") or not f.get("source_reel",false):say(g,[["Imani","Bring the source reel and settle INDEX first.","neutral"]]);return true
+			if not f.has("autocomplete_resolution") or not f.get("source_reel",false):say(g,[["Imani","Bring the source reel and settle AUTOCOMPLETE first.","neutral"]]);return true
 			if f.get("chapter2_complete",false):say(g,[["Imani","Old Main. The directory will tell us who gave the ceremony its first purpose.","neutral"]]);return true
 			f.aftermath_pending="playback";g.persist();aftermath(g,"playback");return true
 		"norlin_rest", "playback_lamp", "workshop_rest", "control_lamp":
@@ -76,8 +76,8 @@ static func aftermath(g: Node,id: String) -> void:
 	var scenes: Dictionary={
 		"errata":[["ERRATA","THE MISSED BREATH STAYS. TAKE THE PASSAGE.","warm"],["Imani","You can suggest a change. I can choose whether it's mine.","warm"]] if peaceful else [["Imani","The correction ribbon snapped. I left the pencil a repair note.","concern"],["Jules","The archive is ahead. Bring the reading-room bookmark.","neutral"]],
 		"eric":[["Professor Eric","Three clean test points. Huh. The answer is: it's done. Good enough, and I measured it.","warm"],["Professor Eric","New rule of thumb for the board: sleep is part of the design. Go install your bridge.","warm"],["Jules","Dev's waiting in the workshop. Let's go install that bridge.","neutral"]] if peaceful else [["Professor Eric","Oof. Okay. Okay. The scope's off. Maybe that was the measurement I needed.","concern"],["Walt","He's alright, just tired. Cal and Dev can finish the bridge in the workshop.","concern"]],
-		"index":[["INDEX","FILED UNDER NEXT USEFUL STEP. NOT EVERY POSSIBLE LIFE.","warm"],["Imani","Mine includes a missed breath. Keep it.","warm"],["Jules","Now the playback room through the archive's east door.","neutral"]] if peaceful else [["Nell","The drawers are jammed. I'll reopen one shelf at a time.","concern"],["Imani","Our recording is safe. The playback room is through the east door.","neutral"]],
-		"source_reel":[["Loudspeaker","VAL / TALENT ACQUISITION. A SEAT FOR EVERY FUTURE HIRE. BEGIN WITH A PROMISE.","concern"],["Jules","That's the booth's source. Somebody is recruiting a whole graduating class out of things we might become.","concern"],["Walt","Rook shut the direct door. He was afraid this would end his shift.","neutral"],["Imani","Take this back to INDEX through the repaired shortcut. Then we hear the whole recording.","neutral"]],
+		"autocomplete":[["AUTOCOMPLETE","NEXT USEFUL STEP ACCEPTED. NOT EVERY POSSIBLE LIFE. ONE SENTENCE LEFT UNFINISHED, ON PURPOSE.","warm"],["Imani","Mine includes a missed breath. Keep it.","warm"],["AUTOCOMPLETE","KEPT. THE REST IS FOR THE HUMMING TO DECIDE. ...AND THEN YOU WILL","warm"],["Jules","That one's ours to finish. Now the playback room through the archive's east door.","neutral"]] if peaceful else [["AUTOCOMPLETE","THAT ENDING WAS NOT IN MY SUGGESTIONS. NOBODY WROTE IT. ...HOW DOES IT GO?","concern"],["Nell","The rack has gone quiet. The cursor's still blinking, mid-sentence. I'll wake it one shelf at a time.","concern"],["Imani","Our recording is safe. The playback room is through the east door.","neutral"]],
+		"source_reel":[["Loudspeaker","VAL / TALENT ACQUISITION. A SEAT FOR EVERY FUTURE HIRE. BEGIN WITH A PROMISE.","concern"],["Jules","That's the booth's source. Somebody is recruiting a whole graduating class out of things we might become.","concern"],["Walt","Rook shut the direct door. He was afraid this would end his shift.","neutral"],["Imani","Take this back to AUTOCOMPLETE through the repaired shortcut. Then we hear the whole recording.","neutral"]],
 		"playback":[["Loudspeaker","EVERY POSSIBLE GRADUATE MUST ARRIVE. RESERVE MORE CHAIRS. UNTIL EVERY FUTURE IS SEATED, THE NIGHT REMAINS OPEN.","concern"],["Jules","The chairs are taking the space living people need.","concern"],["Pip","If that magic made me, do I stop too?","concern"],["Walt","You chose to come with us. A purpose can change with the person using it.","neutral"],["Imani","Rook needs to hear that. First, the booth's directory in Old Main. Who gave VAL this job?","neutral"],["Jules","One real answer, then a way home. Take the quad's Old Main path.","warm"]]}
 	g.dialogue(scenes[id],func() -> void:
 		if id=="playback":f.playback_heard=true;f.chapter2_complete=true
@@ -95,5 +95,5 @@ static func objective(s: Dictionary) -> String:
 	if not f.has("eric_resolution"):return "Probe the test points / Professor Eric on the test floor"
 	if not f.get("bridge_ready",false):return "Install the bridge with Dev / shared workshop"
 	if not f.get("source_reel",false):return "Recover the source reel / upstairs control booth"
-	if not f.has("index_resolution"):return "Return the source / INDEX in Norlin's closed archive"
+	if not f.has("autocomplete_resolution"):return "Return the source / AUTOCOMPLETE in Norlin's closed archive"
 	return "Hear the full source / playback room through the archive"

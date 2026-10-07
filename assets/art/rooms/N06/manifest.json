@@ -45,14 +45,14 @@
    "texture": "res://assets/art/rooms/N06/rope-closed.png",
    "x": 762,
    "y": 376,
-   "flag": "index_resolution",
+   "flag": "autocomplete_resolution",
    "when": false
   },
   {
    "texture": "res://assets/art/rooms/N06/rope-open.png",
    "x": 762,
    "y": 376,
-   "flag": "index_resolution",
+   "flag": "autocomplete_resolution",
    "when": true
   }
  ],
@@ -448,7 +448,7 @@
    "texture": "res://assets/art/rooms/N06/ghost-lawyer.png",
    "x": 394,
    "y": 64,
-   "flag": "index_resolution",
+   "flag": "autocomplete_resolution",
    "when": false
   },
   {
@@ -458,7 +458,7 @@
    "texture": "res://assets/art/rooms/N06/ghost-ceo.png",
    "x": 394,
    "y": 64,
-   "flag": "index_resolution",
+   "flag": "autocomplete_resolution",
    "when": false
   },
   {
@@ -468,7 +468,7 @@
    "texture": "res://assets/art/rooms/N06/ghost-accepted.png",
    "x": 394,
    "y": 64,
-   "flag": "index_resolution",
+   "flag": "autocomplete_resolution",
    "when": false
   },
   {

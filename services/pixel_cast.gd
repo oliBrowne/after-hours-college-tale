@@ -6,8 +6,17 @@ static var texture_cache: Dictionary={}
 static var portrait_cache: Dictionary={}
 static var trim_cache: Dictionary={}
 static var breathing_cache: Dictionary={}
+## The last two decoded sheets: get_image() decodes the whole sheet (~5 ms), and frames are cut from the same sheet in runs.
+static var sheet_cache: Array=[]
+static func sheet_image(sheet: Texture2D) -> Image:
+	for entry: Array in sheet_cache:
+		if entry[0]==sheet:return entry[1]
+	var image: Image=sheet.get_image()
+	sheet_cache.push_front([sheet,image])
+	if sheet_cache.size()>2:sheet_cache.pop_back()
+	return image
 static func source_image(texture: Texture2D) -> Image:
-	var image: Image=texture.atlas.get_image().get_region(Rect2i(texture.region)) if texture is AtlasTexture else texture.get_image()
+	var image: Image=sheet_image(texture.atlas).get_region(Rect2i(texture.region)) if texture is AtlasTexture else texture.get_image()
 	image.convert(Image.FORMAT_RGBA8)
 	if texture is AtlasTexture:
 		if trim_cache.is_empty():trim_cache=JSON.parse_string(FileAccess.get_file_as_string("res://assets/art/consumer-trims-v1.json"))

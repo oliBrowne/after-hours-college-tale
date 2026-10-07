@@ -78,7 +78,7 @@ func _test_damage() -> void:
 	var battle: Dictionary = Rules.create_battle()
 	battle.max_hp = 48
 	_check(Rules.enemy_damage("walt", battle) == 8 and Rules.enemy_damage("", battle) == 8, "Opening bosses hit for 8")
-	_check(Rules.enemy_damage("encore", battle) == 14 and Rules.enemy_damage("index", battle) == 18 and Rules.enemy_damage("rook", battle) == 22 and Rules.enemy_damage("val", battle) == 24, "Later bosses hit harder")
+	_check(Rules.enemy_damage("encore", battle) == 14 and Rules.enemy_damage("autocomplete", battle) == 18 and Rules.enemy_damage("rook", battle) == 22 and Rules.enemy_damage("val", battle) == 24, "Later bosses hit harder")
 	_check(Rules.enemy_damage("val", battle, true) == 12, "Reduced incoming damage halves a hit")
 	battle.openness = 50
 	_check(Rules.desperate(battle) and Rules.enemy_damage("val", battle) == 30, "At 50 Openness a boss hits 25 percent harder")

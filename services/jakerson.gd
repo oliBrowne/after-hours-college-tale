@@ -46,6 +46,14 @@ static func next_place(g: Node) -> String:
 
 static func greeting(g: Node) -> void:
 	g.state.flags.jakerson_seen=true;g.state.flags.intro_seen=true;g.persist()
+	if g.state.flags.get("movein_done",false):
+		# Four years after move-in day: he knows exactly who this is.
+		say(g,[["Jules","Eight minutes until the last bus. Mixer back to Imani, then home. One small promise.","neutral"],
+			["Jakerson","Jules! Is that Imani's mixer? She's been texting everyone about it since dinner.","warm"],
+			["Jakerson","I'm heading to the UMC anyway. Rule forty-one: nobody walks alone on the last night.","warm"],
+			["Jules","We got to forty-one?","neutral"],
+			["Jakerson","I kept adding them. Also... the campus is being weird tonight. My laptop keeps printing the same line. ONE MORE MINUTE.","concern"],
+			["Jakerson","Come on, I'll walk you.","warm"]],func() -> void:offer(g));return
 	say(g,[["Jules","Eight minutes until the last bus. Mixer back to Imani, then home. One small promise.","neutral"],
 		["Jakerson","Hey! Is that Imani's mixer? She's been texting the whole floor about it.","warm"],
 		["Jakerson","I'm Jakerson. Computer science. I'm heading to the UMC anyway, and it's quicker if you know the way.","warm"],
@@ -145,8 +153,9 @@ static func stops(g: Node) -> Array:
 	if door.is_empty():return list
 	var door_at: Vector2=Vector2(float(door.x),float(door.y))
 	if room==START:
-		list.append([stand_near(g,Vector2(426,214),Vector2(380,240),26.0),"That's the last bus notice. Walk up to things and press "+key(g,"confirm")+" to read them.",true])
-		list.append([stand_near(g,door_at,Vector2(500,240),46.0),"Doors around here stick. Stand on the door and press "+key(g,"confirm")+".",false])
+		var taught: bool=bool(g.state.flags.get("movein_done",false))
+		list.append([stand_near(g,Vector2(426,214),Vector2(380,240),26.0),"Last bus notice. Eight minutes. Tight, but you've done tighter." if taught else "That's the last bus notice. Walk up to things and press "+key(g,"confirm")+" to read them.",true])
+		list.append([stand_near(g,door_at,Vector2(500,240),46.0),"Underpass door. You know the drill: stand on it, press "+key(g,"confirm")+"." if taught else "Doors around here stick. Stand on the door and press "+key(g,"confirm")+".",false])
 	elif room=="U08" and g.rooms[room].objects.any(func(o: Dictionary) -> bool: return str(o.id)=="walt"):
 		list.append([stand_near(g,Vector2(262,204),Vector2(300,250),44.0),"That's Walt's spot. He keeps a lantern lit down here and fixes radios for half the Hill. Say hi if you want.",true])
 		list.append([stand_near(g,door_at,g.player.position,46.0),"Terrace is up these steps. Door, then "+key(g,"confirm")+".",false])
@@ -234,6 +243,14 @@ static func face(sprite: AnimatedSprite2D,target: Vector2) -> void:
 
 static func terrace_scene(g: Node) -> void:
 	g.state.flags.jakerson_guide="terrace";g.persist()
+	if g.state.flags.has("jakerson_resolution"):
+		say(g,[["Jakerson","And that's the UMC. Usually it's dead by now.","warm"],
+			["Jakerson","...Did that flyer on the door just turn its own page?","concern"],
+			["Jules","Doors that think about it. Flyers that read themselves. Is this normal here?","concern"],
+			["Jakerson","Not even in finals week. Something in there wants people to stay. ONE MORE MINUTE, every time.","concern"],
+			["Jakerson","If something gets in your face tonight, you don't have to beat it. Same as the ping-pong table: listen, make one small promise, keep it, and it lets go.","warm"],
+			["Jakerson","I'll be out here if you need a hint. Imani's club room is inside, left side of the atrium.","warm"]],func() -> void:walk_to_spot(g);g.resume_world())
+		return
 	say(g,[["Jakerson","And that's the UMC. Usually it's dead by now.","warm"],
 		["Jakerson","...Did that flyer on the door just turn its own page?","concern"],
 		["Jules","Doors that think about it. Flyers that read themselves. Is this normal here?","concern"],
@@ -280,6 +297,7 @@ static func after_spar(g: Node) -> void:
 	var peaceful: bool=str(g.state.flags.get("jakerson_resolution",""))=="peaceful"
 	g.boss_id=""
 	g.enter_room(str(g.state.room),Vector2(g.state.x,g.state.y),false)
+	if NativeMoveIn.active(g):NativeMoveIn.aftermath(g,peaceful);return
 	var lines: Array=[["Jakerson","See? You never knocked me over. You kept one promise and the fight just... ended.","warm"],
 		["Jakerson","STRIKE works too. But things around here remember being hit.","neutral"]] if peaceful else [["Jakerson","Ow. Okay, that works too.","concern"],
 		["Jakerson","But things around here remember being hit. Next time, try keeping a promise instead.","neutral"]]
@@ -454,7 +472,8 @@ static func graduation(g: Node) -> void:
 	f.graduation_day=true;f.jakerson_outfit="";g.persist()
 	if field:g.enter_room("G01",Vector2(500,486),false)
 	else:g.enter_room("M06",Vector2(420,404),false)
-	var lines: Array=[["Loudspeaker","Four years later. "+("Folsom Field" if field else "Macky Auditorium")+", in daylight. Commencement.","neutral"],
+	var place: String=("Folsom Field" if field else "Macky Auditorium")
+	var lines: Array=[["Loudspeaker","Four years later. "+place+", in daylight. Commencement.","neutral"],
 		["Loudspeaker","Jules Navarro.","warm"],
 		["Imani","WOOO! That's my bus buddy!","warm"],
 		["Walt","I brought the lantern. It's daytime. It still felt right.","warm"],
@@ -463,6 +482,16 @@ static func graduation(g: Node) -> void:
 		["Jules","And you walked me to the UMC and then made me fight you.","warm"],
 		["Jakerson","Friendly spar! Look how that turned out.","warm"],
 		["Jakerson","One more? For old times. One last friendly set, everything I ever showed you. Loser buys the boba.","warm"]]
+	if f.get("movein_done",false):
+		var order: String=NativeMoveIn.boba(f)
+		lines=[["Loudspeaker","Commencement. "+place+", in daylight.","neutral"],
+			["Loudspeaker","Jules Navarro.","warm"],
+			["Imani","WOOO! That's my bus buddy!","warm"],
+			["Walt","I brought the lantern. It's daytime. It still felt right.","warm"],
+			["Loudspeaker","Jakerson. Computer science.","warm"],
+			["Jakerson","Four years ago you asked if I snored. Last night I walked you to the UMC like it was move-in day again.","warm"],
+			["Jules","You snore. And you only walked me so you wouldn't have to carry the mixer.","warm"],
+			["Jakerson","Details. Remember what we shook on in the lobby? One real match, you and me. Loser buys the boba"+(". I remember you're ordering "+order+"." if not order.is_empty() else "."),"warm"]]
 	if not field:
 		say(g,lines,func() -> void:rematch_offer(g));return
 	lines.append_array([["Jakerson","I booked the courts. Give me two minutes to lose the gown.","warm"],["Imani","He's been carrying a racket under that gown all morning.","warm"]])
@@ -483,6 +512,9 @@ static func after_final(g: Node) -> void:
 	var lines: Array=[["Jakerson","Okay, okay! You passed. With honors.","warm"],
 		["Jakerson","Funny. I spent four years teaching you how things work, and you three taught me when to stop.","warm"]] if peaceful else [["Jakerson","Ow! Okay. Passed. Maybe a little too well.","concern"],
 		["Jakerson","Kidding. Mostly. You still kept your promises when it counted.","warm"]]
+	var order: String=NativeMoveIn.boba(f)
+	if f.get("movein_done",false) and not order.is_empty():
+		lines.append(["Jakerson","So who lost? Nobody. Which means we both buy. One "+order+", one for me, and I pay first. Rule forty-two.","warm"] if peaceful else ["Jakerson","So I lost, officially. One "+order+" coming up. Rule forty-two: always pay your bets.","warm"])
 	lines.append_array([["Imani","Group photo! Before anyone gets sentimental.","warm"],["Walt","Too late.","warm"],["Jules","One more minute. Then we go.","warm"]])
 	say(g,lines,func() -> void:
 		f.graduation_complete=true;f.aftermath_pending="";g.persist();NativeFinalCampaign.ending_menu(g))
