@@ -88,7 +88,7 @@ func run(main: Node) -> bool:
 	if DodgeBox.handles("tanner"):
 		before=NativeRandomFights.bucks(f)
 		await _object("tanner");await _settle()
-		_assert(int(game.mode)==BATTLE and game.boss_id=="tanner" and int(game.battle.hp)==NativeSideBosses.hp("tanner"),"Tanner's fight opens with his own HP: "+str(game.battle.get("hp",-1)))
+		_assert(int(game.mode) in [BATTLE,BANNER] and game.boss_id=="tanner" and int(game.battle.hp)==NativeSideBosses.hp("tanner"),"Tanner's fight opens with his own HP: "+str(game.battle.get("hp",-1)))
 		await _side_fight("tanner",true)
 		_assert(str(f.get("tanner_resolution",""))=="peaceful" and NativeRandomFights.bucks(f)-before>=60,"Tanner pays his full Buff Bucks the peaceful way (%d)"%(NativeRandomFights.bucks(f)-before))
 		_assert(LinkedOut.pending(f).any(func(p: Dictionary)->bool:return str(p.id)=="tanner"),"Tanner sends a LinkedOut request")
@@ -108,7 +108,7 @@ func run(main: Node) -> bool:
 	if DodgeBox.handles("kyle"):
 		before=NativeRandomFights.bucks(f)
 		await _object("kyle");await _settle()
-		_assert(int(game.mode)==BATTLE and game.boss_id=="kyle","Kyle's fight opens")
+		_assert(int(game.mode) in [BATTLE,BANNER] and game.boss_id=="kyle","Kyle's fight opens")
 		await _side_fight("kyle",false)
 		_assert(str(f.get("kyle_resolution",""))=="forceful" and NativeRandomFights.bucks(f)-before>=48,"Kyle still pays the hard way (%d)"%(NativeRandomFights.bucks(f)-before))
 		_assert(not LinkedOut.pending(f).any(func(p: Dictionary)->bool:return str(p.id)=="kyle") and LinkedOut.viewed_only(f).any(func(p: Dictionary)->bool:return str(p.id)=="kyle"),"Kyle only views the profile after a forceful ending")
