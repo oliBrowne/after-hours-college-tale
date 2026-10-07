@@ -1,0 +1,1752 @@
+{
+ "background": "res://assets/art/rooms/F06/background.png",
+ "width": 800,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/F06/prop-0.png",
+   "anchor": [
+    179,
+    78
+   ],
+   "flag": "encore_resolution",
+   "flag_texture": "res://assets/art/rooms/F06/prop-0-dark.png"
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/F06/prop-1.png",
+   "anchor": [
+    22,
+    71
+   ],
+   "flag": "encore_resolution",
+   "flag_texture": "res://assets/art/rooms/F06/prop-1-quiet.png"
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/F06/prop-2.png",
+   "anchor": [
+    22,
+    71
+   ],
+   "flag": "encore_resolution",
+   "flag_texture": "res://assets/art/rooms/F06/prop-2-quiet.png"
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/F06/prop-3.png",
+   "anchor": [
+    64,
+    35
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/F06/prop-4.png",
+   "anchor": [
+    64,
+    35
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/F06/prop-5.png",
+   "anchor": [
+    13,
+    62
+   ]
+  }
+ },
+ "label_only": [],
+ "overlays": [
+  {
+   "texture": "res://assets/art/rooms/F06/show-over.png",
+   "x": 195,
+   "y": 0,
+   "flag": "encore_resolution"
+  },
+  {
+   "texture": "res://assets/art/rooms/F06/screen-goodnight.png",
+   "x": 368,
+   "y": 35,
+   "flag": "encore_resolution",
+   "equals": "peaceful"
+  }
+ ],
+ "fauna": [
+  {
+   "kind": "moth",
+   "x": 123,
+   "y": 334,
+   "range": 5,
+   "speed": 1.8,
+   "rate": 8.0
+  },
+  {
+   "kind": "moth",
+   "x": 128,
+   "y": 332,
+   "range": 4,
+   "speed": 1.4,
+   "rate": 7.0,
+   "flip": true
+  },
+  {
+   "kind": "rabbit",
+   "x": 744,
+   "y": 300,
+   "range": 0,
+   "speed": 0.0,
+   "rate": 0.6
+  },
+  {
+   "kind": "bat",
+   "x": 120,
+   "y": 30,
+   "fly": 18.0,
+   "rate": 7.0
+  },
+  {
+   "kind": "bat",
+   "x": 700,
+   "y": 18,
+   "fly": 14.0,
+   "rate": 6.0
+  }
+ ],
+ "leaves": [],
+ "layers": [
+  {
+   "kind": "beam",
+   "x": 235,
+   "y": 12,
+   "angle": -112,
+   "sweep": 16,
+   "period": 9.0,
+   "phase": 0.0,
+   "length": 140,
+   "width": 26,
+   "color": "c8b0ff",
+   "alpha": 0.16,
+   "floor": -400,
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "beam",
+   "x": 645,
+   "y": 9,
+   "angle": -68,
+   "sweep": 16,
+   "period": 10.5,
+   "phase": 2.2,
+   "length": 140,
+   "width": 26,
+   "color": "ffd0e8",
+   "alpha": 0.15,
+   "floor": -400,
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "beam",
+   "x": 446,
+   "y": 18,
+   "angle": 86,
+   "sweep": 9,
+   "period": 6.0,
+   "phase": 0.0,
+   "length": 300,
+   "width": 46,
+   "color": "fff0c4",
+   "alpha": 0.22,
+   "floor": 310,
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "beam",
+   "x": 340,
+   "y": 24,
+   "angle": 100,
+   "sweep": 10,
+   "period": 7.0,
+   "phase": 1.0,
+   "length": 200,
+   "width": 36,
+   "color": "f2b0d0",
+   "alpha": 0.15,
+   "floor": 286,
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "beam",
+   "x": 556,
+   "y": 25,
+   "angle": 78,
+   "sweep": 12,
+   "period": 8.5,
+   "phase": 3.4,
+   "length": 200,
+   "width": 36,
+   "color": "c8b0ff",
+   "alpha": 0.15,
+   "floor": 290,
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "00001111",
+   "rate": 1.2,
+   "texture": "res://assets/art/rooms/F06/screen-again.png",
+   "x": 368,
+   "y": 35,
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "1000000000",
+   "rate": 5.0,
+   "rects": [
+    [
+     368,
+     35,
+     144,
+     2,
+     "b8a8e8",
+     0.12
+    ]
+   ],
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "0100000000",
+   "rate": 5.0,
+   "rects": [
+    [
+     368,
+     43,
+     144,
+     2,
+     "b8a8e8",
+     0.12
+    ]
+   ],
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "0010000000",
+   "rate": 5.0,
+   "rects": [
+    [
+     368,
+     52,
+     144,
+     2,
+     "b8a8e8",
+     0.12
+    ]
+   ],
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "0001000000",
+   "rate": 5.0,
+   "rects": [
+    [
+     368,
+     61,
+     144,
+     2,
+     "b8a8e8",
+     0.12
+    ]
+   ],
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000100000",
+   "rate": 5.0,
+   "rects": [
+    [
+     368,
+     70,
+     144,
+     2,
+     "b8a8e8",
+     0.12
+    ]
+   ],
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000010000",
+   "rate": 5.0,
+   "rects": [
+    [
+     368,
+     79,
+     144,
+     2,
+     "b8a8e8",
+     0.12
+    ]
+   ],
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000001000",
+   "rate": 5.0,
+   "rects": [
+    [
+     368,
+     88,
+     144,
+     2,
+     "b8a8e8",
+     0.12
+    ]
+   ],
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000100",
+   "rate": 5.0,
+   "rects": [
+    [
+     368,
+     97,
+     144,
+     2,
+     "b8a8e8",
+     0.12
+    ]
+   ],
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     44,
+     36,
+     "f2a0a0",
+     1
+    ],
+    [
+     52,
+     37,
+     "f2a0a0",
+     1
+    ],
+    [
+     60,
+     39,
+     "f6cf7a",
+     1
+    ],
+    [
+     68,
+     40,
+     "f2a0a0",
+     1
+    ],
+    [
+     76,
+     41,
+     "f6cf7a",
+     1
+    ],
+    [
+     84,
+     42,
+     "fff0c4",
+     1
+    ],
+    [
+     92,
+     42,
+     "fff0c4",
+     1
+    ],
+    [
+     100,
+     43,
+     "f6cf7a",
+     1
+    ],
+    [
+     108,
+     43,
+     "a8d8c8",
+     1
+    ],
+    [
+     116,
+     43,
+     "f6cf7a",
+     1
+    ],
+    [
+     124,
+     43,
+     "f6cf7a",
+     1
+    ],
+    [
+     132,
+     42,
+     "f6cf7a",
+     1
+    ],
+    [
+     140,
+     41,
+     "fff0c4",
+     1
+    ],
+    [
+     148,
+     41,
+     "f6cf7a",
+     1
+    ],
+    [
+     156,
+     40,
+     "f6cf7a",
+     1
+    ],
+    [
+     164,
+     38,
+     "f6cf7a",
+     1
+    ],
+    [
+     172,
+     37,
+     "f6cf7a",
+     1
+    ],
+    [
+     180,
+     35,
+     "f6cf7a",
+     1
+    ],
+    [
+     188,
+     33,
+     "f6cf7a",
+     1
+    ],
+    [
+     196,
+     31,
+     "a8d8c8",
+     1
+    ],
+    [
+     204,
+     29,
+     "f6cf7a",
+     1
+    ],
+    [
+     212,
+     26,
+     "fff0c4",
+     1
+    ],
+    [
+     220,
+     24,
+     "f2a0a0",
+     1
+    ],
+    [
+     0,
+     70,
+     "f6cf7a",
+     1
+    ],
+    [
+     8,
+     66,
+     "fff0c4",
+     1
+    ],
+    [
+     16,
+     60,
+     "fff0c4",
+     1
+    ],
+    [
+     24,
+     52,
+     "f6cf7a",
+     1
+    ],
+    [
+     32,
+     43,
+     "a8d8c8",
+     1
+    ],
+    [
+     657,
+     24,
+     "a8d8c8",
+     1
+    ],
+    [
+     665,
+     29,
+     "fff0c4",
+     1
+    ],
+    [
+     673,
+     34,
+     "f2a0a0",
+     1
+    ],
+    [
+     681,
+     38,
+     "a8d8c8",
+     1
+    ],
+    [
+     689,
+     42,
+     "fff0c4",
+     1
+    ],
+    [
+     697,
+     46,
+     "f2a0a0",
+     1
+    ],
+    [
+     705,
+     49,
+     "a8d8c8",
+     1
+    ],
+    [
+     713,
+     52,
+     "f6cf7a",
+     1
+    ],
+    [
+     721,
+     55,
+     "f6cf7a",
+     1
+    ],
+    [
+     729,
+     57,
+     "f6cf7a",
+     1
+    ],
+    [
+     737,
+     59,
+     "f6cf7a",
+     1
+    ],
+    [
+     745,
+     61,
+     "a8d8c8",
+     1
+    ],
+    [
+     753,
+     62,
+     "a8d8c8",
+     1
+    ],
+    [
+     761,
+     63,
+     "f6cf7a",
+     1
+    ],
+    [
+     769,
+     63,
+     "f6cf7a",
+     1
+    ],
+    [
+     777,
+     63,
+     "f2a0a0",
+     1
+    ],
+    [
+     785,
+     63,
+     "f6cf7a",
+     1
+    ],
+    [
+     793,
+     62,
+     "f2a0a0",
+     1
+    ],
+    [
+     801,
+     61,
+     "f6cf7a",
+     1
+    ],
+    [
+     784,
+     350,
+     "f6cf7a",
+     2
+    ],
+    [
+     784,
+     404,
+     "f6cf7a",
+     2
+    ],
+    [
+     680,
+     106,
+     "f6dca0",
+     1
+    ],
+    [
+     692,
+     106,
+     "f6dca0",
+     1
+    ],
+    [
+     785,
+     115,
+     "f6dca0",
+     1
+    ],
+    [
+     713,
+     98,
+     "f6dca0",
+     1
+    ],
+    [
+     731,
+     98,
+     "f6dca0",
+     1
+    ],
+    [
+     749,
+     98,
+     "f6dca0",
+     1
+    ]
+   ],
+   "rate": 1.8,
+   "min": 0.4
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     239,
+     34,
+     "fff0c4",
+     1
+    ],
+    [
+     261,
+     30,
+     "ffd0e8",
+     1
+    ],
+    [
+     283,
+     28,
+     "fff0c4",
+     1
+    ],
+    [
+     305,
+     26,
+     "c8b0ff",
+     1
+    ],
+    [
+     327,
+     23,
+     "fff0c4",
+     1
+    ],
+    [
+     349,
+     22,
+     "ffb8a0",
+     1
+    ],
+    [
+     371,
+     20,
+     "fff0c4",
+     1
+    ],
+    [
+     393,
+     20,
+     "ffd0e8",
+     1
+    ],
+    [
+     415,
+     19,
+     "fff0c4",
+     1
+    ],
+    [
+     437,
+     18,
+     "c8b0ff",
+     1
+    ],
+    [
+     459,
+     19,
+     "fff0c4",
+     1
+    ],
+    [
+     481,
+     19,
+     "ffb8a0",
+     1
+    ],
+    [
+     503,
+     21,
+     "fff0c4",
+     1
+    ],
+    [
+     525,
+     22,
+     "ffd0e8",
+     1
+    ],
+    [
+     547,
+     22,
+     "fff0c4",
+     1
+    ],
+    [
+     569,
+     25,
+     "c8b0ff",
+     1
+    ],
+    [
+     591,
+     27,
+     "fff0c4",
+     1
+    ],
+    [
+     613,
+     30,
+     "ffb8a0",
+     1
+    ],
+    [
+     635,
+     34,
+     "fff0c4",
+     1
+    ],
+    [
+     226,
+     -5,
+     "fff0c4",
+     1
+    ],
+    [
+     243,
+     -5,
+     "fff0c4",
+     1
+    ],
+    [
+     636,
+     -5,
+     "fff0c4",
+     1
+    ],
+    [
+     653,
+     -5,
+     "fff0c4",
+     1
+    ]
+   ],
+   "rate": 1.3,
+   "min": 0.5,
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     283,
+     28,
+     "e8f0ff",
+     1
+    ],
+    [
+     371,
+     20,
+     "e8f0ff",
+     1
+    ],
+    [
+     459,
+     19,
+     "e8f0ff",
+     1
+    ],
+    [
+     547,
+     22,
+     "e8f0ff",
+     1
+    ],
+    [
+     635,
+     34,
+     "e8f0ff",
+     1
+    ]
+   ],
+   "rate": 0.5,
+   "min": 0.8,
+   "flag": "encore_resolution"
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     32,
+     25,
+     "fff0c4",
+     1
+    ],
+    [
+     43,
+     25,
+     "fff0c4",
+     1
+    ],
+    [
+     125,
+     330,
+     "f6cf7a",
+     2
+    ]
+   ],
+   "rate": 1.0,
+   "min": 0.6
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 16,
+   "rect": [
+    320,
+    150,
+    240,
+    70
+   ],
+   "speed": [
+    0,
+    -4
+   ],
+   "color": "f6e0b0",
+   "flag": "encore_resolution",
+   "when": false
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 8,
+   "rect": [
+    436,
+    228,
+    48,
+    80
+   ],
+   "speed": [
+    0,
+    -3
+   ],
+   "color": "fff0c4",
+   "flag": "encore_resolution",
+   "when": false
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/F06/battle-far.png",
+  "near": "res://assets/art/rooms/F06/battle-near.png",
+  "layers": [
+   {
+    "kind": "beam",
+    "depth": "far",
+    "x": 150,
+    "y": 14,
+    "angle": -60,
+    "sweep": 18,
+    "period": 9.0,
+    "phase": 0.0,
+    "length": 120,
+    "width": 24,
+    "color": "c8b0ff",
+    "alpha": 0.14,
+    "floor": -400
+   },
+   {
+    "kind": "beam",
+    "depth": "far",
+    "x": 490,
+    "y": 14,
+    "angle": -120,
+    "sweep": 18,
+    "period": 10.0,
+    "phase": 2.0,
+    "length": 120,
+    "width": 24,
+    "color": "ffd0e8",
+    "alpha": 0.14,
+    "floor": -400
+   },
+   {
+    "kind": "fauna",
+    "depth": "far",
+    "fauna": [
+     {
+      "kind": "bat",
+      "x": 200,
+      "y": 40,
+      "fly": 14.0,
+      "rate": 7.0
+     },
+     {
+      "kind": "bat",
+      "x": 360,
+      "y": 30,
+      "fly": 11.0,
+      "rate": 6.0
+     }
+    ]
+   },
+   {
+    "kind": "movers",
+    "from": [
+     404,
+     99
+    ],
+    "to": [
+     468,
+     99
+    ],
+    "count": 1,
+    "period": 16.0,
+    "size": [
+     1,
+     1
+    ],
+    "pair": 0,
+    "color": "f6dca0",
+    "ease": "out"
+   },
+   {
+    "kind": "beam",
+    "x": 200,
+    "y": 16,
+    "angle": 62,
+    "sweep": 14,
+    "period": 7.0,
+    "phase": 1.0,
+    "length": 200,
+    "width": 44,
+    "color": "fff0c4",
+    "alpha": 0.16,
+    "floor": 118
+   },
+   {
+    "kind": "beam",
+    "x": 440,
+    "y": 16,
+    "angle": 118,
+    "sweep": 14,
+    "period": 8.0,
+    "phase": 3.0,
+    "length": 200,
+    "width": 44,
+    "color": "f2b0d0",
+    "alpha": 0.15,
+    "floor": 118
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      345,
+      102,
+      "a8d8c8",
+      1
+     ],
+     [
+      341,
+      103,
+      "fff0c4",
+      1
+     ],
+     [
+      337,
+      104,
+      "fff0c4",
+      1
+     ],
+     [
+      333,
+      104,
+      "f6cf7a",
+      1
+     ],
+     [
+      329,
+      105,
+      "f6cf7a",
+      1
+     ],
+     [
+      325,
+      105,
+      "f6cf7a",
+      1
+     ],
+     [
+      321,
+      105,
+      "f6cf7a",
+      1
+     ],
+     [
+      317,
+      105,
+      "f6cf7a",
+      1
+     ],
+     [
+      313,
+      105,
+      "f6cf7a",
+      1
+     ],
+     [
+      309,
+      105,
+      "f2a0a0",
+      1
+     ],
+     [
+      305,
+      104,
+      "fff0c4",
+      1
+     ],
+     [
+      301,
+      104,
+      "a8d8c8",
+      1
+     ],
+     [
+      297,
+      104,
+      "fff0c4",
+      1
+     ],
+     [
+      293,
+      103,
+      "fff0c4",
+      1
+     ],
+     [
+      289,
+      102,
+      "a8d8c8",
+      1
+     ],
+     [
+      290,
+      102,
+      "f6cf7a",
+      1
+     ],
+     [
+      294,
+      103,
+      "fff0c4",
+      1
+     ],
+     [
+      298,
+      104,
+      "f2a0a0",
+      1
+     ],
+     [
+      302,
+      105,
+      "a8d8c8",
+      1
+     ],
+     [
+      306,
+      105,
+      "f6cf7a",
+      1
+     ],
+     [
+      310,
+      106,
+      "f6cf7a",
+      1
+     ],
+     [
+      314,
+      106,
+      "f2a0a0",
+      1
+     ],
+     [
+      318,
+      106,
+      "a8d8c8",
+      1
+     ],
+     [
+      322,
+      106,
+      "f6cf7a",
+      1
+     ],
+     [
+      326,
+      107,
+      "f6cf7a",
+      1
+     ],
+     [
+      330,
+      106,
+      "a8d8c8",
+      1
+     ],
+     [
+      334,
+      106,
+      "f6cf7a",
+      1
+     ],
+     [
+      338,
+      106,
+      "f6cf7a",
+      1
+     ],
+     [
+      342,
+      106,
+      "f2a0a0",
+      1
+     ],
+     [
+      346,
+      105,
+      "f6cf7a",
+      1
+     ],
+     [
+      350,
+      104,
+      "f6cf7a",
+      1
+     ],
+     [
+      354,
+      104,
+      "fff0c4",
+      1
+     ],
+     [
+      355,
+      103,
+      "a8d8c8",
+      1
+     ],
+     [
+      351,
+      104,
+      "f6cf7a",
+      1
+     ],
+     [
+      347,
+      105,
+      "f6cf7a",
+      1
+     ],
+     [
+      343,
+      106,
+      "f6cf7a",
+      1
+     ],
+     [
+      339,
+      107,
+      "f6cf7a",
+      1
+     ],
+     [
+      335,
+      107,
+      "f2a0a0",
+      1
+     ],
+     [
+      331,
+      107,
+      "f6cf7a",
+      1
+     ],
+     [
+      327,
+      108,
+      "f6cf7a",
+      1
+     ],
+     [
+      323,
+      108,
+      "f6cf7a",
+      1
+     ],
+     [
+      319,
+      108,
+      "fff0c4",
+      1
+     ],
+     [
+      315,
+      108,
+      "f2a0a0",
+      1
+     ],
+     [
+      311,
+      108,
+      "f2a0a0",
+      1
+     ],
+     [
+      307,
+      108,
+      "a8d8c8",
+      1
+     ],
+     [
+      303,
+      107,
+      "f6cf7a",
+      1
+     ],
+     [
+      299,
+      107,
+      "a8d8c8",
+      1
+     ],
+     [
+      295,
+      106,
+      "f6cf7a",
+      1
+     ],
+     [
+      291,
+      106,
+      "fff0c4",
+      1
+     ],
+     [
+      287,
+      105,
+      "f6cf7a",
+      1
+     ],
+     [
+      283,
+      104,
+      "f6cf7a",
+      1
+     ],
+     [
+      279,
+      103,
+      "fff0c4",
+      1
+     ],
+     [
+      232,
+      81,
+      "f6cf7a",
+      1
+     ],
+     [
+      238,
+      86,
+      "f6cf7a",
+      1
+     ],
+     [
+      244,
+      91,
+      "f2a0a0",
+      1
+     ],
+     [
+      250,
+      95,
+      "f6cf7a",
+      1
+     ],
+     [
+      256,
+      98,
+      "fff0c4",
+      1
+     ],
+     [
+      262,
+      100,
+      "fff0c4",
+      1
+     ],
+     [
+      268,
+      102,
+      "f2a0a0",
+      1
+     ],
+     [
+      274,
+      103,
+      "f6cf7a",
+      1
+     ],
+     [
+      360,
+      103,
+      "fff0c4",
+      1
+     ],
+     [
+      366,
+      102,
+      "f6cf7a",
+      1
+     ],
+     [
+      372,
+      101,
+      "a8d8c8",
+      1
+     ],
+     [
+      378,
+      99,
+      "a8d8c8",
+      1
+     ],
+     [
+      384,
+      97,
+      "f6cf7a",
+      1
+     ],
+     [
+      390,
+      93,
+      "f6cf7a",
+      1
+     ],
+     [
+      396,
+      90,
+      "f6cf7a",
+      1
+     ],
+     [
+      402,
+      85,
+      "f6cf7a",
+      1
+     ],
+     [
+      408,
+      81,
+      "fff0c4",
+      1
+     ]
+    ],
+    "rate": 2.0,
+    "min": 0.35
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      345,
+      104,
+      "fff0c4",
+      1
+     ],
+     [
+      290,
+      104,
+      "fff0c4",
+      1
+     ],
+     [
+      355,
+      105,
+      "fff0c4",
+      1
+     ],
+     [
+      281,
+      105,
+      "fff0c4",
+      1
+     ],
+     [
+      226,
+      75,
+      "fff0c4",
+      1
+     ],
+     [
+      232,
+      75,
+      "fff0c4",
+      1
+     ],
+     [
+      408,
+      75,
+      "fff0c4",
+      1
+     ],
+     [
+      414,
+      75,
+      "fff0c4",
+      1
+     ],
+     [
+      327,
+      102,
+      "f6dca0",
+      1
+     ],
+     [
+      332,
+      102,
+      "f6dca0",
+      1
+     ],
+     [
+      368,
+      105,
+      "f6dca0",
+      1
+     ],
+     [
+      340,
+      99,
+      "f6dca0",
+      1
+     ],
+     [
+      347,
+      99,
+      "f6dca0",
+      1
+     ],
+     [
+      354,
+      99,
+      "f6dca0",
+      1
+     ]
+    ],
+    "rate": 1.3,
+    "min": 0.5
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      20,
+      25,
+      "fff0c4",
+      1
+     ],
+     [
+      50,
+      23,
+      "ffd0e8",
+      1
+     ],
+     [
+      80,
+      23,
+      "fff0c4",
+      1
+     ],
+     [
+      110,
+      23,
+      "c8b0ff",
+      1
+     ],
+     [
+      140,
+      21,
+      "fff0c4",
+      1
+     ],
+     [
+      170,
+      21,
+      "ffb8a0",
+      1
+     ],
+     [
+      200,
+      20,
+      "fff0c4",
+      1
+     ],
+     [
+      230,
+      20,
+      "ffd0e8",
+      1
+     ],
+     [
+      260,
+      20,
+      "fff0c4",
+      1
+     ],
+     [
+      290,
+      19,
+      "c8b0ff",
+      1
+     ],
+     [
+      320,
+      20,
+      "fff0c4",
+      1
+     ],
+     [
+      350,
+      19,
+      "ffb8a0",
+      1
+     ],
+     [
+      380,
+      20,
+      "fff0c4",
+      1
+     ],
+     [
+      410,
+      20,
+      "ffd0e8",
+      1
+     ],
+     [
+      440,
+      20,
+      "fff0c4",
+      1
+     ],
+     [
+      470,
+      21,
+      "c8b0ff",
+      1
+     ],
+     [
+      500,
+      21,
+      "fff0c4",
+      1
+     ],
+     [
+      530,
+      23,
+      "ffb8a0",
+      1
+     ],
+     [
+      560,
+      23,
+      "fff0c4",
+      1
+     ],
+     [
+      590,
+      23,
+      "ffd0e8",
+      1
+     ],
+     [
+      620,
+      25,
+      "fff0c4",
+      1
+     ],
+     [
+      112,
+      57,
+      "ffb8d8",
+      1
+     ],
+     [
+      112,
+      95,
+      "c8b0ff",
+      1
+     ],
+     [
+      527,
+      61,
+      "c8b0ff",
+      1
+     ],
+     [
+      527,
+      99,
+      "ffd0e8",
+      1
+     ]
+    ],
+    "rate": 1.6,
+    "min": 0.55
+   },
+   {
+    "kind": "blink",
+    "pattern": "1110",
+    "rate": 0.9,
+    "rects": [
+     [
+      165,
+      134,
+      1,
+      1,
+      "5cf08a",
+      1.0
+     ],
+     [
+      272,
+      134,
+      1,
+      1,
+      "5cf08a",
+      1.0
+     ],
+     [
+      367,
+      134,
+      1,
+      1,
+      "5cf08a",
+      1.0
+     ],
+     [
+      474,
+      134,
+      1,
+      1,
+      "5cf08a",
+      1.0
+     ]
+    ]
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 14,
+    "rect": [
+     120,
+     60,
+     400,
+     80
+    ],
+    "speed": [
+     0,
+     -4
+    ],
+    "color": "f6e0b0"
+   }
+  ]
+ }
+}

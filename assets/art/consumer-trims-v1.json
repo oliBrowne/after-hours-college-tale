@@ -1,0 +1,182 @@
+{
+  "res://assets/art/jakerson-v1.png|362,488,347,229": [
+    [
+      0,
+      217,
+      3,
+      12
+    ]
+  ],
+  "res://assets/art/jakerson-v1.png|1107,488,341,229": [
+    [
+      340,
+      217,
+      1,
+      12
+    ]
+  ],
+  "res://assets/art/jakerson-v1.png|724,12,342,465": [
+    [
+      0,
+      115,
+      8,
+      28
+    ]
+  ],
+  "res://assets/art/support-dialogue-v3.png|280,0,281,305": [
+    [
+      0,
+      175,
+      9,
+      34
+    ]
+  ],
+  "res://assets/art/support-dialogue-v3.png|561,0,280,305": [
+    [
+      0,
+      176,
+      6,
+      26
+    ]
+  ],
+  "res://assets/art/support-dialogue-v3.png|841,0,281,305": [
+    [
+      0,
+      176,
+      9,
+      35
+    ]
+  ],
+  "res://assets/art/festival-cast-v1.png|615,981,307,297": [
+    [
+      0,
+      102,
+      5,
+      35
+    ]
+  ],
+  "res://assets/art/festival-cast-v1.png|0,365,307,374": [
+    [
+      12,
+      338,
+      3,
+      8
+    ]
+  ],
+  "res://assets/art/festival-cast-v1.png|307,739,308,242": [
+    [
+      0,
+      168,
+      3,
+      20
+    ]
+  ],
+  "res://assets/art/festival-cast-v1.png|615,0,307,365": [
+    [
+      0,
+      225,
+      2,
+      13
+    ],
+    [
+      43,
+      285,
+      15,
+      35
+    ]
+  ],
+  "res://assets/art/festival-cast-v1.png|307,0,308,365": [
+    [
+      0,
+      169,
+      3,
+      20
+    ],
+    [
+      0,
+      233,
+      8,
+      39
+    ]
+  ],
+  "res://assets/art/chapter2-bodies-v1.png|286,1115,275,265": [
+    [
+      274,
+      236,
+      1,
+      11
+    ]
+  ],
+  "res://assets/art/finale-cast-v1.png|443,315,210,172": [
+    [
+      0,
+      43,
+      3,
+      25
+    ]
+  ],
+  "res://assets/art/finale-cast-v1.png|221,968,222,214": [
+    [
+      0,
+      134,
+      3,
+      20
+    ]
+  ],
+  "res://assets/art/finale-cast-v1.png|221,30,222,265": [
+    [
+      0,
+      121,
+      3,
+      22
+    ]
+  ],
+  "res://assets/art/finale-cast-v1.png|443,30,220,265": [
+    [
+      0,
+      127,
+      1,
+      4
+    ]
+  ],
+  "res://assets/art/object-dialogue-v3.png|561,830,280,272": [
+    [
+      0,
+      178,
+      2,
+      17
+    ]
+  ],
+  "res://assets/art/object-dialogue-v3.png|841,830,281,272": [
+    [
+      0,
+      203,
+      1,
+      14
+    ]
+  ],
+  "res://assets/art/object-dialogue-v3.png|280,1102,281,300": [
+    [
+      0,
+      247,
+      4,
+      24
+    ]
+  ],
+  "res://assets/art/object-dialogue-v3.png|561,1102,280,300": [
+    [
+      0,
+      250,
+      2,
+      21
+    ]
+  ],
+  "res://assets/art/object-dialogue-v3.png|841,1102,281,300": [
+    [
+      0,
+      247,
+      1,
+      24
+    ]
+  ]
+}

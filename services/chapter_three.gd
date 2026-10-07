@@ -1,0 +1,47 @@
+class_name NativeChapterThree
+extends RefCounted
+static func handle(g: Node, object: Dictionary) -> bool:
+	if not str(g.state.room).begins_with("O") or object.get("kind","")=="door":return false
+	var f: Dictionary=g.state.flags
+	match str(object.id):
+		"notice_limits":
+			NativeChapterTwo.say(g,[["Loudspeaker","JULES: NEVER DISAPPOINT. IMANI: KEEP EVERY AUDIENCE. WALT: NEED NOBODY.","concern"],["Jules","Those aren't office hours. They're sentences with no stopping point.","concern"],["Imani","Nobody asked whether I wanted every audience.","neutral"],["Walt","And needing someone is different from handing them my life.","neutral"],["Jules","The first recording is in the empty office. We find who gave this machine its job.","neutral"]],{"notice_limits":true});return true
+		"origin_directory":
+			if f.get("booth_origin",false):NativeChapterTwo.say(g,[["Jules","VAL was told to gather every possible graduate. The pledge booth multiplied that job with every imagined future.","neutral"],["Imani","We need a ceremony people can consent to, and an end to the night.","neutral"]]);return true
+			NativeChapterTwo.say(g,[["Directory","CEREMONY PROTOTYPE / VAL. GATHER EVERYONE THEY COULD BECOME. DO NOT CLOSE UNTIL ALL ARE PRESENT.","concern"],["Jules","A fictional ceremony machine. Someone gave it a job that could never end.","concern"],["Imani","The booth asked for promises. VAL treated every answer as another person who had to arrive.","neutral"],["Walt","Objects held those promises long enough to wake up. The glove, the catalogue, the marshal.","neutral"],["Pip","If we stop the source, what happens to us?","concern"],["Jules","We ask the people it made before deciding for them. A purpose can be revised with those affected.","neutral"],["Imani","Todd's finite-plan desk is next door. Rook is outside. We need both conversations before Macky.","neutral"]],{"booth_origin":true});return true
+		"family_phone":
+			NativeChapterTwo.say(g,[["Jules","Mom's message: You don't have to bring me a successful evening. Just tell me where you are.","concern"],["Jules","I can write where I am. Not a promise to finish every problem before calling.","neutral"]],{"family_message_read":true});return true
+		"finite_plan":
+			g.dialogue([["Todd Saliman","This is a fictional desk for a very real question: what exactly are you agreeing to?","neutral"],["Imani","One gathering. Each person can leave. Nobody signs for somebody else.","neutral"],["Walt","And work gets named, shared and stopped. Not passed to whoever looks most available.","neutral"]],g.resume_world,[g.option("One gathering / one closing time.",func() -> void:NativeChapterTwo.say(g,[["Jules","One gathering that ends. Attendance is a choice.","warm"]],{"finite_plan":"one-gathering"})),g.option("Shared duties / the right to decline.",func() -> void:NativeChapterTwo.say(g,[["Jules","Named tasks. Shared responsibility. A right to say no.","warm"]],{"finite_plan":"shared-duties"}))]);return true
+		"todd":
+			if not f.get("booth_origin",false) or not f.has("finite_plan"):
+				NativeChapterTwo.say(g,[["Todd Saliman","Read the original directory in the empty office, then choose the limits on this consent form.","neutral"]]);return true
+			if f.has("todd_resolution"):
+				if not f.get("chapter3_complete",false):
+					f.aftermath_pending="todd";g.persist();aftermath(g)
+				else:NativeChapterTwo.say(g,[["Todd Saliman","The finite plan is accepted. Make space for people to answer for themselves.","warm"]])
+				return true
+			NativeChapterTwo.fight(g,"todd",[["Todd Saliman","A plan with limits. Let's test whether it survives an audit.","neutral"],["Imani","The consent boxes are choices, not a promise to answer everything.","neutral"],["Todd Saliman","Confirm at both outlined boxes. When RED AUDIT appears, hold still. Three verses; then submit the finite plan.","neutral"],["Jules","One useful rehearsal. We can also clear the machinery and repair it afterwards.","neutral"]]);return true
+		"rook":
+			if not f.get("booth_origin",false):NativeChapterTwo.say(g,[["Rook","The directory is inside. I'd recommend not reading it. Which has never made anyone less curious.","neutral"],["Jules","You know what is on that reel.","concern"],["Rook","I heard the instruction when they switched it on. That's what I know.","concern"]]);return true
+			if f.get("rook_confessed",false):NativeChapterTwo.say(g,[["Rook","Macky. I still have keys. I just don't know which job they belong to anymore.","concern"]]);return true
+			NativeChapterTwo.say(g,[["Rook","I closed the Engineering door. I knew the reel would lead here.","concern"],["Walt","You thought stopping the ceremony would stop you.","neutral"],["Rook","I am folded paper with a job. When the job ends, does the paper stay a person?","concern"],["Pip","I don't need somebody to lose me forever. I can hold a door because I choose to.","warm"],["Imani","ENCORE can host a show that ends. INDEX can keep a stopping place. Your purpose can change too.","neutral"],["Rook","You make that sound possible. I still don't trust an ending.","concern"],["Jules","Then come to Macky and hear the choices. We won't write your answer for you.","neutral"]],{"rook_confessed":true});return true
+		"courtyard_lamp", "cabinet_lamp":
+			for member: Dictionary in g.state.party:member.hp=member.max
+			g.persist();g.audio.effect("save")
+			g.open_menu(g.Mode.MENU,"Rested / choose a save slot",[g.option("Save slot 1",func() -> void:g.manual_save("slot1")),g.option("Save slot 2",func() -> void:g.manual_save("slot2")),g.option("Save slot 3",func() -> void:g.manual_save("slot3")),g.option("Back",g.resume_world)]);return true
+	return false
+static func aftermath(g: Node) -> void:
+	var f: Dictionary=g.state.flags
+	g.boss_id="";g.enter_room(str(g.state.room),Vector2(g.state.x,g.state.y),false)
+	var lines: Array=[["Todd Saliman","Two explicit choices. One finite plan. Approved for the people who actually chose it.","warm"],["Imani","And room for a different answer. We're keeping that.","warm"]] if f.get("todd_resolution","")=="peaceful" else [["Todd Saliman","The stamp rig is damaged. I'll file the limits by hand and arrange repairs.","concern"],["Walt","The people still get a choice. That's the part we keep.","neutral"]]
+	lines.append(["Jules","Rook is in the courtyard. We need to speak with him about what happens when this job ends, then follow the procession to Macky.","neutral"])
+	g.dialogue(lines,func() -> void:f.chapter3_complete=true;f.aftermath_pending="";g.persist();g.resume_world())
+static func objective(s: Dictionary) -> String:
+	var f: Dictionary=s.flags
+	if not f.get("notice_limits",false):return "Read the changing notices / Old Main notice hall"
+	if not f.get("booth_origin",false):return "Find VAL's first instruction / Old Main empty office"
+	if not f.has("finite_plan"):return "Choose explicit limits / consent form in the cabinet room"
+	if not f.get("chapter3_complete",false):return "Submit one finite plan / Todd at the cabinet desk"
+	if not f.get("rook_confessed",false):return "Ask Rook what he fears / Old Main courtyard"
+	return "Follow the procession / Macky comes next"

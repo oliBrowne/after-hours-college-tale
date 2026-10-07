@@ -1,0 +1,580 @@
+{
+ "background": "res://assets/art/rooms/N06/background.png",
+ "width": 800,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/N06/prop-0.png",
+   "anchor": [
+    77,
+    124
+   ]
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/N06/prop-1.png",
+   "anchor": [
+    77,
+    124
+   ]
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/N06/prop-2.png",
+   "anchor": [
+    74,
+    54
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/N06/prop-3.png",
+   "anchor": [
+    59,
+    92
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/N06/prop-4.png",
+   "anchor": [
+    13,
+    70
+   ]
+  }
+ },
+ "label_only": [],
+ "overlays": [
+  {
+   "texture": "res://assets/art/rooms/N06/rope-closed.png",
+   "x": 762,
+   "y": 376,
+   "flag": "index_resolution",
+   "when": false
+  },
+  {
+   "texture": "res://assets/art/rooms/N06/rope-open.png",
+   "x": 762,
+   "y": 376,
+   "flag": "index_resolution",
+   "when": true
+  }
+ ],
+ "fauna": [
+  {
+   "kind": "lamp_moth",
+   "x": 95,
+   "y": 249,
+   "range": 6,
+   "speed": 2.0,
+   "rate": 9.0
+  },
+  {
+   "kind": "library_cat",
+   "x": 632,
+   "y": 100,
+   "range": 0,
+   "speed": 0.0,
+   "rate": 0.5,
+   "flip": true
+  }
+ ],
+ "leaves": [],
+ "layers": [
+  {
+   "kind": "blink",
+   "pattern": "1000000000",
+   "rate": 1.3,
+   "flag": "index_resolution",
+   "when": false,
+   "texture": "res://assets/art/rooms/N06/drawer-out.png",
+   "x": 24,
+   "y": 66
+  },
+  {
+   "kind": "blink",
+   "pattern": "0100000000",
+   "rate": 1.3,
+   "flag": "index_resolution",
+   "when": false,
+   "texture": "res://assets/art/rooms/N06/drawer-out.png",
+   "x": 706,
+   "y": 87
+  },
+  {
+   "kind": "blink",
+   "pattern": "0010000000",
+   "rate": 1.3,
+   "flag": "index_resolution",
+   "when": false,
+   "texture": "res://assets/art/rooms/N06/drawer-out.png",
+   "x": 760,
+   "y": 73
+  },
+  {
+   "kind": "blink",
+   "pattern": "0001000000",
+   "rate": 1.3,
+   "flag": "index_resolution",
+   "when": false,
+   "texture": "res://assets/art/rooms/N06/drawer-out.png",
+   "x": 696,
+   "y": 66
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000100000",
+   "rate": 1.3,
+   "flag": "index_resolution",
+   "when": false,
+   "texture": "res://assets/art/rooms/N06/drawer-out.png",
+   "x": 78,
+   "y": 52
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000010000",
+   "rate": 1.3,
+   "flag": "index_resolution",
+   "when": false,
+   "texture": "res://assets/art/rooms/N06/drawer-out.png",
+   "x": 750,
+   "y": 38
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000001000",
+   "rate": 1.3,
+   "flag": "index_resolution",
+   "when": false,
+   "texture": "res://assets/art/rooms/N06/drawer-out.png",
+   "x": 760,
+   "y": 80
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000100",
+   "rate": 1.3,
+   "flag": "index_resolution",
+   "when": false,
+   "texture": "res://assets/art/rooms/N06/drawer-out.png",
+   "x": 696,
+   "y": 45
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000010",
+   "rate": 1.3,
+   "flag": "index_resolution",
+   "when": false,
+   "texture": "res://assets/art/rooms/N06/drawer-out.png",
+   "x": 696,
+   "y": 38
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000001",
+   "rate": 1.3,
+   "flag": "index_resolution",
+   "when": false,
+   "texture": "res://assets/art/rooms/N06/drawer-out.png",
+   "x": 112,
+   "y": 66
+  },
+  {
+   "kind": "blink",
+   "pattern": "10000000",
+   "rate": 5.0,
+   "flag": "index_resolution",
+   "when": false,
+   "rects": [
+    [
+     554,
+     18,
+     4,
+     3,
+     "f6ecd2"
+    ],
+    [
+     554,
+     18,
+     4,
+     1,
+     "fff8e6"
+    ],
+    [
+     555,
+     19,
+     2,
+     1,
+     "b0382e"
+    ]
+   ]
+  },
+  {
+   "kind": "blink",
+   "pattern": "01000000",
+   "rate": 5.0,
+   "flag": "index_resolution",
+   "when": false,
+   "rects": [
+    [
+     554,
+     34,
+     4,
+     3,
+     "f6ecd2"
+    ],
+    [
+     554,
+     34,
+     4,
+     1,
+     "fff8e6"
+    ],
+    [
+     555,
+     35,
+     2,
+     1,
+     "b0382e"
+    ]
+   ]
+  },
+  {
+   "kind": "blink",
+   "pattern": "00100000",
+   "rate": 5.0,
+   "flag": "index_resolution",
+   "when": false,
+   "rects": [
+    [
+     554,
+     50,
+     4,
+     3,
+     "f6ecd2"
+    ],
+    [
+     554,
+     50,
+     4,
+     1,
+     "fff8e6"
+    ],
+    [
+     555,
+     51,
+     2,
+     1,
+     "b0382e"
+    ]
+   ]
+  },
+  {
+   "kind": "blink",
+   "pattern": "00010000",
+   "rate": 5.0,
+   "flag": "index_resolution",
+   "when": false,
+   "rects": [
+    [
+     554,
+     66,
+     4,
+     3,
+     "f6ecd2"
+    ],
+    [
+     554,
+     66,
+     4,
+     1,
+     "fff8e6"
+    ],
+    [
+     555,
+     67,
+     2,
+     1,
+     "b0382e"
+    ]
+   ]
+  },
+  {
+   "kind": "blink",
+   "pattern": "00001000",
+   "rate": 5.0,
+   "flag": "index_resolution",
+   "when": false,
+   "rects": [
+    [
+     554,
+     82,
+     4,
+     3,
+     "f6ecd2"
+    ],
+    [
+     554,
+     82,
+     4,
+     1,
+     "fff8e6"
+    ],
+    [
+     555,
+     83,
+     2,
+     1,
+     "b0382e"
+    ]
+   ]
+  },
+  {
+   "kind": "blink",
+   "pattern": "00000100",
+   "rate": 5.0,
+   "flag": "index_resolution",
+   "when": false,
+   "rects": [
+    [
+     554,
+     98,
+     4,
+     3,
+     "f6ecd2"
+    ],
+    [
+     554,
+     98,
+     4,
+     1,
+     "fff8e6"
+    ],
+    [
+     555,
+     99,
+     2,
+     1,
+     "b0382e"
+    ]
+   ]
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     282,
+     64,
+     "fde9b6",
+     1
+    ],
+    [
+     518,
+     64,
+     "fde9b6",
+     1
+    ],
+    [
+     196,
+     78,
+     "fde9b6",
+     1
+    ],
+    [
+     664,
+     78,
+     "fde9b6",
+     1
+    ],
+    [
+     370,
+     65,
+     "fde9b6",
+     1
+    ],
+    [
+     95,
+     252,
+     "fff0c4",
+     2
+    ]
+   ],
+   "rate": 1.1,
+   "min": 0.55
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 18,
+   "rect": [
+    150,
+    40,
+    500,
+    90
+   ],
+   "speed": [
+    1,
+    2
+   ],
+   "color": "fde9b6"
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/N06/battle-far.png",
+  "layers": [
+   {
+    "kind": "blink",
+    "pattern": "100000000",
+    "rate": 1.4,
+    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
+    "x": 496,
+    "y": 120
+   },
+   {
+    "kind": "blink",
+    "pattern": "010000000",
+    "rate": 1.4,
+    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
+    "x": 19,
+    "y": 40
+   },
+   {
+    "kind": "blink",
+    "pattern": "001000000",
+    "rate": 1.4,
+    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
+    "x": 19,
+    "y": 100
+   },
+   {
+    "kind": "blink",
+    "pattern": "000100000",
+    "rate": 1.4,
+    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
+    "x": 134,
+    "y": 73
+   },
+   {
+    "kind": "blink",
+    "pattern": "000010000",
+    "rate": 1.4,
+    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
+    "x": 454,
+    "y": 87
+   },
+   {
+    "kind": "blink",
+    "pattern": "000001000",
+    "rate": 1.4,
+    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
+    "x": 41,
+    "y": 47
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000100",
+    "rate": 1.4,
+    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
+    "x": 570,
+    "y": 100
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000010",
+    "rate": 1.4,
+    "texture": "res://assets/art/rooms/N06/battle-drawer.png",
+    "x": 102,
+    "y": 114
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      278,
+      42,
+      "fde9b6",
+      1
+     ],
+     [
+      362,
+      42,
+      "fde9b6",
+      1
+     ],
+     [
+      263,
+      23,
+      "fde9b6",
+      1
+     ],
+     [
+      377,
+      23,
+      "fde9b6",
+      1
+     ],
+     [
+      105,
+      15,
+      "fde9b6",
+      1
+     ],
+     [
+      535,
+      15,
+      "fde9b6",
+      1
+     ],
+     [
+      309,
+      61,
+      "f6cf7a",
+      0
+     ]
+    ],
+    "rate": 1.2,
+    "min": 0.55
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 20,
+    "rect": [
+     180,
+     30,
+     280,
+     110
+    ],
+    "speed": [
+     1,
+     2
+    ],
+    "color": "fde9b6"
+   },
+   {
+    "kind": "fauna",
+    "fauna": [
+     {
+      "kind": "loose_page",
+      "x": 160,
+      "y": 40,
+      "fly": 7.0,
+      "rate": 3.0
+     },
+     {
+      "kind": "loose_page",
+      "x": 420,
+      "y": 92,
+      "fly": 5.0,
+      "rate": 2.6
+     },
+     {
+      "kind": "loose_page",
+      "x": 300,
+      "y": 20,
+      "fly": 9.0,
+      "rate": 3.4
+     }
+    ]
+   }
+  ]
+ }
+}

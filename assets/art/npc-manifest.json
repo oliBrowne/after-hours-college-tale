@@ -1,0 +1,339 @@
+{
+  "version": 1,
+  "assets": [
+    {
+      "id": "npc-deion-world",
+      "path": "res://assets/art/npc-deion-world.png",
+      "width": 440,
+      "height": 224,
+      "sha256": "6a8fafa9cc3174b92c3c17b256bbbe5febc9d77efd1ad1cb10cb7c5cf13c9a1d",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "frameWidth": 40,
+      "frameHeight": 56,
+      "columns": 11,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "pivot": [
+        20,
+        56
+      ],
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "walk": [
+          2,
+          7
+        ],
+        "interact": [
+          8,
+          10
+        ]
+      },
+      "spriteFrames": "res://resources/art_npc_deion.tres"
+    },
+    {
+      "id": "npc-chip-world",
+      "path": "res://assets/art/npc-chip-world.png",
+      "width": 440,
+      "height": 224,
+      "sha256": "bf655bd4c879377ad0a534143aab6936ad8f1827d376b195286d0ee8628bfd56",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "frameWidth": 40,
+      "frameHeight": 56,
+      "columns": 11,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "pivot": [
+        20,
+        56
+      ],
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "walk": [
+          2,
+          7
+        ],
+        "interact": [
+          8,
+          10
+        ]
+      },
+      "spriteFrames": "res://resources/art_npc_chip.tres"
+    },
+    {
+      "id": "npc-todd-world",
+      "path": "res://assets/art/npc-todd-world.png",
+      "width": 440,
+      "height": 224,
+      "sha256": "e534b47a3c10558cab525c234246c7619e3525c4742260f8ebe96aadbab6368f",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "frameWidth": 40,
+      "frameHeight": 56,
+      "columns": 11,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "pivot": [
+        20,
+        56
+      ],
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "walk": [
+          2,
+          7
+        ],
+        "interact": [
+          8,
+          10
+        ]
+      },
+      "spriteFrames": "res://resources/art_npc_todd.tres"
+    },
+    {
+      "id": "npc-mara-world",
+      "path": "res://assets/art/npc-mara-world.png",
+      "width": 440,
+      "height": 224,
+      "sha256": "12dfaac0bbeac3a76a8c63bc88441afd2a5832b3461d508b8221f6b685cc0916",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "frameWidth": 40,
+      "frameHeight": 56,
+      "columns": 11,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "pivot": [
+        20,
+        56
+      ],
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "walk": [
+          2,
+          7
+        ],
+        "interact": [
+          8,
+          10
+        ]
+      },
+      "spriteFrames": "res://resources/art_npc_mara.tres"
+    },
+    {
+      "id": "npc-eli-world",
+      "path": "res://assets/art/npc-eli-world.png",
+      "width": 440,
+      "height": 224,
+      "sha256": "c48fb4bb5ee5759fef5b6c110a0f7d5eca503802a47c226cf99eccb795159942",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "frameWidth": 40,
+      "frameHeight": 56,
+      "columns": 11,
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "pivot": [
+        20,
+        56
+      ],
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "walk": [
+          2,
+          7
+        ],
+        "interact": [
+          8,
+          10
+        ]
+      },
+      "spriteFrames": "res://resources/art_npc_eli.tres"
+    },
+    {
+      "id": "npc-deion-portraits",
+      "path": "res://assets/art/npc-deion-portraits.png",
+      "width": 320,
+      "height": 80,
+      "sha256": "b1841538cebb0b4970bdf28172d3637df0bbb74d10dbe0c7c0f7d4e012648543",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "frameWidth": 80,
+      "frameHeight": 80,
+      "expressions": [
+        "neutral",
+        "amused",
+        "surprised",
+        "warm"
+      ],
+      "notes": "Original hand-authored close-ups; fictional characterization, native-size review pending."
+    },
+    {
+      "id": "npc-chip-portraits",
+      "path": "res://assets/art/npc-chip-portraits.png",
+      "width": 320,
+      "height": 80,
+      "sha256": "b9d615112f3425e5bcb9d0bdbc20ab7a6ff8d5734b69cba13522ebdcdb123783",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "frameWidth": 80,
+      "frameHeight": 80,
+      "expressions": [
+        "neutral",
+        "amused",
+        "surprised",
+        "warm"
+      ],
+      "notes": "Original hand-authored close-ups; fictional characterization, native-size review pending."
+    },
+    {
+      "id": "npc-todd-portraits",
+      "path": "res://assets/art/npc-todd-portraits.png",
+      "width": 320,
+      "height": 80,
+      "sha256": "77981e8b89706e01b2f469e9f0708de310e130431a233fdd9d05df9850791a2f",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "frameWidth": 80,
+      "frameHeight": 80,
+      "expressions": [
+        "neutral",
+        "amused",
+        "surprised",
+        "warm"
+      ],
+      "notes": "Original hand-authored close-ups; fictional characterization, native-size review pending."
+    },
+    {
+      "id": "npc-mara-portraits",
+      "path": "res://assets/art/npc-mara-portraits.png",
+      "width": 320,
+      "height": 80,
+      "sha256": "66cbfa0f554b3da94983be0f17fd2b9cb1c21e9aaa82a6e26445871f38e91926",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "frameWidth": 80,
+      "frameHeight": 80,
+      "expressions": [
+        "neutral",
+        "amused",
+        "surprised",
+        "warm"
+      ],
+      "notes": "Original hand-authored close-ups; fictional characterization, native-size review pending."
+    },
+    {
+      "id": "npc-eli-portraits",
+      "path": "res://assets/art/npc-eli-portraits.png",
+      "width": 320,
+      "height": 80,
+      "sha256": "7cc80be0dd9a5443112e7262219d6ab2f4e09aa349fb2bcdc2664039a512bcae",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "frameWidth": 80,
+      "frameHeight": 80,
+      "expressions": [
+        "neutral",
+        "amused",
+        "surprised",
+        "warm"
+      ],
+      "notes": "Original hand-authored close-ups; fictional characterization, native-size review pending."
+    },
+    {
+      "id": "lamp-light-mask",
+      "path": "res://assets/art/lamp-light-mask.png",
+      "width": 128,
+      "height": 128,
+      "sha256": "447ebd0c233370b438fc5630f052e956804616ccfa6fbaa940c2eb872aba4eb6",
+      "source": "Original integer-grid drawing in game/scripts/export-native-npc-art.mjs",
+      "status": "exported; native motion review pending",
+      "kind": "light-falloff",
+      "notes": "PointLight2D texture; use warm color amber, energy0.35–0.65, texture_scale0.7–1.2. Do not blur character textures."
+    }
+  ],
+  "identities": {
+    "deion": {
+      "name": "Deion Sanders",
+      "skin": "skinDark",
+      "shade": "skinDarkShade",
+      "jacket": "black",
+      "pants": "ink",
+      "hair": "hair",
+      "notes": "Affectionate fictional coach cameo; gold-lined black cap, dark glasses, headset, gold whistle; no borrowed catchphrase or voice."
+    },
+    "todd": {
+      "name": "Todd Saliman",
+      "skin": "skinPale",
+      "shade": "skinPaleShade",
+      "jacket": "blueDark",
+      "pants": "plum",
+      "hair": "grey",
+      "notes": "Affectionate fictional system-president cameo; grey side-part, navy suit, cream shirt, gold tie, document folio."
+    },
+    "mara": {
+      "name": "Mara Alvarez",
+      "skin": "skinWarm",
+      "shade": "skinWarmShade",
+      "jacket": "sage",
+      "pants": "plum",
+      "hair": "hair",
+      "notes": "Fictional unhoused Boulder resident and mural restorer; plum knit cap, teal canvas vest, cream sleeves, sketch roll. Her craft, humour and preferences define her; housing status is not a punchline."
+    },
+    "eli": {
+      "name": "Eli Brooks",
+      "skin": "skinPale",
+      "shade": "skinPaleShade",
+      "jacket": "sageDark",
+      "pants": "blueDark",
+      "hair": "copper",
+      "notes": "Fictional unhoused Boulder resident and bike mechanic; copper beard, mustard hoodie, sage work vest, bike multi-tool. His routines and friendships define him; no deprivation caricature."
+    },
+    "chip": {
+      "name": "Chip",
+      "notes": "Original drawing of the CU costumed buffalo mascot: woolly brown head, cream horns, black/gold jersey, articulated costume paws."
+    }
+  },
+  "references": [
+    "https://cubuffs.com/staff-directory/deion-coach-prime-sanders/1138",
+    "https://cubuffs.com/sports/2016/6/15/Spirit",
+    "https://president.cu.edu/bio"
+  ],
+  "approval": "Native resource import and moving-game inspection required. Real-person cameos are fictional dialogue and events, not attributed statements."
+}

@@ -1,0 +1,391 @@
+{
+ "background": "res://assets/art/rooms/N03/background.png",
+ "width": 800,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/N03/prop-0.png",
+   "anchor": [
+    69,
+    56
+   ]
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/N03/prop-1.png",
+   "anchor": [
+    89,
+    56
+   ]
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/N03/prop-2.png",
+   "anchor": [
+    79,
+    56
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/N03/prop-3.png",
+   "anchor": [
+    54,
+    104
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/N03/prop-4.png",
+   "anchor": [
+    48,
+    33
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/N03/prop-5.png",
+   "anchor": [
+    53,
+    33
+   ]
+  },
+  "6": {
+   "texture": "res://assets/art/rooms/N03/prop-6.png",
+   "anchor": [
+    13,
+    70
+   ]
+  }
+ },
+ "label_only": [],
+ "fauna": [
+  {
+   "kind": "barn_owl",
+   "x": 416,
+   "y": 127,
+   "range": 0,
+   "speed": 0.0,
+   "rate": 1.5
+  },
+  {
+   "kind": "lamp_moth",
+   "x": 98,
+   "y": 268,
+   "range": 6,
+   "speed": 2.0,
+   "rate": 9.0
+  }
+ ],
+ "leaves": [],
+ "layers": [
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     324,
+     66,
+     "fde9b6",
+     2
+    ],
+    [
+     476,
+     66,
+     "fde9b6",
+     2
+    ],
+    [
+     118,
+     104,
+     "fde9b6",
+     1
+    ]
+   ],
+   "rate": 1.2,
+   "min": 0.6
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     272,
+     49,
+     "c8d0f0",
+     0
+    ],
+    [
+     251,
+     54,
+     "c8d0f0",
+     0
+    ],
+    [
+     251,
+     74,
+     "c8d0f0",
+     0
+    ],
+    [
+     421,
+     58,
+     "c8d0f0",
+     0
+    ],
+    [
+     373,
+     39,
+     "c8d0f0",
+     0
+    ],
+    [
+     390,
+     52,
+     "c8d0f0",
+     0
+    ],
+    [
+     542,
+     63,
+     "c8d0f0",
+     0
+    ],
+    [
+     530,
+     51,
+     "c8d0f0",
+     0
+    ],
+    [
+     544,
+     72,
+     "c8d0f0",
+     0
+    ]
+   ],
+   "rate": 0.8,
+   "min": 0.0
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 14,
+   "rect": [
+    372,
+    60,
+    110,
+    170
+   ],
+   "speed": [
+    1.5,
+    2.5
+   ],
+   "color": "d8dcf0"
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/N03/battle-far.png",
+  "layers": [
+   {
+    "kind": "beam",
+    "x": 320,
+    "y": 70,
+    "angle": 90,
+    "sweep": 3,
+    "period": 19.0,
+    "phase": 0.0,
+    "length": 120,
+    "width": 150,
+    "color": "c8d4ff",
+    "alpha": 0.1,
+    "floor": 150
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      288,
+      102,
+      "fff0c4",
+      0
+     ],
+     [
+      262,
+      102,
+      "fff0c4",
+      0
+     ],
+     [
+      352,
+      102,
+      "fff0c4",
+      0
+     ],
+     [
+      378,
+      102,
+      "fff0c4",
+      0
+     ],
+     [
+      283,
+      103,
+      "fff0c4",
+      0
+     ],
+     [
+      252,
+      103,
+      "fff0c4",
+      0
+     ],
+     [
+      357,
+      103,
+      "fff0c4",
+      0
+     ],
+     [
+      388,
+      103,
+      "fff0c4",
+      0
+     ],
+     [
+      275,
+      104,
+      "fff0c4",
+      0
+     ],
+     [
+      238,
+      104,
+      "fff0c4",
+      0
+     ],
+     [
+      365,
+      104,
+      "fff0c4",
+      0
+     ],
+     [
+      402,
+      104,
+      "fff0c4",
+      0
+     ],
+     [
+      263,
+      106,
+      "fff0c4",
+      0
+     ],
+     [
+      216,
+      106,
+      "fff0c4",
+      0
+     ],
+     [
+      377,
+      106,
+      "fff0c4",
+      0
+     ],
+     [
+      424,
+      106,
+      "fff0c4",
+      0
+     ],
+     [
+      243,
+      106,
+      "fff0c4",
+      1
+     ],
+     [
+      178,
+      106,
+      "fff0c4",
+      1
+     ],
+     [
+      397,
+      106,
+      "fff0c4",
+      1
+     ],
+     [
+      462,
+      106,
+      "fff0c4",
+      1
+     ],
+     [
+      223,
+      14,
+      "fde9b6",
+      1
+     ],
+     [
+      417,
+      14,
+      "fde9b6",
+      1
+     ],
+     [
+      260,
+      46,
+      "fde9b6",
+      1
+     ],
+     [
+      380,
+      46,
+      "fde9b6",
+      1
+     ],
+     [
+      276,
+      61,
+      "fde9b6",
+      1
+     ],
+     [
+      364,
+      61,
+      "fde9b6",
+      1
+     ]
+    ],
+    "rate": 1.2,
+    "min": 0.55
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 24,
+    "rect": [
+     250,
+     40,
+     140,
+     120
+    ],
+    "speed": [
+     1,
+     3
+    ],
+    "color": "d8dcf0"
+   },
+   {
+    "kind": "fauna",
+    "fauna": [
+     {
+      "kind": "barn_owl",
+      "x": 330,
+      "y": 100,
+      "range": 0,
+      "speed": 0.0,
+      "rate": 1.5
+     }
+    ]
+   }
+  ]
+ }
+}

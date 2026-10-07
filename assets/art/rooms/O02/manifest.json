@@ -1,0 +1,655 @@
+{
+ "background": "res://assets/art/rooms/O02/background.png",
+ "width": 800,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/O02/prop-0.png",
+   "anchor": [
+    94,
+    84
+   ],
+   "flag": "notice_limits",
+   "flag_texture": "res://assets/art/rooms/O02/prop-0-notice_limits.png"
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/O02/prop-1.png",
+   "anchor": [
+    58,
+    98
+   ]
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/O02/prop-2.png",
+   "anchor": [
+    54,
+    65
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/O02/prop-3.png",
+   "anchor": [
+    69,
+    56
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/O02/prop-4.png",
+   "anchor": [
+    64,
+    35
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/O02/prop-5.png",
+   "anchor": [
+    11,
+    71
+   ]
+  }
+ },
+ "label_only": [],
+ "overlays": [],
+ "fauna": [
+  {
+   "kind": "loose_page",
+   "x": 120,
+   "y": 250,
+   "fly": 11.0,
+   "rate": 5.0
+  },
+  {
+   "kind": "lamp_moth",
+   "x": 117,
+   "y": 144,
+   "range": 6,
+   "speed": 2.1,
+   "rate": 9.0
+  },
+  {
+   "kind": "umc2_mouse",
+   "x": 700,
+   "y": 149,
+   "range": 26,
+   "speed": 0.35,
+   "rate": 4.0
+  }
+ ],
+ "layers": [
+  {
+   "kind": "blink",
+   "pattern": "110000000",
+   "rate": 2.5,
+   "texture": "res://assets/art/rooms/O02/stir-0.png",
+   "x": 363,
+   "y": 59
+  },
+  {
+   "kind": "blink",
+   "pattern": "000110000",
+   "rate": 2.5,
+   "texture": "res://assets/art/rooms/O02/stir-1.png",
+   "x": 455,
+   "y": 58
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000100",
+   "rate": 2.5,
+   "texture": "res://assets/art/rooms/O02/stir-2.png",
+   "x": 391,
+   "y": 80
+  },
+  {
+   "kind": "blink",
+   "pattern": "1000",
+   "rate": 2.0,
+   "texture": "res://assets/art/rooms/O02/pendulum-0.png",
+   "x": 44,
+   "y": 48
+  },
+  {
+   "kind": "blink",
+   "pattern": "0101",
+   "rate": 2.0,
+   "texture": "res://assets/art/rooms/O02/pendulum-1.png",
+   "x": 44,
+   "y": 48
+  },
+  {
+   "kind": "blink",
+   "pattern": "0010",
+   "rate": 2.0,
+   "texture": "res://assets/art/rooms/O02/pendulum-2.png",
+   "x": 44,
+   "y": 48
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     272,
+     56,
+     "fde9b6",
+     1
+    ],
+    [
+     532,
+     56,
+     "fde9b6",
+     1
+    ],
+    [
+     156,
+     58,
+     "fde9b6",
+     1
+    ],
+    [
+     644,
+     58,
+     "fde9b6",
+     1
+    ],
+    [
+     115,
+     147,
+     "fff0c4",
+     2
+    ]
+   ],
+   "rate": 1.2,
+   "min": 0.55
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 16,
+   "rect": [
+    190,
+    30,
+    420,
+    140
+   ],
+   "speed": [
+    2,
+    1
+   ],
+   "color": "c8d4f0"
+  },
+  {
+   "kind": "particles",
+   "style": "wind",
+   "count": 5,
+   "rect": [
+    40,
+    250,
+    720,
+    190
+   ],
+   "speed": [
+    16,
+    -2
+   ],
+   "color": "c8d4f0"
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/O02/battle-far.png",
+  "layers": [
+   {
+    "kind": "blink",
+    "pattern": "100000000000000000000000",
+    "rate": 3.0,
+    "rects": [
+     [
+      157,
+      54,
+      4,
+      1,
+      "1a120c",
+      0.6
+     ],
+     [
+      157,
+      50,
+      4,
+      3,
+      "e8d89a"
+     ],
+     [
+      157,
+      50,
+      4,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "001000000000000000000000",
+    "rate": 3.0,
+    "rects": [
+     [
+      164,
+      53,
+      4,
+      1,
+      "1a120c",
+      0.6
+     ],
+     [
+      164,
+      49,
+      4,
+      3,
+      "e8d89a"
+     ],
+     [
+      164,
+      49,
+      4,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000011000000000000000000",
+    "rate": 3.0,
+    "rects": [
+     [
+      98,
+      50,
+      5,
+      2,
+      "1a120c",
+      0.6
+     ],
+     [
+      98,
+      45,
+      5,
+      4,
+      "c8d4e4"
+     ],
+     [
+      98,
+      45,
+      5,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000100000000000000000",
+    "rate": 3.0,
+    "rects": [
+     [
+      83,
+      46,
+      6,
+      2,
+      "1a120c",
+      0.6
+     ],
+     [
+      83,
+      41,
+      6,
+      4,
+      "e8d89a"
+     ],
+     [
+      83,
+      41,
+      6,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000001000000000000000",
+    "rate": 3.0,
+    "rects": [
+     [
+      291,
+      77,
+      2,
+      1,
+      "1a120c",
+      0.6
+     ],
+     [
+      291,
+      74,
+      2,
+      2,
+      "e8c8c0"
+     ],
+     [
+      291,
+      74,
+      2,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000011000000000000",
+    "rate": 3.0,
+    "rects": [
+     [
+      198,
+      74,
+      3,
+      1,
+      "1a120c",
+      0.6
+     ],
+     [
+      198,
+      71,
+      3,
+      2,
+      "e8c8c0"
+     ],
+     [
+      198,
+      71,
+      3,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000110000000000",
+    "rate": 3.0,
+    "rects": [
+     [
+      273,
+      77,
+      2,
+      1,
+      "1a120c",
+      0.6
+     ],
+     [
+      273,
+      74,
+      2,
+      2,
+      "f2e6b8"
+     ],
+     [
+      273,
+      74,
+      2,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000001100000000",
+    "rate": 3.0,
+    "rects": [
+     [
+      168,
+      67,
+      4,
+      1,
+      "1a120c",
+      0.6
+     ],
+     [
+      168,
+      63,
+      4,
+      3,
+      "d8e4c8"
+     ],
+     [
+      168,
+      63,
+      4,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000000011000000",
+    "rate": 3.0,
+    "rects": [
+     [
+      202,
+      65,
+      3,
+      1,
+      "1a120c",
+      0.6
+     ],
+     [
+      202,
+      62,
+      3,
+      2,
+      "f2e6b8"
+     ],
+     [
+      202,
+      62,
+      3,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000000000100000",
+    "rate": 3.0,
+    "rects": [
+     [
+      162,
+      65,
+      4,
+      1,
+      "1a120c",
+      0.6
+     ],
+     [
+      162,
+      61,
+      4,
+      3,
+      "e8d89a"
+     ],
+     [
+      162,
+      61,
+      4,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000000000001100",
+    "rate": 3.0,
+    "rects": [
+     [
+      338,
+      77,
+      2,
+      1,
+      "1a120c",
+      0.6
+     ],
+     [
+      338,
+      74,
+      2,
+      2,
+      "d8e4c8"
+     ],
+     [
+      338,
+      74,
+      2,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000000000000010",
+    "rate": 3.0,
+    "rects": [
+     [
+      154,
+      63,
+      4,
+      1,
+      "1a120c",
+      0.6
+     ],
+     [
+      154,
+      59,
+      4,
+      3,
+      "f2e6b8"
+     ],
+     [
+      154,
+      59,
+      4,
+      1,
+      "fff6dc"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "1000100000000000",
+    "rate": 5.0,
+    "texture": "res://assets/art/rooms/O02/battle-ring-0.png",
+    "x": 293,
+    "y": 39
+   },
+   {
+    "kind": "blink",
+    "pattern": "0100010000000000",
+    "rate": 5.0,
+    "texture": "res://assets/art/rooms/O02/battle-ring-1.png",
+    "x": 290,
+    "y": 36
+   },
+   {
+    "kind": "blink",
+    "pattern": "0010001000000000",
+    "rate": 5.0,
+    "texture": "res://assets/art/rooms/O02/battle-ring-2.png",
+    "x": 287,
+    "y": 33
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      261,
+      47,
+      "fde9b6",
+      2
+     ],
+     [
+      339,
+      47,
+      "fde9b6",
+      2
+     ],
+     [
+      243,
+      24,
+      "fde9b6",
+      2
+     ],
+     [
+      357,
+      24,
+      "fde9b6",
+      2
+     ]
+    ],
+    "rate": 1.2,
+    "min": 0.55
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 20,
+    "rect": [
+     330,
+     20,
+     300,
+     140
+    ],
+    "speed": [
+     1,
+     2
+    ],
+    "color": "c8d4f0"
+   },
+   {
+    "kind": "particles",
+    "style": "wind",
+    "count": 6,
+    "rect": [
+     0,
+     118,
+     640,
+     46
+    ],
+    "speed": [
+     34,
+     0
+    ]
+   },
+   {
+    "kind": "fauna",
+    "fauna": [
+     {
+      "kind": "loose_page",
+      "x": 40,
+      "y": 70,
+      "fly": 16.0,
+      "rate": 6.0
+     },
+     {
+      "kind": "loose_page",
+      "x": 360,
+      "y": 112,
+      "fly": 12.0,
+      "rate": 5.0
+     }
+    ]
+   }
+  ]
+ }
+}

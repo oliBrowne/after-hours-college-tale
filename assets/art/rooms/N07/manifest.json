@@ -1,0 +1,637 @@
+{
+ "background": "res://assets/art/rooms/N07/background.png",
+ "width": 800,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/N07/prop-0.png",
+   "anchor": [
+    94,
+    80
+   ]
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/N07/prop-1.png",
+   "anchor": [
+    63,
+    35
+   ]
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/N07/prop-2.png",
+   "anchor": [
+    63,
+    35
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/N07/prop-3.png",
+   "anchor": [
+    54,
+    98
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/N07/prop-4.png",
+   "anchor": [
+    54,
+    54
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/N07/prop-5.png",
+   "anchor": [
+    13,
+    70
+   ]
+  }
+ },
+ "label_only": [],
+ "overlays": [
+  {
+   "texture": "res://assets/art/rooms/N07/rope-closed.png",
+   "x": 744,
+   "y": 376,
+   "flag": "playback_heard",
+   "when": false
+  },
+  {
+   "texture": "res://assets/art/rooms/N07/rope-open.png",
+   "x": 744,
+   "y": 376,
+   "flag": "playback_heard",
+   "when": true
+  }
+ ],
+ "fauna": [
+  {
+   "kind": "lamp_moth",
+   "x": 135,
+   "y": 323,
+   "range": 6,
+   "speed": 2.0,
+   "rate": 9.0
+  }
+ ],
+ "leaves": [],
+ "layers": [
+  {
+   "kind": "blink",
+   "pattern": "100000000000",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-0.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "010000000000",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-1.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "001000000000",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-2.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "000100000000",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-3.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "000010000000",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-4.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "000001000000",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-5.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000100000",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-6.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000010000",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-7.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000001000",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-8.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000000100",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-9.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000000010",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-10.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000000001",
+   "rate": 10.0,
+   "texture": "res://assets/art/rooms/N07/wave-11.png",
+   "x": 311,
+   "y": 42
+  },
+  {
+   "kind": "blink",
+   "pattern": "100000",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-0.png",
+   "x": 322,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "001000",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-0.png",
+   "x": 432,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "010000",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-1.png",
+   "x": 322,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "000100",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-1.png",
+   "x": 432,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "001000",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-2.png",
+   "x": 322,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "000010",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-2.png",
+   "x": 432,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "000100",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-3.png",
+   "x": 322,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "000001",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-3.png",
+   "x": 432,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "000010",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-4.png",
+   "x": 322,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "100000",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-4.png",
+   "x": 432,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "000001",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-5.png",
+   "x": 322,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "010000",
+   "rate": 6.0,
+   "texture": "res://assets/art/rooms/N07/vu-5.png",
+   "x": 432,
+   "y": 118
+  },
+  {
+   "kind": "blink",
+   "pattern": "100",
+   "rate": 5.0,
+   "texture": "res://assets/art/rooms/N07/reel-0-0.png",
+   "x": 46,
+   "y": 48
+  },
+  {
+   "kind": "blink",
+   "pattern": "010",
+   "rate": 5.0,
+   "texture": "res://assets/art/rooms/N07/reel-0-1.png",
+   "x": 46,
+   "y": 48
+  },
+  {
+   "kind": "blink",
+   "pattern": "001",
+   "rate": 5.0,
+   "texture": "res://assets/art/rooms/N07/reel-0-2.png",
+   "x": 46,
+   "y": 48
+  },
+  {
+   "kind": "blink",
+   "pattern": "100",
+   "rate": 5.0,
+   "texture": "res://assets/art/rooms/N07/reel-1-0.png",
+   "x": 97,
+   "y": 48
+  },
+  {
+   "kind": "blink",
+   "pattern": "010",
+   "rate": 5.0,
+   "texture": "res://assets/art/rooms/N07/reel-1-1.png",
+   "x": 97,
+   "y": 48
+  },
+  {
+   "kind": "blink",
+   "pattern": "001",
+   "rate": 5.0,
+   "texture": "res://assets/art/rooms/N07/reel-1-2.png",
+   "x": 97,
+   "y": 48
+  },
+  {
+   "kind": "blink",
+   "pattern": "1010001011000100",
+   "rate": 8.0,
+   "texture": "res://assets/art/rooms/N07/woofer-push.png",
+   "x": 248,
+   "y": 101
+  },
+  {
+   "kind": "blink",
+   "pattern": "1010001011000100",
+   "rate": 8.0,
+   "texture": "res://assets/art/rooms/N07/woofer-push.png",
+   "x": 524,
+   "y": 101
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     135,
+     326,
+     "fff0c4",
+     2
+    ],
+    [
+     314,
+     101,
+     "7ad08a",
+     0
+    ],
+    [
+     364,
+     119,
+     "7ad08a",
+     0
+    ],
+    [
+     490,
+     119,
+     "7ad08a",
+     0
+    ]
+   ],
+   "rate": 1.2,
+   "min": 0.55
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 14,
+   "rect": [
+    300,
+    40,
+    200,
+    90
+   ],
+   "speed": [
+    1,
+    2
+   ],
+   "color": "c8f0d0"
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/N07/battle-far.png",
+  "layers": [
+   {
+    "kind": "blink",
+    "pattern": "100000000000",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-0.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "010000000000",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-1.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "001000000000",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-2.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "000100000000",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-3.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "000010000000",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-4.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "000001000000",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-5.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000100000",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-6.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000010000",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-7.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000001000",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-8.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000100",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-9.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000010",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-10.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000001",
+    "rate": 10.0,
+    "texture": "res://assets/art/rooms/N07/battle-wave-11.png",
+    "x": 244,
+    "y": 27
+   },
+   {
+    "kind": "blink",
+    "pattern": "100000",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-0.png",
+    "x": 263,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "000100",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-0.png",
+    "x": 318,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "010000",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-1.png",
+    "x": 263,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "000010",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-1.png",
+    "x": 318,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "001000",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-2.png",
+    "x": 263,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "000001",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-2.png",
+    "x": 318,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "000100",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-3.png",
+    "x": 263,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "100000",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-3.png",
+    "x": 318,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "000010",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-4.png",
+    "x": 263,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "010000",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-4.png",
+    "x": 318,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "000001",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-5.png",
+    "x": 263,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "001000",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/N07/battle-vu-5.png",
+    "x": 318,
+    "y": 98
+   },
+   {
+    "kind": "blink",
+    "pattern": "1010001011000100",
+    "rate": 8.0,
+    "texture": "res://assets/art/rooms/N07/battle-woofer.png",
+    "x": 195,
+    "y": 85
+   },
+   {
+    "kind": "blink",
+    "pattern": "1010001011000100",
+    "rate": 8.0,
+    "texture": "res://assets/art/rooms/N07/battle-woofer.png",
+    "x": 391,
+    "y": 85
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      247,
+      80,
+      "7ad08a",
+      0
+     ]
+    ],
+    "rate": 1.1,
+    "min": 0.6
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 22,
+    "rect": [
+     217,
+     21,
+     174,
+     90
+    ],
+    "speed": [
+     1,
+     2
+    ],
+    "color": "c8f0d0"
+   },
+   {
+    "kind": "fauna",
+    "fauna": [
+     {
+      "kind": "lamp_moth",
+      "x": 304,
+      "y": -1,
+      "range": 8,
+      "speed": 2.0,
+      "rate": 9.0
+     }
+    ]
+   }
+  ]
+ }
+}

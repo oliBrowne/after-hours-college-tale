@@ -1,0 +1,9612 @@
+{
+  "U01": {
+    "name": "Broadway / last light",
+    "cue": "arrival",
+    "objects": [
+      {
+        "id": "jakerson",
+        "name": "Jakerson / student guide",
+        "x": 132,
+        "y": 249,
+        "kind": "talk",
+        "sprite": "npc-jakerson",
+        "hit_rect": [
+          -20,
+          -60,
+          40,
+          64
+        ],
+        "requires": [],
+        "lines": [
+          [
+            "Jakerson",
+            "One thing at a time.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "bus",
+        "name": "Last bus notice",
+        "x": 426,
+        "y": 214,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "9:20. The last bus home. Mom asked me to call when I got on.",
+            "concern"
+          ],
+          [
+            "Jules",
+            "Eight minutes to return one mixer. No extra favors. That is the plan.",
+            "neutral"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "bike",
+        "name": "Bicycle / Eli's repair tag",
+        "x": 510,
+        "y": 285,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "Eli fixed the brake for free. I owe him a coffee, and a brake that stays fixed.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "mara",
+        "name": "Mara / mural painter",
+        "x": 300,
+        "y": 282,
+        "kind": "talk",
+        "sprite": "npc-mara",
+        "lines": [
+          [
+            "Mara",
+            "That bag looks heavier than your future. Are you returning something or accepting a quest?",
+            "warm"
+          ],
+          [
+            "Jules",
+            "A mixer. I am not accepting the other thing.",
+            "neutral"
+          ],
+          [
+            "Mara",
+            "The UMC is through the underpass, past the bus shelter. Follow the arrows. Do not let the club poster negotiate.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "umc_path",
+        "name": "Path under Broadway to the UMC",
+        "x": 588,
+        "y": 280,
+        "kind": "door",
+        "to": "U08",
+        "spawn": [
+          90,
+          272
+        ],
+        "requires": []
+      }
+    ],
+    "id": "U01",
+    "walk_bounds": [
+      20,
+      148,
+      600,
+      168
+    ],
+    "blocks": [
+      {
+        "x": 411.0,
+        "y": 198,
+        "w": 30,
+        "h": 6
+      },
+      {
+        "x": 220.0,
+        "y": 195,
+        "w": 112,
+        "h": 40
+      },
+      {
+        "x": 318.0,
+        "y": 262,
+        "w": 72,
+        "h": 12
+      },
+      {
+        "x": 480.0,
+        "y": 275,
+        "w": 60,
+        "h": 10
+      },
+      {
+        "x": 368.0,
+        "y": 240,
+        "w": 92,
+        "h": 14
+      },
+      {
+        "x": 141.0,
+        "y": 243,
+        "w": 18,
+        "h": 8
+      },
+      {
+        "x": 577.5,
+        "y": 158,
+        "w": 25,
+        "h": 14
+      }
+    ],
+    "dimensions": [
+      640,
+      360
+    ],
+    "entry": [
+      96,
+      258
+    ],
+    "placements": [
+      {
+        "kind": "shelter",
+        "x": 420,
+        "y": 216,
+        "w": 138,
+        "h": 73,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "notice",
+        "x": 426,
+        "y": 204,
+        "w": 30,
+        "h": 40,
+        "depth": 6,
+        "object": "bus",
+        "label": "LAST BUS",
+        "anchor_offset": [
+          0,
+          10
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 276,
+        "y": 235,
+        "w": 112,
+        "h": 36,
+        "depth": 40,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "mural",
+        "x": 354,
+        "y": 274,
+        "w": 72,
+        "h": 61,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bike",
+        "x": 510,
+        "y": 285,
+        "w": 60,
+        "h": 35,
+        "depth": 10,
+        "object": "bike",
+        "label": "ELI'S BIKE",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 414,
+        "y": 254,
+        "w": 92,
+        "h": 34,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 588,
+        "y": 280,
+        "w": 42,
+        "h": 30,
+        "depth": 0,
+        "object": "umc_path",
+        "label": "UNDERPASS >",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 150,
+        "y": 251,
+        "w": 18,
+        "h": 66,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tree",
+        "x": 590,
+        "y": 172,
+        "w": 25,
+        "h": 96,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 184,
+        "y": 270,
+        "w": 18,
+        "h": 32,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "U02": {
+    "name": "UMC terrace / the doors are open",
+    "cue": "campus",
+    "objects": [
+      {
+        "id": "main_entrance",
+        "name": "Enter the UMC",
+        "x": 320,
+        "y": 152,
+        "kind": "door",
+        "to": "U03",
+        "spawn": [
+          360,
+          402
+        ],
+        "requires": []
+      },
+      {
+        "id": "outdoor_return",
+        "name": "Back through the underpass",
+        "x": 65,
+        "y": 292,
+        "kind": "door",
+        "to": "U08",
+        "spawn": [
+          552,
+          272
+        ],
+        "requires": []
+      },
+      {
+        "id": "mags",
+        "name": "Mags / night porter",
+        "x": 222,
+        "y": 197,
+        "kind": "talk",
+        "sprite": "mags",
+        "lines": [
+          [
+            "Mags",
+            "Arts night. Last Light. Everyone brings something unfinished; I bring the mop.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "I just need to return Imani's mixer and leave.",
+            "neutral"
+          ],
+          [
+            "Mags",
+            "Club room, left of the atrium. Returning a thing is a complete task. Remember that.",
+            "warm"
+          ],
+          [
+            "Mags",
+            "If the building asks for your entire future, try asking for a receipt.",
+            "neutral"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "eli",
+        "name": "Eli / bike mechanic",
+        "x": 481,
+        "y": 278,
+        "kind": "talk",
+        "sprite": "npc-eli",
+        "lines": [
+          [
+            "Eli",
+            "The new brake holds. Your backpack, on the other hand, needs a structural engineer.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "There is a mixer in it.",
+            "neutral"
+          ],
+          [
+            "Eli",
+            "Good. If the building starts singing, you can ask it to use headphones.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "squirrel",
+        "name": "Squirrel with an impressive schedule",
+        "x": 180,
+        "y": 270,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "It has one acorn and no outstanding commitments. I should learn from it.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      }
+    ],
+    "id": "U02",
+    "walk_bounds": [
+      20,
+      122,
+      600,
+      194
+    ],
+    "blocks": [
+      {
+        "x": 293.0,
+        "y": 206,
+        "w": 144,
+        "h": 42
+      },
+      {
+        "x": 138.0,
+        "y": 209,
+        "w": 54,
+        "h": 18
+      },
+      {
+        "x": 463.0,
+        "y": 214,
+        "w": 86,
+        "h": 20
+      },
+      {
+        "x": 500.0,
+        "y": 292,
+        "w": 96,
+        "h": 14
+      },
+      {
+        "x": 257.0,
+        "y": 175,
+        "w": 18,
+        "h": 8
+      },
+      {
+        "x": 367.0,
+        "y": 175,
+        "w": 18,
+        "h": 8
+      }
+    ],
+    "dimensions": [
+      640,
+      360
+    ],
+    "entry": [
+      108,
+      278
+    ],
+    "placements": [
+      {
+        "kind": "door",
+        "x": 320,
+        "y": 152,
+        "w": 78,
+        "h": 65,
+        "depth": 0,
+        "object": "main_entrance",
+        "label": "UMC",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 65,
+        "y": 292,
+        "w": 38,
+        "h": 30,
+        "depth": 0,
+        "object": "outdoor_return",
+        "label": "< UNDERPASS",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 365,
+        "y": 248,
+        "w": 144,
+        "h": 43,
+        "depth": 42,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "cart",
+        "x": 165,
+        "y": 227,
+        "w": 54,
+        "h": 42,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "workbench",
+        "x": 506,
+        "y": 234,
+        "w": 86,
+        "h": 43,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 548,
+        "y": 306,
+        "w": 96,
+        "h": 34,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 266,
+        "y": 183,
+        "w": 18,
+        "h": 62,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 376,
+        "y": 183,
+        "w": 18,
+        "h": 62,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "U03": {
+    "name": "UMC atrium / Last Light",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "clubroom",
+        "name": "Club room / return the mixer",
+        "x": 90,
+        "y": 192,
+        "kind": "door",
+        "to": "U04",
+        "spawn": [
+          128,
+          400
+        ],
+        "requires": []
+      },
+      {
+        "id": "terrace",
+        "name": "Return to terrace",
+        "x": 360,
+        "y": 436,
+        "kind": "door",
+        "to": "U02",
+        "spawn": [
+          320,
+          191
+        ],
+        "requires": []
+      },
+      {
+        "id": "stairs",
+        "name": "Repair landing / downstairs",
+        "x": 702,
+        "y": 159,
+        "kind": "door",
+        "to": "U05",
+        "spawn": [
+          110,
+          273
+        ],
+        "requires": [
+          "flyer_resolution"
+        ]
+      },
+      {
+        "id": "directory",
+        "name": "UMC room directory",
+        "x": 625,
+        "y": 199,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "CLUB ROOM: left door. REPAIR LANDING: stairs. THE CONNECTION: downstairs.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "LOST PROPERTY: past the lanes. Somebody drew a question mark next to it.",
+            "concern"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "booth",
+        "name": "NEXT YEAR / voice booth",
+        "x": 382,
+        "y": 252,
+        "kind": "booth",
+        "requires": []
+      },
+      {
+        "id": "lamp",
+        "name": "Work lamp / rest and save",
+        "x": 615,
+        "y": 368,
+        "kind": "save",
+        "requires": []
+      },
+      {
+        "id": "todd",
+        "name": "Todd Saliman / listening booth",
+        "x": 622,
+        "y": 284,
+        "kind": "talk",
+        "sprite": "npc-todd",
+        "lines": [
+          [
+            "Todd Saliman",
+            "The finite-plan desk is in Old Main. This hall only has the directory.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "One building at a time.",
+            "neutral"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "farrand_gate",
+        "name": "Farrand east gate",
+        "x": 730,
+        "y": 385,
+        "kind": "door",
+        "to": "F01",
+        "spawn": [
+          120,
+          400
+        ],
+        "requires": [
+          "claim_resolution",
+          "walt_joined"
+        ]
+      }
+    ],
+    "id": "U03",
+    "walk_bounds": [
+      20,
+      118,
+      760,
+      338
+    ],
+    "blocks": [
+      {
+        "x": 343.0,
+        "y": 218,
+        "w": 78,
+        "h": 30
+      },
+      {
+        "x": 149.0,
+        "y": 316,
+        "w": 102,
+        "h": 22
+      },
+      {
+        "x": 597.0,
+        "y": 176,
+        "w": 56,
+        "h": 8
+      },
+      {
+        "x": 652.0,
+        "y": 357,
+        "w": 94,
+        "h": 16
+      },
+      {
+        "x": 606.0,
+        "y": 360,
+        "w": 18,
+        "h": 8
+      },
+      {
+        "x": 136.0,
+        "y": 196,
+        "w": 50,
+        "h": 26
+      },
+      {
+        "x": 511.0,
+        "y": 181,
+        "w": 48,
+        "h": 26
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "entry": [
+      360,
+      402
+    ],
+    "placements": [
+      {
+        "kind": "door",
+        "x": 90,
+        "y": 192,
+        "w": 48,
+        "h": 65,
+        "depth": 0,
+        "object": "clubroom",
+        "label": "CLUB <",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 360,
+        "y": 436,
+        "w": 58,
+        "h": 30,
+        "depth": 0,
+        "object": "terrace",
+        "label": "TERRACE",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "stairs",
+        "x": 702,
+        "y": 159,
+        "w": 76,
+        "h": 48,
+        "depth": 0,
+        "object": "stairs",
+        "label": "REPAIR >",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "requires": [
+          "booth_seen"
+        ]
+      },
+      {
+        "kind": "booth",
+        "x": 382,
+        "y": 248,
+        "w": 78,
+        "h": 106,
+        "depth": 30,
+        "object": "booth",
+        "label": "NEXT YEAR",
+        "anchor_offset": [
+          0,
+          4
+        ]
+      },
+      {
+        "kind": "desk",
+        "x": 200,
+        "y": 338,
+        "w": 102,
+        "h": 46,
+        "depth": 22,
+        "object": null,
+        "label": "LAST LIGHT",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "sign",
+        "x": 625,
+        "y": 309,
+        "w": 160,
+        "h": 36,
+        "depth": 8,
+        "object": "directory",
+        "label": "CLUB < / REPAIR >",
+        "anchor_offset": [
+          0,
+          15
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 699,
+        "y": 373,
+        "w": 94,
+        "h": 37,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 615,
+        "y": 368,
+        "w": 18,
+        "h": 66,
+        "depth": 8,
+        "object": "lamp",
+        "label": "REST / SAVE",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 161,
+        "y": 222,
+        "w": 50,
+        "h": 38,
+        "depth": 26,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 535,
+        "y": 207,
+        "w": 48,
+        "h": 38,
+        "depth": 26,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 730,
+        "y": 385,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "farrand_gate",
+        "label": "Farrand east gate",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "U04": {
+    "name": "Club room / one more favor",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "atrium",
+        "name": "Back to the atrium",
+        "x": 80,
+        "y": 423,
+        "kind": "door",
+        "to": "U03",
+        "spawn": [
+          112,
+          222
+        ],
+        "requires": []
+      },
+      {
+        "id": "connection_shortcut",
+        "name": "Connection shortcut",
+        "x": 722,
+        "y": 177,
+        "kind": "door",
+        "to": "U06",
+        "spawn": [
+          123,
+          215
+        ],
+        "requires": [
+          "cal_key_received"
+        ]
+      },
+      {
+        "id": "imani",
+        "name": "Imani / the borrowed mixer",
+        "x": 170,
+        "y": 329,
+        "kind": "talk",
+        "sprite": "imani",
+        "requires": []
+      },
+      {
+        "id": "flyer",
+        "name": "Flyerer / impossible invitation",
+        "x": 650,
+        "y": 312,
+        "kind": "battle",
+        "sprite": "flyer",
+        "requires": []
+      },
+      {
+        "id": "invitation",
+        "name": "An unfinished-reading club",
+        "x": 301,
+        "y": 263,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "We read things nobody had time to finish. One page is enough.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "Maybe I can understand that without joining twelve committees.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "stage",
+        "name": "Stage cue sheet",
+        "x": 390,
+        "y": 232,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Imani",
+            "I made the evening sound enormous because I was scared nobody would come.",
+            "concern"
+          ],
+          [
+            "Jules",
+            "Small is allowed. You can put that on the poster.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      }
+    ],
+    "id": "U04",
+    "walk_bounds": [
+      20,
+      128,
+      760,
+      328
+    ],
+    "blocks": [
+      {
+        "x": 147.0,
+        "y": 188,
+        "w": 486,
+        "h": 18
+      },
+      {
+        "x": 172.0,
+        "y": 290,
+        "w": 112,
+        "h": 22
+      },
+      {
+        "x": 270.0,
+        "y": 243,
+        "w": 62,
+        "h": 18
+      },
+      {
+        "x": 340.0,
+        "y": 304,
+        "w": 62,
+        "h": 18
+      },
+      {
+        "x": 460.0,
+        "y": 304,
+        "w": 62,
+        "h": 18
+      },
+      {
+        "x": 340.0,
+        "y": 371,
+        "w": 62,
+        "h": 18
+      },
+      {
+        "x": 460.0,
+        "y": 371,
+        "w": 62,
+        "h": 18
+      },
+      {
+        "x": 581.0,
+        "y": 377,
+        "w": 18,
+        "h": 8
+      },
+      {
+        "x": 592.5,
+        "y": 160,
+        "w": 37,
+        "h": 22
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "entry": [
+      128,
+      400
+    ],
+    "placements": [
+      {
+        "kind": "threshold",
+        "x": 80,
+        "y": 423,
+        "w": 52,
+        "h": 30,
+        "depth": 0,
+        "object": "atrium",
+        "label": "ATRIUM",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "door",
+        "x": 722,
+        "y": 177,
+        "w": 46,
+        "h": 60,
+        "depth": 0,
+        "object": "connection_shortcut",
+        "label": "SERVICE",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "stage",
+        "x": 390,
+        "y": 206,
+        "w": 486,
+        "h": 82,
+        "depth": 18,
+        "object": "stage",
+        "label": "UNFINISHED STAGE",
+        "anchor_offset": [
+          0,
+          26
+        ]
+      },
+      {
+        "kind": "step",
+        "x": 113,
+        "y": 202,
+        "w": 42,
+        "h": 32,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "mixer",
+        "x": 228,
+        "y": 312,
+        "w": 112,
+        "h": 48,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 301,
+        "y": 261,
+        "w": 62,
+        "h": 35,
+        "depth": 18,
+        "object": "invitation",
+        "label": "ONE INVITATION",
+        "anchor_offset": [
+          0,
+          2
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 371,
+        "y": 322,
+        "w": 62,
+        "h": 38,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 491,
+        "y": 322,
+        "w": 62,
+        "h": 38,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 371,
+        "y": 389,
+        "w": 62,
+        "h": 38,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 491,
+        "y": 389,
+        "w": 62,
+        "h": 38,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 590,
+        "y": 385,
+        "w": 18,
+        "h": 62,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "speaker",
+        "x": 611,
+        "y": 182,
+        "w": 37,
+        "h": 66,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "flyer_note",
+        "x": 676,
+        "y": 320,
+        "w": 30,
+        "h": 18,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "U05": {
+    "name": "Repair landing / down is a direction",
+    "cue": "campus",
+    "objects": [
+      {
+        "id": "connection_stairs",
+        "name": "Descend to The Connection",
+        "x": 570,
+        "y": 171,
+        "kind": "door",
+        "to": "U06",
+        "spawn": [
+          320,
+          449
+        ],
+        "requires": [
+          "cal_key_received"
+        ]
+      },
+      {
+        "id": "atrium",
+        "name": "Back upstairs to the atrium",
+        "x": 68,
+        "y": 294,
+        "kind": "door",
+        "to": "U03",
+        "spawn": [
+          673,
+          192
+        ],
+        "requires": []
+      },
+      {
+        "id": "cal",
+        "name": "Cal / a sensible repair plan",
+        "x": 450,
+        "y": 267,
+        "kind": "talk",
+        "sprite": "cal",
+        "requires": []
+      },
+      {
+        "id": "fuseboard",
+        "name": "A humming maintenance panel",
+        "x": 429,
+        "y": 215,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "A fuse labeled TOMORROW is lit. Yesterday is missing.",
+            "neutral"
+          ],
+          [
+            "Cal",
+            "Do not pull it. First we find what it powers.",
+            "neutral"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "mags",
+        "name": "Mags / spare keys",
+        "x": 98,
+        "y": 182,
+        "kind": "talk",
+        "sprite": "mags",
+        "lines": [
+          [
+            "Mags",
+            "Lost property has been returning things nobody remembers losing.",
+            "neutral"
+          ],
+          [
+            "Mags",
+            "Take Cal. He knows which noises are machinery and which are opinions.",
+            "concern"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "mags_checklist",
+        "name": "Mags's checklist",
+        "x": 100,
+        "y": 246,
+        "kind": "inspect",
+        "requires": []
+      }
+    ],
+    "id": "U05",
+    "walk_bounds": [
+      20,
+      128,
+      600,
+      188
+    ],
+    "blocks": [
+      {
+        "x": 144.0,
+        "y": 158,
+        "w": 240,
+        "h": 58
+      },
+      {
+        "x": 427.0,
+        "y": 206,
+        "w": 86,
+        "h": 22
+      },
+      {
+        "x": 407.5,
+        "y": 199,
+        "w": 43,
+        "h": 10
+      },
+      {
+        "x": 75.5,
+        "y": 214,
+        "w": 49,
+        "h": 16
+      },
+      {
+        "x": 533.0,
+        "y": 279,
+        "w": 18,
+        "h": 8
+      }
+    ],
+    "dimensions": [
+      640,
+      360
+    ],
+    "entry": [
+      110,
+      273
+    ],
+    "placements": [
+      {
+        "kind": "stairs",
+        "x": 68,
+        "y": 294,
+        "w": 52,
+        "h": 45,
+        "depth": 0,
+        "object": "atrium",
+        "label": "UP / ATRIUM",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "stairs",
+        "x": 570,
+        "y": 171,
+        "w": 67,
+        "h": 45,
+        "depth": 0,
+        "object": "connection_stairs",
+        "label": "DOWN / LANES",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "rail",
+        "x": 264,
+        "y": 216,
+        "w": 240,
+        "h": 54,
+        "depth": 58,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "workbench",
+        "x": 470,
+        "y": 228,
+        "w": 86,
+        "h": 46,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "panel",
+        "x": 429,
+        "y": 209,
+        "w": 43,
+        "h": 64,
+        "depth": 10,
+        "object": "fuseboard",
+        "label": "ACCESS PANEL",
+        "anchor_offset": [
+          0,
+          6
+        ]
+      },
+      {
+        "kind": "cart",
+        "x": 100,
+        "y": 230,
+        "w": 49,
+        "h": 40,
+        "depth": 16,
+        "object": "mags_checklist",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 542,
+        "y": 287,
+        "w": 18,
+        "h": 59,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "U06": {
+    "name": "The Connection / after closing",
+    "cue": "campus",
+    "objects": [
+      {
+        "id": "atrium",
+        "name": "Repair stairs / return upstairs",
+        "x": 320,
+        "y": 483,
+        "kind": "door",
+        "to": "U05",
+        "spawn": [
+          540,
+          202
+        ],
+        "requires": []
+      },
+      {
+        "id": "lost_property",
+        "name": "Lost property / the voice in the wall",
+        "x": 880,
+        "y": 211,
+        "kind": "door",
+        "to": "U07",
+        "spawn": [
+          360,
+          405
+        ],
+        "requires": [
+          "cal_key_received"
+        ]
+      },
+      {
+        "id": "deion",
+        "name": "Deion Sanders / a clean handoff",
+        "x": 787,
+        "y": 369,
+        "kind": "challenge",
+        "sprite": "npc-deion",
+        "lines": [
+          [
+            "Deion Sanders",
+            "You can sprint forever, or you can hand something to a teammate. Which one gets you home?",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "Is this advice or a drill?",
+            "neutral"
+          ],
+          [
+            "Deion Sanders",
+            "Both. Jump the low hurdles. Duck the high ones. Then take a break.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "pinpal",
+        "name": "Pin Pal / return service",
+        "x": 621,
+        "y": 335,
+        "kind": "battle",
+        "requires": []
+      },
+      {
+        "id": "mara",
+        "name": "Mara / a familiar face",
+        "x": 569,
+        "y": 472,
+        "kind": "talk",
+        "sprite": "npc-mara",
+        "lines": [
+          [
+            "Mara",
+            "The mural followed me down the stairs. Very inconsiderate of a two-dimensional object.",
+            "neutral"
+          ],
+          [
+            "Mara",
+            "Listen: the squeak beyond that door is trying to say somebody's name.",
+            "concern"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "lanes",
+        "name": "Bowling lanes / rolling stars",
+        "x": 565,
+        "y": 344,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Cal",
+            "The ball returns are working. The pins are refusing to be scored.",
+            "neutral"
+          ],
+          [
+            "Imani",
+            "For once, I support a machine with a boundary.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "scorecard",
+        "name": "Club scorecard / one round is enough",
+        "x": 270,
+        "y": 424,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "A scorecard asks for a partner, not a perfect score. Someone circled ONE ROUND.",
+            "neutral"
+          ],
+          [
+            "Imani",
+            "A promise with an ending. Pin Pal could use one of those.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "scoreboard",
+        "name": "Next-up board / names before numbers",
+        "x": 472,
+        "y": 359,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "The board lists people, then refuses to rank them.",
+            "neutral"
+          ],
+          [
+            "Imani",
+            "Pin Pal wants a practice partner. One round can be a complete promise.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "ball_return",
+        "name": "Ball return / the same request",
+        "x": 402,
+        "y": 361,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Cal",
+            "The paddle works. Pin Pal keeps sending the same ball back.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "We should ask what one round means before agreeing to play forever.",
+            "concern"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "club_service",
+        "name": "Club service stairs",
+        "x": 92,
+        "y": 191,
+        "kind": "door",
+        "to": "U04",
+        "spawn": [
+          680,
+          210
+        ],
+        "requires": [
+          "cal_key_received"
+        ]
+      },
+      {
+        "id": "arcade_button",
+        "name": "Arcade / stubborn button",
+        "x": 715,
+        "y": 318,
+        "kind": "inspect",
+        "requires": []
+      }
+    ],
+    "id": "U06",
+    "walk_bounds": [
+      20,
+      148,
+      920,
+      360
+    ],
+    "blocks": [
+      {
+        "x": 163,
+        "y": 150,
+        "w": 420,
+        "h": 169
+      },
+      {
+        "x": 101.0,
+        "y": 403,
+        "w": 98,
+        "h": 18
+      },
+      {
+        "x": 426.0,
+        "y": 413,
+        "w": 108,
+        "h": 18
+      },
+      {
+        "x": 235.0,
+        "y": 403,
+        "w": 70,
+        "h": 18
+      },
+      {
+        "x": 436.0,
+        "y": 333,
+        "w": 72,
+        "h": 10
+      },
+      {
+        "x": 382.0,
+        "y": 329,
+        "w": 40,
+        "h": 18
+      },
+      {
+        "x": 221.0,
+        "y": 325,
+        "w": 40,
+        "h": 18
+      },
+      {
+        "x": 507.0,
+        "y": 325,
+        "w": 40,
+        "h": 18
+      },
+      {
+        "x": 694.0,
+        "y": 266,
+        "w": 42,
+        "h": 26
+      },
+      {
+        "x": 755.0,
+        "y": 266,
+        "w": 42,
+        "h": 26
+      },
+      {
+        "x": 816.0,
+        "y": 266,
+        "w": 42,
+        "h": 26
+      },
+      {
+        "x": 802.0,
+        "y": 402,
+        "w": 94,
+        "h": 16
+      },
+      {
+        "x": 700.0,
+        "y": 446,
+        "w": 96,
+        "h": 18
+      },
+      {
+        "x": 63.0,
+        "y": 382,
+        "w": 18,
+        "h": 8
+      },
+      {
+        "x": 904.0,
+        "y": 385,
+        "w": 18,
+        "h": 8
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "entry": [
+      320,
+      449
+    ],
+    "placements": [
+      {
+        "kind": "stairs",
+        "x": 320,
+        "y": 483,
+        "w": 60,
+        "h": 48,
+        "depth": 0,
+        "object": "atrium",
+        "label": "REPAIR / UP",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "door",
+        "x": 880,
+        "y": 211,
+        "w": 52,
+        "h": 65,
+        "depth": 0,
+        "object": "lost_property",
+        "label": "LOST PROPERTY",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "door",
+        "x": 92,
+        "y": 191,
+        "w": 50,
+        "h": 61,
+        "depth": 0,
+        "object": "club_service",
+        "label": "CLUB SERVICE",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 150,
+        "y": 421,
+        "w": 98,
+        "h": 35,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 480,
+        "y": 431,
+        "w": 108,
+        "h": 35,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 270,
+        "y": 421,
+        "w": 70,
+        "h": 35,
+        "depth": 18,
+        "object": "scorecard",
+        "label": "ONE ROUND",
+        "anchor_offset": [
+          0,
+          3
+        ]
+      },
+      {
+        "kind": "scoreboard",
+        "x": 472,
+        "y": 343,
+        "w": 72,
+        "h": 51,
+        "depth": 10,
+        "object": "scoreboard",
+        "label": "NEXT UP",
+        "anchor_offset": [
+          0,
+          16
+        ]
+      },
+      {
+        "kind": "return",
+        "x": 402,
+        "y": 347,
+        "w": 40,
+        "h": 42,
+        "depth": 18,
+        "object": "ball_return",
+        "label": "BALL RETURN",
+        "anchor_offset": [
+          0,
+          14
+        ]
+      },
+      {
+        "kind": "return",
+        "x": 241,
+        "y": 343,
+        "w": 40,
+        "h": 42,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "return",
+        "x": 527,
+        "y": 343,
+        "w": 40,
+        "h": 42,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "arcade",
+        "x": 715,
+        "y": 292,
+        "w": 42,
+        "h": 83,
+        "depth": 26,
+        "object": "arcade_button",
+        "label": "",
+        "anchor_offset": [
+          0,
+          26
+        ]
+      },
+      {
+        "kind": "arcade",
+        "x": 776,
+        "y": 292,
+        "w": 42,
+        "h": 83,
+        "depth": 26,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "arcade",
+        "x": 837,
+        "y": 292,
+        "w": 42,
+        "h": 83,
+        "depth": 26,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 849,
+        "y": 418,
+        "w": 94,
+        "h": 35,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 748,
+        "y": 464,
+        "w": 96,
+        "h": 35,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "sign",
+        "x": 626,
+        "y": 420,
+        "w": 122,
+        "h": 27,
+        "depth": 0,
+        "object": null,
+        "label": "LOST PROPERTY >",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 72,
+        "y": 390,
+        "w": 18,
+        "h": 65,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 913,
+        "y": 393,
+        "w": 18,
+        "h": 65,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": [
+      {
+        "x": 163,
+        "y": 150,
+        "w": 420,
+        "h": 169
+      }
+    ]
+  },
+  "U07": {
+    "name": "Lost property / who wants this back?",
+    "cue": "claim",
+    "objects": [
+      {
+        "id": "connection",
+        "name": "Back to The Connection",
+        "x": 360,
+        "y": 436,
+        "kind": "door",
+        "to": "U06",
+        "spawn": [
+          849,
+          239
+        ],
+        "requires": []
+      },
+      {
+        "id": "claim",
+        "name": "CLAIM / the coat rack",
+        "x": 660,
+        "y": 212,
+        "kind": "battle",
+        "requires": []
+      },
+      {
+        "id": "pip",
+        "name": "Pip / glove or departure note",
+        "x": 150,
+        "y": 259,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Pip",
+            "You found me! I was worried they would file me under LEFT, forever.",
+            "concern"
+          ],
+          [
+            "Jules",
+            "Do you have an owner?",
+            "neutral"
+          ],
+          [
+            "Pip",
+            "Do I need one to come along?",
+            "warm"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "lamp",
+        "name": "Warm shelf light / rest and save",
+        "x": 650,
+        "y": 371,
+        "kind": "save",
+        "requires": []
+      },
+      {
+        "id": "spool",
+        "name": "Ticket spool / changed by the encounter",
+        "x": 739,
+        "y": 261,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Cal",
+            "There is a whole shelf of things that people chose not to carry anymore.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "That should be allowed.",
+            "warm"
+          ]
+        ],
+        "requires": []
+      },
+      {
+        "id": "lost_labels",
+        "name": "Two return labels",
+        "x": 245,
+        "y": 288,
+        "kind": "inspect",
+        "requires": []
+      }
+    ],
+    "id": "U07",
+    "walk_bounds": [
+      20,
+      122,
+      760,
+      334
+    ],
+    "blocks": [
+      {
+        "x": 203.0,
+        "y": 208,
+        "w": 84,
+        "h": 64
+      },
+      {
+        "x": 496.0,
+        "y": 197,
+        "w": 78,
+        "h": 70
+      },
+      {
+        "x": 314.0,
+        "y": 315,
+        "w": 132,
+        "h": 36
+      },
+      {
+        "x": 106.0,
+        "y": 259,
+        "w": 88,
+        "h": 24
+      },
+      {
+        "x": 718.0,
+        "y": 237,
+        "w": 42,
+        "h": 12
+      },
+      {
+        "x": 641.0,
+        "y": 363,
+        "w": 18,
+        "h": 8
+      },
+      {
+        "x": 680.0,
+        "y": 369,
+        "w": 82,
+        "h": 16
+      },
+      {
+        "x": 50.0,
+        "y": 164,
+        "w": 114,
+        "h": 18
+      },
+      {
+        "x": 597.0,
+        "y": 130,
+        "w": 150,
+        "h": 14
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "entry": [
+      360,
+      405
+    ],
+    "placements": [
+      {
+        "kind": "threshold",
+        "x": 360,
+        "y": 436,
+        "w": 56,
+        "h": 30,
+        "depth": 0,
+        "object": "connection",
+        "label": "CONNECTION",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "shelf",
+        "x": 245,
+        "y": 272,
+        "w": 84,
+        "h": 116,
+        "depth": 64,
+        "object": "lost_labels",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ]
+      },
+      {
+        "kind": "shelf",
+        "x": 535,
+        "y": 267,
+        "w": 78,
+        "h": 111,
+        "depth": 70,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "sorting",
+        "x": 380,
+        "y": 351,
+        "w": 132,
+        "h": 53,
+        "depth": 36,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "pip_table",
+        "x": 150,
+        "y": 283,
+        "w": 88,
+        "h": 40,
+        "depth": 24,
+        "object": "pip",
+        "label": "UNCLAIMED GLOVE",
+        "anchor_offset": [
+          0,
+          -24
+        ]
+      },
+      {
+        "kind": "ticket",
+        "x": 739,
+        "y": 249,
+        "w": 42,
+        "h": 68,
+        "depth": 12,
+        "object": "spool",
+        "label": "TICKET SPOOL",
+        "anchor_offset": [
+          0,
+          12
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 650,
+        "y": 371,
+        "w": 18,
+        "h": 65,
+        "depth": 8,
+        "object": "lamp",
+        "label": "REST / SAVE",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 721,
+        "y": 385,
+        "w": 82,
+        "h": 34,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "shelf",
+        "x": 107,
+        "y": 182,
+        "w": 114,
+        "h": 62,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "shelf",
+        "x": 672,
+        "y": 144,
+        "w": 150,
+        "h": 48,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "U08": {
+    "name": "Broadway underpass / under the bridge",
+    "cue": "arrival",
+    "objects": [
+      {
+        "id": "walt",
+        "name": "Walt / under the bridge",
+        "x": 262,
+        "y": 204,
+        "kind": "talk",
+        "sprite": "npc-walt",
+        "seated": {
+          "texture": "res://assets/art/rooms/U08/walt-seated.png",
+          "anchor": [
+            24,
+            45
+          ],
+          "until": "imani_joined"
+        },
+        "requires": []
+      },
+      {
+        "id": "broadway_return",
+        "name": "Back up to Broadway",
+        "x": 46,
+        "y": 272,
+        "kind": "door",
+        "to": "U01",
+        "spawn": [
+          548,
+          279
+        ],
+        "requires": []
+      },
+      {
+        "id": "terrace_path",
+        "name": "On to the UMC terrace",
+        "x": 596,
+        "y": 272,
+        "kind": "door",
+        "to": "U02",
+        "spawn": [
+          108,
+          270
+        ],
+        "requires": []
+      },
+      {
+        "id": "walt_radio",
+        "name": "Old radio / mid-repair",
+        "x": 338,
+        "y": 204,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A radio with its back off. Every tube is labelled in tiny careful handwriting.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "The dial is parked between stations. It hums like it is waiting for someone to speak.",
+            "concern"
+          ]
+        ]
+      },
+      {
+        "id": "walt_cart",
+        "name": "Shopping cart / everything that matters",
+        "x": 112,
+        "y": 208,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Blankets, a bag of radio parts, a sealed jar of coffee. Packed like it has moved a lot.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "underpass_mural",
+        "name": "Mural / the Flatirons at dusk",
+        "x": 548,
+        "y": 176,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Somebody painted the Flatirons down here, where nobody can see the real ones.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Signed in the corner: 'For whoever is still walking.'",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "id": "U08",
+    "walk_bounds": [
+      20,
+      168,
+      600,
+      166
+    ],
+    "blocks": [],
+    "dimensions": [
+      640,
+      360
+    ],
+    "entry": [
+      90,
+      272
+    ],
+    "placements": [
+      {
+        "kind": "tent",
+        "x": 188,
+        "y": 200,
+        "w": 88,
+        "h": 52,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 298,
+        "y": 206,
+        "w": 12,
+        "h": 18,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "crate",
+        "x": 338,
+        "y": 204,
+        "w": 30,
+        "h": 32,
+        "depth": 10,
+        "object": "walt_radio",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "cart",
+        "x": 112,
+        "y": 208,
+        "w": 52,
+        "h": 42,
+        "depth": 12,
+        "object": "walt_cart",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "boxes",
+        "x": 58,
+        "y": 186,
+        "w": 38,
+        "h": 34,
+        "depth": 10,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 46,
+        "y": 272,
+        "w": 40,
+        "h": 30,
+        "depth": 0,
+        "object": "broadway_return",
+        "label": "< BROADWAY",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 596,
+        "y": 272,
+        "w": 40,
+        "h": 30,
+        "depth": 0,
+        "object": "terrace_path",
+        "label": "UMC >",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 360,
+        "y": 166,
+        "w": 20,
+        "h": 72,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 584,
+        "y": 166,
+        "w": 20,
+        "h": 72,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "F01": {
+    "id": "F01",
+    "name": "Farrand / cable walk",
+    "cue": "campus",
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "objects": [
+      {
+        "id": "umc",
+        "name": "UMC east gate",
+        "x": 60,
+        "y": 390,
+        "kind": "door",
+        "to": "U03",
+        "spawn": [
+          690,
+          385
+        ],
+        "requires": []
+      },
+      {
+        "id": "tent",
+        "name": "Volunteer tent",
+        "x": 230,
+        "y": 165,
+        "kind": "door",
+        "to": "F02",
+        "spawn": [
+          210,
+          400
+        ],
+        "requires": []
+      },
+      {
+        "id": "food",
+        "name": "Food court path",
+        "x": 720,
+        "y": 350,
+        "kind": "door",
+        "to": "F03",
+        "spawn": [
+          90,
+          400
+        ],
+        "requires": []
+      },
+      {
+        "id": "route_notice",
+        "name": "Crossed-out route notice",
+        "x": 540,
+        "y": 235,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "EVERYONE THIS WAY is crossed out. Below: pick one route.",
+            "neutral"
+          ],
+          [
+            "Walt",
+            "An instruction that can admit a mistake. Promising.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "rook",
+        "name": "Rook / night marshal",
+        "x": 635,
+        "y": 310,
+        "kind": "talk",
+        "lines": [
+          [
+            "Jules",
+            "Rook / night marshal. One thing at a time.",
+            "neutral"
+          ]
+        ],
+        "sprite": "npc-rook"
+      },
+      {
+        "id": "cone",
+        "name": "CONE COMMITTEE / one marked route",
+        "x": 515,
+        "y": 315,
+        "kind": "battle",
+        "lines": [],
+        "sprite": "npc-cone"
+      }
+    ],
+    "placements": [
+      {
+        "kind": "tree",
+        "x": 340,
+        "y": 240,
+        "w": 72,
+        "h": 110,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "rail",
+        "x": 450,
+        "y": 330,
+        "w": 150,
+        "h": 26,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 150,
+        "y": 360,
+        "w": 18,
+        "h": 55,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "notice",
+        "x": 540,
+        "y": 225,
+        "w": 90,
+        "h": 58,
+        "depth": 12,
+        "object": "route_notice",
+        "label": "FOLLOW ONE",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "cart",
+        "x": 290,
+        "y": 400,
+        "w": 72,
+        "h": 43,
+        "depth": 15,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 60,
+        "y": 390,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "umc",
+        "label": "UMC east gate",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 230,
+        "y": 165,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "tent",
+        "label": "Volunteer tent",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 720,
+        "y": 350,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "food",
+        "label": "Food court path",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "F02": {
+    "id": "F02",
+    "name": "Farrand / volunteer tent",
+    "cue": "umc",
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "objects": [
+      {
+        "id": "cable",
+        "name": "Cable walk",
+        "x": 210,
+        "y": 420,
+        "kind": "door",
+        "to": "F01",
+        "spawn": [
+          230,
+          185
+        ],
+        "requires": []
+      },
+      {
+        "id": "lawn",
+        "name": "Audience lawn",
+        "x": 710,
+        "y": 340,
+        "kind": "door",
+        "to": "F04",
+        "spawn": [
+          100,
+          400
+        ],
+        "requires": []
+      },
+      {
+        "id": "volunteers",
+        "name": "Volunteers / one final task",
+        "x": 400,
+        "y": 326,
+        "kind": "talk",
+        "lines": [
+          [
+            "Jules",
+            "Volunteers / one final task. One thing at a time.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "volunteer_list",
+        "name": "Three volunteers, one shift",
+        "x": 590,
+        "y": 210,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Imani",
+            "The list says three volunteers. The stage has called them forty times.",
+            "concern"
+          ],
+          [
+            "Jules",
+            "A shift should have an end.",
+            "neutral"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "stage",
+        "x": 400,
+        "y": 230,
+        "w": 470,
+        "h": 60,
+        "depth": 36,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 400,
+        "y": 310,
+        "w": 160,
+        "h": 30,
+        "depth": 18,
+        "object": "volunteers",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 240,
+        "y": 355,
+        "w": 90,
+        "h": 30,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 550,
+        "y": 355,
+        "w": 100,
+        "h": 30,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 155,
+        "y": 335,
+        "w": 18,
+        "h": 55,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "notice",
+        "x": 590,
+        "y": 200,
+        "w": 72,
+        "h": 42,
+        "depth": 12,
+        "object": "volunteer_list",
+        "label": "THREE NAMES",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 210,
+        "y": 420,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "cable",
+        "label": "Cable walk",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 710,
+        "y": 340,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "lawn",
+        "label": "Audience lawn",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "F03": {
+    "id": "F03",
+    "name": "Farrand / food court",
+    "cue": "campus",
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "objects": [
+      {
+        "id": "cable",
+        "name": "Cable walk",
+        "x": 60,
+        "y": 400,
+        "kind": "door",
+        "to": "F01",
+        "spawn": [
+          700,
+          350
+        ],
+        "requires": []
+      },
+      {
+        "id": "lawn",
+        "name": "Audience lawn",
+        "x": 730,
+        "y": 405,
+        "kind": "door",
+        "to": "F04",
+        "spawn": [
+          125,
+          455
+        ],
+        "requires": []
+      },
+      {
+        "id": "cups",
+        "name": "Three mugs on a drying rack",
+        "x": 330,
+        "y": 265,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Walt",
+            "One has a chipped handle. I can wrap it when the rack is dry.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "When it is dry. A very specific later.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "mags",
+        "name": "Mags / closing the food cart",
+        "x": 605,
+        "y": 395,
+        "kind": "talk",
+        "lines": [
+          [
+            "Mags",
+            "Soup is off. Counter is clean. The cart is going home.",
+            "warm"
+          ],
+          [
+            "Imani",
+            "Even the cart gets a stopping cue.",
+            "neutral"
+          ]
+        ],
+        "sprite": "mags"
+      }
+    ],
+    "placements": [
+      {
+        "kind": "table",
+        "x": 330,
+        "y": 250,
+        "w": 150,
+        "h": 30,
+        "depth": 16,
+        "object": "cups",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 570,
+        "y": 345,
+        "w": 140,
+        "h": 30,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 410,
+        "y": 350,
+        "w": 70,
+        "h": 44,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "cart",
+        "x": 625,
+        "y": 225,
+        "w": 86,
+        "h": 45,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tree",
+        "x": 170,
+        "y": 235,
+        "w": 60,
+        "h": 98,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 100,
+        "y": 350,
+        "w": 18,
+        "h": 55,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 60,
+        "y": 400,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "cable",
+        "label": "Cable walk",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 730,
+        "y": 405,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "lawn",
+        "label": "Audience lawn",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "F04": {
+    "id": "F04",
+    "name": "Farrand / audience lawn",
+    "cue": "campus",
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "objects": [
+      {
+        "id": "tent",
+        "name": "Volunteer tent",
+        "x": 70,
+        "y": 390,
+        "kind": "door",
+        "to": "F02",
+        "spawn": [
+          690,
+          340
+        ],
+        "requires": []
+      },
+      {
+        "id": "food",
+        "name": "Food court",
+        "x": 80,
+        "y": 465,
+        "kind": "door",
+        "to": "F03",
+        "spawn": [
+          700,
+          405
+        ],
+        "requires": []
+      },
+      {
+        "id": "backstage",
+        "name": "Backstage side passage",
+        "x": 880,
+        "y": 390,
+        "kind": "door",
+        "to": "F05",
+        "spawn": [
+          95,
+          390
+        ],
+        "requires": [
+          "chip_resolution"
+        ]
+      },
+      {
+        "id": "mainstage",
+        "name": "Main stage aisle",
+        "x": 480,
+        "y": 490,
+        "kind": "door",
+        "to": "F06",
+        "spawn": [
+          125,
+          420
+        ],
+        "requires": [
+          "chip_resolution",
+          "volunteers_released",
+          "imani_performance"
+        ]
+      },
+      {
+        "id": "chip",
+        "name": "Chip / one bounded rehearsal",
+        "x": 480,
+        "y": 310,
+        "kind": "challenge",
+        "lines": [
+          [
+            "Chip",
+            "The crowd keeps being called back. Can we rehearse an ending?",
+            "concern"
+          ],
+          [
+            "Imani",
+            "Three called columns. Then applause can be quiet.",
+            "warm"
+          ],
+          [
+            "Walt",
+            "And everyone gets to sit down.",
+            "neutral"
+          ]
+        ],
+        "sprite": "npc-chip"
+      }
+    ],
+    "placements": [
+      {
+        "kind": "stage",
+        "x": 480,
+        "y": 250,
+        "w": 360,
+        "h": 52,
+        "depth": 32,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 320,
+        "y": 360,
+        "w": 170,
+        "h": 30,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 640,
+        "y": 360,
+        "w": 170,
+        "h": 30,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 320,
+        "y": 430,
+        "w": 170,
+        "h": 30,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 640,
+        "y": 430,
+        "w": 170,
+        "h": 30,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 150,
+        "y": 370,
+        "w": 18,
+        "h": 55,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 810,
+        "y": 370,
+        "w": 18,
+        "h": 55,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 70,
+        "y": 390,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "tent",
+        "label": "Volunteer tent",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 80,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "food",
+        "label": "Food court",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 880,
+        "y": 390,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "backstage",
+        "label": "Backstage side pa",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 480,
+        "y": 490,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "mainstage",
+        "label": "Main stage aisle",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "F05": {
+    "id": "F05",
+    "name": "Farrand / backstage",
+    "cue": "umc",
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "objects": [
+      {
+        "id": "lawn",
+        "name": "Audience lawn",
+        "x": 60,
+        "y": 390,
+        "kind": "door",
+        "to": "F04",
+        "spawn": [
+          850,
+          390
+        ],
+        "requires": []
+      },
+      {
+        "id": "mainstage",
+        "name": "Main stage wings",
+        "x": 710,
+        "y": 390,
+        "kind": "door",
+        "to": "F06",
+        "spawn": [
+          700,
+          410
+        ],
+        "requires": [
+          "volunteers_released",
+          "imani_performance"
+        ]
+      },
+      {
+        "id": "tent_shortcut",
+        "name": "Volunteer shortcut",
+        "x": 100,
+        "y": 170,
+        "kind": "door",
+        "to": "F02",
+        "spawn": [
+          650,
+          400
+        ],
+        "requires": [
+          "rook_met"
+        ]
+      },
+      {
+        "id": "consent",
+        "name": "Imani / choose a finite performance",
+        "x": 405,
+        "y": 366,
+        "kind": "talk",
+        "lines": [
+          [
+            "Jules",
+            "Imani / choose a finite performance. One thing at a time.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "stopping_cue",
+        "name": "Crossed-out encore cue",
+        "x": 455,
+        "y": 230,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Imani",
+            "The cue sheet says AGAIN. I am writing STOP underneath.",
+            "warm"
+          ],
+          [
+            "Walt",
+            "Make that word visible from the back row.",
+            "neutral"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "shelf",
+        "x": 310,
+        "y": 245,
+        "w": 100,
+        "h": 90,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "shelf",
+        "x": 600,
+        "y": 300,
+        "w": 100,
+        "h": 85,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 405,
+        "y": 350,
+        "w": 140,
+        "h": 30,
+        "depth": 18,
+        "object": "consent",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "notice",
+        "x": 455,
+        "y": 220,
+        "w": 70,
+        "h": 42,
+        "depth": 10,
+        "object": "stopping_cue",
+        "label": "ONE SONG",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 100,
+        "y": 300,
+        "w": 18,
+        "h": 55,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 60,
+        "y": 390,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "lawn",
+        "label": "Audience lawn",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 710,
+        "y": 390,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "mainstage",
+        "label": "Main stage wings",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 100,
+        "y": 170,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "tent_shortcut",
+        "label": "Volunteer shortcu",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "F06": {
+    "id": "F06",
+    "name": "Farrand / main stage",
+    "cue": "umc",
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "objects": [
+      {
+        "id": "backstage",
+        "name": "Backstage wings",
+        "x": 720,
+        "y": 425,
+        "kind": "door",
+        "to": "F05",
+        "spawn": [
+          680,
+          390
+        ],
+        "requires": []
+      },
+      {
+        "id": "lawn",
+        "name": "Audience aisle",
+        "x": 80,
+        "y": 425,
+        "kind": "door",
+        "to": "F04",
+        "spawn": [
+          480,
+          470
+        ],
+        "requires": []
+      },
+      {
+        "id": "encore",
+        "name": "ENCORE / the show that will not end",
+        "x": 460,
+        "y": 308,
+        "kind": "battle",
+        "lines": [
+          [
+            "Jules",
+            "ENCORE / the show that will not end. One thing at a time.",
+            "neutral"
+          ]
+        ],
+        "sprite": "npc-encore"
+      },
+      {
+        "id": "lamp",
+        "name": "Stage rest light",
+        "x": 125,
+        "y": 380,
+        "kind": "save",
+        "lines": [
+          [
+            "Jules",
+            "Stage rest light. One thing at a time.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "norlin_route",
+        "name": "Norlin steps / follow the recording",
+        "x": 700,
+        "y": 400,
+        "kind": "door",
+        "to": "N01",
+        "spawn": [
+          120,
+          445
+        ],
+        "requires": [
+          "chapter1_complete"
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "stage",
+        "x": 440,
+        "y": 245,
+        "w": 350,
+        "h": 55,
+        "depth": 30,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "speaker",
+        "x": 255,
+        "y": 260,
+        "w": 38,
+        "h": 68,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "speaker",
+        "x": 635,
+        "y": 260,
+        "w": 38,
+        "h": 68,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 350,
+        "y": 370,
+        "w": 120,
+        "h": 30,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 565,
+        "y": 370,
+        "w": 120,
+        "h": 30,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 125,
+        "y": 380,
+        "w": 18,
+        "h": 55,
+        "depth": 0,
+        "object": "lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 720,
+        "y": 425,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "backstage",
+        "label": "Backstage wings",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 80,
+        "y": 425,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "lawn",
+        "label": "Audience aisle",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 700,
+        "y": 400,
+        "w": 72,
+        "h": 18,
+        "depth": 0,
+        "object": "norlin_route",
+        "label": "NORLIN",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 700,
+        "shift_x": 0
+      }
+    ],
+    "fixed_blocks": []
+  },
+  "N01": {
+    "name": "Norlin steps / the page before the door",
+    "cue": "campus",
+    "objects": [
+      {
+        "id": "farrand",
+        "name": "Back to Farrand",
+        "x": 70,
+        "y": 465,
+        "kind": "door",
+        "to": "F06",
+        "spawn": [
+          680,
+          410
+        ],
+        "requires": []
+      },
+      {
+        "id": "checkout",
+        "name": "Library checkout",
+        "x": 510,
+        "y": 190,
+        "kind": "door",
+        "to": "N02",
+        "spawn": [
+          400,
+          425
+        ],
+        "requires": [
+          "chapter1_complete"
+        ]
+      },
+      {
+        "id": "garden",
+        "name": "Margin garden",
+        "x": 875,
+        "y": 350,
+        "kind": "door",
+        "to": "N05",
+        "spawn": [
+          95,
+          390
+        ],
+        "requires": [
+          "library_pass"
+        ]
+      },
+      {
+        "id": "engineering",
+        "name": "Engineering court",
+        "x": 870,
+        "y": 470,
+        "kind": "door",
+        "to": "E01",
+        "spawn": [
+          105,
+          440
+        ],
+        "requires": [
+          "library_pass"
+        ]
+      },
+      {
+        "id": "service",
+        "name": "UMC service passage",
+        "x": 80,
+        "y": 205,
+        "kind": "door",
+        "to": "U06",
+        "spawn": [
+          120,
+          215
+        ],
+        "requires": [
+          "bridge_ready"
+        ]
+      },
+      {
+        "id": "norlin_rest",
+        "name": "The quiet lamp / save",
+        "x": 170,
+        "y": 415,
+        "kind": "save",
+        "lines": []
+      },
+      {
+        "id": "quad_notice",
+        "name": "One useful stopping point",
+        "x": 365,
+        "y": 400,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Imani",
+            "A student marked where they stopped reading, not where they failed.",
+            "warm"
+          ],
+          [
+            "Walt",
+            "There is room beside that mark for someone else to begin.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "oldmain_route",
+        "name": "Old Main courtyard",
+        "x": 760,
+        "y": 200,
+        "kind": "door",
+        "to": "O01",
+        "spawn": [
+          120,
+          445
+        ],
+        "requires": [
+          "chapter2_complete"
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "planter",
+        "x": 410,
+        "y": 350,
+        "w": 180,
+        "h": 65,
+        "depth": 25,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 410,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 620,
+        "y": 435,
+        "w": 150,
+        "h": 32,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 620,
+        "shift_x": 0
+      },
+      {
+        "kind": "tree",
+        "x": 160,
+        "y": 260,
+        "w": 65,
+        "h": 112,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 160,
+        "shift_x": 0
+      },
+      {
+        "kind": "tree",
+        "x": 815,
+        "y": 285,
+        "w": 72,
+        "h": 120,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 815,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 170,
+        "y": 399,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "norlin_rest",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 170,
+        "shift_x": 0
+      },
+      {
+        "kind": "notice",
+        "x": 365,
+        "y": 384,
+        "w": 66,
+        "h": 48,
+        "depth": 0,
+        "object": "quad_notice",
+        "label": "STOP HERE",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 365,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 70,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "farrand",
+        "label": "Back to Farrand",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 70,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 510,
+        "y": 190,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "checkout",
+        "label": "Library checkout",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 510,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 875,
+        "y": 350,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "garden",
+        "label": "Margin garden",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 875,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 870,
+        "y": 470,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "engineering",
+        "label": "Engineering court",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 870,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 80,
+        "y": 205,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "service",
+        "label": "UMC service passage",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 80,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 760,
+        "y": 200,
+        "w": 72,
+        "h": 18,
+        "depth": 0,
+        "object": "oldmain_route",
+        "label": "OLD MAIN",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 760,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "N02": {
+    "name": "Checkout hall / borrowed futures",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "steps",
+        "name": "Norlin steps",
+        "x": 400,
+        "y": 430,
+        "kind": "door",
+        "to": "N01",
+        "spawn": [
+          510,
+          220
+        ],
+        "requires": []
+      },
+      {
+        "id": "reading",
+        "name": "Reading wing",
+        "x": 85,
+        "y": 300,
+        "kind": "door",
+        "to": "N03",
+        "spawn": [
+          700,
+          400
+        ],
+        "requires": [
+          "library_pass"
+        ]
+      },
+      {
+        "id": "stacks",
+        "name": "Moving stacks",
+        "x": 720,
+        "y": 300,
+        "kind": "door",
+        "to": "N04",
+        "spawn": [
+          100,
+          430
+        ],
+        "requires": [
+          "library_pass"
+        ]
+      },
+      {
+        "id": "nell",
+        "name": "Nell / one borrower at a time",
+        "x": 405,
+        "y": 340,
+        "kind": "talk",
+        "lines": [],
+        "sprite": "npc-nell"
+      },
+      {
+        "id": "return_slip",
+        "name": "Return slip / not a debt",
+        "x": 245,
+        "y": 315,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "Due back when you are done. Someone crossed out FOREVER.",
+            "neutral"
+          ],
+          [
+            "Nell",
+            "The desk has limits. That is how it stays useful.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "desk",
+        "x": 405,
+        "y": 315,
+        "w": 180,
+        "h": 52,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 405,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 225,
+        "y": 240,
+        "w": 130,
+        "h": 112,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 225,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 615,
+        "y": 240,
+        "w": 130,
+        "h": 112,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 615,
+        "shift_x": 0
+      },
+      {
+        "kind": "planter",
+        "x": 580,
+        "y": 380,
+        "w": 56,
+        "h": 44,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 580,
+        "shift_x": 0
+      },
+      {
+        "kind": "notice",
+        "x": 245,
+        "y": 299,
+        "w": 64,
+        "h": 48,
+        "depth": 0,
+        "object": "return_slip",
+        "label": "DUE BACK",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 245,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 120,
+        "y": 390,
+        "w": 20,
+        "h": 68,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 120,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 400,
+        "y": 430,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "steps",
+        "label": "Norlin steps",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 400,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 85,
+        "y": 300,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "reading",
+        "label": "Reading wing",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 85,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 720,
+        "y": 300,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "stacks",
+        "label": "Moving stacks",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 720,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "N03": {
+    "name": "Reading room / the imperfect recording",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "checkout",
+        "name": "Checkout hall",
+        "x": 730,
+        "y": 400,
+        "kind": "door",
+        "to": "N02",
+        "spawn": [
+          115,
+          310
+        ],
+        "requires": []
+      },
+      {
+        "id": "garden",
+        "name": "Garden reading door",
+        "x": 100,
+        "y": 190,
+        "kind": "door",
+        "to": "N05",
+        "spawn": [
+          550,
+          395
+        ],
+        "requires": []
+      },
+      {
+        "id": "recording_choice",
+        "name": "Imani / the polished demo",
+        "x": 480,
+        "y": 350,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "bookmark",
+        "name": "Bookmark / leave a useful place",
+        "x": 230,
+        "y": 310,
+        "kind": "inspect",
+        "lines": []
+      },
+      {
+        "id": "reading_margin",
+        "name": "A second set of notes",
+        "x": 630,
+        "y": 250,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Walt",
+            "Two hands worked on this page. Different ink. Neither erased the other.",
+            "warm"
+          ],
+          [
+            "Imani",
+            "The polished recording made all my breaths disappear. I want those back.",
+            "concern"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "desk",
+        "x": 230,
+        "y": 294,
+        "w": 130,
+        "h": 38,
+        "depth": 20,
+        "object": "bookmark",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 230,
+        "shift_x": 0
+      },
+      {
+        "kind": "desk",
+        "x": 480,
+        "y": 334,
+        "w": 170,
+        "h": 38,
+        "depth": 20,
+        "object": "recording_choice",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 480,
+        "shift_x": 0
+      },
+      {
+        "kind": "desk",
+        "x": 390,
+        "y": 225,
+        "w": 150,
+        "h": 38,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 390,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 650,
+        "y": 235,
+        "w": 100,
+        "h": 100,
+        "depth": 18,
+        "object": "reading_margin",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 650,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 200,
+        "y": 385,
+        "w": 90,
+        "h": 30,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 200,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 515,
+        "y": 415,
+        "w": 100,
+        "h": 30,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 515,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 95,
+        "y": 330,
+        "w": 20,
+        "h": 68,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 95,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 730,
+        "y": 400,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "checkout",
+        "label": "Checkout hall",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 730,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 100,
+        "y": 190,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "garden",
+        "label": "Garden reading door",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 100,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "N04": {
+    "name": "Moving stacks / keep one sentence",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "checkout",
+        "name": "Checkout hall",
+        "x": 75,
+        "y": 430,
+        "kind": "door",
+        "to": "N02",
+        "spawn": [
+          690,
+          310
+        ],
+        "requires": []
+      },
+      {
+        "id": "garden",
+        "name": "Garden service aisle",
+        "x": 840,
+        "y": 435,
+        "kind": "door",
+        "to": "N05",
+        "spawn": [
+          680,
+          330
+        ],
+        "requires": [
+          "stacks_shifted"
+        ]
+      },
+      {
+        "id": "archive",
+        "name": "Closed archive",
+        "x": 830,
+        "y": 190,
+        "kind": "door",
+        "to": "N06",
+        "spawn": [
+          95,
+          400
+        ],
+        "requires": [
+          "errata_resolution",
+          "bookmark_found"
+        ]
+      },
+      {
+        "id": "stack_crank",
+        "name": "Shelf crank / reveal a service aisle",
+        "x": 760,
+        "y": 335,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "errata",
+        "name": "ERRATA / one surviving sentence",
+        "x": 470,
+        "y": 425,
+        "kind": "battle",
+        "lines": [],
+        "sprite": "npc-errata"
+      },
+      {
+        "id": "sentence",
+        "name": "The sentence under the red marks",
+        "x": 205,
+        "y": 420,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "I came back because I said I would. The pencil wants to replace SAID with MUST.",
+            "concern"
+          ],
+          [
+            "Walt",
+            "Keep the first sentence. A promise can be chosen.",
+            "neutral"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "shelf",
+        "x": 275,
+        "y": 265,
+        "w": 150,
+        "h": 120,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 275,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 565,
+        "y": 265,
+        "w": 150,
+        "h": 120,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 565,
+        "shift_x": -90
+      },
+      {
+        "kind": "shelf",
+        "x": 275,
+        "y": 375,
+        "w": 150,
+        "h": 100,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 275,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 565,
+        "y": 375,
+        "w": 150,
+        "h": 100,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 565,
+        "shift_x": 120
+      },
+      {
+        "kind": "panel",
+        "x": 760,
+        "y": 319,
+        "w": 70,
+        "h": 60,
+        "depth": 12,
+        "object": "stack_crank",
+        "label": "SHIFT AISLE",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 760,
+        "shift_x": 0
+      },
+      {
+        "kind": "notice",
+        "x": 205,
+        "y": 404,
+        "w": 72,
+        "h": 42,
+        "depth": 0,
+        "object": "sentence",
+        "label": "ONE SENTENCE",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 205,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 105,
+        "y": 270,
+        "w": 20,
+        "h": 68,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 105,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 430,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "checkout",
+        "label": "Checkout hall",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 840,
+        "y": 435,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "garden",
+        "label": "Garden service aisle",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 840,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 830,
+        "y": 190,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "archive",
+        "label": "Closed archive",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 830,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "N05": {
+    "name": "Margin garden / room for an empty space",
+    "cue": "campus",
+    "objects": [
+      {
+        "id": "steps",
+        "name": "Norlin steps",
+        "x": 70,
+        "y": 400,
+        "kind": "door",
+        "to": "N01",
+        "spawn": [
+          845,
+          350
+        ],
+        "requires": []
+      },
+      {
+        "id": "reading",
+        "name": "Reading-room door",
+        "x": 550,
+        "y": 420,
+        "kind": "door",
+        "to": "N03",
+        "spawn": [
+          100,
+          215
+        ],
+        "requires": []
+      },
+      {
+        "id": "stacks",
+        "name": "Service aisle",
+        "x": 720,
+        "y": 340,
+        "kind": "door",
+        "to": "N04",
+        "spawn": [
+          810,
+          420
+        ],
+        "requires": [
+          "stacks_shifted"
+        ]
+      },
+      {
+        "id": "rook",
+        "name": "Rook / a convenient detour",
+        "x": 420,
+        "y": 285,
+        "kind": "talk",
+        "lines": [],
+        "sprite": "npc-rook"
+      },
+      {
+        "id": "empty_chair",
+        "name": "EMPTY CHAIR / respect a missing person",
+        "x": 280,
+        "y": 365,
+        "kind": "talk",
+        "lines": [],
+        "sprite": "npc-empty-chair"
+      },
+      {
+        "id": "garden_birds",
+        "name": "Birds in the roof garden",
+        "x": 615,
+        "y": 220,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Imani",
+            "They have no opinion about the recording. This is refreshing.",
+            "warm"
+          ],
+          [
+            "Walt",
+            "They do have an opinion about your granola. Keep the lid on.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "tree",
+        "x": 155,
+        "y": 260,
+        "w": 65,
+        "h": 110,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 155,
+        "shift_x": 0
+      },
+      {
+        "kind": "tree",
+        "x": 650,
+        "y": 280,
+        "w": 65,
+        "h": 110,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 650,
+        "shift_x": 0
+      },
+      {
+        "kind": "planter",
+        "x": 375,
+        "y": 395,
+        "w": 190,
+        "h": 65,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 375,
+        "shift_x": 0
+      },
+      {
+        "kind": "planter",
+        "x": 520,
+        "y": 245,
+        "w": 80,
+        "h": 55,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 520,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 95,
+        "y": 335,
+        "w": 20,
+        "h": 68,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 95,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 70,
+        "y": 400,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "steps",
+        "label": "Norlin steps",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 70,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 550,
+        "y": 420,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "reading",
+        "label": "Reading-room door",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 550,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 720,
+        "y": 340,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "stacks",
+        "label": "Service aisle",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 720,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "N06": {
+    "name": "Closed archive / INDEX has not finished",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "stacks",
+        "name": "Moving stacks",
+        "x": 65,
+        "y": 410,
+        "kind": "door",
+        "to": "N04",
+        "spawn": [
+          800,
+          215
+        ],
+        "requires": []
+      },
+      {
+        "id": "playback",
+        "name": "Playback room",
+        "x": 725,
+        "y": 410,
+        "kind": "door",
+        "to": "N07",
+        "spawn": [
+          120,
+          400
+        ],
+        "requires": [
+          "index_resolution"
+        ]
+      },
+      {
+        "id": "index",
+        "name": "INDEX / every possible name",
+        "x": 480,
+        "y": 345,
+        "kind": "battle",
+        "lines": [],
+        "sprite": "npc-index"
+      },
+      {
+        "id": "reservation_ledger",
+        "name": "Reserved seats / a ceremony for possibilities",
+        "x": 245,
+        "y": 365,
+        "kind": "inspect",
+        "lines": []
+      }
+    ],
+    "placements": [
+      {
+        "kind": "shelf",
+        "x": 230,
+        "y": 250,
+        "w": 145,
+        "h": 118,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 230,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 630,
+        "y": 250,
+        "w": 145,
+        "h": 118,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 630,
+        "shift_x": 0
+      },
+      {
+        "kind": "sorting",
+        "x": 245,
+        "y": 349,
+        "w": 140,
+        "h": 40,
+        "depth": 20,
+        "object": "reservation_ledger",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 245,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 480,
+        "y": 230,
+        "w": 110,
+        "h": 88,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 480,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 95,
+        "y": 315,
+        "w": 20,
+        "h": 68,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 95,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 65,
+        "y": 410,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "stacks",
+        "label": "Moving stacks",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 65,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 725,
+        "y": 410,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "playback",
+        "label": "Playback room",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 725,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "N07": {
+    "name": "Playback room / the source of the promise",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "archive",
+        "name": "Closed archive",
+        "x": 65,
+        "y": 415,
+        "kind": "door",
+        "to": "N06",
+        "spawn": [
+          690,
+          400
+        ],
+        "requires": []
+      },
+      {
+        "id": "steps",
+        "name": "Return stairs to the quad",
+        "x": 725,
+        "y": 415,
+        "kind": "door",
+        "to": "N01",
+        "spawn": [
+          640,
+          450
+        ],
+        "requires": [
+          "playback_heard"
+        ]
+      },
+      {
+        "id": "playback",
+        "name": "Source reel / hear what was promised",
+        "x": 400,
+        "y": 340,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "playback_lamp",
+        "name": "Save / before the source reel",
+        "x": 135,
+        "y": 405,
+        "kind": "save",
+        "lines": []
+      },
+      {
+        "id": "spare_headphones",
+        "name": "A spare pair of headphones",
+        "x": 595,
+        "y": 315,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "One pair will not fit three people.",
+            "neutral"
+          ],
+          [
+            "Walt",
+            "Then use the speaker. Shared problems do not require matching ears.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "workbench",
+        "x": 400,
+        "y": 324,
+        "w": 180,
+        "h": 48,
+        "depth": 22,
+        "object": "playback",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 400,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 310,
+        "y": 410,
+        "w": 120,
+        "h": 32,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 310,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 530,
+        "y": 410,
+        "w": 120,
+        "h": 32,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 530,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 640,
+        "y": 245,
+        "w": 100,
+        "h": 94,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 640,
+        "shift_x": 0
+      },
+      {
+        "kind": "desk",
+        "x": 595,
+        "y": 299,
+        "w": 100,
+        "h": 36,
+        "depth": 18,
+        "object": "spare_headphones",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 595,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 135,
+        "y": 389,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "playback_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 135,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 65,
+        "y": 415,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "archive",
+        "label": "Closed archive",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 65,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 725,
+        "y": 415,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "steps",
+        "label": "Return stairs to the quad",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 725,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "E01": {
+    "name": "Engineering loading court / a path you can use",
+    "cue": "campus",
+    "objects": [
+      {
+        "id": "quad",
+        "name": "Norlin quad",
+        "x": 65,
+        "y": 465,
+        "kind": "door",
+        "to": "N01",
+        "spawn": [
+          835,
+          470
+        ],
+        "requires": []
+      },
+      {
+        "id": "workshop",
+        "name": "Shared workshop",
+        "x": 510,
+        "y": 185,
+        "kind": "door",
+        "to": "E02",
+        "spawn": [
+          120,
+          410
+        ],
+        "requires": []
+      },
+      {
+        "id": "bridge_shortcut",
+        "name": "Repaired bridge / quad shortcut",
+        "x": 870,
+        "y": 385,
+        "kind": "door",
+        "to": "N01",
+        "spawn": [
+          860,
+          345
+        ],
+        "requires": [
+          "bridge_ready"
+        ]
+      },
+      {
+        "id": "rook",
+        "name": "Rook / the closed booth",
+        "x": 580,
+        "y": 355,
+        "kind": "talk",
+        "lines": [],
+        "sprite": "npc-rook"
+      },
+      {
+        "id": "work_notice",
+        "name": "A shared-work notice",
+        "x": 225,
+        "y": 300,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Walt",
+            "The note says ASK BEFORE LIFTING. Somebody has added ASK FOR HELP.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "The second line looks like Cal's handwriting.",
+            "neutral"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "cart",
+        "x": 345,
+        "y": 340,
+        "w": 110,
+        "h": 50,
+        "depth": 24,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 345,
+        "shift_x": 0
+      },
+      {
+        "kind": "rail",
+        "x": 730,
+        "y": 370,
+        "w": 180,
+        "h": 30,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 730,
+        "shift_x": 0
+      },
+      {
+        "kind": "workbench",
+        "x": 540,
+        "y": 440,
+        "w": 180,
+        "h": 40,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 540,
+        "shift_x": 0
+      },
+      {
+        "kind": "notice",
+        "x": 225,
+        "y": 284,
+        "w": 90,
+        "h": 48,
+        "depth": 0,
+        "object": "work_notice",
+        "label": "ASK FIRST",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 225,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 115,
+        "y": 370,
+        "w": 20,
+        "h": 68,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 115,
+        "shift_x": 0
+      },
+      {
+        "kind": "planter",
+        "x": 780,
+        "y": 240,
+        "w": 88,
+        "h": 44,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 780,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 65,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "quad",
+        "label": "Norlin quad",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 65,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 510,
+        "y": 185,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "workshop",
+        "label": "Shared workshop",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 510,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 870,
+        "y": 385,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "bridge_shortcut",
+        "label": "Repaired bridge",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 870,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "E02": {
+    "name": "Shared workshop / Cal and Dev",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "court",
+        "name": "Loading court",
+        "x": 65,
+        "y": 425,
+        "kind": "door",
+        "to": "E01",
+        "spawn": [
+          480,
+          220
+        ],
+        "requires": []
+      },
+      {
+        "id": "test_floor",
+        "name": "Test floor / lower level",
+        "x": 725,
+        "y": 425,
+        "kind": "door",
+        "to": "E03",
+        "spawn": [
+          110,
+          430
+        ],
+        "requires": [
+          "dev_met"
+        ]
+      },
+      {
+        "id": "cal",
+        "name": "Cal / the model with no supports",
+        "x": 300,
+        "y": 315,
+        "kind": "talk",
+        "lines": [],
+        "sprite": "cal"
+      },
+      {
+        "id": "dev",
+        "name": "Dev / a smaller shared design",
+        "x": 520,
+        "y": 350,
+        "kind": "talk",
+        "lines": [],
+        "sprite": "npc-dev"
+      },
+      {
+        "id": "workshop_rest",
+        "name": "The warm desk lamp / rest and save",
+        "x": 115,
+        "y": 360,
+        "kind": "save",
+        "lines": []
+      },
+      {
+        "id": "tool_tags",
+        "name": "Two names on every borrowed tool",
+        "x": 630,
+        "y": 245,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Imani",
+            "These tools have Cal AND Dev on the tags.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "Evidence that nobody built the whole evening alone.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "workbench",
+        "x": 300,
+        "y": 290,
+        "w": 170,
+        "h": 45,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 300,
+        "shift_x": 0
+      },
+      {
+        "kind": "workbench",
+        "x": 520,
+        "y": 325,
+        "w": 170,
+        "h": 45,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 520,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 635,
+        "y": 225,
+        "w": 95,
+        "h": 96,
+        "depth": 20,
+        "object": "tool_tags",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 635,
+        "shift_x": 0
+      },
+      {
+        "kind": "cart",
+        "x": 220,
+        "y": 410,
+        "w": 70,
+        "h": 44,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 220,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 115,
+        "y": 344,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "workshop_rest",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 115,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 65,
+        "y": 425,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "court",
+        "label": "Loading court",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 65,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 725,
+        "y": 425,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "test_floor",
+        "label": "Test floor",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 725,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "E03": {
+    "name": "Test floor / put the load somewhere real",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "workshop",
+        "name": "Shared workshop",
+        "x": 65,
+        "y": 430,
+        "kind": "door",
+        "to": "E02",
+        "spawn": [
+          690,
+          400
+        ],
+        "requires": []
+      },
+      {
+        "id": "model_stairs",
+        "name": "Model stairs / upper level",
+        "x": 850,
+        "y": 185,
+        "kind": "door",
+        "to": "E04",
+        "spawn": [
+          110,
+          445
+        ],
+        "requires": []
+      },
+      {
+        "id": "eric",
+        "name": "Professor Eric / one more measurement",
+        "x": 635,
+        "y": 350,
+        "kind": "battle",
+        "lines": [],
+        "sprite": "npc-eric"
+      },
+      {
+        "id": "load_chart",
+        "name": "The scope cart / every signal needs a way home",
+        "x": 280,
+        "y": 365,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Walt",
+            "Three test points circled in red. Somebody wrote LOOK BEFORE YOU TRUST next to them.",
+            "neutral"
+          ],
+          [
+            "Imani",
+            "And a sticky note that says GO HOME, ERIC. In his own handwriting.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "rail",
+        "x": 460,
+        "y": 260,
+        "w": 320,
+        "h": 25,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 460,
+        "shift_x": 0
+      },
+      {
+        "kind": "workbench",
+        "x": 280,
+        "y": 349,
+        "w": 170,
+        "h": 42,
+        "depth": 20,
+        "object": "load_chart",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 280,
+        "shift_x": 0
+      },
+      {
+        "kind": "cart",
+        "x": 170,
+        "y": 280,
+        "w": 80,
+        "h": 50,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 170,
+        "shift_x": 0
+      },
+      {
+        "kind": "stairs",
+        "x": 850,
+        "y": 173,
+        "w": 75,
+        "h": 55,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 850,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 100,
+        "y": 340,
+        "w": 20,
+        "h": 68,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 100,
+        "shift_x": 0
+      },
+      {
+        "kind": "rail",
+        "x": 780,
+        "y": 435,
+        "w": 120,
+        "h": 26,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 780,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 65,
+        "y": 430,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "workshop",
+        "label": "Shared workshop",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 65,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 850,
+        "y": 185,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "model_stairs",
+        "label": "Model stairs",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 850,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "E04": {
+    "name": "Suspended model / above the test floor",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "test_floor",
+        "name": "Descend to test floor",
+        "x": 75,
+        "y": 465,
+        "kind": "door",
+        "to": "E03",
+        "spawn": [
+          820,
+          210
+        ],
+        "requires": []
+      },
+      {
+        "id": "control",
+        "name": "Control booth",
+        "x": 860,
+        "y": 300,
+        "kind": "door",
+        "to": "E05",
+        "spawn": [
+          110,
+          410
+        ],
+        "requires": [
+          "bridge_ready"
+        ]
+      },
+      {
+        "id": "model_plan",
+        "name": "Cal and Dev's bridge / revise the span",
+        "x": 470,
+        "y": 385,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "stress_note",
+        "name": "Perfect arch / nobody can cross",
+        "x": 735,
+        "y": 440,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "The drawing looks beautiful from the bottom.",
+            "concern"
+          ],
+          [
+            "Walt",
+            "It needs somewhere for a person to stand at the top.",
+            "neutral"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "bridge_model",
+        "x": 470,
+        "y": 369,
+        "w": 300,
+        "h": 130,
+        "depth": 24,
+        "object": "model_plan",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 470,
+        "shift_x": 0
+      },
+      {
+        "kind": "rail",
+        "x": 470,
+        "y": 245,
+        "w": 390,
+        "h": 24,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 470,
+        "shift_x": 0
+      },
+      {
+        "kind": "workbench",
+        "x": 735,
+        "y": 424,
+        "w": 120,
+        "h": 42,
+        "depth": 20,
+        "object": "stress_note",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 735,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 125,
+        "y": 350,
+        "w": 20,
+        "h": 68,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 125,
+        "shift_x": 0
+      },
+      {
+        "kind": "stairs",
+        "x": 75,
+        "y": 453,
+        "w": 64,
+        "h": 45,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "test_floor",
+        "label": "Descend to test floor",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 860,
+        "y": 300,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "control",
+        "label": "Control booth",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 860,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "E05": {
+    "name": "Control booth / the recording nobody made",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "model",
+        "name": "Suspended model",
+        "x": 65,
+        "y": 425,
+        "kind": "door",
+        "to": "E04",
+        "spawn": [
+          825,
+          320
+        ],
+        "requires": []
+      },
+      {
+        "id": "court_shortcut",
+        "name": "Loading-court service lift",
+        "x": 725,
+        "y": 425,
+        "kind": "door",
+        "to": "E01",
+        "spawn": [
+          835,
+          385
+        ],
+        "requires": [
+          "bridge_ready"
+        ]
+      },
+      {
+        "id": "source_reel",
+        "name": "Source reel / return it to Norlin",
+        "x": 420,
+        "y": 350,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "booth_logs",
+        "name": "A night marshal signed the log",
+        "x": 630,
+        "y": 250,
+        "kind": "inspect",
+        "lines": []
+      },
+      {
+        "id": "control_lamp",
+        "name": "Save / before taking the reel",
+        "x": 125,
+        "y": 365,
+        "kind": "save",
+        "lines": []
+      }
+    ],
+    "placements": [
+      {
+        "kind": "workbench",
+        "x": 420,
+        "y": 334,
+        "w": 220,
+        "h": 60,
+        "depth": 24,
+        "object": "source_reel",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 420,
+        "shift_x": 0
+      },
+      {
+        "kind": "panel",
+        "x": 635,
+        "y": 234,
+        "w": 110,
+        "h": 94,
+        "depth": 20,
+        "object": "booth_logs",
+        "label": "LAST CALL",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 635,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 230,
+        "y": 235,
+        "w": 110,
+        "h": 100,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 230,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 125,
+        "y": 349,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "control_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 125,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 65,
+        "y": 425,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "model",
+        "label": "Suspended model",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 65,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 725,
+        "y": 425,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "court_shortcut",
+        "label": "Loading-court service lift",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 725,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "O01": {
+    "name": "Old Main courtyard / the last open office",
+    "cue": "campus",
+    "objects": [
+      {
+        "id": "quad",
+        "name": "Norlin quad",
+        "x": 75,
+        "y": 460,
+        "kind": "door",
+        "to": "N01",
+        "spawn": [
+          780,
+          235
+        ],
+        "requires": []
+      },
+      {
+        "id": "notice_hall",
+        "name": "Notice hall",
+        "x": 450,
+        "y": 190,
+        "kind": "door",
+        "to": "O02",
+        "spawn": [
+          400,
+          425
+        ],
+        "requires": [
+          "chapter2_complete"
+        ]
+      },
+      {
+        "id": "rook",
+        "name": "Rook / a shift that will not end",
+        "x": 645,
+        "y": 335,
+        "kind": "talk",
+        "lines": [],
+        "sprite": "npc-rook"
+      },
+      {
+        "id": "courtyard_lamp",
+        "name": "Rest / before the office",
+        "x": 190,
+        "y": 425,
+        "kind": "save",
+        "lines": []
+      },
+      {
+        "id": "oldmain_tree",
+        "name": "A tree with an ordinary shadow",
+        "x": 260,
+        "y": 265,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Walt",
+            "The shadow has no opinion about what we should become.",
+            "warm"
+          ],
+          [
+            "Imani",
+            "I am spending a whole minute with that tree after this.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "macky_route",
+        "name": "Macky procession",
+        "x": 865,
+        "y": 445,
+        "kind": "door",
+        "to": "M01",
+        "spawn": [
+          120,
+          445
+        ],
+        "requires": [
+          "chapter3_complete",
+          "rook_confessed"
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "stairs",
+        "x": 450,
+        "y": 177,
+        "w": 290,
+        "h": 38,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 450,
+        "shift_x": 0
+      },
+      {
+        "kind": "tree",
+        "x": 260,
+        "y": 265,
+        "w": 80,
+        "h": 136,
+        "depth": 20,
+        "object": "oldmain_tree",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 260,
+        "shift_x": 0
+      },
+      {
+        "kind": "tree",
+        "x": 800,
+        "y": 300,
+        "w": 80,
+        "h": 140,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 800,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 390,
+        "y": 380,
+        "w": 150,
+        "h": 32,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 390,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 190,
+        "y": 409,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "courtyard_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 190,
+        "shift_x": 0
+      },
+      {
+        "kind": "planter",
+        "x": 640,
+        "y": 440,
+        "w": 170,
+        "h": 54,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 640,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 460,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "quad",
+        "label": "Norlin quad",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 450,
+        "y": 190,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "notice_hall",
+        "label": "Notice hall",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 450,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 865,
+        "y": 445,
+        "w": 72,
+        "h": 18,
+        "depth": 0,
+        "object": "macky_route",
+        "label": "MACKY",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 865,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "O02": {
+    "name": "Notice hall / who gets to say no",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "courtyard",
+        "name": "Old Main courtyard",
+        "x": 400,
+        "y": 430,
+        "kind": "door",
+        "to": "O01",
+        "spawn": [
+          450,
+          225
+        ],
+        "requires": []
+      },
+      {
+        "id": "office",
+        "name": "Empty office",
+        "x": 85,
+        "y": 300,
+        "kind": "door",
+        "to": "O03",
+        "spawn": [
+          700,
+          410
+        ],
+        "requires": [
+          "notice_limits"
+        ]
+      },
+      {
+        "id": "cabinet",
+        "name": "Cabinet room",
+        "x": 720,
+        "y": 300,
+        "kind": "door",
+        "to": "O04",
+        "spawn": [
+          120,
+          410
+        ],
+        "requires": [
+          "booth_origin"
+        ]
+      },
+      {
+        "id": "notice_limits",
+        "name": "Ordinary notices / extraordinary demands",
+        "x": 410,
+        "y": 345,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "directory_sign",
+        "name": "A hand-lettered directory",
+        "x": 625,
+        "y": 245,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "Empty office: original ceremony directory. Cabinet room: finite-plan desk.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "morning_hours",
+        "name": "Open again in the morning",
+        "x": 235,
+        "y": 320,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Imani",
+            "The office hours have an end. The building survives that.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "notice",
+        "x": 410,
+        "y": 329,
+        "w": 180,
+        "h": 80,
+        "depth": 16,
+        "object": "notice_limits",
+        "label": "WHAT YOU OWE",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 410,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 205,
+        "y": 240,
+        "w": 110,
+        "h": 95,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 205,
+        "shift_x": 0
+      },
+      {
+        "kind": "notice",
+        "x": 625,
+        "y": 229,
+        "w": 100,
+        "h": 62,
+        "depth": 12,
+        "object": "directory_sign",
+        "label": "DIRECTORY",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 625,
+        "shift_x": 0
+      },
+      {
+        "kind": "desk",
+        "x": 235,
+        "y": 304,
+        "w": 130,
+        "h": 42,
+        "depth": 20,
+        "object": "morning_hours",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 235,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 540,
+        "y": 415,
+        "w": 120,
+        "h": 32,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 540,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 115,
+        "y": 210,
+        "w": 20,
+        "h": 68,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 115,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 400,
+        "y": 430,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "courtyard",
+        "label": "Old Main courtyard",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 400,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 85,
+        "y": 300,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "office",
+        "label": "Empty office",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 85,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 720,
+        "y": 300,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "cabinet",
+        "label": "Cabinet room",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 720,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "O03": {
+    "name": "Empty office / the first purpose",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "hall",
+        "name": "Notice hall",
+        "x": 725,
+        "y": 425,
+        "kind": "door",
+        "to": "O02",
+        "spawn": [
+          110,
+          315
+        ],
+        "requires": []
+      },
+      {
+        "id": "cabinet_service",
+        "name": "Cabinet service door",
+        "x": 95,
+        "y": 220,
+        "kind": "door",
+        "to": "O04",
+        "spawn": [
+          650,
+          410
+        ],
+        "requires": [
+          "booth_origin"
+        ]
+      },
+      {
+        "id": "origin_directory",
+        "name": "The ceremony directory / first recording",
+        "x": 410,
+        "y": 345,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "family_phone",
+        "name": "Jules phone / an unsent message",
+        "x": 630,
+        "y": 330,
+        "kind": "inspect",
+        "lines": []
+      },
+      {
+        "id": "office_window",
+        "name": "A quiet window",
+        "x": 570,
+        "y": 220,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Walt",
+            "People will need this room when the sun is up.",
+            "neutral"
+          ],
+          [
+            "Imani",
+            "Then we will leave it a room, not a future.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "desk",
+        "x": 410,
+        "y": 329,
+        "w": 210,
+        "h": 52,
+        "depth": 24,
+        "object": "origin_directory",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 410,
+        "shift_x": 0
+      },
+      {
+        "kind": "desk",
+        "x": 630,
+        "y": 314,
+        "w": 120,
+        "h": 38,
+        "depth": 20,
+        "object": "family_phone",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 630,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 220,
+        "y": 265,
+        "w": 110,
+        "h": 108,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 220,
+        "shift_x": 0
+      },
+      {
+        "kind": "panel",
+        "x": 570,
+        "y": 204,
+        "w": 110,
+        "h": 70,
+        "depth": 0,
+        "object": "office_window",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 570,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 340,
+        "y": 420,
+        "w": 105,
+        "h": 32,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 340,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 115,
+        "y": 350,
+        "w": 20,
+        "h": 68,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 115,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 725,
+        "y": 425,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "hall",
+        "label": "Notice hall",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 725,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 95,
+        "y": 220,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "cabinet_service",
+        "label": "Cabinet service door",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 95,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "O04": {
+    "name": "Cabinet room / a finite plan",
+    "cue": "umc",
+    "objects": [
+      {
+        "id": "hall",
+        "name": "Notice hall",
+        "x": 75,
+        "y": 425,
+        "kind": "door",
+        "to": "O02",
+        "spawn": [
+          690,
+          315
+        ],
+        "requires": []
+      },
+      {
+        "id": "office_service",
+        "name": "Empty office service door",
+        "x": 725,
+        "y": 425,
+        "kind": "door",
+        "to": "O03",
+        "spawn": [
+          125,
+          245
+        ],
+        "requires": []
+      },
+      {
+        "id": "todd",
+        "name": "Todd Saliman / the finite-plan desk",
+        "x": 440,
+        "y": 300,
+        "kind": "battle",
+        "lines": [],
+        "sprite": "npc-todd"
+      },
+      {
+        "id": "finite_plan",
+        "name": "Consent form / choose explicit limits",
+        "x": 455,
+        "y": 385,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "cabinet_lamp",
+        "name": "Rest / before the finite plan",
+        "x": 135,
+        "y": 335,
+        "kind": "save",
+        "lines": []
+      },
+      {
+        "id": "cabinet_note",
+        "name": "No blank signature lines",
+        "x": 650,
+        "y": 260,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Todd Saliman",
+            "Ask a question before signing. Leave space for a different answer.",
+            "neutral"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "desk",
+        "x": 455,
+        "y": 369,
+        "w": 180,
+        "h": 44,
+        "depth": 22,
+        "object": "finite_plan",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 455,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 225,
+        "y": 225,
+        "w": 135,
+        "h": 112,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 225,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 600,
+        "y": 225,
+        "w": 135,
+        "h": 112,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 600,
+        "shift_x": 0
+      },
+      {
+        "kind": "notice",
+        "x": 650,
+        "y": 244,
+        "w": 82,
+        "h": 50,
+        "depth": 12,
+        "object": "cabinet_note",
+        "label": "ASK FIRST",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 650,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 135,
+        "y": 319,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "cabinet_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 135,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 425,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "hall",
+        "label": "Notice hall",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 725,
+        "y": 425,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "office_service",
+        "label": "Empty office service door",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 725,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "M01": {
+    "name": "Procession walk / no one has to march",
+    "cue": "macky",
+    "objects": [
+      {
+        "id": "courtyard",
+        "name": "Old Main courtyard",
+        "x": 75,
+        "y": 460,
+        "kind": "door",
+        "to": "O01",
+        "spawn": [
+          820,
+          430
+        ],
+        "requires": []
+      },
+      {
+        "id": "lobby",
+        "name": "Macky lobby",
+        "x": 510,
+        "y": 190,
+        "kind": "door",
+        "to": "M02",
+        "spawn": [
+          400,
+          425
+        ],
+        "requires": [
+          "chapter3_complete",
+          "rook_confessed"
+        ]
+      },
+      {
+        "id": "balcony_shortcut",
+        "name": "Balcony service stair",
+        "x": 865,
+        "y": 350,
+        "kind": "door",
+        "to": "M05",
+        "spawn": [
+          110,
+          435
+        ],
+        "requires": [
+          "balcony_open"
+        ]
+      },
+      {
+        "id": "mags",
+        "name": "Mags / a thermos and a stopping time",
+        "x": 320,
+        "y": 390,
+        "kind": "talk",
+        "lines": [],
+        "sprite": "mags"
+      },
+      {
+        "id": "procession_notice",
+        "name": "Reserved for every future",
+        "x": 615,
+        "y": 340,
+        "kind": "inspect",
+        "lines": []
+      },
+      {
+        "id": "procession_lamp",
+        "name": "Rest / before Macky",
+        "x": 190,
+        "y": 425,
+        "kind": "save",
+        "lines": []
+      },
+      {
+        "id": "night_birds",
+        "name": "Birds waiting for morning",
+        "x": 780,
+        "y": 265,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Imani",
+            "They are not waiting to graduate.",
+            "warm"
+          ],
+          [
+            "Walt",
+            "They are waiting for breakfast. An excellent finite plan.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "tree",
+        "x": 155,
+        "y": 260,
+        "w": 74,
+        "h": 126,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 155,
+        "shift_x": 0
+      },
+      {
+        "kind": "tree",
+        "x": 815,
+        "y": 280,
+        "w": 74,
+        "h": 126,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 815,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 380,
+        "y": 430,
+        "w": 140,
+        "h": 32,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 380,
+        "shift_x": 0
+      },
+      {
+        "kind": "notice",
+        "x": 615,
+        "y": 324,
+        "w": 96,
+        "h": 60,
+        "depth": 14,
+        "object": "procession_notice",
+        "label": "RESERVED",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 615,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 190,
+        "y": 409,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "procession_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 190,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 460,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "courtyard",
+        "label": "Old Main courtyard",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 510,
+        "y": 190,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "lobby",
+        "label": "Macky lobby",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 510,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 865,
+        "y": 350,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "balcony_shortcut",
+        "label": "Balcony service stair",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 865,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "M02": {
+    "name": "Macky lobby / a choice of doors",
+    "cue": "macky",
+    "objects": [
+      {
+        "id": "outside",
+        "name": "Procession walk",
+        "x": 400,
+        "y": 430,
+        "kind": "door",
+        "to": "M01",
+        "spawn": [
+          510,
+          225
+        ],
+        "requires": []
+      },
+      {
+        "id": "cloakroom",
+        "name": "Cloakroom / free the guests",
+        "x": 85,
+        "y": 300,
+        "kind": "door",
+        "to": "M03",
+        "spawn": [
+          700,
+          410
+        ],
+        "requires": []
+      },
+      {
+        "id": "pit",
+        "name": "Orchestra pit / choose the score",
+        "x": 725,
+        "y": 300,
+        "kind": "door",
+        "to": "M04",
+        "spawn": [
+          110,
+          435
+        ],
+        "requires": []
+      },
+      {
+        "id": "balcony",
+        "name": "Balcony / the night marshal",
+        "x": 680,
+        "y": 190,
+        "kind": "door",
+        "to": "M05",
+        "spawn": [
+          120,
+          425
+        ],
+        "requires": [
+          "attendees_freed",
+          "music_ready"
+        ]
+      },
+      {
+        "id": "stage",
+        "name": "Graduation stage",
+        "x": 400,
+        "y": 190,
+        "kind": "door",
+        "to": "M06",
+        "spawn": [
+          400,
+          470
+        ],
+        "requires": [
+          "rook_resolution"
+        ]
+      },
+      {
+        "id": "lobby_directory",
+        "name": "Two branches / one way forward",
+        "x": 365,
+        "y": 340,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "Cloakroom left: guests can leave. Orchestra pit right: Imani chooses the score. Balcony above: Rook has the stage key.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "lobby_lamp",
+        "name": "Rest / before the balcony",
+        "x": 135,
+        "y": 405,
+        "kind": "save",
+        "lines": []
+      }
+    ],
+    "placements": [
+      {
+        "kind": "notice",
+        "x": 365,
+        "y": 324,
+        "w": 120,
+        "h": 74,
+        "depth": 16,
+        "object": "lobby_directory",
+        "label": "TWO CHOICES",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 365,
+        "shift_x": 0
+      },
+      {
+        "kind": "planter",
+        "x": 255,
+        "y": 220,
+        "w": 82,
+        "h": 54,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 255,
+        "shift_x": 0
+      },
+      {
+        "kind": "planter",
+        "x": 550,
+        "y": 220,
+        "w": 82,
+        "h": 54,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 550,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 280,
+        "y": 410,
+        "w": 115,
+        "h": 32,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 280,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 555,
+        "y": 410,
+        "w": 115,
+        "h": 32,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 555,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 135,
+        "y": 389,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "lobby_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 135,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 400,
+        "y": 430,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "outside",
+        "label": "Procession walk",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 400,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 85,
+        "y": 300,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "cloakroom",
+        "label": "Cloakroom",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 85,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 725,
+        "y": 300,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "pit",
+        "label": "Orchestra pit",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 725,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 680,
+        "y": 190,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "balcony",
+        "label": "Balcony",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 680,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 400,
+        "y": 190,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "stage",
+        "label": "Graduation stage",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 400,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "M03": {
+    "name": "Cloakroom / tickets are invitations",
+    "cue": "macky",
+    "objects": [
+      {
+        "id": "lobby",
+        "name": "Lobby return",
+        "x": 725,
+        "y": 425,
+        "kind": "door",
+        "to": "M02",
+        "spawn": [
+          115,
+          315
+        ],
+        "requires": []
+      },
+      {
+        "id": "service_balcony",
+        "name": "Balcony backstage stair",
+        "x": 75,
+        "y": 200,
+        "kind": "door",
+        "to": "M05",
+        "spawn": [
+          120,
+          425
+        ],
+        "requires": [
+          "attendees_freed",
+          "music_ready"
+        ]
+      },
+      {
+        "id": "attendees",
+        "name": "A coat check for possible people",
+        "x": 435,
+        "y": 345,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "mara",
+        "name": "Mara / her own way home",
+        "x": 220,
+        "y": 320,
+        "kind": "talk",
+        "lines": [],
+        "sprite": "npc-mara"
+      },
+      {
+        "id": "eli",
+        "name": "Eli / a seat left open",
+        "x": 625,
+        "y": 255,
+        "kind": "talk",
+        "lines": [],
+        "sprite": "npc-eli"
+      },
+      {
+        "id": "cloak_note",
+        "name": "No attendance debt",
+        "x": 595,
+        "y": 390,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Imani",
+            "Having a ticket means you can enter. It does not mean you owe the room your whole night.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "shelf",
+        "x": 230,
+        "y": 235,
+        "w": 160,
+        "h": 110,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 230,
+        "shift_x": 0
+      },
+      {
+        "kind": "shelf",
+        "x": 610,
+        "y": 235,
+        "w": 160,
+        "h": 110,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 610,
+        "shift_x": 0
+      },
+      {
+        "kind": "sorting",
+        "x": 435,
+        "y": 329,
+        "w": 190,
+        "h": 48,
+        "depth": 22,
+        "object": "attendees",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 435,
+        "shift_x": 0
+      },
+      {
+        "kind": "notice",
+        "x": 595,
+        "y": 374,
+        "w": 96,
+        "h": 56,
+        "depth": 12,
+        "object": "cloak_note",
+        "label": "ASK FIRST",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 595,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 120,
+        "y": 385,
+        "w": 20,
+        "h": 68,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 120,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 725,
+        "y": 425,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "lobby",
+        "label": "Lobby return",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 725,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 200,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "service_balcony",
+        "label": "Balcony backstage stair",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      760,
+      314
+    ],
+    "entry": [
+      120,
+      400
+    ],
+    "fixed_blocks": []
+  },
+  "M04": {
+    "name": "Orchestra pit / the score can end",
+    "cue": "macky",
+    "objects": [
+      {
+        "id": "lobby",
+        "name": "Lobby stairs",
+        "x": 75,
+        "y": 465,
+        "kind": "door",
+        "to": "M02",
+        "spawn": [
+          690,
+          315
+        ],
+        "requires": []
+      },
+      {
+        "id": "balcony_lift",
+        "name": "Music service stair",
+        "x": 870,
+        "y": 200,
+        "kind": "door",
+        "to": "M05",
+        "spawn": [
+          700,
+          425
+        ],
+        "requires": [
+          "music_ready",
+          "attendees_freed"
+        ]
+      },
+      {
+        "id": "final_score",
+        "name": "Imani / choose a finite score",
+        "x": 490,
+        "y": 360,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "pit_lamp",
+        "name": "Rest / before the final score",
+        "x": 140,
+        "y": 440,
+        "kind": "save",
+        "lines": []
+      },
+      {
+        "id": "orchestra_note",
+        "name": "An unfinished rest",
+        "x": 710,
+        "y": 340,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Walt",
+            "Someone wrote REST above the silence.",
+            "neutral"
+          ],
+          [
+            "Imani",
+            "That part is not missing. It is part of the music.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "stage",
+        "x": 490,
+        "y": 260,
+        "w": 390,
+        "h": 84,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 490,
+        "shift_x": 0
+      },
+      {
+        "kind": "speaker",
+        "x": 720,
+        "y": 275,
+        "w": 42,
+        "h": 100,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 720,
+        "shift_x": 0
+      },
+      {
+        "kind": "speaker",
+        "x": 240,
+        "y": 275,
+        "w": 42,
+        "h": 100,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 240,
+        "shift_x": 0
+      },
+      {
+        "kind": "workbench",
+        "x": 490,
+        "y": 344,
+        "w": 210,
+        "h": 48,
+        "depth": 22,
+        "object": "final_score",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 490,
+        "shift_x": 0
+      },
+      {
+        "kind": "notice",
+        "x": 710,
+        "y": 324,
+        "w": 100,
+        "h": 56,
+        "depth": 12,
+        "object": "orchestra_note",
+        "label": "REST",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 710,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 140,
+        "y": 424,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "pit_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 140,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "lobby",
+        "label": "Lobby stairs",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 870,
+        "y": 200,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "balcony_lift",
+        "label": "Music service stair",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 870,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "M05": {
+    "name": "Balcony / one last call",
+    "cue": "macky",
+    "objects": [
+      {
+        "id": "lobby",
+        "name": "Lobby stair",
+        "x": 75,
+        "y": 465,
+        "kind": "door",
+        "to": "M02",
+        "spawn": [
+          645,
+          220
+        ],
+        "requires": []
+      },
+      {
+        "id": "pit_return",
+        "name": "Orchestra service stair",
+        "x": 875,
+        "y": 465,
+        "kind": "door",
+        "to": "M04",
+        "spawn": [
+          825,
+          225
+        ],
+        "requires": []
+      },
+      {
+        "id": "procession_shortcut",
+        "name": "Outside service stair",
+        "x": 75,
+        "y": 200,
+        "kind": "door",
+        "to": "M01",
+        "spawn": [
+          835,
+          350
+        ],
+        "requires": [
+          "balcony_open"
+        ]
+      },
+      {
+        "id": "stage",
+        "name": "Stage access",
+        "x": 840,
+        "y": 200,
+        "kind": "door",
+        "to": "M06",
+        "spawn": [
+          400,
+          470
+        ],
+        "requires": [
+          "rook_resolution"
+        ]
+      },
+      {
+        "id": "rook",
+        "name": "Rook / LAST CALL",
+        "x": 575,
+        "y": 350,
+        "kind": "battle",
+        "lines": [],
+        "sprite": "npc-rook"
+      },
+      {
+        "id": "balcony_lamp",
+        "name": "Rest / before LAST CALL",
+        "x": 210,
+        "y": 445,
+        "kind": "save",
+        "lines": []
+      },
+      {
+        "id": "balcony_view",
+        "name": "A room filled with reserved chairs",
+        "x": 370,
+        "y": 280,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Jules",
+            "The chairs keep multiplying. Every future gets a place; every living person loses one.",
+            "concern"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "rail",
+        "x": 485,
+        "y": 235,
+        "w": 580,
+        "h": 28,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 485,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 440,
+        "y": 435,
+        "w": 160,
+        "h": 32,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 440,
+        "shift_x": 0
+      },
+      {
+        "kind": "notice",
+        "x": 370,
+        "y": 264,
+        "w": 120,
+        "h": 58,
+        "depth": 12,
+        "object": "balcony_view",
+        "label": "ONE EXIT",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 370,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 210,
+        "y": 429,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "balcony_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 210,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "lobby",
+        "label": "Lobby stair",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 875,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "pit_return",
+        "label": "Orchestra service stair",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 875,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 200,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "procession_shortcut",
+        "label": "Outside service stair",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 840,
+        "y": 200,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "stage",
+        "label": "Stage access",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 840,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "M06": {
+    "name": "Graduation stage / everyone you could be",
+    "cue": "macky",
+    "objects": [
+      {
+        "id": "balcony",
+        "name": "Balcony return",
+        "x": 75,
+        "y": 465,
+        "kind": "door",
+        "to": "M05",
+        "spawn": [
+          800,
+          220
+        ],
+        "requires": []
+      },
+      {
+        "id": "lobby_return",
+        "name": "Lobby return",
+        "x": 400,
+        "y": 490,
+        "kind": "door",
+        "to": "M02",
+        "spawn": [
+          400,
+          220
+        ],
+        "requires": []
+      },
+      {
+        "id": "dawn_exit",
+        "name": "Dawn exit",
+        "x": 875,
+        "y": 465,
+        "kind": "door",
+        "to": "M07",
+        "spawn": [
+          120,
+          445
+        ],
+        "requires": [
+          "val_resolution"
+        ]
+      },
+      {
+        "id": "val",
+        "name": "VAL / every possible graduate",
+        "x": 485,
+        "y": 330,
+        "kind": "battle",
+        "lines": [],
+        "sprite": "npc-val"
+      },
+      {
+        "id": "stage_lamp",
+        "name": "Rest / final checkpoint",
+        "x": 190,
+        "y": 445,
+        "kind": "save",
+        "lines": []
+      },
+      {
+        "id": "reserved_chairs",
+        "name": "Seats no one chose",
+        "x": 725,
+        "y": 360,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Walt",
+            "A reserved chair can become a chair again. It does not have to hold a whole future.",
+            "neutral"
+          ],
+          [
+            "Pip",
+            "I can hold the door. Nobody has to be lost first.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "stage",
+        "x": 485,
+        "y": 250,
+        "w": 530,
+        "h": 92,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 485,
+        "shift_x": 0
+      },
+      {
+        "kind": "seats",
+        "x": 725,
+        "y": 344,
+        "w": 145,
+        "h": 40,
+        "depth": 20,
+        "object": "reserved_chairs",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 725,
+        "shift_x": 0
+      },
+      {
+        "kind": "speaker",
+        "x": 805,
+        "y": 245,
+        "w": 46,
+        "h": 110,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 805,
+        "shift_x": 0
+      },
+      {
+        "kind": "speaker",
+        "x": 160,
+        "y": 245,
+        "w": 46,
+        "h": 110,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 160,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 190,
+        "y": 429,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "stage_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 190,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "balcony",
+        "label": "Balcony return",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 400,
+        "y": 490,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "lobby_return",
+        "label": "Lobby return",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 400,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 875,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "dawn_exit",
+        "label": "Dawn exit",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 875,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "M07": {
+    "name": "Dawn exit / the campus belongs to morning",
+    "cue": "macky",
+    "objects": [
+      {
+        "id": "stage_return",
+        "name": "The quiet stage",
+        "x": 75,
+        "y": 465,
+        "kind": "door",
+        "to": "M06",
+        "spawn": [
+          840,
+          440
+        ],
+        "requires": []
+      },
+      {
+        "id": "umc_return",
+        "name": "Morning walk to the UMC",
+        "x": 875,
+        "y": 465,
+        "kind": "door",
+        "to": "U03",
+        "spawn": [
+          615,
+          400
+        ],
+        "requires": [
+          "dawn_talk_read"
+        ]
+      },
+      {
+        "id": "quad_return",
+        "name": "Morning quad",
+        "x": 510,
+        "y": 200,
+        "kind": "door",
+        "to": "N01",
+        "spawn": [
+          510,
+          220
+        ],
+        "requires": [
+          "dawn_talk_read"
+        ]
+      },
+      {
+        "id": "dawn_conversation",
+        "name": "The party / what stays with us",
+        "x": 430,
+        "y": 345,
+        "kind": "talk",
+        "lines": []
+      },
+      {
+        "id": "dawn_lamp",
+        "name": "Rest / a real morning",
+        "x": 190,
+        "y": 430,
+        "kind": "save",
+        "lines": []
+      },
+      {
+        "id": "dawn_birds",
+        "name": "Ordinary morning birds",
+        "x": 700,
+        "y": 280,
+        "kind": "inspect",
+        "lines": [
+          [
+            "Imani",
+            "Not a chorus. Just birds.",
+            "warm"
+          ],
+          [
+            "Walt",
+            "That is enough sound for this minute.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "tree",
+        "x": 180,
+        "y": 270,
+        "w": 78,
+        "h": 130,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 180,
+        "shift_x": 0
+      },
+      {
+        "kind": "tree",
+        "x": 750,
+        "y": 300,
+        "w": 78,
+        "h": 130,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 750,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 430,
+        "y": 329,
+        "w": 210,
+        "h": 32,
+        "depth": 16,
+        "object": "dawn_conversation",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 430,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 190,
+        "y": 414,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "dawn_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 190,
+        "shift_x": 0
+      },
+      {
+        "kind": "planter",
+        "x": 620,
+        "y": 425,
+        "w": 150,
+        "h": 54,
+        "depth": 20,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 620,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "stage_return",
+        "label": "The quiet stage",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 875,
+        "y": 465,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "umc_return",
+        "label": "Morning walk to the UMC",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 875,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 510,
+        "y": 200,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "quad_return",
+        "label": "Morning quad",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 510,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      142,
+      920,
+      374
+    ],
+    "entry": [
+      120,
+      460
+    ],
+    "fixed_blocks": []
+  },
+  "G01": {
+    "name": "Folsom Field / commencement morning",
+    "cue": "macky",
+    "objects": [
+      {
+        "id": "dawn_return",
+        "name": "Back to the dawn walk",
+        "x": 75,
+        "y": 505,
+        "kind": "door",
+        "to": "M07",
+        "spawn": [
+          840,
+          440
+        ],
+        "requires": []
+      },
+      {
+        "id": "courts_path",
+        "name": "Path to the tennis courts",
+        "x": 885,
+        "y": 505,
+        "kind": "door",
+        "to": "G02",
+        "spawn": [
+          90,
+          296
+        ],
+        "requires": []
+      },
+      {
+        "id": "jakerson_graduation",
+        "name": "Jakerson / in the second row",
+        "x": 560,
+        "y": 480,
+        "kind": "talk",
+        "sprite": "npc-jakerson",
+        "requires": [],
+        "lines": [
+          [
+            "Jakerson",
+            "You made it to the front row. I only made the second.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "commencement_podium",
+        "name": "The podium / names read out",
+        "x": 480,
+        "y": 246,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "They read every name. Even the ones who almost didn't stay.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "grad_lamp",
+        "name": "Field light / save",
+        "x": 112,
+        "y": 470,
+        "kind": "save",
+        "requires": []
+      }
+    ],
+    "placements": [
+      {
+        "kind": "chairs",
+        "x": 250,
+        "y": 318,
+        "w": 300,
+        "h": 34,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 250,
+        "shift_x": 0
+      },
+      {
+        "kind": "chairs",
+        "x": 710,
+        "y": 318,
+        "w": 300,
+        "h": 34,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 710,
+        "shift_x": 0
+      },
+      {
+        "kind": "chairs",
+        "x": 250,
+        "y": 372,
+        "w": 300,
+        "h": 34,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 250,
+        "shift_x": 0
+      },
+      {
+        "kind": "chairs",
+        "x": 710,
+        "y": 372,
+        "w": 300,
+        "h": 34,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 710,
+        "shift_x": 0
+      },
+      {
+        "kind": "chairs",
+        "x": 250,
+        "y": 426,
+        "w": 300,
+        "h": 34,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 250,
+        "shift_x": 0
+      },
+      {
+        "kind": "chairs",
+        "x": 710,
+        "y": 426,
+        "w": 300,
+        "h": 34,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 710,
+        "shift_x": 0
+      },
+      {
+        "kind": "podium",
+        "x": 480,
+        "y": 246,
+        "w": 34,
+        "h": 52,
+        "depth": 10,
+        "object": "commencement_podium",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 480,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 112,
+        "y": 470,
+        "w": 20,
+        "h": 68,
+        "depth": 0,
+        "object": "grad_lamp",
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 112,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 505,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "dawn_return",
+        "label": "< DAWN WALK",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 75,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 885,
+        "y": 505,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "courts_path",
+        "label": "TENNIS COURTS >",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 885,
+        "shift_x": 0
+      },
+      {
+        "kind": "balloons",
+        "x": 860,
+        "y": 300,
+        "w": 40,
+        "h": 90,
+        "depth": 6,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 860,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      230,
+      920,
+      290
+    ],
+    "entry": [
+      120,
+      480
+    ],
+    "fixed_blocks": []
+  },
+  "G02": {
+    "name": "Tennis courts / one friendly set",
+    "cue": "macky",
+    "objects": [
+      {
+        "id": "field_return",
+        "name": "Back to commencement",
+        "x": 46,
+        "y": 300,
+        "kind": "door",
+        "to": "G01",
+        "spawn": [
+          860,
+          480
+        ],
+        "requires": []
+      },
+      {
+        "id": "jakerson_match",
+        "name": "Jakerson / one friendly set",
+        "x": 430,
+        "y": 320,
+        "kind": "talk",
+        "sprite": "npc-jakerson",
+        "requires": [],
+        "lines": [
+          [
+            "Jakerson",
+            "One set. No scores kept. Well, I'll keep them.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "ball_machine",
+        "name": "Ball machine / LOB, TOPSPIN, MERCY",
+        "x": 520,
+        "y": 214,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Three settings: LOB, TOPSPIN and MERCY. Someone taped over MERCY.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "court_bench",
+        "name": "Courtside bench",
+        "x": 150,
+        "y": 212,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A water bottle, a towel and a graduation cap someone already took off.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "placements": [
+      {
+        "kind": "net",
+        "x": 330,
+        "y": 262,
+        "w": 300,
+        "h": 26,
+        "depth": 6,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 330,
+        "shift_x": 0
+      },
+      {
+        "kind": "ball_machine",
+        "x": 520,
+        "y": 214,
+        "w": 34,
+        "h": 40,
+        "depth": 14,
+        "object": "ball_machine",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 520,
+        "shift_x": 0
+      },
+      {
+        "kind": "bench",
+        "x": 150,
+        "y": 212,
+        "w": 110,
+        "h": 30,
+        "depth": 12,
+        "object": "court_bench",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 150,
+        "shift_x": 0
+      },
+      {
+        "kind": "hopper",
+        "x": 214,
+        "y": 214,
+        "w": 18,
+        "h": 26,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ],
+        "base_x": 214,
+        "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 46,
+        "y": 300,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "field_return",
+        "label": "< COMMENCEMENT",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 46,
+        "shift_x": 0
+      },
+      {
+        "kind": "lamp",
+        "x": 600,
+        "y": 186,
+        "w": 20,
+        "h": 80,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          16
+        ],
+        "base_x": 600,
+        "shift_x": 0
+      }
+    ],
+    "dimensions": [
+      640,
+      360
+    ],
+    "walk_bounds": [
+      20,
+      176,
+      600,
+      164
+    ],
+    "entry": [
+      90,
+      296
+    ],
+    "fixed_blocks": []
+  }
+}

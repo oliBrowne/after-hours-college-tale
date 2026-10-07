@@ -1,0 +1,647 @@
+{
+ "background": "res://assets/art/rooms/U06/background.png",
+ "width": 960,
+ "occluders": [],
+ "props": {
+  "3": {
+   "texture": "res://assets/art/rooms/U06/prop-3.png",
+   "anchor": [
+    51,
+    36
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/U06/prop-4.png",
+   "anchor": [
+    56,
+    36
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/U06/prop-5.png",
+   "anchor": [
+    37,
+    49
+   ]
+  },
+  "13": {
+   "texture": "res://assets/art/rooms/U06/prop-13.png",
+   "anchor": [
+    49,
+    36
+   ]
+  },
+  "14": {
+   "texture": "res://assets/art/rooms/U06/prop-14.png",
+   "anchor": [
+    50,
+    49
+   ]
+  },
+  "15": {
+   "texture": "res://assets/art/rooms/U06/prop-15.png",
+   "anchor": [
+    63,
+    28
+   ]
+  },
+  "16": {
+   "texture": "res://assets/art/rooms/U06/prop-16.png",
+   "anchor": [
+    11,
+    66
+   ]
+  },
+  "17": {
+   "texture": "res://assets/art/rooms/U06/prop-17.png",
+   "anchor": [
+    11,
+    66
+   ]
+  }
+ },
+ "label_only": [
+  0,
+  1,
+  2
+ ],
+ "fauna": [
+  {
+   "kind": "umc_moth",
+   "x": 70,
+   "y": 328,
+   "range": 8,
+   "speed": 1.6,
+   "rate": 9.0
+  },
+  {
+   "kind": "umc_moth",
+   "x": 914,
+   "y": 329,
+   "range": 7,
+   "speed": 1.3,
+   "rate": 8.0
+  },
+  {
+   "kind": "umc2_mouse",
+   "x": 44,
+   "y": 153,
+   "range": 14,
+   "speed": 0.5,
+   "rate": 5.0
+  }
+ ],
+ "leaves": [],
+ "layers": [
+  {
+   "kind": "blink",
+   "pattern": "11111111111111111111101011111111111111111111111111111110",
+   "rate": 9.0,
+   "texture": "res://assets/art/rooms/U06/neon-n.png",
+   "x": 374,
+   "y": 17
+  },
+  {
+   "kind": "movers",
+   "from": [
+    373,
+    301
+   ],
+   "to": [
+    373,
+    180
+   ],
+   "count": 1,
+   "period": 4.6,
+   "size": [
+    5,
+    3
+   ],
+   "color": "6ae0d0",
+   "ease": "out",
+   "flag": "pinpal_resolution",
+   "when": false
+  },
+  {
+   "kind": "movers",
+   "from": [
+    497,
+    301
+   ],
+   "to": [
+    491,
+    180
+   ],
+   "count": 1,
+   "period": 7.3,
+   "size": [
+    5,
+    3
+   ],
+   "color": "ff8ab8",
+   "ease": "out",
+   "flag": "pinpal_resolution",
+   "when": false
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     374,
+     60,
+     "fff4dc",
+     1
+    ],
+    [
+     508,
+     68,
+     "fff4dc",
+     1
+    ],
+    [
+     531,
+     64,
+     "fff4dc",
+     1
+    ],
+    [
+     198,
+     71,
+     "fff4dc",
+     1
+    ],
+    [
+     235,
+     75,
+     "fff4dc",
+     1
+    ],
+    [
+     202,
+     69,
+     "fff4dc",
+     1
+    ],
+    [
+     170,
+     80,
+     "fff4dc",
+     1
+    ],
+    [
+     331,
+     59,
+     "fff4dc",
+     1
+    ],
+    [
+     190,
+     63,
+     "fff4dc",
+     1
+    ],
+    [
+     316,
+     62,
+     "fff4dc",
+     1
+    ],
+    [
+     245,
+     61,
+     "fff4dc",
+     1
+    ],
+    [
+     408,
+     75,
+     "fff4dc",
+     1
+    ],
+    [
+     478,
+     77,
+     "fff4dc",
+     1
+    ],
+    [
+     380,
+     68,
+     "fff4dc",
+     1
+    ]
+   ],
+   "rate": 1.4,
+   "min": 0.1
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     744,
+     103,
+     "f6cf7a",
+     1
+    ]
+   ],
+   "rate": 2.5,
+   "min": 0.3
+  },
+  {
+   "kind": "blink",
+   "pattern": "1100",
+   "rate": 2.0,
+   "rects": [
+    [
+     701,
+     296,
+     28,
+     6,
+     "58a8e8",
+     0.08
+    ],
+    [
+     762,
+     296,
+     28,
+     6,
+     "ff7aa8",
+     0.08
+    ],
+    [
+     823,
+     296,
+     28,
+     6,
+     "58e0d0",
+     0.08
+    ]
+   ]
+  },
+  {
+   "kind": "blink",
+   "pattern": "0110",
+   "rate": 1.5,
+   "rects": [
+    [
+     705,
+     298,
+     20,
+     4,
+     "fff0c4",
+     0.06
+    ],
+    [
+     766,
+     298,
+     20,
+     4,
+     "fff0c4",
+     0.06
+    ],
+    [
+     827,
+     298,
+     20,
+     4,
+     "fff0c4",
+     0.06
+    ]
+   ]
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 14,
+   "rect": [
+    173,
+    112,
+    400,
+    60
+   ],
+   "speed": [
+    0,
+    2
+   ],
+   "color": "fff0c4"
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/U06/battle-far.png",
+  "layers": [
+   {
+    "kind": "blink",
+    "pattern": "11111111111111111111101011111111111111111111111111111110",
+    "rate": 9.0,
+    "texture": "res://assets/art/rooms/U06/battle-neon-n.png",
+    "x": 301,
+    "y": 29
+   },
+   {
+    "kind": "blink",
+    "pattern": "0000000000000010000001000000",
+    "rate": 5.0,
+    "texture": "res://assets/art/rooms/U06/battle-dodge-4a.png",
+    "x": 279,
+    "y": 89
+   },
+   {
+    "kind": "blink",
+    "pattern": "0000000000000001111110000000",
+    "rate": 5.0,
+    "texture": "res://assets/art/rooms/U06/battle-dodge-4b.png",
+    "x": 279,
+    "y": 89
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000000000100000000100000000",
+    "rate": 5.0,
+    "texture": "res://assets/art/rooms/U06/battle-dodge-5a.png",
+    "x": 313,
+    "y": 89
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000000000011111111000000000",
+    "rate": 5.0,
+    "texture": "res://assets/art/rooms/U06/battle-dodge-5b.png",
+    "x": 313,
+    "y": 89
+   },
+   {
+    "kind": "movers",
+    "from": [
+     300.0,
+     136.2
+    ],
+    "to": [
+     300.0,
+     98.8
+    ],
+    "count": 1,
+    "period": 5.6,
+    "size": [
+     13,
+     6
+    ],
+    "color": "3ad8c860",
+    "ease": "out"
+   },
+   {
+    "kind": "movers",
+    "from": [
+     300.0,
+     136.2
+    ],
+    "to": [
+     300.0,
+     98.8
+    ],
+    "count": 1,
+    "period": 5.6,
+    "size": [
+     7,
+     3
+    ],
+    "color": "6ae0d0",
+    "ease": "out"
+   },
+   {
+    "kind": "movers",
+    "from": [
+     366.4,
+     136.2
+    ],
+    "to": [
+     335.5,
+     98.8
+    ],
+    "count": 1,
+    "period": 7.2,
+    "size": [
+     13,
+     6
+    ],
+    "color": "ff6aa060",
+    "ease": "out"
+   },
+   {
+    "kind": "movers",
+    "from": [
+     366.4,
+     136.2
+    ],
+    "to": [
+     335.5,
+     98.8
+    ],
+    "count": 1,
+    "period": 7.2,
+    "size": [
+     7,
+     3
+    ],
+    "color": "ff8ab8",
+    "ease": "out"
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      394,
+      60,
+      "fff4dc",
+      1
+     ],
+     [
+      333,
+      59,
+      "fff4dc",
+      1
+     ],
+     [
+      365,
+      61,
+      "fff4dc",
+      1
+     ],
+     [
+      222,
+      57,
+      "fff4dc",
+      1
+     ],
+     [
+      359,
+      60,
+      "fff4dc",
+      1
+     ],
+     [
+      242,
+      62,
+      "fff4dc",
+      1
+     ],
+     [
+      326,
+      60,
+      "fff4dc",
+      1
+     ],
+     [
+      234,
+      65,
+      "fff4dc",
+      1
+     ],
+     [
+      360,
+      59,
+      "fff4dc",
+      1
+     ],
+     [
+      110,
+      23,
+      "c8b4ff",
+      1
+     ],
+     [
+      228,
+      24,
+      "c8b4ff",
+      1
+     ],
+     [
+      129,
+      16,
+      "c8b4ff",
+      1
+     ],
+     [
+      119,
+      7,
+      "c8b4ff",
+      1
+     ],
+     [
+      176,
+      25,
+      "c8b4ff",
+      1
+     ],
+     [
+      280,
+      19,
+      "c8b4ff",
+      1
+     ],
+     [
+      90,
+      21,
+      "c8b4ff",
+      1
+     ],
+     [
+      382,
+      21,
+      "c8b4ff",
+      1
+     ],
+     [
+      84,
+      23,
+      "c8b4ff",
+      1
+     ],
+     [
+      194,
+      6,
+      "c8b4ff",
+      1
+     ],
+     [
+      84,
+      19,
+      "c8b4ff",
+      1
+     ],
+     [
+      235,
+      27,
+      "c8b4ff",
+      1
+     ],
+     [
+      74,
+      13,
+      "c8b4ff",
+      1
+     ]
+    ],
+    "rate": 1.3,
+    "min": 0.15
+   },
+   {
+    "kind": "beam",
+    "x": 190,
+    "y": 10,
+    "angle": 98,
+    "sweep": 20,
+    "period": 7.0,
+    "phase": 0.0,
+    "length": 132,
+    "width": 46,
+    "color": "b48cff",
+    "alpha": 0.22,
+    "floor": 136
+   },
+   {
+    "kind": "beam",
+    "x": 360,
+    "y": 8,
+    "angle": 84,
+    "sweep": 22,
+    "period": 9.0,
+    "phase": 2.2,
+    "length": 128,
+    "width": 42,
+    "color": "ff7aa8",
+    "alpha": 0.18,
+    "floor": 132
+   },
+   {
+    "kind": "beam",
+    "x": 560,
+    "y": 40,
+    "angle": 112,
+    "sweep": 14,
+    "period": 8.0,
+    "phase": 4.0,
+    "length": 100,
+    "width": 40,
+    "color": "58e0d0",
+    "alpha": 0.16,
+    "floor": 134
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 18,
+    "rect": [
+     150,
+     40,
+     320,
+     100
+    ],
+    "speed": [
+     0,
+     3
+    ],
+    "color": "c8b4ff"
+   }
+  ]
+ }
+}

@@ -1,0 +1,227 @@
+{
+ "background": "res://assets/art/rooms/U02/background.png",
+ "occluders": [],
+ "props": {
+  "2": {
+   "texture": "res://assets/art/rooms/U02/prop-2.png",
+   "anchor": [
+    74,
+    49
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/U02/prop-3.png",
+   "anchor": [
+    31,
+    46
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/U02/prop-4.png",
+   "anchor": [
+    45,
+    47
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/U02/prop-5.png",
+   "anchor": [
+    50,
+    34
+   ]
+  },
+  "6": {
+   "texture": "res://assets/art/rooms/U02/prop-6.png",
+   "anchor": [
+    11,
+    62
+   ]
+  },
+  "7": {
+   "texture": "res://assets/art/rooms/U02/prop-7.png",
+   "anchor": [
+    11,
+    62
+   ]
+  }
+ },
+ "label_only": [
+  0
+ ],
+ "fauna": [
+  {
+   "kind": "squirrel",
+   "x": 180,
+   "y": 273,
+   "range": 3,
+   "speed": 0.25,
+   "rate": 1.2
+  },
+  {
+   "kind": "pigeon",
+   "x": 252,
+   "y": 266,
+   "range": 14,
+   "speed": 0.32,
+   "rate": 2.0
+  },
+  {
+   "kind": "pigeon",
+   "x": 284,
+   "y": 279,
+   "range": 10,
+   "speed": 0.27,
+   "rate": 1.6,
+   "flip": true
+  },
+  {
+   "kind": "rabbit",
+   "x": 458,
+   "y": 133,
+   "range": 0,
+   "speed": 0.0,
+   "rate": 0.7
+  },
+  {
+   "kind": "bird",
+   "x": 60,
+   "y": 38,
+   "fly": 9.0,
+   "rate": 4.0
+  },
+  {
+   "kind": "bird",
+   "x": 220,
+   "y": 52,
+   "fly": 7.0,
+   "rate": 3.5
+  }
+ ],
+ "leaves": [
+  [
+   40,
+   30,
+   90,
+   70
+  ],
+  [
+   560,
+   20,
+   80,
+   80
+  ]
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/U02/battle-far.png",
+  "near": "res://assets/art/rooms/U02/battle-near.png",
+  "layers": [
+   {
+    "kind": "drift",
+    "depth": "far",
+    "texture": "res://assets/art/rooms/U02/battle-clouds.png",
+    "y": 2,
+    "speed": 2.5
+   },
+   {
+    "kind": "fauna",
+    "depth": "far",
+    "fauna": [
+     {
+      "kind": "bird",
+      "x": 40,
+      "y": 30,
+      "fly": 11.0,
+      "rate": 4.0
+     },
+     {
+      "kind": "bird",
+      "x": 330,
+      "y": 18,
+      "fly": 8.0,
+      "rate": 3.2
+     },
+     {
+      "kind": "bird",
+      "x": 352,
+      "y": 24,
+      "fly": 8.0,
+      "rate": 3.6
+     }
+    ]
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      255,
+      81,
+      "fff0c4",
+      2
+     ],
+     [
+      385,
+      81,
+      "fff0c4",
+      2
+     ],
+     [
+      194,
+      68,
+      "fff0c4",
+      2
+     ],
+     [
+      446,
+      68,
+      "fff0c4",
+      2
+     ],
+     [
+      299,
+      93,
+      "fde9b6",
+      1
+     ],
+     [
+      341,
+      93,
+      "fde9b6",
+      1
+     ]
+    ],
+    "rate": 1.7,
+    "min": 0.45
+   },
+   {
+    "kind": "particles",
+    "style": "leaf",
+    "count": 16,
+    "rect": [
+     -20,
+     -10,
+     680,
+     175
+    ],
+    "speed": [
+     34,
+     16
+    ]
+   },
+   {
+    "kind": "particles",
+    "style": "wind",
+    "count": 4,
+    "rect": [
+     -120,
+     20,
+     880,
+     120
+    ],
+    "speed": [
+     240,
+     0
+    ]
+   }
+  ]
+ }
+}

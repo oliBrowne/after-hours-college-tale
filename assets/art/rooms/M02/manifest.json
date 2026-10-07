@@ -1,0 +1,359 @@
+{
+ "background": "res://assets/art/rooms/M02/background.png",
+ "background_dawn": "res://assets/art/rooms/M02/background-dawn.png",
+ "width": 800,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/M02/prop-0.png",
+   "anchor": [
+    62,
+    76
+   ]
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/M02/prop-1.png",
+   "anchor": [
+    47,
+    55
+   ]
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/M02/prop-2.png",
+   "anchor": [
+    47,
+    55
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/M02/prop-3.png",
+   "anchor": [
+    59,
+    33
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/M02/prop-4.png",
+   "anchor": [
+    59,
+    33
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/M02/prop-5.png",
+   "anchor": [
+    13,
+    70
+   ]
+  }
+ },
+ "label_only": [],
+ "overlays": [
+  {
+   "texture": "res://assets/art/rooms/M02/doors-open.png",
+   "x": 340,
+   "y": 0,
+   "flag": "rook_resolution"
+  }
+ ],
+ "fauna": [
+  {
+   "kind": "lamp_moth",
+   "x": 139,
+   "y": 331,
+   "range": 7,
+   "speed": 1.7,
+   "rate": 9.0
+  }
+ ],
+ "layers": [
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     400,
+     52,
+     "f6cf7a",
+     2
+    ],
+    [
+     342,
+     66,
+     "fff0c4",
+     1
+    ],
+    [
+     458,
+     66,
+     "fff0c4",
+     1
+    ],
+    [
+     680,
+     64,
+     "f6cf7a",
+     1
+    ],
+    [
+     158,
+     45,
+     "fff0c4",
+     2
+    ],
+    [
+     600,
+     45,
+     "fff0c4",
+     2
+    ],
+    [
+     135,
+     326,
+     "fff0c4",
+     2
+    ]
+   ],
+   "rate": 1.1,
+   "min": 0.55
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 16,
+   "rect": [
+    340,
+    230,
+    120,
+    230
+   ],
+   "speed": [
+    0,
+    3
+   ],
+   "color": "f8e0b0",
+   "flag": "dawn_started"
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/M02/battle-far.png",
+  "far_dawn": "res://assets/art/rooms/M02/battle-far-dawn.png",
+  "layers": [
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      -490,
+      -68,
+      "fff0c4",
+      1
+     ],
+     [
+      -171,
+      -2,
+      "fff0c4",
+      1
+     ],
+     [
+      -92,
+      14,
+      "fff0c4",
+      1
+     ],
+     [
+      42,
+      41,
+      "fff0c4",
+      1
+     ],
+     [
+      69,
+      47,
+      "fff0c4",
+      1
+     ],
+     [
+      126,
+      58,
+      "fff0c4",
+      1
+     ],
+     [
+      140,
+      61,
+      "fff0c4",
+      1
+     ],
+     [
+      171,
+      68,
+      "fff0c4",
+      1
+     ],
+     [
+      179,
+      69,
+      "fff0c4",
+      1
+     ],
+     [
+      190,
+      71,
+      "fff0c4",
+      1
+     ],
+     [
+      1130,
+      -68,
+      "fff0c4",
+      1
+     ],
+     [
+      811,
+      -2,
+      "fff0c4",
+      1
+     ],
+     [
+      732,
+      14,
+      "fff0c4",
+      1
+     ],
+     [
+      598,
+      41,
+      "fff0c4",
+      1
+     ],
+     [
+      571,
+      47,
+      "fff0c4",
+      1
+     ],
+     [
+      514,
+      58,
+      "fff0c4",
+      1
+     ],
+     [
+      500,
+      61,
+      "fff0c4",
+      1
+     ],
+     [
+      469,
+      68,
+      "fff0c4",
+      1
+     ],
+     [
+      461,
+      69,
+      "fff0c4",
+      1
+     ],
+     [
+      450,
+      71,
+      "fff0c4",
+      1
+     ],
+     [
+      320,
+      34,
+      "f6cf7a",
+      1
+     ],
+     [
+      269,
+      47,
+      "f6cf7a",
+      1
+     ],
+     [
+      371,
+      47,
+      "f6cf7a",
+      1
+     ],
+     [
+      257,
+      50,
+      "fff0c4",
+      1
+     ],
+     [
+      383,
+      50,
+      "fff0c4",
+      1
+     ],
+     [
+      236,
+      34,
+      "fff0c4",
+      2
+     ],
+     [
+      404,
+      34,
+      "fff0c4",
+      2
+     ],
+     [
+      193,
+      2,
+      "fff0c4",
+      2
+     ],
+     [
+      447,
+      2,
+      "fff0c4",
+      2
+     ],
+     [
+      528,
+      97,
+      "f6cf7a",
+      1
+     ]
+    ],
+    "rate": 1.2,
+    "min": 0.55
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 18,
+    "rect": [
+     180,
+     30,
+     280,
+     130
+    ],
+    "speed": [
+     0,
+     3
+    ],
+    "color": "f8e0b0"
+   },
+   {
+    "kind": "fauna",
+    "fauna": [
+     {
+      "kind": "lamp_moth",
+      "x": 320,
+      "y": 40,
+      "range": 8,
+      "speed": 1.5,
+      "rate": 9.0
+     }
+    ]
+   }
+  ]
+ }
+}

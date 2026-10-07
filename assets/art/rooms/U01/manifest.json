@@ -1,0 +1,343 @@
+{
+ "background": "res://assets/art/rooms/U01/background.png",
+ "width": 640,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/U01/prop-0.png",
+   "anchor": [
+    72,
+    95
+   ]
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/U01/prop-1.png",
+   "anchor": [
+    17,
+    42
+   ]
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/U01/prop-2.png",
+   "anchor": [
+    58,
+    42
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/U01/prop-3.png",
+   "anchor": [
+    39,
+    64
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/U01/prop-4.png",
+   "anchor": [
+    33,
+    38
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/U01/prop-5.png",
+   "anchor": [
+    48,
+    34
+   ]
+  },
+  "7": {
+   "texture": "res://assets/art/rooms/U01/prop-7.png",
+   "anchor": [
+    11,
+    66
+   ]
+  },
+  "8": {
+   "texture": "res://assets/art/rooms/U01/prop-8.png",
+   "anchor": [
+    55,
+    110
+   ]
+  },
+  "9": {
+   "texture": "res://assets/art/rooms/U01/prop-9.png",
+   "anchor": [
+    8,
+    33
+   ]
+  }
+ },
+ "label_only": [],
+ "fauna": [
+  {
+   "kind": "pigeon",
+   "x": 120,
+   "y": 304,
+   "range": 15,
+   "speed": 0.35,
+   "rate": 2.0
+  },
+  {
+   "kind": "pigeon",
+   "x": 156,
+   "y": 318,
+   "range": 10,
+   "speed": 0.29,
+   "rate": 1.5,
+   "flip": true
+  },
+  {
+   "kind": "squirrel",
+   "x": 540,
+   "y": 336,
+   "range": 18,
+   "speed": 0.22,
+   "rate": 1.4
+  },
+  {
+   "kind": "bird",
+   "x": 100,
+   "y": 22,
+   "fly": 8.0,
+   "rate": 4.0
+  }
+ ],
+ "leaves": [
+  [
+   560,
+   70,
+   60,
+   100
+  ]
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/U01/battle-far.png",
+  "near": "res://assets/art/rooms/U01/battle-near.png",
+  "layers": [
+   {
+    "kind": "fauna",
+    "depth": "far",
+    "fauna": [
+     {
+      "kind": "bird",
+      "x": 210,
+      "y": 26,
+      "fly": 9.0,
+      "rate": 4.0
+     },
+     {
+      "kind": "bird",
+      "x": 226,
+      "y": 32,
+      "fly": 9.0,
+      "rate": 3.6
+     }
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "1111111111111011111111111111110111",
+    "rate": 9.0,
+    "texture": "res://assets/art/rooms/U01/battle-neon-ffbf5a.png",
+    "x": 262,
+    "y": 77
+   },
+   {
+    "kind": "blink",
+    "pattern": "1111111111111111111101011111111111",
+    "rate": 9.0,
+    "texture": "res://assets/art/rooms/U01/battle-neon-ff6a5a.png",
+    "x": 392,
+    "y": 69
+   },
+   {
+    "kind": "blink",
+    "pattern": "1111111111111111111111111111111111",
+    "rate": 9.0,
+    "texture": "res://assets/art/rooms/U01/battle-neon-58e0d0.png",
+    "x": 225,
+    "y": 63
+   },
+   {
+    "kind": "blink",
+    "pattern": "1101111111111111111111111111111111",
+    "rate": 9.0,
+    "texture": "res://assets/art/rooms/U01/battle-neon-hotel.png",
+    "x": 459,
+    "y": 42
+   },
+   {
+    "kind": "blink",
+    "pattern": "1111111111111111110111111111111111",
+    "rate": 9.0,
+    "texture": "res://assets/art/rooms/U01/battle-neon-jazz.png",
+    "x": 136,
+    "y": 31
+   },
+   {
+    "kind": "blink",
+    "pattern": "111111111111110000000000",
+    "rate": 1.0,
+    "rects": [
+     [
+      318,
+      60,
+      5,
+      5,
+      "58e0a0"
+     ],
+     [
+      316,
+      58,
+      9,
+      9,
+      "58e0a0",
+      0.25
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000001110000000",
+    "rate": 1.0,
+    "rects": [
+     [
+      318,
+      52,
+      5,
+      5,
+      "ffbf5a"
+     ],
+     [
+      316,
+      50,
+      9,
+      9,
+      "ffbf5a",
+      0.25
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000000001111111",
+    "rate": 1.0,
+    "rects": [
+     [
+      318,
+      44,
+      5,
+      5,
+      "ff5a5a"
+     ],
+     [
+      316,
+      42,
+      9,
+      9,
+      "ff5a5a",
+      0.25
+     ]
+    ]
+   },
+   {
+    "kind": "movers",
+    "from": [
+     314.2,
+     101.7
+    ],
+    "to": [
+     296.8,
+     112.6
+    ],
+    "count": 2,
+    "period": 9.0,
+    "size": [
+     1,
+     3
+    ],
+    "pair": 9,
+    "color": "fff0c4",
+    "ease": "in"
+   },
+   {
+    "kind": "movers",
+    "from": [
+     343.2,
+     112.6
+    ],
+    "to": [
+     325.8,
+     101.7
+    ],
+    "count": 2,
+    "period": 11.0,
+    "size": [
+     3,
+     1
+    ],
+    "pair": 9,
+    "color": "ff5a5a",
+    "ease": "out"
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      285,
+      95,
+      "fff0c4",
+      1
+     ],
+     [
+      355,
+      95,
+      "fff0c4",
+      1
+     ],
+     [
+      261,
+      85,
+      "fff0c4",
+      2
+     ],
+     [
+      379,
+      85,
+      "fff0c4",
+      2
+     ],
+     [
+      218,
+      68,
+      "fff0c4",
+      2
+     ],
+     [
+      422,
+      68,
+      "fff0c4",
+      2
+     ]
+    ],
+    "rate": 1.5,
+    "min": 0.5
+   },
+   {
+    "kind": "particles",
+    "style": "leaf",
+    "count": 9,
+    "rect": [
+     -20,
+     20,
+     680,
+     150
+    ],
+    "speed": [
+     22,
+     12
+    ]
+   }
+  ]
+ }
+}

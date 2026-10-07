@@ -1,0 +1,266 @@
+{
+  "jules": {
+    "right": {
+      "file": "jules-right.png",
+      "frames": 8,
+      "size": [
+        72,
+        65
+      ],
+      "foot": [
+        37,
+        61
+      ]
+    },
+    "left": {
+      "file": "jules-left.png",
+      "frames": 8,
+      "size": [
+        72,
+        65
+      ],
+      "foot": [
+        37,
+        61
+      ]
+    },
+    "down": {
+      "file": "jules-down.png",
+      "frames": 6,
+      "size": [
+        72,
+        65
+      ],
+      "foot": [
+        37,
+        61
+      ]
+    },
+    "up": {
+      "file": "jules-up.png",
+      "frames": 6,
+      "size": [
+        72,
+        65
+      ],
+      "foot": [
+        37,
+        61
+      ]
+    }
+  },
+  "imani": {
+    "right": {
+      "file": "imani-right.png",
+      "frames": 8,
+      "size": [
+        70,
+        58
+      ],
+      "foot": [
+        36,
+        55
+      ]
+    },
+    "left": {
+      "file": "imani-left.png",
+      "frames": 8,
+      "size": [
+        70,
+        58
+      ],
+      "foot": [
+        36,
+        55
+      ]
+    },
+    "down": {
+      "file": "imani-down.png",
+      "frames": 6,
+      "size": [
+        70,
+        58
+      ],
+      "foot": [
+        36,
+        55
+      ]
+    },
+    "up": {
+      "file": "imani-up.png",
+      "frames": 6,
+      "size": [
+        70,
+        58
+      ],
+      "foot": [
+        36,
+        55
+      ]
+    }
+  },
+  "walt": {
+    "right": {
+      "file": "walt-right.png",
+      "frames": 8,
+      "size": [
+        43,
+        92
+      ],
+      "foot": [
+        22,
+        70
+      ]
+    },
+    "left": {
+      "file": "walt-left.png",
+      "frames": 8,
+      "size": [
+        43,
+        92
+      ],
+      "foot": [
+        22,
+        70
+      ]
+    },
+    "down": {
+      "file": "walt-down.png",
+      "frames": 6,
+      "size": [
+        43,
+        92
+      ],
+      "foot": [
+        22,
+        70
+      ]
+    },
+    "up": {
+      "file": "walt-up.png",
+      "frames": 6,
+      "size": [
+        43,
+        92
+      ],
+      "foot": [
+        22,
+        70
+      ]
+    }
+  },
+  "jak": {
+    "right": {
+      "file": "jak-right.png",
+      "frames": 8,
+      "size": [
+        48,
+        64
+      ],
+      "foot": [
+        27,
+        62
+      ]
+    },
+    "down": {
+      "file": "jak-down.png",
+      "frames": 8,
+      "size": [
+        48,
+        64
+      ],
+      "foot": [
+        27,
+        62
+      ]
+    },
+    "up": {
+      "file": "jak-up.png",
+      "frames": 8,
+      "size": [
+        48,
+        64
+      ],
+      "foot": [
+        27,
+        62
+      ]
+    }
+  },
+  "jaktennis": {
+    "right": {
+      "file": "jaktennis-right.png",
+      "frames": 8,
+      "size": [
+        48,
+        64
+      ],
+      "foot": [
+        27,
+        62
+      ]
+    },
+    "down": {
+      "file": "jaktennis-down.png",
+      "frames": 8,
+      "size": [
+        48,
+        64
+      ],
+      "foot": [
+        27,
+        62
+      ]
+    },
+    "up": {
+      "file": "jaktennis-up.png",
+      "frames": 8,
+      "size": [
+        48,
+        64
+      ],
+      "foot": [
+        27,
+        62
+      ]
+    }
+  },
+  "eric": {
+    "right": {
+      "file": "eric-right.png",
+      "frames": 8,
+      "size": [
+        50,
+        55
+      ],
+      "foot": [
+        24,
+        52
+      ]
+    },
+    "down": {
+      "file": "eric-down.png",
+      "frames": 8,
+      "size": [
+        50,
+        55
+      ],
+      "foot": [
+        24,
+        52
+      ]
+    },
+    "up": {
+      "file": "eric-up.png",
+      "frames": 8,
+      "size": [
+        50,
+        55
+      ],
+      "foot": [
+        24,
+        52
+      ]
+    }
+  }
+}

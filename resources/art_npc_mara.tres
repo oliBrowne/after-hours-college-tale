@@ -1,0 +1,237 @@
+[gd_resource type="SpriteFrames" load_steps=46 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/npc-mara-world.png" id="1"]
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_1"]
+atlas = ExtResource("1")
+region = Rect2(40, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_2"]
+atlas = ExtResource("1")
+region = Rect2(80, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_3"]
+atlas = ExtResource("1")
+region = Rect2(120, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_4"]
+atlas = ExtResource("1")
+region = Rect2(160, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_5"]
+atlas = ExtResource("1")
+region = Rect2(200, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_6"]
+atlas = ExtResource("1")
+region = Rect2(240, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_7"]
+atlas = ExtResource("1")
+region = Rect2(280, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_8"]
+atlas = ExtResource("1")
+region = Rect2(320, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_9"]
+atlas = ExtResource("1")
+region = Rect2(360, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_0_10"]
+atlas = ExtResource("1")
+region = Rect2(400, 0, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_1"]
+atlas = ExtResource("1")
+region = Rect2(40, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_2"]
+atlas = ExtResource("1")
+region = Rect2(80, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_3"]
+atlas = ExtResource("1")
+region = Rect2(120, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_4"]
+atlas = ExtResource("1")
+region = Rect2(160, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_5"]
+atlas = ExtResource("1")
+region = Rect2(200, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_6"]
+atlas = ExtResource("1")
+region = Rect2(240, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_7"]
+atlas = ExtResource("1")
+region = Rect2(280, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_8"]
+atlas = ExtResource("1")
+region = Rect2(320, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_9"]
+atlas = ExtResource("1")
+region = Rect2(360, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_1_10"]
+atlas = ExtResource("1")
+region = Rect2(400, 56, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_1"]
+atlas = ExtResource("1")
+region = Rect2(40, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_2"]
+atlas = ExtResource("1")
+region = Rect2(80, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_3"]
+atlas = ExtResource("1")
+region = Rect2(120, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_4"]
+atlas = ExtResource("1")
+region = Rect2(160, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_5"]
+atlas = ExtResource("1")
+region = Rect2(200, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_6"]
+atlas = ExtResource("1")
+region = Rect2(240, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_7"]
+atlas = ExtResource("1")
+region = Rect2(280, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_8"]
+atlas = ExtResource("1")
+region = Rect2(320, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_9"]
+atlas = ExtResource("1")
+region = Rect2(360, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_2_10"]
+atlas = ExtResource("1")
+region = Rect2(400, 112, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_0"]
+atlas = ExtResource("1")
+region = Rect2(0, 168, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_1"]
+atlas = ExtResource("1")
+region = Rect2(40, 168, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_2"]
+atlas = ExtResource("1")
+region = Rect2(80, 168, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_3"]
+atlas = ExtResource("1")
+region = Rect2(120, 168, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_4"]
+atlas = ExtResource("1")
+region = Rect2(160, 168, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_5"]
+atlas = ExtResource("1")
+region = Rect2(200, 168, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_6"]
+atlas = ExtResource("1")
+region = Rect2(240, 168, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_7"]
+atlas = ExtResource("1")
+region = Rect2(280, 168, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_8"]
+atlas = ExtResource("1")
+region = Rect2(320, 168, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_9"]
+atlas = ExtResource("1")
+region = Rect2(360, 168, 40, 56)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_mara_3_10"]
+atlas = ExtResource("1")
+region = Rect2(400, 168, 40, 56)
+filter_clip = true
+
+[resource]
+animations = [{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_0_0")},{"duration": 1.0, "texture": SubResource("Atlas_mara_0_1")}], "loop": true, "name": &"idle_down", "speed": 2.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_0_2")},{"duration": 1.0, "texture": SubResource("Atlas_mara_0_3")},{"duration": 1.0, "texture": SubResource("Atlas_mara_0_4")},{"duration": 1.0, "texture": SubResource("Atlas_mara_0_5")},{"duration": 1.0, "texture": SubResource("Atlas_mara_0_6")},{"duration": 1.0, "texture": SubResource("Atlas_mara_0_7")}], "loop": true, "name": &"walk_down", "speed": 9.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_0_8")},{"duration": 1.0, "texture": SubResource("Atlas_mara_0_9")},{"duration": 1.0, "texture": SubResource("Atlas_mara_0_10")}], "loop": false, "name": &"interact_down", "speed": 6.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_1_0")},{"duration": 1.0, "texture": SubResource("Atlas_mara_1_1")}], "loop": true, "name": &"idle_left", "speed": 2.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_1_2")},{"duration": 1.0, "texture": SubResource("Atlas_mara_1_3")},{"duration": 1.0, "texture": SubResource("Atlas_mara_1_4")},{"duration": 1.0, "texture": SubResource("Atlas_mara_1_5")},{"duration": 1.0, "texture": SubResource("Atlas_mara_1_6")},{"duration": 1.0, "texture": SubResource("Atlas_mara_1_7")}], "loop": true, "name": &"walk_left", "speed": 9.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_1_8")},{"duration": 1.0, "texture": SubResource("Atlas_mara_1_9")},{"duration": 1.0, "texture": SubResource("Atlas_mara_1_10")}], "loop": false, "name": &"interact_left", "speed": 6.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_2_0")},{"duration": 1.0, "texture": SubResource("Atlas_mara_2_1")}], "loop": true, "name": &"idle_right", "speed": 2.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_2_2")},{"duration": 1.0, "texture": SubResource("Atlas_mara_2_3")},{"duration": 1.0, "texture": SubResource("Atlas_mara_2_4")},{"duration": 1.0, "texture": SubResource("Atlas_mara_2_5")},{"duration": 1.0, "texture": SubResource("Atlas_mara_2_6")},{"duration": 1.0, "texture": SubResource("Atlas_mara_2_7")}], "loop": true, "name": &"walk_right", "speed": 9.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_2_8")},{"duration": 1.0, "texture": SubResource("Atlas_mara_2_9")},{"duration": 1.0, "texture": SubResource("Atlas_mara_2_10")}], "loop": false, "name": &"interact_right", "speed": 6.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_3_0")},{"duration": 1.0, "texture": SubResource("Atlas_mara_3_1")}], "loop": true, "name": &"idle_up", "speed": 2.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_3_2")},{"duration": 1.0, "texture": SubResource("Atlas_mara_3_3")},{"duration": 1.0, "texture": SubResource("Atlas_mara_3_4")},{"duration": 1.0, "texture": SubResource("Atlas_mara_3_5")},{"duration": 1.0, "texture": SubResource("Atlas_mara_3_6")},{"duration": 1.0, "texture": SubResource("Atlas_mara_3_7")}], "loop": true, "name": &"walk_up", "speed": 9.0},
+{"frames": [{"duration": 1.0, "texture": SubResource("Atlas_mara_3_8")},{"duration": 1.0, "texture": SubResource("Atlas_mara_3_9")},{"duration": 1.0, "texture": SubResource("Atlas_mara_3_10")}], "loop": false, "name": &"interact_up", "speed": 6.0}]

@@ -1,0 +1,362 @@
+{
+ "background": "res://assets/art/rooms/O04/background.png",
+ "width": 800,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/O04/prop-0.png",
+   "anchor": [
+    94,
+    74
+   ],
+   "flag": "finite_plan",
+   "flag_texture": "res://assets/art/rooms/O04/prop-0-finite_plan.png"
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/O04/prop-1.png",
+   "anchor": [
+    72,
+    117
+   ]
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/O04/prop-2.png",
+   "anchor": [
+    72,
+    117
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/O04/prop-3.png",
+   "anchor": [
+    43,
+    52
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/O04/prop-4.png",
+   "anchor": [
+    13,
+    71
+   ]
+  }
+ },
+ "label_only": [],
+ "overlays": [
+  {
+   "texture": "res://assets/art/rooms/O04/rig-approved.png",
+   "x": 328,
+   "y": 14,
+   "flag": "todd_resolution",
+   "equals": "peaceful"
+  },
+  {
+   "texture": "res://assets/art/rooms/O04/rig-damaged.png",
+   "x": 328,
+   "y": 14,
+   "flag": "todd_resolution",
+   "equals": "forceful"
+  },
+  {
+   "texture": "res://assets/art/rooms/O04/forms-scattered.png",
+   "x": 320,
+   "y": 142,
+   "flag": "todd_resolution",
+   "equals": "forceful"
+  }
+ ],
+ "fauna": [
+  {
+   "kind": "lamp_moth",
+   "x": 139,
+   "y": 261,
+   "range": 7,
+   "speed": 1.8,
+   "rate": 8.0
+  },
+  {
+   "kind": "umc2_mouse",
+   "x": 720,
+   "y": 148,
+   "range": 22,
+   "speed": 0.3,
+   "rate": 4.0,
+   "flip": true
+  }
+ ],
+ "layers": [
+  {
+   "kind": "blink",
+   "pattern": "110000",
+   "rate": 3.0,
+   "texture": "res://assets/art/rooms/O04/rig-lamp.png",
+   "x": 416,
+   "y": 3,
+   "flag": "todd_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "101000000000000000",
+   "rate": 7.0,
+   "texture": "res://assets/art/rooms/O04/stamp-0-mid.png",
+   "x": 364,
+   "y": 52,
+   "flag": "todd_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "010000000000000000",
+   "rate": 7.0,
+   "texture": "res://assets/art/rooms/O04/stamp-0-down.png",
+   "x": 364,
+   "y": 52,
+   "flag": "todd_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000101000000000",
+   "rate": 7.0,
+   "texture": "res://assets/art/rooms/O04/stamp-1-mid.png",
+   "x": 418,
+   "y": 52,
+   "flag": "todd_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000010000000000",
+   "rate": 7.0,
+   "texture": "res://assets/art/rooms/O04/stamp-1-down.png",
+   "x": 418,
+   "y": 52,
+   "flag": "todd_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000000000101000",
+   "rate": 7.0,
+   "texture": "res://assets/art/rooms/O04/stamp-2-mid.png",
+   "x": 472,
+   "y": 52,
+   "flag": "todd_resolution",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000000000010000",
+   "rate": 7.0,
+   "texture": "res://assets/art/rooms/O04/stamp-2-down.png",
+   "x": 472,
+   "y": 52,
+   "flag": "todd_resolution",
+   "when": false
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     294,
+     50,
+     "fde9b6",
+     1
+    ],
+    [
+     590,
+     50,
+     "fde9b6",
+     1
+    ],
+    [
+     135,
+     263,
+     "fff0c4",
+     2
+    ],
+    [
+     385,
+     321,
+     "fde9b6",
+     1
+    ]
+   ],
+   "rate": 1.1,
+   "min": 0.55
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 16,
+   "rect": [
+    40,
+    60,
+    90,
+    150
+   ],
+   "speed": [
+    -1,
+    2
+   ],
+   "color": "c8d4f0"
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 10,
+   "rect": [
+    706,
+    60,
+    70,
+    150
+   ],
+   "speed": [
+    -1,
+    2
+   ],
+   "color": "c8d4f0"
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/O04/battle-far.png",
+  "layers": [
+   {
+    "kind": "blink",
+    "pattern": "110000",
+    "rate": 3.0,
+    "texture": "res://assets/art/rooms/O04/battle-lamp.png",
+    "x": 270,
+    "y": 4
+   },
+   {
+    "kind": "blink",
+    "pattern": "101000000000000000",
+    "rate": 7.0,
+    "texture": "res://assets/art/rooms/O04/battle-stamp-0-mid.png",
+    "x": 214,
+    "y": 50
+   },
+   {
+    "kind": "blink",
+    "pattern": "010000000000000000",
+    "rate": 7.0,
+    "texture": "res://assets/art/rooms/O04/battle-stamp-0-down.png",
+    "x": 214,
+    "y": 50
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000101000000000",
+    "rate": 7.0,
+    "texture": "res://assets/art/rooms/O04/battle-stamp-1-mid.png",
+    "x": 268,
+    "y": 50
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000010000000000",
+    "rate": 7.0,
+    "texture": "res://assets/art/rooms/O04/battle-stamp-1-down.png",
+    "x": 268,
+    "y": 50
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000101000",
+    "rate": 7.0,
+    "texture": "res://assets/art/rooms/O04/battle-stamp-2-mid.png",
+    "x": 322,
+    "y": 50
+   },
+   {
+    "kind": "blink",
+    "pattern": "000000000000010000",
+    "rate": 7.0,
+    "texture": "res://assets/art/rooms/O04/battle-stamp-2-down.png",
+    "x": 322,
+    "y": 50
+   },
+   {
+    "kind": "beam",
+    "x": 290,
+    "y": 20,
+    "angle": 90,
+    "sweep": 38,
+    "period": 7.0,
+    "length": 132,
+    "width": 80,
+    "alpha": 0.12,
+    "color": "ff5a40",
+    "floor": 150
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      68,
+      27,
+      "fde9b6",
+      1
+     ],
+     [
+      141,
+      50,
+      "fde9b6",
+      1
+     ],
+     [
+      170,
+      54,
+      "fde9b6",
+      1
+     ],
+     [
+      410,
+      54,
+      "fde9b6",
+      1
+     ]
+    ],
+    "rate": 1.3,
+    "min": 0.5
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 22,
+    "rect": [
+     0,
+     40,
+     170,
+     110
+    ],
+    "speed": [
+     -2,
+     3
+    ],
+    "color": "c8d4f0"
+   },
+   {
+    "kind": "fauna",
+    "fauna": [
+     {
+      "kind": "loose_page",
+      "x": 120,
+      "y": 70,
+      "fly": 14.0,
+      "rate": 6.0
+     },
+     {
+      "kind": "loose_page",
+      "x": 420,
+      "y": 112,
+      "fly": 10.0,
+      "rate": 5.0
+     }
+    ]
+   }
+  ]
+ }
+}

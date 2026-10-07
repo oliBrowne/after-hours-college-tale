@@ -1,0 +1,219 @@
+{
+ "background": "res://assets/art/rooms/O03/background.png",
+ "width": 800,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/O03/prop-0.png",
+   "anchor": [
+    109,
+    76
+   ]
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/O03/prop-1.png",
+   "anchor": [
+    64,
+    48
+   ],
+   "flag": "family_message_read",
+   "flag_texture": "res://assets/art/rooms/O03/prop-1-family_message_read.png"
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/O03/prop-2.png",
+   "anchor": [
+    58,
+    111
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/O03/prop-4.png",
+   "anchor": [
+    56,
+    35
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/O03/prop-5.png",
+   "anchor": [
+    13,
+    71
+   ]
+  }
+ },
+ "label_only": [
+  3
+ ],
+ "overlays": [
+  {
+   "texture": "res://assets/art/rooms/O03/door-ajar.png",
+   "x": 71,
+   "y": 54,
+   "flag": "booth_origin"
+  }
+ ],
+ "fauna": [
+  {
+   "kind": "lamp_moth",
+   "x": 600,
+   "y": 68,
+   "range": 8,
+   "speed": 1.6,
+   "rate": 8.0
+  },
+  {
+   "kind": "umc2_mouse",
+   "x": 300,
+   "y": 148,
+   "range": 18,
+   "speed": 0.3,
+   "rate": 4.0,
+   "flip": true
+  }
+ ],
+ "layers": [
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     115,
+     287,
+     "fff0c4",
+     2
+    ],
+    [
+     327,
+     272,
+     "fde9b6",
+     1
+    ]
+   ],
+   "rate": 1.1,
+   "min": 0.55
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 18,
+   "rect": [
+    482,
+    42,
+    136,
+    200
+   ],
+   "speed": [
+    -1,
+    2
+   ],
+   "color": "c8d4f0"
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/O03/battle-far.png",
+  "layers": [
+   {
+    "kind": "blink",
+    "pattern": "1000",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/O03/battle-reels-0.png",
+    "x": 214,
+    "y": 61
+   },
+   {
+    "kind": "blink",
+    "pattern": "0100",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/O03/battle-reels-1.png",
+    "x": 214,
+    "y": 61
+   },
+   {
+    "kind": "blink",
+    "pattern": "0010",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/O03/battle-reels-2.png",
+    "x": 214,
+    "y": 61
+   },
+   {
+    "kind": "blink",
+    "pattern": "0001",
+    "rate": 6.0,
+    "texture": "res://assets/art/rooms/O03/battle-reels-3.png",
+    "x": 214,
+    "y": 61
+   },
+   {
+    "kind": "blink",
+    "pattern": "1100000000",
+    "rate": 3.0,
+    "rects": [
+     [
+      321,
+      73,
+      15,
+      9,
+      "a8d0f0",
+      0.22
+     ],
+     [
+      325,
+      76,
+      7,
+      3,
+      "e8f4fc",
+      0.8
+     ]
+    ]
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      371,
+      73,
+      "fde9b6",
+      1
+     ],
+     [
+      174,
+      57,
+      "fff0c4",
+      2
+     ]
+    ],
+    "rate": 1.4,
+    "min": 0.5
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 22,
+    "rect": [
+     226,
+     32,
+     144,
+     120
+    ],
+    "speed": [
+     -2,
+     2
+    ],
+    "color": "c8d4f0"
+   },
+   {
+    "kind": "fauna",
+    "fauna": [
+     {
+      "kind": "lamp_moth",
+      "x": 360,
+      "y": 52,
+      "range": 6,
+      "speed": 1.7,
+      "rate": 8.0
+     }
+    ]
+   }
+  ]
+ }
+}

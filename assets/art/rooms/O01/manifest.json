@@ -1,0 +1,630 @@
+{
+ "background": "res://assets/art/rooms/O01/background.png",
+ "width": 960,
+ "occluders": [],
+ "props": {
+  "1": {
+   "texture": "res://assets/art/rooms/O01/prop-1.png",
+   "anchor": [
+    68,
+    136
+   ]
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/O01/prop-2.png",
+   "anchor": [
+    57,
+    140
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/O01/prop-3.png",
+   "anchor": [
+    78,
+    34
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/O01/prop-4.png",
+   "anchor": [
+    12,
+    70
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/O01/prop-5.png",
+   "anchor": [
+    89,
+    58
+   ]
+  }
+ },
+ "label_only": [
+  0
+ ],
+ "overlays": [
+  {
+   "texture": "res://assets/art/rooms/O01/office-closed.png",
+   "x": 540,
+   "y": 33,
+   "flag": "chapter3_complete"
+  },
+  {
+   "texture": "res://assets/art/rooms/O01/procession-lit.png",
+   "x": 0,
+   "y": 420,
+   "flag": "chapter3_complete"
+  }
+ ],
+ "fauna": [
+  {
+   "kind": "barn_owl",
+   "x": 165,
+   "y": 36,
+   "range": 0,
+   "speed": 0.0,
+   "rate": 1.2
+  },
+  {
+   "kind": "night_bat",
+   "x": 380,
+   "y": 22,
+   "fly": 13.0,
+   "rate": 7.0
+  },
+  {
+   "kind": "night_bat",
+   "x": 700,
+   "y": 40,
+   "fly": 10.0,
+   "rate": 6.0
+  },
+  {
+   "kind": "om_roost",
+   "x": 280,
+   "y": 124,
+   "range": 0,
+   "speed": 0.0,
+   "rate": 0.4
+  },
+  {
+   "kind": "squirrel",
+   "x": 336,
+   "y": 286,
+   "range": 4,
+   "speed": 0.3,
+   "rate": 1.2
+  },
+  {
+   "kind": "rabbit",
+   "x": 868,
+   "y": 372,
+   "range": 6,
+   "speed": 0.2,
+   "rate": 0.8,
+   "flip": true
+  },
+  {
+   "kind": "lamp_moth",
+   "x": 192,
+   "y": 340,
+   "range": 7,
+   "speed": 2.3,
+   "rate": 9.0
+  },
+  {
+   "kind": "om_crane",
+   "x": 200,
+   "y": 206,
+   "fly": 5.0,
+   "rate": 3.0
+  }
+ ],
+ "leaves": [
+  [
+   200,
+   145,
+   120,
+   130
+  ],
+  [
+   760,
+   200,
+   80,
+   100
+  ]
+ ],
+ "layers": [
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     424,
+     84,
+     "fff0c4",
+     1
+    ],
+    [
+     476,
+     84,
+     "fff0c4",
+     1
+    ],
+    [
+     190,
+     346,
+     "fff0c4",
+     2
+    ],
+    [
+     450,
+     79,
+     "fde9b6",
+     1
+    ]
+   ],
+   "rate": 1.6,
+   "min": 0.5
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     779,
+     9,
+     "c8c0e0",
+     0
+    ],
+    [
+     41,
+     95,
+     "c8c0e0",
+     0
+    ],
+    [
+     765,
+     19,
+     "c8c0e0",
+     0
+    ],
+    [
+     8,
+     101,
+     "c8c0e0",
+     0
+    ],
+    [
+     160,
+     62,
+     "c8c0e0",
+     0
+    ],
+    [
+     813,
+     99,
+     "c8c0e0",
+     0
+    ],
+    [
+     889,
+     106,
+     "c8c0e0",
+     0
+    ],
+    [
+     112,
+     44,
+     "c8c0e0",
+     0
+    ],
+    [
+     803,
+     93,
+     "c8c0e0",
+     0
+    ],
+    [
+     35,
+     95,
+     "c8c0e0",
+     0
+    ],
+    [
+     57,
+     20,
+     "c8c0e0",
+     0
+    ]
+   ],
+   "rate": 0.9,
+   "min": 0.0
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     558,
+     63,
+     "fff0c4",
+     1
+    ]
+   ],
+   "rate": 2.4,
+   "min": 0.6,
+   "flag": "chapter3_complete",
+   "when": false
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     746,
+     436,
+     "f6cf7a",
+     1
+    ],
+    [
+     770,
+     436,
+     "f6cf7a",
+     1
+    ],
+    [
+     794,
+     436,
+     "f6cf7a",
+     1
+    ],
+    [
+     818,
+     436,
+     "f6cf7a",
+     1
+    ],
+    [
+     842,
+     436,
+     "f6cf7a",
+     1
+    ],
+    [
+     866,
+     436,
+     "f6cf7a",
+     1
+    ],
+    [
+     890,
+     436,
+     "f6cf7a",
+     1
+    ],
+    [
+     914,
+     436,
+     "f6cf7a",
+     1
+    ],
+    [
+     938,
+     436,
+     "f6cf7a",
+     1
+    ],
+    [
+     758,
+     485,
+     "f6cf7a",
+     1
+    ],
+    [
+     782,
+     485,
+     "f6cf7a",
+     1
+    ],
+    [
+     806,
+     485,
+     "f6cf7a",
+     1
+    ],
+    [
+     830,
+     485,
+     "f6cf7a",
+     1
+    ],
+    [
+     854,
+     485,
+     "f6cf7a",
+     1
+    ],
+    [
+     878,
+     485,
+     "f6cf7a",
+     1
+    ],
+    [
+     902,
+     485,
+     "f6cf7a",
+     1
+    ],
+    [
+     926,
+     485,
+     "f6cf7a",
+     1
+    ]
+   ],
+   "rate": 3.1,
+   "min": 0.4,
+   "flag": "chapter3_complete"
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/O01/battle-far.png",
+  "near": "res://assets/art/rooms/O01/battle-near.png",
+  "layers": [
+   {
+    "kind": "blink",
+    "pattern": "100000",
+    "rate": 3.0,
+    "texture": "res://assets/art/rooms/O01/battle-bell-0.png",
+    "x": 310,
+    "y": 40
+   },
+   {
+    "kind": "blink",
+    "pattern": "010001",
+    "rate": 3.0,
+    "texture": "res://assets/art/rooms/O01/battle-bell-1.png",
+    "x": 310,
+    "y": 40
+   },
+   {
+    "kind": "blink",
+    "pattern": "001010",
+    "rate": 3.0,
+    "texture": "res://assets/art/rooms/O01/battle-bell-2.png",
+    "x": 310,
+    "y": 40
+   },
+   {
+    "kind": "blink",
+    "pattern": "000100",
+    "rate": 3.0,
+    "texture": "res://assets/art/rooms/O01/battle-bell-3.png",
+    "x": 310,
+    "y": 40
+   },
+   {
+    "kind": "drift",
+    "depth": "far",
+    "texture": "res://assets/art/rooms/O01/battle-clouds.png",
+    "y": 8,
+    "speed": 2.0,
+    "alpha": 0.85
+   },
+   {
+    "kind": "fauna",
+    "depth": "far",
+    "fauna": [
+     {
+      "kind": "night_bat",
+      "x": 260,
+      "y": 20,
+      "fly": 12.0,
+      "rate": 7.0
+     },
+     {
+      "kind": "night_bat",
+      "x": 360,
+      "y": 34,
+      "fly": 9.0,
+      "rate": 6.0
+     },
+     {
+      "kind": "night_bat",
+      "x": 60,
+      "y": 48,
+      "fly": 14.0,
+      "rate": 7.5
+     }
+    ]
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      205,
+      87,
+      "fff0c4",
+      1
+     ],
+     [
+      435,
+      87,
+      "fff0c4",
+      1
+     ],
+     [
+      155,
+      76,
+      "fff0c4",
+      2
+     ],
+     [
+      485,
+      76,
+      "fff0c4",
+      2
+     ],
+     [
+      309,
+      98,
+      "fde9b6",
+      1
+     ],
+     [
+      331,
+      98,
+      "fde9b6",
+      1
+     ],
+     [
+      364,
+      89,
+      "fff0c4",
+      1
+     ]
+    ],
+    "rate": 1.6,
+    "min": 0.45
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      298,
+      23,
+      "c8c0e0",
+      0
+     ],
+     [
+      170,
+      53,
+      "c8c0e0",
+      0
+     ],
+     [
+      341,
+      28,
+      "c8c0e0",
+      0
+     ],
+     [
+      281,
+      64,
+      "c8c0e0",
+      0
+     ],
+     [
+      360,
+      20,
+      "c8c0e0",
+      0
+     ],
+     [
+      300,
+      22,
+      "c8c0e0",
+      0
+     ],
+     [
+      370,
+      36,
+      "c8c0e0",
+      0
+     ],
+     [
+      231,
+      35,
+      "c8c0e0",
+      0
+     ],
+     [
+      195,
+      39,
+      "c8c0e0",
+      0
+     ],
+     [
+      105,
+      8,
+      "c8c0e0",
+      0
+     ],
+     [
+      310,
+      66,
+      "c8c0e0",
+      0
+     ],
+     [
+      357,
+      13,
+      "c8c0e0",
+      0
+     ],
+     [
+      199,
+      68,
+      "c8c0e0",
+      0
+     ],
+     [
+      277,
+      58,
+      "c8c0e0",
+      0
+     ],
+     [
+      342,
+      61,
+      "c8c0e0",
+      0
+     ]
+    ],
+    "rate": 0.9,
+    "min": 0.0,
+    "depth": "far"
+   },
+   {
+    "kind": "particles",
+    "style": "leaf",
+    "count": 14,
+    "rect": [
+     -20,
+     0,
+     300,
+     165
+    ],
+    "speed": [
+     26,
+     18
+    ]
+   },
+   {
+    "kind": "particles",
+    "style": "leaf",
+    "count": 6,
+    "rect": [
+     440,
+     30,
+     220,
+     135
+    ],
+    "speed": [
+     -14,
+     16
+    ]
+   },
+   {
+    "kind": "fauna",
+    "fauna": [
+     {
+      "kind": "om_crane",
+      "x": 120,
+      "y": 96,
+      "fly": 6.0,
+      "rate": 3.0
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,443 @@
+[gd_resource type="SpriteFrames" load_steps=70 format=3]
+
+[ext_resource type="Texture2D" path="res://assets/art/cal-world.png" id="1_texture"]
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_0_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(0, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_1_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(32, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_2_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(64, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_3_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(96, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_4_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(128, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_5_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(160, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_6_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(192, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_7_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(224, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_8_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(256, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_9_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(288, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_10_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(320, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_11_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(352, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_12_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(384, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_13_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(416, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_14_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(448, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_15_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(480, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_16_0"]
+atlas = ExtResource("1_texture")
+region = Rect2(512, 0, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_0_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(0, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_1_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(32, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_2_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(64, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_3_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(96, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_4_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(128, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_5_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(160, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_6_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(192, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_7_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(224, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_8_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(256, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_9_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(288, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_10_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(320, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_11_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(352, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_12_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(384, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_13_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(416, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_14_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(448, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_15_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(480, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_16_1"]
+atlas = ExtResource("1_texture")
+region = Rect2(512, 48, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_0_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(0, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_1_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(32, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_2_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(64, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_3_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(96, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_4_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(128, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_5_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(160, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_6_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(192, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_7_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(224, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_8_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(256, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_9_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(288, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_10_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(320, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_11_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(352, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_12_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(384, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_13_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(416, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_14_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(448, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_15_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(480, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_16_2"]
+atlas = ExtResource("1_texture")
+region = Rect2(512, 96, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_0_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(0, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_1_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(32, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_2_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(64, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_3_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(96, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_4_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(128, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_5_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(160, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_6_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(192, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_7_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(224, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_8_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(256, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_9_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(288, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_10_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(320, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_11_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(352, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_12_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(384, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_13_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(416, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_14_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(448, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_15_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(480, 144, 32, 48)
+filter_clip = true
+
+[sub_resource type="AtlasTexture" id="Atlas_cal_world_16_3"]
+atlas = ExtResource("1_texture")
+region = Rect2(512, 144, 32, 48)
+filter_clip = true
+
+[resource]
+animations = [
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_0_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_1_0")}],
+"loop": true,
+"name": &"idle_down",
+"speed": 2.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_2_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_3_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_4_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_5_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_6_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_7_0")}],
+"loop": true,
+"name": &"walk_down",
+"speed": 9.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_8_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_9_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_10_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_11_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_12_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_13_0")}],
+"loop": true,
+"name": &"run_down",
+"speed": 12.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_14_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_15_0")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_16_0")}],
+"loop": false,
+"name": &"interact_down",
+"speed": 6.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_0_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_1_1")}],
+"loop": true,
+"name": &"idle_left",
+"speed": 2.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_2_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_3_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_4_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_5_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_6_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_7_1")}],
+"loop": true,
+"name": &"walk_left",
+"speed": 9.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_8_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_9_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_10_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_11_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_12_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_13_1")}],
+"loop": true,
+"name": &"run_left",
+"speed": 12.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_14_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_15_1")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_16_1")}],
+"loop": false,
+"name": &"interact_left",
+"speed": 6.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_0_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_1_2")}],
+"loop": true,
+"name": &"idle_right",
+"speed": 2.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_2_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_3_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_4_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_5_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_6_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_7_2")}],
+"loop": true,
+"name": &"walk_right",
+"speed": 9.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_8_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_9_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_10_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_11_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_12_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_13_2")}],
+"loop": true,
+"name": &"run_right",
+"speed": 12.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_14_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_15_2")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_16_2")}],
+"loop": false,
+"name": &"interact_right",
+"speed": 6.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_0_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_1_3")}],
+"loop": true,
+"name": &"idle_up",
+"speed": 2.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_2_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_3_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_4_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_5_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_6_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_7_3")}],
+"loop": true,
+"name": &"walk_up",
+"speed": 9.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_8_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_9_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_10_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_11_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_12_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_13_3")}],
+"loop": true,
+"name": &"run_up",
+"speed": 12.0
+},
+{
+"frames": [{"duration": 1.0, "texture": SubResource("Atlas_cal_world_14_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_15_3")}, {"duration": 1.0, "texture": SubResource("Atlas_cal_world_16_3")}],
+"loop": false,
+"name": &"interact_up",
+"speed": 6.0
+}
+]

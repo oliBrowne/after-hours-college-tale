@@ -1,0 +1,621 @@
+{
+  "version": 1,
+  "engine": "Godot 4",
+  "source_manifest": "public/assets/art/manifest.json",
+  "assets": [
+    {
+      "id": "jules-world",
+      "path": "res://assets/art/jules-world.png",
+      "width": 544,
+      "height": 192,
+      "sha256": "0c0c6a9f2d0bb5ed50d5b0a2a3601399ba3df2bfcb6e24c24df93a919472d22e",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 32,
+      "frameHeight": 48,
+      "pivot": [
+        16,
+        48
+      ],
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "walk": [
+          2,
+          7
+        ],
+        "run": [
+          8,
+          13
+        ],
+        "interact": [
+          14,
+          16
+        ]
+      },
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "jules-battle",
+      "path": "res://assets/art/jules-battle.png",
+      "width": 1248,
+      "height": 72,
+      "sha256": "4d9cd8bf96aaaddd6741437464710c4b61f88d3df5ec77b79a55e0fda843a9fd",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 48,
+      "frameHeight": 72,
+      "pivot": [
+        24,
+        72
+      ],
+      "animations": {
+        "idle": [
+          0,
+          3
+        ],
+        "strike": [
+          4,
+          9
+        ],
+        "connect": [
+          10,
+          15
+        ],
+        "guard": [
+          16,
+          17
+        ],
+        "hit": [
+          18,
+          19
+        ],
+        "down": [
+          20,
+          21
+        ],
+        "victory": [
+          22,
+          25
+        ]
+      },
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "imani-world",
+      "path": "res://assets/art/imani-world.png",
+      "width": 544,
+      "height": 192,
+      "sha256": "82208dcd0dd76f6630e34c7c64b3b6977b29f77631c2993672989214f898edd3",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 32,
+      "frameHeight": 48,
+      "pivot": [
+        16,
+        48
+      ],
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "walk": [
+          2,
+          7
+        ],
+        "run": [
+          8,
+          13
+        ],
+        "interact": [
+          14,
+          16
+        ]
+      },
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "imani-battle",
+      "path": "res://assets/art/imani-battle.png",
+      "width": 1248,
+      "height": 72,
+      "sha256": "ad4070aa098afbc71576b7426a22cf7370a2178f99156be7ee9181dc4598699d",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 48,
+      "frameHeight": 72,
+      "pivot": [
+        24,
+        72
+      ],
+      "animations": {
+        "idle": [
+          0,
+          3
+        ],
+        "strike": [
+          4,
+          9
+        ],
+        "connect": [
+          10,
+          15
+        ],
+        "guard": [
+          16,
+          17
+        ],
+        "hit": [
+          18,
+          19
+        ],
+        "down": [
+          20,
+          21
+        ],
+        "victory": [
+          22,
+          25
+        ]
+      },
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "cal-world",
+      "path": "res://assets/art/cal-world.png",
+      "width": 544,
+      "height": 192,
+      "sha256": "6513d155cf82ba03f33dfd94d84817ed79430fa27ff9ce66ac4698cf7b51fb64",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 32,
+      "frameHeight": 48,
+      "pivot": [
+        16,
+        48
+      ],
+      "rows": [
+        "down",
+        "left",
+        "right",
+        "up"
+      ],
+      "animations": {
+        "idle": [
+          0,
+          1
+        ],
+        "walk": [
+          2,
+          7
+        ],
+        "run": [
+          8,
+          13
+        ],
+        "interact": [
+          14,
+          16
+        ]
+      },
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "cal-battle",
+      "path": "res://assets/art/cal-battle.png",
+      "width": 1248,
+      "height": 72,
+      "sha256": "b22f7dee5f01e32127a33e966cc383426b77e8e57c25f63aabf22414b5af43f2",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 48,
+      "frameHeight": 72,
+      "pivot": [
+        24,
+        72
+      ],
+      "animations": {
+        "idle": [
+          0,
+          3
+        ],
+        "strike": [
+          4,
+          9
+        ],
+        "connect": [
+          10,
+          15
+        ],
+        "guard": [
+          16,
+          17
+        ],
+        "hit": [
+          18,
+          19
+        ],
+        "down": [
+          20,
+          21
+        ],
+        "victory": [
+          22,
+          25
+        ]
+      },
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "mags-world",
+      "path": "res://assets/art/mags-world.png",
+      "width": 256,
+      "height": 48,
+      "sha256": "524821c8acbfb423ea2b4ea5529a171c39b6de8f6ff62b219b6e2fe081d5becc",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 32,
+      "frameHeight": 48,
+      "pivot": [
+        16,
+        48
+      ],
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "jules-portraits",
+      "path": "res://assets/art/jules-portraits.png",
+      "width": 640,
+      "height": 80,
+      "sha256": "8c4d6f5401ca5940a7fbdd390030bb7490c344af324c12d0f70c3dc320bdc2f2",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 80,
+      "frameHeight": 80,
+      "expressions": [
+        "neutral",
+        "amused",
+        "surprised",
+        "listening",
+        "worried",
+        "resolved",
+        "joy",
+        "tired"
+      ],
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "imani-portraits",
+      "path": "res://assets/art/imani-portraits.png",
+      "width": 640,
+      "height": 80,
+      "sha256": "0ab43b1423fbd4b3b9362fd4cbe4f8a356886e0a0fb828cd65a16824b986ec01",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 80,
+      "frameHeight": 80,
+      "expressions": [
+        "neutral",
+        "amused",
+        "surprised",
+        "listening",
+        "worried",
+        "resolved",
+        "joy",
+        "tired"
+      ],
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "cal-portraits",
+      "path": "res://assets/art/cal-portraits.png",
+      "width": 640,
+      "height": 80,
+      "sha256": "76d00e3729a01fc882f0970d19305cbbe95f4b978a9296b85c2453368c033890",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 80,
+      "frameHeight": 80,
+      "expressions": [
+        "neutral",
+        "amused",
+        "surprised",
+        "listening",
+        "worried",
+        "resolved",
+        "joy",
+        "tired"
+      ],
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "mags-portraits",
+      "path": "res://assets/art/mags-portraits.png",
+      "width": 240,
+      "height": 80,
+      "sha256": "d14247227206e5f95bb3072cdd343707e933534c002b45a46c72c3bb5d653b17",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 80,
+      "frameHeight": 80,
+      "expressions": [
+        "neutral",
+        "amused",
+        "surprised"
+      ],
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "flyerer",
+      "path": "res://assets/art/flyerer.png",
+      "width": 768,
+      "height": 64,
+      "sha256": "4a50ded1a72c65297d93f10cbcd1c5fa089b0e34866bc3e3fd5c62adeff691c3",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "frameWidth": 64,
+      "frameHeight": 64,
+      "pivot": [
+        32,
+        64
+      ],
+      "animations": {
+        "idle": [
+          0,
+          3
+        ],
+        "tell": [
+          4,
+          7
+        ],
+        "reaction": [
+          8,
+          9
+        ],
+        "settled": [
+          10,
+          11
+        ]
+      },
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "room-u01",
+      "path": "res://assets/art/room-u01.png",
+      "width": 640,
+      "height": 360,
+      "sha256": "f3491c750880b563afc807c7bbe39f17977ab66de826a5c2ccdf737447f17e2d",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "kind": "room",
+      "logicalSize": [
+        640,
+        360
+      ],
+      "playableBounds": [
+        32,
+        160,
+        608,
+        304
+      ],
+      "palette": [
+        "#171a2b",
+        "#353047",
+        "#b5816c",
+        "#805a58",
+        "#cea489",
+        "#9e4e52",
+        "#c37361",
+        "#e6d6b1",
+        "#5c897c",
+        "#3f615c",
+        "#e8b45c",
+        "#f4d28b",
+        "#425da6",
+        "#283866",
+        "#6b81bf",
+        "#a68db8",
+        "#b9d5bc",
+        "#b77b55",
+        "#86503e",
+        "#885b45",
+        "#583c38",
+        "#d1aa7c",
+        "#a77d62",
+        "#28232b",
+        "#46343a",
+        "#6d7250",
+        "#4c533f",
+        "#686475",
+        "#7c7583",
+        "#555266",
+        "#374a46",
+        "#53624d",
+        "#29384d",
+        "#faf0d5"
+      ],
+      "notes": "Compressed fictional campus composition; collision remains explicit in room content.",
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "room-u02",
+      "path": "res://assets/art/room-u02.png",
+      "width": 640,
+      "height": 360,
+      "sha256": "2b17c3c182553520de18050a99518512dd84e776076bff8cf34d524e7b6e1c65",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "kind": "room",
+      "logicalSize": [
+        640,
+        360
+      ],
+      "playableBounds": [
+        32,
+        160,
+        608,
+        304
+      ],
+      "palette": [
+        "#171a2b",
+        "#353047",
+        "#b5816c",
+        "#805a58",
+        "#cea489",
+        "#9e4e52",
+        "#c37361",
+        "#e6d6b1",
+        "#5c897c",
+        "#3f615c",
+        "#e8b45c",
+        "#f4d28b",
+        "#425da6",
+        "#283866",
+        "#6b81bf",
+        "#a68db8",
+        "#b9d5bc",
+        "#b77b55",
+        "#86503e",
+        "#885b45",
+        "#583c38",
+        "#d1aa7c",
+        "#a77d62",
+        "#28232b",
+        "#46343a",
+        "#6d7250",
+        "#4c533f",
+        "#686475",
+        "#7c7583",
+        "#555266",
+        "#374a46",
+        "#53624d",
+        "#29384d",
+        "#faf0d5"
+      ],
+      "notes": "Compressed fictional campus composition; collision remains explicit in room content.",
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "room-u03",
+      "path": "res://assets/art/room-u03.png",
+      "width": 640,
+      "height": 360,
+      "sha256": "9e38771c7d43c3df18ad891aeb9a9aeeab69e8351d8ecac9193e9fb70346a301",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "kind": "room",
+      "logicalSize": [
+        640,
+        360
+      ],
+      "playableBounds": [
+        24,
+        160,
+        616,
+        304
+      ],
+      "notes": "Fictional UMC lobby. Cabinet x329; rest lamp x465,y182. y220 corridor clear.",
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "room-u04",
+      "path": "res://assets/art/room-u04.png",
+      "width": 640,
+      "height": 360,
+      "sha256": "276c19acb5092952e7a5960f3f2d2b0ba685c07335063f84911fc5ad2dbdb386",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "kind": "room",
+      "logicalSize": [
+        640,
+        360
+      ],
+      "playableBounds": [
+        32,
+        160,
+        608,
+        304
+      ],
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "afterhours-font",
+      "path": "res://assets/art/afterhours-font.png",
+      "width": 128,
+      "height": 72,
+      "sha256": "8af29f205b25f62009ec63f3f380c7c6c1ba4d8ad16a6fec5ef73cb2412dc3e9",
+      "source": "Original integer-grid drawings in scripts/export-art.mjs",
+      "status": "exported; motion approval pending",
+      "kind": "bitmap-font",
+      "cell": [
+        8,
+        12
+      ],
+      "lineHeight": 16,
+      "license": "Original glyph drawings; project distribution permitted",
+      "migration": "Byte-for-byte original export copied to native project"
+    },
+    {
+      "id": "room-u01-tileatlas",
+      "path": "res://assets/art/room-u01-tileatlas.png",
+      "width": 640,
+      "height": 368,
+      "sha256": "e08fbab4b172ddcd9d9b75ef105d2f31f4c6d63ee84dd62b1b8606c0afe85ec0",
+      "source": "Lossless padding of original room-u01.png",
+      "status": "native migration exported; native runtime inspection pending"
+    },
+    {
+      "id": "room-u02-tileatlas",
+      "path": "res://assets/art/room-u02-tileatlas.png",
+      "width": 640,
+      "height": 368,
+      "sha256": "8c3577f4cf233631dd71fee993d46d98ae6a62928cac770f58bc302cc43b05ce",
+      "source": "Lossless padding of original room-u02.png",
+      "status": "native migration exported; native runtime inspection pending"
+    },
+    {
+      "id": "room-u03-tileatlas",
+      "path": "res://assets/art/room-u03-tileatlas.png",
+      "width": 640,
+      "height": 368,
+      "sha256": "06d6ae96688b664373336ca0a600d4b9107a95c78837249d06dfc5fa81044ce9",
+      "source": "Lossless padding of original room-u03.png",
+      "status": "native migration exported; native runtime inspection pending"
+    },
+    {
+      "id": "room-u04-tileatlas",
+      "path": "res://assets/art/room-u04-tileatlas.png",
+      "width": 640,
+      "height": 368,
+      "sha256": "ad917da7a2765ff19e6dc0acb6496aa3bb2b4b0e0c938e4c703120bc1290c051",
+      "source": "Lossless padding of original room-u04.png",
+      "status": "native migration exported; native runtime inspection pending"
+    }
+  ],
+  "animation_resources": {
+    "jules-world": "res://resources/art_jules_world.tres",
+    "jules-battle": "res://resources/art_jules_battle.tres",
+    "imani-world": "res://resources/art_imani_world.tres",
+    "imani-battle": "res://resources/art_imani_battle.tres",
+    "cal-world": "res://resources/art_cal_world.tres",
+    "cal-battle": "res://resources/art_cal_battle.tres",
+    "mags-world": "res://resources/art_mags_world.tres",
+    "flyerer": "res://resources/art_flyerer.tres"
+  },
+  "font": "res://assets/art/afterhours-font.fnt"
+}

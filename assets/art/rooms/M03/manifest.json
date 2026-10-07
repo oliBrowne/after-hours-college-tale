@@ -1,0 +1,222 @@
+{
+ "background": "res://assets/art/rooms/M03/background.png",
+ "background_dawn": "res://assets/art/rooms/M03/background-dawn.png",
+ "width": 800,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/M03/prop-0.png",
+   "anchor": [
+    83,
+    111
+   ],
+   "flag": "attendees_freed",
+   "flag_texture": "res://assets/art/rooms/M03/prop-0-freed.png"
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/M03/prop-1.png",
+   "anchor": [
+    83,
+    111
+   ],
+   "flag": "attendees_freed",
+   "flag_texture": "res://assets/art/rooms/M03/prop-1-freed.png"
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/M03/prop-2.png",
+   "anchor": [
+    98,
+    49
+   ],
+   "flag": "attendees_freed",
+   "flag_texture": "res://assets/art/rooms/M03/prop-2-freed.png"
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/M03/prop-3.png",
+   "anchor": [
+    51,
+    57
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/M03/prop-4.png",
+   "anchor": [
+    13,
+    70
+   ]
+  }
+ },
+ "label_only": [],
+ "overlays": [
+  {
+   "texture": "res://assets/art/rooms/M03/card-leave.png",
+   "x": 381,
+   "y": 112,
+   "flag": "attendee_choice",
+   "equals": "leave"
+  },
+  {
+   "texture": "res://assets/art/rooms/M03/card-invite.png",
+   "x": 381,
+   "y": 112,
+   "flag": "attendee_choice",
+   "equals": "invite"
+  }
+ ],
+ "fauna": [
+  {
+   "kind": "umc2_mouse",
+   "x": 520,
+   "y": 444,
+   "range": 12,
+   "speed": 0.7,
+   "rate": 5.0
+  }
+ ],
+ "layers": [
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     431,
+     62,
+     "fff0c4",
+     2
+    ],
+    [
+     230,
+     58,
+     "fff0c4",
+     2
+    ],
+    [
+     610,
+     58,
+     "fff0c4",
+     2
+    ],
+    [
+     120,
+     322,
+     "fff0c4",
+     2
+    ]
+   ],
+   "rate": 1.0,
+   "min": 0.6
+  },
+  {
+   "kind": "fauna",
+   "flag": "attendees_freed",
+   "fauna": [
+    {
+     "kind": "macky_ticket",
+     "x": 80,
+     "y": 190,
+     "fly": 9.0,
+     "rate": 5.0
+    },
+    {
+     "kind": "macky_ticket",
+     "x": 420,
+     "y": 250,
+     "fly": 7.0,
+     "rate": 4.0
+    },
+    {
+     "kind": "macky_ticket",
+     "x": 600,
+     "y": 170,
+     "fly": 8.0,
+     "rate": 6.0
+    }
+   ]
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/M03/battle-far.png",
+  "far_dawn": "res://assets/art/rooms/M03/battle-far-dawn.png",
+  "layers": [
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      320,
+      51,
+      "f6cf7a",
+      2
+     ],
+     [
+      320,
+      43,
+      "fff0c4",
+      1
+     ],
+     [
+      320,
+      25,
+      "fff0c4",
+      2
+     ],
+     [
+      320,
+      -12,
+      "fff0c4",
+      2
+     ]
+    ],
+    "rate": 1.0,
+    "min": 0.6
+   },
+   {
+    "kind": "fauna",
+    "fauna": [
+     {
+      "kind": "macky_ticket",
+      "x": 40,
+      "y": 60,
+      "fly": 10.0,
+      "rate": 5.0
+     },
+     {
+      "kind": "macky_ticket",
+      "x": 300,
+      "y": 30,
+      "fly": 7.0,
+      "rate": 4.0
+     },
+     {
+      "kind": "macky_ticket",
+      "x": 520,
+      "y": 84,
+      "fly": 12.0,
+      "rate": 6.0
+     },
+     {
+      "kind": "macky_ticket",
+      "x": 180,
+      "y": 110,
+      "fly": 8.0,
+      "rate": 5.0
+     }
+    ]
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 14,
+    "rect": [
+     200,
+     40,
+     240,
+     110
+    ],
+    "speed": [
+     0,
+     3
+    ],
+    "color": "f8e0b0"
+   }
+  ]
+ }
+}

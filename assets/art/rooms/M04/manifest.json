@@ -1,0 +1,1353 @@
+{
+ "background": "res://assets/art/rooms/M04/background.png",
+ "width": 960,
+ "occluders": [],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/M04/prop-0.png",
+   "anchor": [
+    197,
+    86
+   ]
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/M04/prop-1.png",
+   "anchor": [
+    24,
+    103
+   ]
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/M04/prop-2.png",
+   "anchor": [
+    24,
+    103
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/M04/prop-3.png",
+   "anchor": [
+    108,
+    51
+   ],
+   "flag": "music_ready",
+   "flag_texture": "res://assets/art/rooms/M04/prop-3-ready.png"
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/M04/prop-4.png",
+   "anchor": [
+    52,
+    58
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/M04/prop-5.png",
+   "anchor": [
+    14,
+    73
+   ]
+  }
+ },
+ "label_only": [],
+ "overlays": [
+  {
+   "texture": "res://assets/art/rooms/M04/setlist-honest.png",
+   "x": 288,
+   "y": 72,
+   "flag": "final_score",
+   "equals": "honest"
+  },
+  {
+   "texture": "res://assets/art/rooms/M04/setlist-instrumental.png",
+   "x": 288,
+   "y": 72,
+   "flag": "final_score",
+   "equals": "instrumental"
+  },
+  {
+   "texture": "res://assets/art/rooms/M04/score-spill.png",
+   "x": 256,
+   "y": 348,
+   "flag": "music_ready",
+   "when": false
+  }
+ ],
+ "fauna": [
+  {
+   "kind": "lamp_moth",
+   "x": 144,
+   "y": 358,
+   "range": 8,
+   "speed": 1.6,
+   "rate": 8.0
+  }
+ ],
+ "layers": [
+  {
+   "kind": "blink",
+   "pattern": "100000000000",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-00.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "010000000000",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-01.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "001000000000",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-02.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000100000000",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-03.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000010000000",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-04.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000001000000",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-05.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000100000",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-06.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000010000",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-07.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000001000",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-08.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000000100",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-09.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000000010",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-10.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "000000000001",
+   "rate": 8,
+   "texture": "res://assets/art/rooms/M04/meter-loud-11.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready",
+   "when": false
+  },
+  {
+   "kind": "blink",
+   "pattern": "1000000000000000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-00.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0100000000000000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-01.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0010000000000000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-02.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0001000000000000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-03.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000100000000000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-04.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000010000000000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-05.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000001000000000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-06.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000100000000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-07.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000010000000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-08.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000001000000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-09.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000100000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-10.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000010000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-11.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000001000000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-12.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000100000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-13.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000010000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-14.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000001000000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-15.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000100000000000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-16.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000100000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-22.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000010000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-23.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000001000000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-24.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000100000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-25.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000010000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-26.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000001000000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-27.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000000100000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-28.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000000010000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-29.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000000001000000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-30.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000000000100000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-31.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000000000010000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-32.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000000000001000000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-33.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000000000000100000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-34.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000000000000010000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-35.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000000000000001000",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-36.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "blink",
+   "pattern": "0000000000000000000000000000000000000100",
+   "rate": 6,
+   "texture": "res://assets/art/rooms/M04/meter-music-37.png",
+   "x": 372,
+   "y": 77,
+   "flag": "music_ready"
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     76,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     134,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     192,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     250,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     308,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     366,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     424,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     482,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     540,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     598,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     656,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     714,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     772,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     830,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     888,
+     46,
+     "ffe6a8",
+     2
+    ],
+    [
+     119,
+     89,
+     "c8dcff",
+     3
+    ],
+    [
+     646,
+     86,
+     "ff6040",
+     3
+    ],
+    [
+     870,
+     65,
+     "8ef08a",
+     2
+    ]
+   ],
+   "rate": 1.1,
+   "min": 0.55
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 7,
+   "rect": [
+    110,
+    334,
+    60,
+    70
+   ],
+   "speed": [
+    3,
+    -3
+   ],
+   "color": "f6e0b0"
+  },
+  {
+   "kind": "fauna",
+   "flag": "music_ready",
+   "fauna": [
+    {
+     "kind": "macky_note",
+     "x": 300,
+     "y": 120,
+     "fly": 7.0,
+     "rate": 3.0
+    },
+    {
+     "kind": "macky_note",
+     "x": 620,
+     "y": 96,
+     "fly": 6.0,
+     "rate": 3.0
+    },
+    {
+     "kind": "macky_note",
+     "x": 860,
+     "y": 140,
+     "fly": 8.0,
+     "rate": 4.0
+    }
+   ]
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/M04/battle-far.png",
+  "layers": [
+   {
+    "kind": "blink",
+    "pattern": "100",
+    "rate": 5,
+    "rects": [
+     [
+      40,
+      34,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      98,
+      39,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      145,
+      43,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      185,
+      46,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      219,
+      48,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      250,
+      50,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      279,
+      51,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      306,
+      51,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      334,
+      51,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      361,
+      51,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      390,
+      50,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      421,
+      48,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      455,
+      46,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      495,
+      43,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      542,
+      39,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      600,
+      34,
+      1,
+      1,
+      "ffe6a8"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "010",
+    "rate": 5,
+    "rects": [
+     [
+      61,
+      36,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      115,
+      41,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      159,
+      44,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      196,
+      47,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      230,
+      49,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      260,
+      50,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      288,
+      51,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      315,
+      51,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      343,
+      51,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      371,
+      50,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      400,
+      49,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      432,
+      48,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      468,
+      45,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      510,
+      42,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      560,
+      37,
+      1,
+      1,
+      "ffe6a8"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "001",
+    "rate": 5,
+    "rects": [
+     [
+      80,
+      37,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      130,
+      42,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      172,
+      45,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      208,
+      48,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      240,
+      49,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      269,
+      50,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      297,
+      51,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      325,
+      51,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      352,
+      51,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      380,
+      50,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      410,
+      49,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      444,
+      47,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      481,
+      44,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      525,
+      41,
+      1,
+      1,
+      "ffe6a8"
+     ],
+     [
+      579,
+      36,
+      1,
+      1,
+      "ffe6a8"
+     ]
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "1010",
+    "rate": 2,
+    "texture": "res://assets/art/rooms/M04/battle-applause.png",
+    "x": 291,
+    "y": 67
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      27,
+      35,
+      "6aff9a",
+      2
+     ],
+     [
+      65,
+      37,
+      "ffe6a8",
+      2
+     ],
+     [
+      114,
+      49,
+      "ffe6a8",
+      1
+     ],
+     [
+      131,
+      57,
+      "6aff9a",
+      1
+     ],
+     [
+      148,
+      57,
+      "ffe6a8",
+      1
+     ],
+     [
+      172,
+      62,
+      "ffe6a8",
+      1
+     ],
+     [
+      613,
+      35,
+      "6aff9a",
+      2
+     ],
+     [
+      575,
+      37,
+      "ffe6a8",
+      2
+     ],
+     [
+      526,
+      49,
+      "ffe6a8",
+      1
+     ],
+     [
+      509,
+      57,
+      "6aff9a",
+      1
+     ],
+     [
+      492,
+      57,
+      "ffe6a8",
+      1
+     ],
+     [
+      468,
+      62,
+      "ffe6a8",
+      1
+     ],
+     [
+      144,
+      110,
+      "ffe2a0",
+      1
+     ],
+     [
+      199,
+      110,
+      "ffe2a0",
+      1
+     ],
+     [
+      266,
+      110,
+      "ffe2a0",
+      1
+     ],
+     [
+      333,
+      110,
+      "ffe2a0",
+      1
+     ],
+     [
+      398,
+      110,
+      "ffe2a0",
+      1
+     ],
+     [
+      473,
+      110,
+      "ffe2a0",
+      1
+     ],
+     [
+      118,
+      111,
+      "ffe2a0",
+      1
+     ],
+     [
+      185,
+      111,
+      "ffe2a0",
+      1
+     ],
+     [
+      248,
+      111,
+      "ffe2a0",
+      1
+     ],
+     [
+      320,
+      111,
+      "ffe2a0",
+      1
+     ],
+     [
+      394,
+      111,
+      "ffe2a0",
+      1
+     ],
+     [
+      467,
+      111,
+      "ffe2a0",
+      1
+     ],
+     [
+      122,
+      112,
+      "ffe2a0",
+      1
+     ],
+     [
+      197,
+      112,
+      "ffe2a0",
+      1
+     ],
+     [
+      271,
+      112,
+      "ffe2a0",
+      1
+     ],
+     [
+      346,
+      112,
+      "ffe2a0",
+      1
+     ],
+     [
+      433,
+      112,
+      "ffe2a0",
+      1
+     ],
+     [
+      511,
+      112,
+      "ffe2a0",
+      1
+     ],
+     [
+      27,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      76,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      125,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      174,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      222,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      271,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      320,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      369,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      418,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      466,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      515,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      564,
+      138,
+      "ffe6a8",
+      2
+     ],
+     [
+      613,
+      138,
+      "ffe6a8",
+      2
+     ]
+    ],
+    "rate": 1.2,
+    "min": 0.55
+   },
+   {
+    "kind": "beam",
+    "x": 244,
+    "y": 20,
+    "angle": 118,
+    "sweep": 9,
+    "period": 7.0,
+    "phase": 0.0,
+    "length": 150,
+    "width": 70,
+    "color": "fff6dc",
+    "alpha": 0.2,
+    "floor": 152
+   },
+   {
+    "kind": "beam",
+    "x": 394,
+    "y": 20,
+    "angle": 66,
+    "sweep": 16,
+    "period": 9.0,
+    "phase": 1.7,
+    "length": 150,
+    "width": 66,
+    "color": "fff0c4",
+    "alpha": 0.18,
+    "floor": 150
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 16,
+    "rect": [
+     150,
+     40,
+     320,
+     110
+    ],
+    "speed": [
+     2,
+     -4
+    ],
+    "color": "fff0d0"
+   },
+   {
+    "kind": "fauna",
+    "fauna": [
+     {
+      "kind": "macky_note",
+      "x": 120,
+      "y": 118,
+      "fly": 9.0,
+      "rate": 3.0
+     },
+     {
+      "kind": "macky_note",
+      "x": 360,
+      "y": 96,
+      "fly": 7.0,
+      "rate": 3.0
+     },
+     {
+      "kind": "macky_note",
+      "x": 560,
+      "y": 128,
+      "fly": 11.0,
+      "rate": 4.0
+     }
+    ]
+   }
+  ]
+ }
+}

@@ -1,0 +1,932 @@
+{
+ "background": "res://assets/art/rooms/F02/background.png",
+ "width": 800,
+ "occluders": [
+  {
+   "texture": "res://assets/art/rooms/F02/festoon-b-0.png",
+   "x": 637,
+   "y": 152,
+   "base": 239
+  },
+  {
+   "texture": "res://assets/art/rooms/F02/festoon-b-1.png",
+   "x": 675,
+   "y": 178,
+   "base": 256
+  },
+  {
+   "texture": "res://assets/art/rooms/F02/festoon-b-2.png",
+   "x": 714,
+   "y": 199,
+   "base": 272
+  },
+  {
+   "texture": "res://assets/art/rooms/F02/festoon-b-3.png",
+   "x": 752,
+   "y": 211,
+   "base": 289
+  }
+ ],
+ "overlays": [
+  {
+   "texture": "res://assets/art/rooms/F02/wet-canvas.png",
+   "x": 452,
+   "y": 384,
+   "flag": "volunteers_released"
+  }
+ ],
+ "props": {
+  "0": {
+   "texture": "res://assets/art/rooms/F02/prop-0.png",
+   "anchor": [
+    257,
+    129
+   ],
+   "flag": "volunteers_released",
+   "flag_texture": "res://assets/art/rooms/F02/prop-0-released.png"
+  },
+  "1": {
+   "texture": "res://assets/art/rooms/F02/prop-1.png",
+   "anchor": [
+    83,
+    56
+   ],
+   "flag": "volunteers_released",
+   "flag_texture": "res://assets/art/rooms/F02/prop-1-released.png"
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/F02/prop-2.png",
+   "anchor": [
+    48,
+    33
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/F02/prop-3.png",
+   "anchor": [
+    53,
+    33
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/F02/prop-4.png",
+   "anchor": [
+    11,
+    60
+   ]
+  },
+  "5": {
+   "texture": "res://assets/art/rooms/F02/prop-5.png",
+   "anchor": [
+    39,
+    45
+   ],
+   "flag": "volunteers_released",
+   "flag_texture": "res://assets/art/rooms/F02/prop-5-released.png"
+  }
+ },
+ "label_only": [],
+ "fauna": [
+  {
+   "kind": "moth",
+   "x": 151,
+   "y": 285,
+   "range": 6,
+   "speed": 2.1,
+   "rate": 8.0
+  },
+  {
+   "kind": "moth",
+   "x": 161,
+   "y": 293,
+   "range": 5,
+   "speed": 1.6,
+   "rate": 7.0,
+   "flip": true
+  },
+  {
+   "kind": "fox",
+   "x": 690,
+   "y": 200,
+   "range": 24,
+   "speed": 0.35,
+   "rate": 3.0
+  },
+  {
+   "kind": "bat",
+   "x": 300,
+   "y": 30,
+   "fly": 19.0,
+   "rate": 7.0
+  }
+ ],
+ "leaves": [],
+ "layers": [
+  {
+   "kind": "beam",
+   "x": 712,
+   "y": 70,
+   "angle": -100,
+   "sweep": 16,
+   "period": 9.0,
+   "phase": 1.0,
+   "length": 120,
+   "width": 24,
+   "color": "c8b0ff",
+   "alpha": 0.14,
+   "floor": -400
+  },
+  {
+   "kind": "beam",
+   "x": 770,
+   "y": 70,
+   "angle": -80,
+   "sweep": 16,
+   "period": 10.5,
+   "phase": 3.0,
+   "length": 120,
+   "width": 24,
+   "color": "ffd0e8",
+   "alpha": 0.13,
+   "floor": -400
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     4,
+     72,
+     "f2a0a0",
+     1
+    ],
+    [
+     12,
+     73,
+     "f6cf7a",
+     1
+    ],
+    [
+     20,
+     73,
+     "f6cf7a",
+     1
+    ],
+    [
+     28,
+     74,
+     "f6cf7a",
+     1
+    ],
+    [
+     36,
+     74,
+     "f6cf7a",
+     1
+    ],
+    [
+     44,
+     74,
+     "f2a0a0",
+     1
+    ],
+    [
+     52,
+     74,
+     "a8d8c8",
+     1
+    ],
+    [
+     60,
+     73,
+     "fff0c4",
+     1
+    ],
+    [
+     68,
+     72,
+     "f6cf7a",
+     1
+    ],
+    [
+     76,
+     71,
+     "f6cf7a",
+     1
+    ],
+    [
+     84,
+     69,
+     "f6cf7a",
+     1
+    ],
+    [
+     92,
+     68,
+     "f6cf7a",
+     1
+    ],
+    [
+     100,
+     66,
+     "fff0c4",
+     1
+    ],
+    [
+     108,
+     63,
+     "f6cf7a",
+     1
+    ],
+    [
+     116,
+     61,
+     "f6cf7a",
+     1
+    ],
+    [
+     124,
+     58,
+     "f6cf7a",
+     1
+    ],
+    [
+     132,
+     55,
+     "f2a0a0",
+     1
+    ],
+    [
+     140,
+     52,
+     "f2a0a0",
+     1
+    ],
+    [
+     148,
+     48,
+     "f6cf7a",
+     1
+    ],
+    [
+     667,
+     53,
+     "f2a0a0",
+     1
+    ],
+    [
+     675,
+     56,
+     "a8d8c8",
+     1
+    ],
+    [
+     683,
+     59,
+     "a8d8c8",
+     1
+    ],
+    [
+     691,
+     62,
+     "fff0c4",
+     1
+    ],
+    [
+     699,
+     65,
+     "a8d8c8",
+     1
+    ],
+    [
+     707,
+     67,
+     "a8d8c8",
+     1
+    ],
+    [
+     715,
+     68,
+     "a8d8c8",
+     1
+    ],
+    [
+     723,
+     70,
+     "f6cf7a",
+     1
+    ],
+    [
+     731,
+     71,
+     "f6cf7a",
+     1
+    ],
+    [
+     739,
+     72,
+     "fff0c4",
+     1
+    ],
+    [
+     747,
+     72,
+     "f6cf7a",
+     1
+    ],
+    [
+     755,
+     72,
+     "f6cf7a",
+     1
+    ],
+    [
+     763,
+     72,
+     "fff0c4",
+     1
+    ],
+    [
+     771,
+     72,
+     "f2a0a0",
+     1
+    ],
+    [
+     779,
+     71,
+     "fff0c4",
+     1
+    ],
+    [
+     787,
+     70,
+     "f6cf7a",
+     1
+    ],
+    [
+     795,
+     68,
+     "f2a0a0",
+     1
+    ]
+   ],
+   "rate": 1.8,
+   "min": 0.4
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     675,
+     81,
+     "f6dca0",
+     1
+    ],
+    [
+     686,
+     79,
+     "f6dca0",
+     1
+    ],
+    [
+     697,
+     77,
+     "f6dca0",
+     1
+    ],
+    [
+     708,
+     76,
+     "f6dca0",
+     1
+    ],
+    [
+     719,
+     75,
+     "f6dca0",
+     1
+    ],
+    [
+     730,
+     74,
+     "f6dca0",
+     1
+    ],
+    [
+     741,
+     74,
+     "f6dca0",
+     1
+    ],
+    [
+     752,
+     74,
+     "f6dca0",
+     1
+    ],
+    [
+     763,
+     75,
+     "f6dca0",
+     1
+    ],
+    [
+     774,
+     76,
+     "f6dca0",
+     1
+    ],
+    [
+     785,
+     77,
+     "f6dca0",
+     1
+    ],
+    [
+     796,
+     79,
+     "f6dca0",
+     1
+    ],
+    [
+     807,
+     81,
+     "f6dca0",
+     1
+    ],
+    [
+     14,
+     43,
+     "fff0c4",
+     1
+    ],
+    [
+     25,
+     43,
+     "fff0c4",
+     1
+    ]
+   ],
+   "rate": 1.2,
+   "min": 0.5
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/F02/battle-far.png",
+  "near": "res://assets/art/rooms/F02/battle-near.png",
+  "layers": [
+   {
+    "kind": "beam",
+    "depth": "far",
+    "x": 304,
+    "y": 50,
+    "angle": -102,
+    "sweep": 16,
+    "period": 8.5,
+    "phase": 0.5,
+    "length": 90,
+    "width": 18,
+    "color": "c8b0ff",
+    "alpha": 0.22,
+    "floor": -400
+   },
+   {
+    "kind": "beam",
+    "depth": "far",
+    "x": 336,
+    "y": 50,
+    "angle": -78,
+    "sweep": 16,
+    "period": 10.0,
+    "phase": 2.5,
+    "length": 90,
+    "width": 18,
+    "color": "ffc8e0",
+    "alpha": 0.22,
+    "floor": -400
+   },
+   {
+    "kind": "fauna",
+    "depth": "far",
+    "fauna": [
+     {
+      "kind": "bat",
+      "x": 260,
+      "y": 68,
+      "fly": 9.0,
+      "rate": 7.0
+     }
+    ]
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      117,
+      -47,
+      "f6cf7a",
+      1
+     ],
+     [
+      138,
+      -25,
+      "a8d8c8",
+      1
+     ],
+     [
+      159,
+      -9,
+      "f6cf7a",
+      1
+     ],
+     [
+      180,
+      1,
+      "f6cf7a",
+      1
+     ],
+     [
+      199,
+      14,
+      "f6cf7a",
+      1
+     ],
+     [
+      213,
+      27,
+      "a8d8c8",
+      1
+     ],
+     [
+      227,
+      31,
+      "fff0c4",
+      1
+     ],
+     [
+      234,
+      39,
+      "f6cf7a",
+      1
+     ],
+     [
+      244,
+      47,
+      "a8d8c8",
+      1
+     ],
+     [
+      253,
+      52,
+      "f6cf7a",
+      1
+     ],
+     [
+      261,
+      56,
+      "a8d8c8",
+      1
+     ],
+     [
+      265,
+      62,
+      "f6cf7a",
+      1
+     ],
+     [
+      523,
+      -47,
+      "f6cf7a",
+      1
+     ],
+     [
+      502,
+      -25,
+      "a8d8c8",
+      1
+     ],
+     [
+      481,
+      -9,
+      "f6cf7a",
+      1
+     ],
+     [
+      460,
+      1,
+      "f6cf7a",
+      1
+     ],
+     [
+      441,
+      14,
+      "f6cf7a",
+      1
+     ],
+     [
+      427,
+      27,
+      "fff0c4",
+      1
+     ],
+     [
+      413,
+      31,
+      "f6cf7a",
+      1
+     ],
+     [
+      406,
+      39,
+      "a8d8c8",
+      1
+     ],
+     [
+      396,
+      47,
+      "f2a0a0",
+      1
+     ],
+     [
+      387,
+      52,
+      "f6cf7a",
+      1
+     ],
+     [
+      379,
+      56,
+      "f2a0a0",
+      1
+     ],
+     [
+      375,
+      62,
+      "a8d8c8",
+      1
+     ],
+     [
+      214,
+      90,
+      "f6cf7a",
+      1
+     ],
+     [
+      226,
+      90,
+      "f6cf7a",
+      1
+     ],
+     [
+      232,
+      90,
+      "f6cf7a",
+      1
+     ],
+     [
+      238,
+      90,
+      "f6cf7a",
+      1
+     ],
+     [
+      256,
+      89,
+      "f6cf7a",
+      1
+     ],
+     [
+      262,
+      89,
+      "f6cf7a",
+      1
+     ],
+     [
+      268,
+      89,
+      "f6cf7a",
+      1
+     ],
+     [
+      280,
+      88,
+      "f6cf7a",
+      1
+     ],
+     [
+      286,
+      87,
+      "f6cf7a",
+      1
+     ],
+     [
+      298,
+      86,
+      "f6cf7a",
+      1
+     ],
+     [
+      316,
+      84,
+      "f6cf7a",
+      1
+     ],
+     [
+      329,
+      84,
+      "f6cf7a",
+      1
+     ],
+     [
+      341,
+      86,
+      "f6cf7a",
+      1
+     ],
+     [
+      347,
+      86,
+      "f6cf7a",
+      1
+     ],
+     [
+      365,
+      88,
+      "f6cf7a",
+      1
+     ],
+     [
+      371,
+      89,
+      "f6cf7a",
+      1
+     ],
+     [
+      383,
+      89,
+      "f6cf7a",
+      1
+     ],
+     [
+      389,
+      90,
+      "f6cf7a",
+      1
+     ],
+     [
+      413,
+      90,
+      "f6cf7a",
+      1
+     ]
+    ],
+    "rate": 2.0,
+    "min": 0.4
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      320,
+      64,
+      "fff0c4",
+      2
+     ],
+     [
+      253,
+      63,
+      "f6dca0",
+      1
+     ],
+     [
+      264,
+      61,
+      "f6dca0",
+      1
+     ],
+     [
+      275,
+      59,
+      "f6dca0",
+      1
+     ],
+     [
+      286,
+      58,
+      "f6dca0",
+      1
+     ],
+     [
+      297,
+      57,
+      "f6dca0",
+      1
+     ],
+     [
+      308,
+      56,
+      "f6dca0",
+      1
+     ],
+     [
+      319,
+      56,
+      "f6dca0",
+      1
+     ],
+     [
+      330,
+      56,
+      "f6dca0",
+      1
+     ],
+     [
+      341,
+      57,
+      "f6dca0",
+      1
+     ],
+     [
+      352,
+      58,
+      "f6dca0",
+      1
+     ],
+     [
+      363,
+      59,
+      "f6dca0",
+      1
+     ],
+     [
+      374,
+      61,
+      "f6dca0",
+      1
+     ],
+     [
+      385,
+      63,
+      "f6dca0",
+      1
+     ]
+    ],
+    "rate": 1.1,
+    "min": 0.6
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 14,
+    "rect": [
+     280,
+     56,
+     80,
+     60
+    ],
+    "speed": [
+     0,
+     5
+    ],
+    "color": "f6e0b0"
+   },
+   {
+    "kind": "particles",
+    "style": "wind",
+    "count": 3,
+    "rect": [
+     200,
+     70,
+     240,
+     50
+    ],
+    "speed": [
+     200,
+     0
+    ]
+   },
+   {
+    "kind": "blink",
+    "pattern": "10100000",
+    "rate": 6.0,
+    "rects": [
+     [
+      434,
+      99,
+      1,
+      1,
+      "ff5a4a"
+     ],
+     [
+      433,
+      98,
+      3,
+      3,
+      "ff5a4a",
+      0.35
+     ]
+    ]
+   }
+  ]
+ }
+}

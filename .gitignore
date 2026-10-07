@@ -1,0 +1,19 @@
+# Godot 4 editor cache and imported data (regenerated on import)
+.godot/
+*.translation
+
+# Export outputs
+/build/
+/export/
+*.pck
+*.exe
+*.zip
+
+# Python caches from tools
+__pycache__/
+*.pyc
+
+# OS / editor noise
+.DS_Store
+Thumbs.db
+desktop.ini
