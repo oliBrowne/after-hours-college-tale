@@ -11,6 +11,10 @@ const TRACK: Color = Color("1d1a2a")
 const MUTED: Color = Color("8a8296")
 ## The bitmap glyphs are 5px wide in 8px cells; a 6px advance reads as words, not spaced-out letters.
 const GLYPH: float = 6.0
+## Ticks each page of an over-long label stays up before the next page shows.
+const LABEL_PAGE_TICKS: int = 150
+## What each queued action does, shown under the action log while a turn resolves.
+const ACTION_HELP: Dictionary = {"strike": "A timed hit. Accuracy changes damage.", "connect": "Listening. OPEN rises as they open up.", "promise": "A promise: the next defense has a real objective.", "boundary": "A boundary: one smaller, honest task.", "guard": "Guarding: less damage, +12 SYNC.", "shield": "Hold the Light cancels one hit.", "heal": "Healing also revives a fallen ally.", "item": "A supply, used on resolution.", "warmth": "Share the Warmth: heal and guard.", "slow": "Half Time slows the next pattern.", "lantern": "Lantern Ward opens a shelter pocket.", "windbreak": "Windbreak shields one ally.", "brace": "Bracing for the next defense.", "release": "RELEASE: enough for tonight."}
 const ACTORS: Array[String] = ["jules", "imani", "walt"]
 const INTRO_CARDS: Array = [["BOULDER / LAST LIGHT", "The Flatirons keep the sunset a little longer than the streets."], ["JULES NAVARRO", "One borrowed mixer. One promise to return it. One last bus home."], ["9:12 PM / THE UMC", "The campus bus pulls away. Jules shifts the mixer and looks toward the UMC."]]
 var mode: Mode = Mode.TITLE
@@ -130,6 +134,17 @@ var qa_music_events: Array[Dictionary] = []
 var graze_sync: int = 0
 var arrival_point: Vector2 = Vector2.INF
 var growth_note: String = ""
+## Dialogue box (and the choice box after it) sits at the top while the people talking stand where
+## the bottom box would cover them (Undertale/Deltarune style).
+var dialogue_top: bool = false
+## A label() whose text did not fit its box shows it a page at a time; this keeps the pages turning.
+var paging_labels: bool = false
+var wind_fx: NativeWindStreaks
+## Screen rect the compact menu's Back button sits in (read by the control overlay).
+var menu_back_rect: Rect2 = Rect2()
+## Ending card / credits roll shown once after the epilogue, then its callback.
+var ending_ticks: int = -1
+var ending_done: Callable
 
 func _ready() -> void:
 	qa = ("--qa-opening" in OS.get_cmdline_user_args() or "--qa-smoke" in OS.get_cmdline_user_args()) and (OS.has_feature("debug") or not OS.get_environment("AFTER_HOURS_QA").is_empty())
@@ -357,8 +372,8 @@ func _input(event: InputEvent) -> void:
 			if pointer_path.is_empty():
 				pointer_object = {}
 				message("That spot has no clear approach. Try the aisle beside it.")
-		elif mode == Mode.DODGE and Rect2(192, 166, 256, 120).has_point(point):
-			dodge_goal = (point - Vector2(192, 166)).clamp(Vector2(3, 3), Vector2(253, 117))
+		elif mode == Mode.DODGE and Rect2(Vector2.ZERO, Vector2(256, 120)).has_point(dodge_view.to_arena(point)):
+			dodge_goal = dodge_view.to_arena(point).clamp(Vector2(3, 3), Vector2(253, 117))
 		elif mode == Mode.DIALOGUE:
 			advance_dialogue()
 		elif mode == Mode.TIMING:
@@ -469,6 +484,9 @@ func _physics_process(delta: float) -> void:
 				ui_dirty = true
 		Mode.DODGE:
 			dodge_tick()
+	if paging_labels and intro_ticks % LABEL_PAGE_TICKS == 0: ui_dirty = true
+	if ending_ticks >= 0 and not pause_context:
+		ending_ticks += 1; ui_dirty = true
 	if ui_dirty:
 		render_ui()
 		ui_dirty = false
@@ -519,7 +537,7 @@ func world_tick(delta: float) -> void:
 			followers[i].follow(trail_point((i + 1) * 48.0))
 	pip.visible = state.flags.get("pip_joined", false)
 	if pip.visible: pip.position = trail_point(144.0)
-	camera.position = camera.position.lerp(Vector2(clampf(player.position.x, 320, camera.limit_right - 320), clampf(player.position.y, 180, camera.limit_bottom - 180)), 0.15)
+	camera.position = camera.position.lerp(Vector2(clampf(player.position.x, camera.limit_left + 320, camera.limit_right - 320), clampf(player.position.y, camera.limit_top + 180, camera.limit_bottom - 180)), 0.15)
 	if arrival_point != Vector2.INF and player.position.distance_to(arrival_point) >= 14: arrival_point = Vector2.INF
 	if not growth_note.is_empty() and notice_ticks == 0:
 		message(growth_note); growth_note = ""
@@ -584,9 +602,15 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 	world.get_node("Dusk").color=Color(0.90,0.88,0.87,1) if state.flags.get("dawn_started",false) else Color(0.68,0.72,0.84,1)
 	environment.configure(id, rooms[id], state.flags)
 	environment.glove_claimed = bool(state.flags.get("pip_joined", false))
+	# The camera stays on the painted room: the dark margin outside the walkable floor (left, right
+	# and below) is never shown, wherever that still leaves a full screen to look at.
+	camera.limit_left = 0; camera.limit_top = 0
 	camera.limit_right = int(rooms[id].dimensions[0])
 	camera.limit_bottom = int(rooms[id].dimensions[1])
-	camera.position = Vector2(clampf(point.x, 320, camera.limit_right - 320), clampf(point.y, 180, camera.limit_bottom - 180))
+	var floor_area: Array = rooms[id].walk_bounds
+	if float(floor_area[2]) + 8.0 >= 640.0 and camera.limit_right > 640: camera.limit_left = maxi(0, int(floor_area[0]) - 4); camera.limit_right = mini(camera.limit_right, int(floor_area[0]) + int(floor_area[2]) + 4)
+	if float(floor_area[3]) + float(floor_area[1]) - 4.0 >= 360.0 and camera.limit_bottom > 360: camera.limit_bottom = mini(camera.limit_bottom, int(floor_area[1]) + int(floor_area[3]) + 4)
+	camera.position = Vector2(clampf(point.x, camera.limit_left + 320, camera.limit_right - 320), clampf(point.y, camera.limit_top + 180, camera.limit_bottom - 180))
 	for block: Dictionary in rooms[id].blocks:
 		var body: StaticBody2D = StaticBody2D.new()
 		body.position = Vector2(float(block.x) + float(block.w) / 2, float(block.y) + float(block.h) / 2)
@@ -656,6 +680,8 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 	NativeRoomScenes.reset()
 	NativeJakerson.on_enter(self, id)
 	NativeMoveIn.on_enter(self, id)
+	NativeSpatialProp.room_left = float(camera.limit_left); NativeSpatialProp.room_size = Vector2(float(camera.limit_right), float(camera.limit_bottom))
+	NativeSpatialProp.watch = [player, pip] + followers + world_npcs
 	for source: Array in rooms[id].lights:
 		var pos := Vector2(source[0], source[1])
 		var light: PointLight2D = PointLight2D.new()
@@ -886,7 +912,7 @@ func show_title() -> void:
 	reset_pointer_controls()
 	pause_context = false
 	world.visible = false; backdrop.visible = true
-	camera.position = Vector2(320, 180); camera.limit_right = 640; camera.limit_bottom = 360
+	camera.position = Vector2(320, 180); camera.limit_left = 0; camera.limit_top = 0; camera.limit_right = 640; camera.limit_bottom = 360
 	_set_battle_visible(false)
 	boss_id = ""
 	var continue_option: Dictionary = option("Continue", func() -> void: load_save("auto"))
@@ -921,16 +947,28 @@ func begin_evening() -> void:
 
 func dialogue(lines: Array, completed: Callable, choices: Array = []) -> void:
 	dialogue_lines = []
+	# Pages follow the box: wrap at the text column's width, then up to three lines a page (four
+	# in large text), split evenly so no page is left holding one stray word.
+	var large: bool = state.settings.large
+	var per_line: int = floori(448.0 / (GLYPH * (2.0 if large else 1.0)))
+	var room: int = 4 if large else 3
 	for line: Array in lines:
 		var mood: String = str(line[2]) if line.size() > 2 else "neutral"
-		var page: String = ""
-		var limit: int = 60 if state.settings.large else 135
+		var rows: Array[String] = []
+		var row: String = ""
 		for word: String in str(line[1]).split(" "):
-			if page.length() + word.length() + 1 > limit and not page.is_empty():
-				dialogue_lines.append([line[0], page, mood]); page = ""
-			page += (" " if not page.is_empty() else "") + word
-		if not page.is_empty(): dialogue_lines.append([line[0], page, mood])
+			if row.length() + word.length() + 1 > per_line and not row.is_empty():
+				rows.append(row); row = ""
+			row += (" " if not row.is_empty() else "") + word
+		if not row.is_empty(): rows.append(row)
+		var pages: int = ceili(float(rows.size()) / room)
+		var start: int = 0
+		for page: int in range(pages):
+			var take: int = ceili(float(rows.size() - start) / (pages - page))
+			dialogue_lines.append([line[0], " ".join(rows.slice(start, start + take)), mood])
+			start += take
 	line_index = 0; reveal = 0; phrase_pause = 0
+	dialogue_top = false
 	dialogue_callback = completed; dialogue_choices = choices
 	mode = Mode.DIALOGUE; input_lock = 2; ui_dirty = true
 	stage_dialogue()
@@ -1199,7 +1237,7 @@ func _build_battle_sprites() -> void:
 		sprite.sprite_frames = NativePartyBattleArt.frames(ACTORS[i])
 		sprite.centered = false
 		sprite.offset = Vector2(-24, -72)
-		sprite.position = Vector2(55 + i * 65, 150)
+		sprite.position = Vector2(48 + i * 74, 150)
 		sprite.z_index = 200
 		add_child(sprite)
 		sprite.play("idle")
@@ -1219,6 +1257,9 @@ func _build_battle_sprites() -> void:
 	foe.frame_changed.connect(func() -> void: NativeCastArt.fit(foe, foe_height()))
 	foe.animation_changed.connect(func() -> void: NativeCastArt.fit(foe, foe_height()))
 	NativeCastArt.fit(foe, foe_height())
+	wind_fx = NativeWindStreaks.new()
+	wind_fx.z_index = 203
+	add_child(wind_fx)
 	_set_battle_visible(false)
 
 func foe_height() -> float:
@@ -1231,6 +1272,8 @@ func _set_battle_visible(value: bool) -> void:
 	claim_art.visible = value and boss_id == "claim"
 	pin_art.visible = value and boss_id == "pinpal"
 	vfx.visible = value
+	wind_fx.visible = value and boss_id == "walt"
+	wind_fx.reduced = bool(state.settings.reducedMotion)
 	battle_scenery.visible = value and battle_scenery.get_child_count() > 0
 
 ## Shows the room's own painted battle backdrop when it has one; otherwise rebuilds the current room
@@ -1315,7 +1358,7 @@ func begin_battle() -> void:
 	while actor < battle.party.size() and int(battle.party[actor].hp) <= 0: actor += 1
 	show_battle_scenery()
 	world.visible = false; backdrop.visible = false; _set_battle_visible(true)
-	camera.position = Vector2(320, 180); camera.limit_right = 640; camera.limit_bottom = 360
+	camera.position = Vector2(320, 180); camera.limit_left = 0; camera.limit_top = 0; camera.limit_right = 640; camera.limit_bottom = 360
 	hint = "Choose one action. Cancel revises your plan."
 	audio.play_music("")
 	audio.play_music(NativeSoundtrack.battle_cue(boss_id, "last-call" if boss_id=="rook" else "graduation" if boss_id=="val" else "boss-dark" if boss_id not in ["", "pinpal", "jakerson", "jakerson_final"] and not NativeRandomFights.is_fight(boss_id) else "battle-rich"))
@@ -1791,6 +1834,7 @@ func caret(at: Vector2, color: Color) -> void:
 func label(text: String, rect: Rect2, size_px: int = 12, color: Color = CREAM) -> Label:
 	var node: Label = Label.new()
 	var clean: String = text.replace("Â·", " / ").replace("â€”", "-").replace("â†’", ">").replace("â€™", "'")
+	clean = key_words(clean)
 	var max_chars: int = maxi(6, floori(rect.size.x / (GLYPH * size_px / 12.0)))
 	var wrapped: Array[String] = []
 	for paragraph: String in clean.split("\n"):
@@ -1801,7 +1845,18 @@ func label(text: String, rect: Rect2, size_px: int = 12, color: Color = CREAM) -
 				line = ""
 			line += (" " if not line.is_empty() else "") + word
 		wrapped.append(line)
+	# Never draw past the box: text taller than the box shows a page at a time, turning every
+	# few seconds, with page dots in the box's bottom-right corner.
+	var room: int = maxi(1, floori((rect.size.y + 2.0) / (font.get_height(size_px) + 2.0)))
+	var pages: int = ceili(float(wrapped.size()) / room)
+	var page: int = 0
+	if pages > 1:
+		paging_labels = true
+		page = (intro_ticks / LABEL_PAGE_TICKS) % pages
+		var per_page: int = ceili(float(wrapped.size()) / pages)
+		wrapped = wrapped.slice(page * per_page, page * per_page + per_page)
 	node.text = "\n".join(wrapped)
+	node.max_lines_visible = room
 	node.position = rect.position
 	node.size = rect.size
 	node.add_theme_font_override("font", font)
@@ -1816,7 +1871,17 @@ func label(text: String, rect: Rect2, size_px: int = 12, color: Color = CREAM) -
 	node.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	ui.add_child(node)
 	text_nodes.append(node)
+	if pages > 1 and room > 1:
+		for dot: int in range(pages):
+			fill(Rect2(rect.end.x - 4 - (pages - 1 - dot) * 5, rect.end.y - 2, 3, 2), AMBER if dot == page else LINE)
 	return node
+
+## Prompts written with a keyboard key ("up or Z jumps") read the same on any device.
+func key_words(text: String) -> String:
+	if not text.contains("Z"): return text
+	var key := RegEx.new()
+	key.compile("(?<![A-Za-z0-9'])Z(?![A-Za-z0-9'])")
+	return key.sub(text, "confirm", true)
 
 func right_label(text: String, rect: Rect2, color: Color = CREAM) -> Label:
 	var node: Label = label(text, rect, 12, color)
@@ -1826,6 +1891,8 @@ func right_label(text: String, rect: Rect2, color: Color = CREAM) -> Label:
 func render_ui() -> void:
 	for node: Control in text_nodes: node.queue_free()
 	text_nodes.clear(); buttons.clear(); battle_help = null
+	paging_labels = false
+	menu_back_rect = Rect2()
 	if is_instance_valid(overlay): overlay.update_state()
 	var stack: float = 40.0
 	if mode == Mode.WORLD and world.visible:
@@ -1844,7 +1911,8 @@ func render_ui() -> void:
 		stack += 28
 	if mode == Mode.WORLD:
 		var tutorial_hint: String=NativeJakerson.hint(self)
-		if not tutorial_hint.is_empty():
+		# One line of guidance at a time: the standing hint steps aside while a bark is showing.
+		if not tutorial_hint.is_empty() and notice_ticks <= 0:
 			panel(Rect2(12,stack,470,40));label(tutorial_hint,Rect2(22,stack+4,450,34),12,MINT)
 			stack += 44
 		var object: Dictionary = nearest_object()
@@ -1893,7 +1961,7 @@ func render_ui() -> void:
 		ui.add_child(skip); text_nodes.append(skip)
 	elif mode == Mode.DIALOGUE:
 		var large: bool = state.settings.large
-		var top: float = 130 if large else 214
+		var top: float = 38.0 if dialogue_top else 130.0 if large else 214.0
 		var height: float = 220 if large else 136
 		panel(Rect2(12, top, 616, height))
 		var line: Array = dialogue_lines[line_index]
@@ -1901,12 +1969,22 @@ func render_ui() -> void:
 		var mood: String = str(line[2]) if line.size() > 2 else "neutral"
 		var talking: bool = reveal < str(line[1]).length()
 		var face: int = 2 if mood == "concern" else 3 if mood == "warm" else 0
+		# A speaker with no portrait (a voice, a notice) gets the whole box for text, not an empty frame.
+		var iconic: Texture2D = NativeTalkArt.icon(speaker, talking and intro_ticks % 20 < 12)
+		if NativeCastArt.portrait(speaker, face) == null and NativeTalkArt.portrait(speaker, face) == null and iconic == null:
+			var bare_tab: float = text_width(speaker) + 16
+			fill(Rect2(22, top - 8, bare_tab, 17), AMBER)
+			label(speaker, Rect2(30, top - 7, bare_tab - 8, 16), 12, INK)
+			label(str(line[1]).left(floori(reveal)), Rect2(30, top + 18, 582, height - 34), 24 if large else 12)
+			if not talking: caret(Vector2(606, top + height - 14), AMBER)
+			return
 		# While a line types out the mouth flaps (closed on punctuation); portraits without drawn
 		# open mouths fall back to swapping in the talking face.
 		var open: bool = talking and intro_ticks % 10 < 5 and not str(line[1]).substr(maxi(0, floori(reveal) - 1), 1) in [".", ",", "!", "?"]
 		var mouth: Texture2D = NativeTalkArt.portrait(speaker, face) if open else null
 		if mouth == null and talking and mood != "concern" and intro_ticks % 16 < 8 and NativeTalkArt.portrait(speaker, face) == null: face = 1
-		if mouth != null: portrait_texture(mouth, Rect2(16, top + 4, 128, 128))
+		if iconic != null: portrait_texture(iconic, Rect2(16, top + 4, 128, 128))
+		elif mouth != null: portrait_texture(mouth, Rect2(16, top + 4, 128, 128))
 		else: portrait(speaker, face, Rect2(16, top + 4, 128, 128))
 		fill(Rect2(150, top + 10, 1, height - 20), LINE)
 		# Name tab sits on the frame, so the speaker reads before the line does.
@@ -1916,14 +1994,30 @@ func render_ui() -> void:
 		label(str(line[1]).left(floori(reveal)), Rect2(164, top + 18, 448, height - 34), 24 if large else 12)
 		if not talking: caret(Vector2(606, top + height - 14), AMBER)
 	elif mode in [Mode.MENU, Mode.PAUSE]:
-		if pause_context and pause_mode == Mode.WORLD and (caption == "Paused" or caption.begins_with("Party") or party_caption(caption)):
+		if ending_ticks >= 0 and not pause_context and mode == Mode.MENU and caption.begins_with("The end"):
+			render_ending()
+		elif pause_context and pause_mode == Mode.WORLD and (caption == "Paused" or caption.begins_with("Party") or party_caption(caption)):
 			render_pause_screen()
 		else:
+			# A framed box sized to its options. Story choices sit where the dialogue box was (bottom,
+			# or top when the speakers stand low); other menus hang from the top.
 			var quiz: float = 46.0 if stack > 40.0 else 0.0
-			panel(Rect2(70, 22 + quiz, 500, 318 - quiz))
-			label(caption, Rect2(88, 36 + quiz, 464, 46), 12, AMBER)
-			fill(Rect2(88, 82 + quiz, 464, 1), LINE)
-			render_options(Rect2(88, 91 + quiz, 464, (194 if mode == Mode.MENU else 239) - quiz))
+			var has_back: bool = mode == Mode.MENU and menu_options.any(func(choice: Dictionary) -> bool: return choice.label == "Back")
+			var count: int = maxi(1, menu_options.size() - (1 if has_back else 0))
+			var caption_lines: int = clampi(ceili(text_width(caption) / 464.0), 1, 2)
+			var head: float = 20.0 + 18.0 * caption_lines
+			var back_room: float = 26.0 if has_back else 0.0
+			var rows: int = clampi(count, 1, floori((318.0 - quiz - head - 10.0 - back_room) / 23.0))
+			var height: float = head + rows * 23.0 + 10.0 + back_room
+			var top: float = 22.0 + quiz
+			if world.visible and not pause_context and mode == Mode.MENU:
+				top = maxf(22.0 + quiz, 38.0 if dialogue_top else 350.0 - height)
+			panel(Rect2(70, top, 500, height))
+			label(caption, Rect2(88, top + 10, 464, 18.0 * caption_lines), 12, AMBER)
+			fill(Rect2(88, top + head - 5, 464, 1), LINE)
+			# Back is drawn by the overlay button in the row after the options.
+			render_options(Rect2(88, top + head + 2, 464, (rows + (1 if has_back else 0)) * 23.0))
+			if has_back: menu_back_rect = Rect2(88, top + head + 2 + rows * 23.0, 464, 23)
 	elif mode in [Mode.BATTLE, Mode.TIMING, Mode.TELEGRAPH, Mode.DODGE, Mode.RESOLVE, Mode.RESULT, Mode.BANNER]:
 		render_battle_ui()
 	if notice_ticks > 0 and mode == Mode.WORLD:
@@ -1971,14 +2065,36 @@ func render_pause_screen() -> void:
 	label(objective(), Rect2(238, 292, 372, 34), 12, CREAM)
 	right_label("Keepsakes %d/%d" % [found, PartyGrowth.KEEPSAKES.size()], Rect2(410, 273, 200, 16), MUTED)
 
+## The closing card: the scene fades to dark, the title and an end line fade in, then the choices
+## (keep exploring / title) appear underneath in a small framed list.
+func render_ending() -> void:
+	var fade: float = clampf(ending_ticks / 80.0, 0.0, 1.0)
+	fill(Rect2(0, 0, 640, 360), Color(0.04, 0.05, 0.09, fade))
+	if ending_ticks < 50: return
+	var shown: float = clampf((ending_ticks - 50) / 60.0, 0.0, 1.0)
+	var tint: Color = Color(1, 1, 1, shown)
+	var title: Label = label("AFTER HOURS", Rect2(120, 70, 400, 50), 36, Color(CREAM, shown)); title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	var sub: Label = label("C O L L E G E   T A L E", Rect2(120, 122, 400, 20), 12, Color(AMBER, shown)); sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	fill(Rect2(220, 152, 200, 1), Color(LINE, shown))
+	var line: Label = label("THE END", Rect2(120, 164, 400, 24), 18, Color(MINT, shown)); line.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	if ending_ticks < 120: return
+	var rows: int = menu_options.size()
+	var top: float = 296.0 - rows * 23.0
+	panel(Rect2(150, top - 10, 340, rows * 23.0 + 18))
+	render_options(Rect2(160, top, 320, rows * 23.0))
+
 func render_options(rect: Rect2) -> void:
 	var reviewing: bool = mode == Mode.BATTLE and caption == "Review party plan"
 	var grid: bool = mode == Mode.BATTLE and (caption.contains("Choose an action") or reviewing)
 	var rows: int = floori(rect.size.y / 23)
-	var first: int = 0 if grid else maxi(0, selection - rows + 1)
-	var count: int = 3 if reviewing else 6 if grid else rows
+	# A list longer than the box but short enough for two columns (e.g. five CONNECT options and
+	# Back in the battle panel) splits into columns instead of scrolling Back out of view.
+	var per_column: int = ceili(menu_options.size() / 2.0)
+	var columns: int = 2 if not grid and menu_options.size() > rows and rect.size.x >= 400 and per_column <= rows else 1
+	var first: int = 0 if grid or columns == 2 else maxi(0, selection - rows + 1)
+	var count: int = 3 if reviewing else 6 if grid else menu_options.size() if columns == 2 else rows
 	var names_only: bool = pause_context and mode == Mode.MENU and (caption.begins_with("Party") or party_caption(caption))
-	if not grid and menu_options.size() > rows:
+	if not grid and columns == 1 and menu_options.size() > rows:
 		var track: ColorRect = ColorRect.new()
 		track.position = Vector2(rect.end.x + 2, rect.position.y); track.size = Vector2(3, rect.size.y); track.color = PLUM
 		track.mouse_filter = Control.MOUSE_FILTER_IGNORE; ui.add_child(track); text_nodes.append(track)
@@ -1998,8 +2114,9 @@ func render_options(rect: Rect2) -> void:
 		button.add_theme_color_override("font_color", MUTED if menu_options[i].get("disabled", false) else INK if chosen else CREAM)
 		button.add_theme_color_override("font_hover_color", Color.WHITE)
 		button.clip_text = true
-		button.position = rect.position + (Vector2((i % 3) * (rect.size.x / 3), (i / 3) * 35) if grid else Vector2(0, (i - first) * 23))
-		button.size = Vector2(rect.size.x / 3 - 8, 24 if reviewing else 30) if grid else Vector2(rect.size.x, 22)
+		button.position = rect.position + (Vector2((i % 3) * (rect.size.x / 3), (i / 3) * 35) if grid else Vector2((i / per_column) * (rect.size.x / 2 + 4), (i % per_column) * 23) if columns == 2 else Vector2(0, (i - first) * 23))
+		var option_size: Vector2 = Vector2(rect.size.x / 3 - 8, 24 if reviewing else 30) if grid else Vector2(rect.size.x / 2 - 4, 22) if columns == 2 else Vector2(rect.size.x, 22)
+		button.size = option_size
 		button.alignment = HORIZONTAL_ALIGNMENT_CENTER if grid else HORIZONTAL_ALIGNMENT_LEFT
 		# Selected = solid amber with dark text; the rest stay quiet so one choice stands out.
 		var normal: StyleBoxFlat = StyleBoxFlat.new()
@@ -2024,7 +2141,7 @@ func render_options(rect: Rect2) -> void:
 		ui.add_child(button); text_nodes.append(button); buttons.append(button)
 		# Size again once the slim styleboxes apply; the default theme's cached minimum clamped it taller.
 		button.update_minimum_size()
-		button.size = Vector2(rect.size.x / 3 - 8, 24 if reviewing else 30) if grid else Vector2(rect.size.x, 22)
+		button.size = option_size
 
 func command_summary(command: Dictionary) -> String:
 	var actor_name: String = str(battle.party[int(command.actor)].id).capitalize()
@@ -2040,17 +2157,25 @@ func command_summary(command: Dictionary) -> String:
 
 func render_battle_ui() -> void:
 	var name: String = "FLYERER" if boss_id.is_empty() else "COACH PRIME" if boss_id == "deion" else "HOLD THE LIGHT" if boss_id == "walt" else "JAKERSON" if boss_id == "jakerson_final" else NativeRandomFights.name_of(boss_id).to_upper() if NativeRandomFights.is_fight(boss_id) else boss_id.to_upper()
-	# Foe card: name, then real meters instead of bare numbers.
-	panel(Rect2(392, 8, 236, 62))
-	label(name, Rect2(404, 13, 212, 16), 12, AMBER)
-	if bool(battle.get("eased", false)) and battle.outcome == "active" and mode in [Mode.TELEGRAPH, Mode.DODGE]: right_label("EASING UP", Rect2(404, 13, 214, 16), MINT)
-	elif BattleRules.desperate(battle) and int(battle.openness) < 100 and battle.outcome == "active" and boss_id not in ["jakerson", "jakerson_final"]: right_label("DESPERATE", Rect2(404, 13, 214, 16), Color("e8837b"))
-	label("WIND" if boss_id == "walt" else "HP", Rect2(404, 31, 44, 16), 12, CREAM)
-	meter(Rect2(450, 36, 124, 5), float(shown_enemy_hp) / maxf(1.0, float(battle.get("max_hp", shown_enemy_hp))), AMBER)
-	right_label(str(shown_enemy_hp), Rect2(576, 31, 42, 16))
-	label("OPEN", Rect2(404, 49, 44, 16), 12, MINT)
-	meter(Rect2(450, 54, 124, 5), float(battle.openness) / 100.0, MINT)
-	right_label("%s%%" % battle.openness, Rect2(576, 49, 42, 16), MINT)
+	# Foe card: name, then real meters instead of bare numbers. It sits top centre, between the
+	# party and the foe, so it never covers the enemy sprite (tall bosses reach y 42).
+	var card: float = 214.0
+	panel(Rect2(card, 8, 212, 62))
+	label(name, Rect2(card + 12, 13, 188, 16), 12, AMBER)
+	if bool(battle.get("eased", false)) and battle.outcome == "active" and mode in [Mode.TELEGRAPH, Mode.DODGE]: right_label("EASING UP", Rect2(card + 12, 13, 190, 16), MINT)
+	elif BattleRules.desperate(battle) and int(battle.openness) < 100 and battle.outcome == "active" and boss_id not in ["jakerson", "jakerson_final"]: right_label("DESPERATE", Rect2(card + 12, 13, 190, 16), Color("e8837b"))
+	# OPEN is the meter most fights are won on, so it is the big, bright one; HP is the quiet one.
+	label("WIND" if boss_id == "walt" else "HP", Rect2(card + 12, 31, 40, 16), 12, MUTED)
+	meter(Rect2(card + 52, 37, 112, 3), float(shown_enemy_hp) / maxf(1.0, float(battle.get("max_hp", shown_enemy_hp))), Color("a8823f"))
+	right_label(str(shown_enemy_hp), Rect2(card + 166, 31, 36, 16), MUTED)
+	# In Hold the Light the lantern-bearer on the foe side is Walt, who is being helped: say so.
+	if boss_id == "walt":
+		var plate: float = text_width("WALT / HOLDS THE LIGHT") + 12
+		panel(Rect2(480 - plate / 2, 148, plate, 17), MINT)
+		label("WALT / HOLDS THE LIGHT", Rect2(480 - plate / 2 + 6, 149, plate - 8, 16), 12, MINT)
+	label("OPEN", Rect2(card + 12, 49, 40, 16), 12, MINT)
+	meter(Rect2(card + 52, 51, 112, 9), float(battle.openness) / 100.0, MINT)
+	right_label("%s%%" % battle.openness, Rect2(card + 166, 49, 36, 16), MINT)
 	# Party strip: one card per member, SYNC as its own meter at the end.
 	var joined: int = 1 + int(bool(state.flags.get("imani_joined", false))) + int(bool(state.flags.get("walt_joined", false)))
 	for i: int in range(joined):
@@ -2070,7 +2195,9 @@ func render_battle_ui() -> void:
 	if mode in [Mode.TELEGRAPH, Mode.DODGE]: progress = live_promise_progress() if battle.promise else "No promise this turn"
 	elif mode == Mode.BATTLE: progress = last_promise_result
 	if boss_id == "claim":
-		progress += ("\n" if not progress.is_empty() else "") + "Tag%s / Return%s / Boundary%s" % ["+" if claim_needs.tagDelivered else "-", "+" if claim_needs.oneReturned else "-", "+" if claim_needs.boundaryKept else "-"]
+		# The three things RELEASE needs (tag delivered, one item returned, a boundary kept).
+		var met: int = int(bool(claim_needs.tagDelivered)) + int(bool(claim_needs.oneReturned)) + int(bool(claim_needs.boundaryKept))
+		progress += ("\n" if not progress.is_empty() else "") + "Needs met %d/3" % met
 	if mode == Mode.BATTLE:
 		panel(Rect2(12, 166, 616, 142))
 		label(battle_error if not battle_error.is_empty() else caption.replace("Choose an action", "your turn"), Rect2(26, 175, 330, 16), 12, Color("e8837b") if not battle_error.is_empty() else AMBER)
@@ -2097,8 +2224,21 @@ func render_battle_ui() -> void:
 		fill(Rect2(302, 235, 36, 21), AMBER)
 		fill(Rect2(80 + minf(1.0, timing_ticks / 54.0) * 480, 231, 3, 29), CREAM)
 	elif mode == Mode.RESOLVE:
-		panel(Rect2(12, 166, 616, 34))
-		label(action_text, Rect2(26, 175, 588, 16), 12, AMBER)
+		# Keep the command panel at full height: who is acting, the whole turn's plan as a log
+		# (done / now / next) and what the current action does.
+		panel(Rect2(12, 166, 616, 142))
+		label(action_text, Rect2(26, 175, 420, 16), 12, AMBER)
+		right_label("Action %d/%d" % [mini(resolution_index + 1, plan.size()), plan.size()], Rect2(450, 175, 164, 16), MUTED)
+		fill(Rect2(26, 195, 588, 1), LINE)
+		for i: int in range(mini(plan.size(), 3)):
+			var row: float = 205 + i * 22
+			var now: bool = i == resolution_index
+			if now: caret(Vector2(28, row + 5), AMBER)
+			label(command_summary(plan[i]), Rect2(42, row, 572, 16), 12, AMBER if now else MUTED if i < resolution_index else CREAM)
+		if resolution_index < plan.size():
+			var acting: Dictionary = plan[resolution_index]
+			var kind: String = "boundary" if acting.get("boundary", false) else str(acting.kind)
+			label(str(ACTION_HELP.get(kind, "")), Rect2(26, 284, 588, 16), 12, MINT)
 	elif mode in [Mode.TELEGRAPH, Mode.DODGE]:
 		var instructions: Dictionary = {"": "Move through the paper gaps. Confirm briefly pushes paper away.", "chip": "Tap left / right to hop. Match the called safe column.", "deion": "%s: jump. %s: duck. Or use the buttons." % [binding_label("confirm"), binding_label("run")], "todd": "Move between stamps. RED AUDIT: stay still. Confirm signs boxes.", "pinpal": "Move left / right. Confirm near a ball to flip it back.", "claim": "Carry the outlined tag." if boss_stage == 0 else "Return one item. Confirm at a destination; leave the other a note."}
 		instructions.cone="Follow each green row. Crossed-out rows are cancelled calls."
@@ -2118,20 +2258,25 @@ func render_battle_ui() -> void:
 			if pattern.promiseComplete: instruction = "Tag delivered through the sweep." if int(pattern.phase) == 0 else "One return, one note. Promise kept." if battle.promise else "One return, one note completed."
 		if pattern.get("audit", false): instruction = "RED AUDIT / HOLD STILL"
 		# Three columns: how to play | arena | what the promise needs.
-		panel(Rect2(12, 166, 172, 120))
-		var heading: float = 16.0 if text_width(instruction) <= 156 else 34.0
-		label(instruction, Rect2(22, 173, 156, heading), 12, Color("e8837b") if pattern.get("audit", false) else AMBER)
-		fill(Rect2(22, 177 + heading, 152, 1), LINE)
-		label(str(pattern.get("hint", instructions.get(boss_id, ""))), Rect2(22, 183 + heading, 156, 100 - heading), 12, CREAM)
-		panel(Rect2(456, 166, 172, 120), MINT if battle.promise else LINE)
-		label("PROMISE" if battle.promise else "DEFEND", Rect2(466, 173, 152, 16), 12, MINT if battle.promise else MUTED)
-		fill(Rect2(466, 193, 152, 1), LINE)
+		# The side panels stop 20px short of the box (emitters and rigs sit just outside its edges).
+		panel(Rect2(12, 166, 160, 120))
+		var heading: float = 16.0 if text_width(instruction) <= 144 else 34.0
+		label(instruction, Rect2(20, 173, 146, heading), 12, Color("e8837b") if pattern.get("audit", false) else AMBER)
+		fill(Rect2(20, 177 + heading, 144, 1), LINE)
+		label(str(pattern.get("hint", instructions.get(boss_id, ""))), Rect2(20, 183 + heading, 146, 100 - heading), 12, CREAM)
+		panel(Rect2(468, 166, 160, 120), MINT if battle.promise else LINE)
+		label("PROMISE" if battle.promise else "DEFEND", Rect2(476, 173, 146, 16), 12, MINT if battle.promise else MUTED)
+		fill(Rect2(476, 193, 144, 1), LINE)
 		var lines: Array[String] = []
 		for part: String in progress.replace("\n", " / ").split(" / "):
 			var piece: String = part.strip_edges()
 			if not piece.is_empty(): lines.append(piece.left(1).to_upper() + piece.substr(1))
-		label("\n".join(lines), Rect2(466, 199, 152, 84), 12, CREAM)
-		if resume_ticks > 0: label("Resume in %s" % ceili(resume_ticks / 60.0), Rect2(239, 214, 180, 26), 12, AMBER)
+		label("\n".join(lines), Rect2(476, 199, 146, 84), 12, CREAM)
+		if resume_ticks > 0:
+			# The countdown takes the action button's slot (hidden meanwhile), clear of the arena and soul.
+			panel(Rect2(232, 291, 176, 22), AMBER)
+			var count: Label = label("Resume in %s" % ceili(resume_ticks / 60.0), Rect2(232, 294, 176, 16), 12, AMBER)
+			count.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	elif mode == Mode.RESULT:
 		panel(Rect2(24, 187, 592, 113), AMBER)
 		label(caption, Rect2(40, 202, 560, 26), 18, AMBER)
@@ -2310,6 +2455,12 @@ func present_impact() -> void:
 		var struck: Node2D = claim_art if boss_id == "claim" else pin_art if boss_id == "pinpal" else foe
 		NativeBattleJuice.flinch(struck, Vector2.RIGHT, damage); NativeBattleJuice.flash(struck)
 		if damage >= 12: NativeBattleJuice.kick([battle_scenery, foe, claim_art, pin_art] + battle_sprites, 2.0, 10)
+	elif str(command.kind) in ["heal", "item", "warmth"]:
+		# Healing pops a green number over each ally it reached.
+		for i: int in range(mini(3, battle_sprites.size())):
+			if command.has("target") and int(command.target) != i: continue
+			var gained: int = int(pending_battle.party[i].hp) - int(battle.party[i].hp)
+			if gained > 0 and battle_sprites[i].visible: vfx.play("heal", battle_sprites[i].position, battle_sprites[i].position - Vector2(0, 38), gained)
 	ui_dirty = true
 
 func stage_dialogue() -> void:
@@ -2322,11 +2473,38 @@ func stage_dialogue() -> void:
 	pip.set_pose("wave" if speaker == "Pip" else "idle")
 	var identities: Dictionary = {"Cal":"cal", "Mags":"mags", "Nell":"nell", "Dev":"dev", "Rook":"rook", "Walt":"walt", "ENCORE":"encore", "ERRATA":"errata", "AUTOCOMPLETE":"autocomplete", "LOADBEARER":"loadbearer", "Professor Eric":"eric", "VAL":"val", "Val":"val_small", "CONE COMMITTEE":"cone", "Chad":"chad", "Jakerson":"jakerson", "Mara":"mara", "Eli":"eli", "Chip":"chip", "Deion Sanders":"deion", "Todd Saliman":"todd", "Flyerer":"flyer"}
 	if speaker != "Booth": NativeTalkMotion.stage(self, speaker, identities)
+	dialogue_top = dialogue_side_top(NativeTalkMotion.speakers(self, speaker, identities))
 	if speaker == "Booth":
 		strange_ticks = 120
 		audio.combat("warning")
 		for person: WorldActor in [player] + followers:
 			if person.visible: person.art.play("interact_up")
+
+## Undertale-style box placement: the box goes to the top when it would cover the people talking
+## (the speaker, and Jules a little), and back down when the top box would cover them instead.
+func dialogue_side_top(talkers: Array) -> bool:
+	if not world.visible: return false
+	var large: bool = state.settings.large
+	var bottom_edge: float = (130.0 if large else 214.0) - 8.0
+	var top_edge: float = (38.0 + 220.0 if large else 38.0 + 136.0) + 8.0
+	var canvas: Transform2D = get_viewport().get_canvas_transform()
+	var under_bottom: float = 0.0
+	var under_top: float = 0.0
+	var anchors: Array = []
+	for sprite: Variant in talkers: anchors.append([sprite, 1.0])
+	anchors.append([player.art, 0.5])
+	for anchor: Array in anchors:
+		if not is_instance_valid(anchor[0]): continue
+		var sprite: Node2D = anchor[0]
+		if not sprite.is_visible_in_tree(): continue
+		var feet: Vector2 = canvas * sprite.global_position
+		if feet.x < -16 or feet.x > 656 or feet.y < 0 or feet.y > 420: continue
+		var middle: float = feet.y - 26.0
+		if middle > bottom_edge: under_bottom += float(anchor[1])
+		if middle < top_edge: under_top += float(anchor[1])
+	if under_bottom > under_top: return true
+	if under_top > under_bottom: return false
+	return dialogue_top
 
 func _qa_smoke() -> void:
 	var route: Node = load("res://scenes/qa_wander.gd" if "--qa-wander" in OS.get_cmdline_user_args() else "res://scenes/qa_jakerson.gd" if "--qa-jakerson" in OS.get_cmdline_user_args() else "res://scenes/qa_final.gd" if "--qa-final" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter3.gd" if "--qa-chapter3" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter2.gd" if "--qa-chapter2" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter1.gd" if "--qa-chapter1" in OS.get_cmdline_user_args() else "res://scenes/qa_review_controls.gd" if "--qa-review-ui" in OS.get_cmdline_user_args() else "res://scenes/qa_opening.gd").new()

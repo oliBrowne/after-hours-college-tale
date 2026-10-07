@@ -129,7 +129,7 @@ def paint_floor(bg):
         for k in range(max(aw, ah)):
             if (k // 4) % 2 == 0:
                 bg.px(ax + (k if aw > 1 else 0), ay + (k if ah > 1 else 0), C(SAFETY[2], 0.6))
-    text(bg, "CART", 88, 242, C(SAFETY[2], 0.5))
+    text(bg, "CART", 106, 245, C(SAFETY[2], 0.5))
     bg.ellipse(292, 262, 16, 8, CONCRETE[1]); bg.ellipse(293, 263, 14, 6, "#2a262c")
     for gx in range(295, 306, 3):
         bg.vline(gx, 263, 6, CONCRETE[4])

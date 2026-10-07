@@ -205,6 +205,73 @@ def paint_lights(bg):
     E.stepped_glow(bg, BOOTH[0] + BOOTH[2] // 2, BASE + 10, 110, 16, "#4ac0b0", 0.07, 2)
 
 
+BALSA = ("#f0d9a8", "#dcb980", "#b98f58", "#8c6538", "#5e4126")
+CONCRETE = ("#a9a9b4", "#8a8a98", "#6a6a7a", "#4a4a5a")
+
+
+def model_art(revised):
+    """The suspended balsa bridge model (300x130, anchored bottom-centre on the floor line): a plank
+    deck with a handrail and a Warren truss under it, hung by its slings. Before the revision its two
+    piers are short stubs ending in raw cut wood over nothing, under a 'NO FOUNDATIONS' tag; once
+    revised the piers run down to concrete footings and the tag reads 'SHARED SPANS'."""
+    w, h = 300, 130
+    cv = Canvas(w, h)
+    ink = "#171a2b"
+    # handrail: posts and a rail along the top of the deck
+    for x in range(4, w - 3, 12):
+        cv.rect(x, 0, 2, 6, ink); cv.vline(x, 1, 5, BALSA[1])
+    cv.hline(2, 1, w - 4, ink); cv.hline(2, 2, w - 4, BALSA[0])
+    # plank deck
+    cv.rect(0, 5, w, 15, ink)
+    cv.wood(1, 6, w - 2, 13, BALSA[1], plank=4, seed=3)
+    cv.hline(1, 6, w - 2, BALSA[0])
+    cv.hline(1, 19, w - 2, ink)
+    for x in range(10, w - 6, 30):
+        cv.vline(x, 6, 13, BALSA[3])
+    # Warren truss under the deck
+    top, bot = 20, 36
+    cv.rect(0, bot, w, 3, ink); cv.rect(1, bot, w - 2, 2, BALSA[2]); cv.hline(1, bot, w - 2, BALSA[0])
+    step = 20
+    for i, x in enumerate(range(2, w - step, step)):
+        if i % 2 == 0:
+            cv.line(x, bot, x + step // 2, top + 1, ink); cv.line(x + 1, bot, x + step // 2 + 1, top + 1, BALSA[2])
+        else:
+            cv.line(x, top + 1, x + step // 2, bot, ink); cv.line(x + 1, top + 1, x + step // 2 + 1, bot, BALSA[2])
+    for x in range(2, w - 2, step // 2):
+        cv.rect(x - 1, top, 3, bot - top, ink); cv.vline(x, top, bot - top, BALSA[3])
+    # the two piers
+    for cx in (50, 250):
+        pier_h = (h - 40) if revised else 30
+        px = cx - 7
+        cv.rect(px - 1, bot + 3, 16, pier_h, ink)
+        cv.wood(px, bot + 3, 14, pier_h - 1, BALSA[1], vertical=True, plank=4, seed=cx)
+        cv.vline(px, bot + 3, pier_h - 1, BALSA[0]); cv.vline(px + 13, bot + 3, pier_h - 1, BALSA[3])
+        if revised:
+            # x-bracing and a concrete footing under each pier
+            for k in range(0, pier_h - 30, 36):
+                y0 = bot + 8 + k
+                cv.line(px + 1, y0, px - 9, y0 + 26, ink); cv.line(px + 13, y0, px + 23, y0 + 26, ink)
+                cv.line(px + 2, y0, px - 8, y0 + 26, BALSA[2]); cv.line(px + 12, y0, px + 22, y0 + 26, BALSA[2])
+            fy = h - 9
+            cv.box(cx - 17, fy, 34, 9, CONCRETE[1], outline=ink)
+            cv.hline(cx - 16, fy + 1, 32, CONCRETE[0])
+        else:
+            # raw cut end, a frayed wire left hanging from it
+            cv.rect(px, bot + 3 + pier_h - 3, 14, 3, BALSA[0])
+            for k, dx in enumerate((3, 7, 10)):
+                cv.vline(px + dx, bot + 3 + pier_h, 5 + k * 2, BALSA[2])
+    # hanging tag
+    label = "SHARED SPANS" if revised else "NO FOUNDATIONS"
+    tw = len(label) * 6 + 12
+    tx = (w - tw) // 2
+    ty = bot + 12
+    cv.vline(tx + 8, bot + 3, 9, ink); cv.vline(tx + tw - 9, bot + 3, 9, ink)
+    cv.rect(tx - 1, ty - 1, tw + 2, 17, ink)
+    cv.rect(tx, ty, tw, 15, "#e6d6b1"); cv.hline(tx, ty, tw, "#fff0c4"); cv.hline(tx, ty + 14, tw, "#b5a37e")
+    text(cv, label, tx + 6, ty + 4, "#805a58" if not revised else "#2f6b58")
+    return cv
+
+
 def build(project):
     out = os.path.join(project, f"assets/art/rooms/{ROOM}")
     os.makedirs(out, exist_ok=True)
@@ -229,6 +296,8 @@ def build(project):
         props[str(index)] = {"texture": res + name, "anchor": [ax, ay]}
 
     save(1, E.guardrail(390, 24, "NO STANDING UNDER LOAD"))
+    model_art(False).save(os.path.join(out, "prop-0.png")); model_art(True).save(os.path.join(out, "prop-0b.png"))
+    props["0"] = {"texture": res + "prop-0.png", "anchor": [150, 130], "flag": "model_revised", "flag_texture": res + "prop-0b.png"}
     save(2, E.drafting_table(120, 42, seed=2))
     save(3, E.cage_pole_lamp(68))
 

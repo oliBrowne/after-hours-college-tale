@@ -1,0 +1,78 @@
+{
+ "world_height": 50,
+ "battle_height": 75,
+ "cells": {
+  "business_major-world-0.png": {
+   "size": [
+    56,
+    55
+   ],
+   "foot": [
+    28,
+    54
+   ],
+   "height": 50,
+   "battle_cell": 0
+  },
+  "business_major-world-1.png": {
+   "size": [
+    56,
+    55
+   ],
+   "foot": [
+    28,
+    54
+   ],
+   "height": 50,
+   "battle_cell": 1
+  },
+  "business_major-world-2.png": {
+   "size": [
+    56,
+    55
+   ],
+   "foot": [
+    28,
+    54
+   ],
+   "height": 50,
+   "battle_cell": 2
+  },
+  "business_major-world-3.png": {
+   "size": [
+    56,
+    55
+   ],
+   "foot": [
+    28,
+    54
+   ],
+   "height": 50,
+   "battle_cell": 3
+  },
+  "business_major-world-4.png": {
+   "size": [
+    56,
+    55
+   ],
+   "foot": [
+    27,
+    54
+   ],
+   "height": 50,
+   "battle_cell": 4
+  },
+  "business_major-world-5.png": {
+   "size": [
+    56,
+    55
+   ],
+   "foot": [
+    28,
+    54
+   ],
+   "height": 50,
+   "battle_cell": 5
+  }
+ }
+}

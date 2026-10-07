@@ -89,9 +89,13 @@ func update_state() -> void:
 	var party: bool = game.pause_context and game.mode == game.Mode.MENU and (game.caption.begins_with("Party") or game.party_caption(game.caption))
 	back_button.position = Vector2(22, 316) if party else Vector2(88, 306)
 	back_button.size = Vector2(184, 22) if party else Vector2(464, 23)
+	# A compact menu box places its own Back row.
+	if not party and game.menu_back_rect.has_area():
+		back_button.position = game.menu_back_rect.position; back_button.size = game.menu_back_rect.size
 	back_button.visible = game.mode == game.Mode.MENU and game.menu_options.any(func(option: Dictionary) -> bool: return option.label == "Back")
 	back_button.text = "Cancel remap" if not game.binding_capture.is_empty() else "Back"
-	var active: bool = game.mode == game.Mode.DODGE and not game.pause_context
+	# While the resume countdown runs, its plate takes the action button's slot.
+	var active: bool = game.mode == game.Mode.DODGE and not game.pause_context and game.resume_ticks == 0
 	action_button.visible = active and game.boss_id != "chip"
 	action_button.text = str({"":"Push paper", "deion":"Jump", "todd":"Sign", "pinpal":"Flip", "claim":"Return", "walt":"Raise lantern", "encore":"Stopping cue"}.get(game.boss_id, "Defend"))
 	action_button.position.x = 192 if game.boss_id == "deion" else 232
