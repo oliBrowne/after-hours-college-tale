@@ -772,7 +772,7 @@ func interact(object: Dictionary) -> void:
 				dialogue([["Jules", "NEXT YEAR. Say who you will become. I do not have time to audition for tomorrow.", "concern"]], resume_world)
 			else:
 				dialogue([["Booth", "Jules Navarro. Tomorrow you will wish you had stayed.", "concern"], ["Jules", "That was my voice. I did not record that.", "concern"], ["Imani", "The booth is not connected to the mixer. It is connected to the floor.", "concern"], ["Jules", "Then we find out who is down there. One real answer. Not our entire future.", "warm"]], func() -> void: state.flags.booth_seen = true; persist(); resume_world())
-		"lamp":
+		"lamp", "farrand_lamp":
 			for member: Dictionary in state.party: member.hp = member.max
 			audio.effect("save")
 			open_menu(Mode.MENU, "Warm light / rest and save", [option("Save slot 1", func() -> void: manual_save("slot1")), option("Save slot 2", func() -> void: manual_save("slot2")), option("Save slot 3", func() -> void: manual_save("slot3")), option("Back", resume_world)])
