@@ -1,0 +1,78 @@
+{
+ "world_height": 50,
+ "battle_height": 76,
+ "cells": {
+  "frisbee-world-0.png": {
+   "size": [
+    56,
+    51
+   ],
+   "foot": [
+    28,
+    50
+   ],
+   "height": 50,
+   "battle_cell": 0
+  },
+  "frisbee-world-1.png": {
+   "size": [
+    56,
+    51
+   ],
+   "foot": [
+    28,
+    50
+   ],
+   "height": 50,
+   "battle_cell": 1
+  },
+  "frisbee-world-2.png": {
+   "size": [
+    56,
+    51
+   ],
+   "foot": [
+    28,
+    50
+   ],
+   "height": 50,
+   "battle_cell": 2
+  },
+  "frisbee-world-3.png": {
+   "size": [
+    56,
+    51
+   ],
+   "foot": [
+    28,
+    50
+   ],
+   "height": 50,
+   "battle_cell": 3
+  },
+  "frisbee-world-4.png": {
+   "size": [
+    56,
+    51
+   ],
+   "foot": [
+    27,
+    50
+   ],
+   "height": 50,
+   "battle_cell": 4
+  },
+  "frisbee-world-5.png": {
+   "size": [
+    56,
+    51
+   ],
+   "foot": [
+    28,
+    50
+   ],
+   "height": 50,
+   "battle_cell": 5
+  }
+ }
+}
