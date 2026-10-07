@@ -1,0 +1,30 @@
+{
+  "height": 60,
+  "battle_height": 88,
+  "feet": {
+    "autocomplete-world-0.png": [
+      32,
+      63
+    ],
+    "autocomplete-world-1.png": [
+      32,
+      63
+    ],
+    "autocomplete-world-2.png": [
+      32,
+      63
+    ],
+    "autocomplete-world-3.png": [
+      32,
+      63
+    ],
+    "autocomplete-world-4.png": [
+      32,
+      63
+    ],
+    "autocomplete-world-5.png": [
+      32,
+      63
+    ]
+  }
+}

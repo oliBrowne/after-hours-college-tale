@@ -1,0 +1,30 @@
+{
+  "height": 50,
+  "battle_height": 82,
+  "feet": {
+    "advisor-world-0.png": [
+      28,
+      55
+    ],
+    "advisor-world-1.png": [
+      28,
+      55
+    ],
+    "advisor-world-2.png": [
+      28,
+      55
+    ],
+    "advisor-world-3.png": [
+      28,
+      55
+    ],
+    "advisor-world-4.png": [
+      26,
+      55
+    ],
+    "advisor-world-5.png": [
+      28,
+      55
+    ]
+  }
+}
