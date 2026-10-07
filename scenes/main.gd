@@ -72,6 +72,8 @@ var target: int = 0
 var pattern: Dictionary = {}
 var battle_sprites: Array[AnimatedSprite2D] = []
 var foe: AnimatedSprite2D
+## CAPTAIN LANCE's paceline (assets/art/peloton-riders.png), a child of foe drawn behind him; only shown for the cone fight.
+var foe_riders: Sprite2D
 var dodge_view: DodgeBoxView
 var phase_ticks: int = 0
 var timing_ticks: int = 0
@@ -1212,10 +1214,17 @@ func _build_battle_sprites() -> void:
 	foe.frame_changed.connect(func() -> void: NativeCastArt.fit(foe, foe_height()))
 	foe.animation_changed.connect(func() -> void: NativeCastArt.fit(foe, foe_height()))
 	NativeCastArt.fit(foe, foe_height())
+	foe_riders = Sprite2D.new()
+	foe_riders.centered = false
+	foe_riders.show_behind_parent = true
+	foe_riders.offset = -Vector2(40, 123)  # the riders image is anchored on Lance's foot point
+	foe_riders.texture_filter = CanvasItem.TEXTURE_FILTER_NEAREST
+	foe_riders.visible = false
+	foe.add_child(foe_riders)
 	_set_battle_visible(false)
 
 func foe_height() -> float:
-	return 40.0 if boss_id=="val" and boss_stage==3 else 104.0 if boss_id=="val" else 80.0
+	return 40.0 if boss_id=="val" and boss_stage==3 else 104.0 if boss_id=="val" else 84.0 if boss_id=="cone" and NativeBossArt.drawn("peloton") else 80.0
 
 func _set_battle_visible(value: bool) -> void:
 	for i: int in range(battle_sprites.size()):
@@ -1287,6 +1296,9 @@ func begin_battle() -> void:
 	foe.sprite_frames = NativeCastArt.frames(boss_id.trim_suffix("_final") if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "flyer")
 	foe.play("idle_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "idle")
 	NativeCastArt.fit(foe, foe_height())
+	foe_riders.visible = boss_id == "cone" and NativeBossArt.drawn("peloton") and ResourceLoader.exists("res://assets/art/peloton-riders.png")
+	if foe_riders.visible and foe_riders.texture == null: foe_riders.texture = load("res://assets/art/peloton-riders.png")
+	foe.position = Vector2(480, 154 if boss_id == "cone" and NativeBossArt.drawn("peloton") else 146)  # Lance is 84px tall: stand him low enough that his helmet clears the boss panel
 	claim_art.set_pose("idle"); pin_art.set_pose("idle")
 	plan = []; actor = 0; target = 0; retreating = false; notice_ticks = 0
 	var full_hp: int = int(battle.hp)
@@ -1349,7 +1361,7 @@ func connect_menu() -> void:
 
 func final_connect_menu() -> void:
 	var choices: Array=[]
-	var names: Dictionary={"cone":["Ask for one route","Follow three marked rows"],"chad":["Ask what he actually wants","Protect one free hour"],"rook":["Ask what one shift needs","Carry one key to one exit"],"val":["Ask who's really hiring","One answer, one full stop"]}
+	var names: Dictionary={"cone":["Ask for one clear line","Follow three marked routes"],"chad":["Ask what he actually wants","Protect one free hour"],"rook":["Ask what one shift needs","Carry one key to one exit"],"val":["Ask who's really hiring","One answer, one full stop"]}
 	choices.append(option(names[boss_id][0],func() -> void:queue_command({"actor":actor,"kind":"connect","label":names[boss_id][0]})))
 	if boss_id=="rook" and boss_stage>=1:
 		choices.append(option("REVISE / keep west exit; decline east",func() -> void:queue_command({"actor":actor,"kind":"promise","revision":"west","label":"One west exit"})))
@@ -2028,7 +2040,7 @@ func command_summary(command: Dictionary) -> String:
 	return text
 
 func render_battle_ui() -> void:
-	var name: String = "FLYERER" if boss_id.is_empty() else "COACH PRIME" if boss_id == "deion" else "HOLD THE LIGHT" if boss_id == "walt" else "JAKERSON" if boss_id == "jakerson_final" else {"claim":"ADVISOR BEV"}.get(boss_id, boss_id.to_upper())
+	var name: String = "FLYERER" if boss_id.is_empty() else "COACH PRIME" if boss_id == "deion" else "HOLD THE LIGHT" if boss_id == "walt" else "JAKERSON" if boss_id == "jakerson_final" else {"claim":"ADVISOR BEV","cone":"CAPTAIN LANCE"}.get(boss_id, boss_id.to_upper())
 	# Foe card: name, then real meters instead of bare numbers.
 	panel(Rect2(392, 8, 236, 62))
 	label(name, Rect2(404, 13, 212, 16), 12, AMBER)
@@ -2090,7 +2102,7 @@ func render_battle_ui() -> void:
 		label(action_text, Rect2(26, 175, 588, 16), 12, AMBER)
 	elif mode in [Mode.TELEGRAPH, Mode.DODGE]:
 		var instructions: Dictionary = {"": "Move through the paper gaps. Confirm briefly pushes paper away.", "chip": "Tap left / right to hop. Match the called safe column.", "deion": "%s: jump. %s: duck. Or use the buttons." % [binding_label("confirm"), binding_label("run")], "todd": "Move between stamps. RED AUDIT: stay still. Confirm signs boxes.", "pinpal": "Move left / right. Confirm near a ball to flip it back.", "claim": "Carry the outlined ticket." if boss_stage == 0 else "Return one item. Confirm at a pigeonhole; leave the other a note."}
-		instructions.cone="Follow each green row. Crossed-out rows are cancelled calls."
+		instructions.cone="Follow each green row. Crossed-out rows say CALL CANCELLED: nobody rides them."
 		instructions.chad="Keep the FREE slot empty. Rest in the Do Not Disturb bubble."
 		instructions.rook=["Confirm at the key, then the exit.","CONNECT > REVISE chooses one exit. Hold its green box.","Move into each green cue and confirm together."][mini(2,boss_stage)]
 		instructions.val=["Confirm at RETURN, then STOP, then NOTE.","In CONNECT, each of you turns down your own perfect resume. Hold the shared space.","CONNECT > REVISE frees one side of the booked chairs. Hold the way out.","Confirm at two green stopping cues. Then choose an ending."][mini(3,boss_stage)]
@@ -2309,7 +2321,7 @@ func stage_dialogue() -> void:
 	for prop: Node2D in environment.foreground_nodes:
 		if prop is NativeSpatialProp and prop.definition.get("object") == "booth": prop.set_pose("tell" if speaker == "Booth" else "idle")
 	pip.set_pose("wave" if speaker == "Pip" else "idle")
-	var identities: Dictionary = {"Cal":"cal", "Mags":"mags", "Nell":"nell", "Dev":"dev", "Rook":"rook", "Walt":"walt", "ENCORE":"encore", "ERRATA":"errata", "AUTOCOMPLETE":"autocomplete", "LOADBEARER":"loadbearer", "Professor Eric":"eric", "VAL":"val", "Val":"val_small", "CONE COMMITTEE":"cone", "Chad":"chad", "Jakerson":"jakerson", "Mara":"mara", "Eli":"eli", "Chip":"chip", "Deion Sanders":"deion", "Todd Saliman":"todd", "Flyerer":"flyer"}
+	var identities: Dictionary = {"Cal":"cal", "Mags":"mags", "Nell":"nell", "Dev":"dev", "Rook":"rook", "Walt":"walt", "ENCORE":"encore", "ERRATA":"errata", "AUTOCOMPLETE":"autocomplete", "LOADBEARER":"loadbearer", "Professor Eric":"eric", "VAL":"val", "Val":"val_small", "Captain Lance":"cone", "PELOTON":"cone", "Chad":"chad", "Jakerson":"jakerson", "Mara":"mara", "Eli":"eli", "Chip":"chip", "Deion Sanders":"deion", "Todd Saliman":"todd", "Flyerer":"flyer"}
 	if speaker != "Booth": NativeTalkMotion.stage(self, speaker, identities)
 	if speaker == "Booth":
 		strange_ticks = 120

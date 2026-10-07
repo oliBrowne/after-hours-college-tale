@@ -18,7 +18,7 @@ const CARDS: Dictionary = {
 	"chip": ["STAGE MANAGER", "CHIP", "Places, everyone! Policies are for people without an ENCORE!", "e8b45c"],
 	"deion": ["COACH PRIME", "DEION SANDERS", "You can sprint forever, or you can hand it to a teammate.", "cfb87c"],
 	"todd": ["THE PRESIDENT", "TODD SALIMAN", "A plan with limits. Let's see if it survives an audit.", "cfb87c"],
-	"cone": ["ONE MARKED ROUTE", "CONE COMMITTEE", "LEFT. RIGHT. BOTH. SAFETY HAS FORMED A COMMITTEE.", "e8a05c"],
+	"cone": ["PELOTON CAPTAIN", "CAPTAIN LANCE", "ON YOUR LEFT! ON YOUR RIGHT! ON BOTH SIDES! SAFETY HAS FORMED A PELOTON.", "b6e63c"],
 	"encore": ["THE SHOW THAT WON'T END", "ENCORE", "THE SONG HAS NO AGREEMENT. AGAIN!", "e8837b"],
 	"eric": ["RULE OF THUMB", "PROFESSOR ERIC", "Hold this probe. One more measurement and we'll know everything.", "9fe0a8"],
 	"errata": ["FIX EVERY LINE", "ERRATA", "REPLACE UNCERTAINTY. ERASE HESITATION.", "e8837b"],
@@ -42,13 +42,13 @@ const ANSWERS: Dictionary = {
 	"errata": ["ERRATA", "...THE WRITER'S. I ONLY MEANT TO HELP. I KEPT HELPING UNTIL NOTHING WAS LEFT."],
 	"eric": ["Professor Eric", "The return path! Everyone watches the signal. Nobody asks where the current comes home. Rule of thumb: always ask."],
 	"autocomplete": ["AUTOCOMPLETE", "THE ORIGINAL IS... ONE STUDENT, HUMMING. I COMPLETED SIX HUNDRED ENDINGS ON TOP OF IT."],
-	"cone": ["CONE COMMITTEE", "ONE ROUTE. WE HAD THREE PROPOSALS. NOBODY WANTED TO CANCEL THE OTHERS."],
+	"cone": ["Captain Lance", "ONE LINE. WE HAD THREE CALLS. NOBODY WANTED TO CANCEL THEIRS. I JUST DON'T WANT ANYONE HIT ON THE PATH."],
 	"chad": ["Chad", "...Honestly? A friend who doesn't need anything from me. Wild, right? Let's circle back on that."],
 	"rook": ["Rook", "One shift. One exit. And somebody to tell me when it ends."],
 	"val": ["VAL", "WHO'S HIRING? ...I AM. I THINK. SOMEONE TOLD ME TO FILL EVERY SEAT, AND I NEVER ASKED WHO."],
 }
 ## Bosses whose internal id is older than their art: card id -> art id (entrance pose and sheet).
-const ART_IDS: Dictionary = {"claim": "advisor"}
+const ART_IDS: Dictionary = {"claim": "advisor", "cone": "peloton"}
 const FULL: int = 150
 const SHORT: int = 80
 const INK: Color = Color("0d101c")

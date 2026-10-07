@@ -6,7 +6,7 @@ const DIR: String = "res://assets/art/talk/"
 static var cache: Dictionary = {}
 
 static func slug(speaker: String) -> String:
-	return "val_vp" if speaker == "VAL" and ResourceLoader.exists(DIR + "val_vp-0.png") else "val_boss" if speaker == "VAL" else {"Advisor Bev": "advisor", "Gwen the Red": "ta"}.get(speaker, speaker.to_lower().replace(" ", "_"))
+	return "val_vp" if speaker == "VAL" and ResourceLoader.exists(DIR + "val_vp-0.png") else "val_boss" if speaker == "VAL" else {"Advisor Bev": "advisor", "Gwen the Red": "ta", "Captain Lance": "peloton", "PELOTON": "peloton"}.get(speaker, speaker.to_lower().replace(" ", "_"))
 
 ## The open-mouth version of a portrait face, at the size dialogue portraits are drawn (2x), or null.
 static func portrait(speaker: String, face: int) -> Texture2D:

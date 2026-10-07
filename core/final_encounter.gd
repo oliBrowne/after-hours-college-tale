@@ -130,7 +130,7 @@ static func step(before: Dictionary, axis: Vector2, precision: bool, assist: flo
 	return p
 static func progress(p: Dictionary) -> String:
 	match str(p.encounterId):
-		"cone":return "Marked routes %d/3\nCrossed-out calls cancelled" % mini(3,int(p.routesKept))
+		"cone":return "Marked routes %d/3\nCancelled calls stay cancelled" % mini(3,int(p.routesKept))
 		"chad":return "Quiet time %d/120\nKeep the slot FREE" % mini(120,int(p.quietTicks))
 		"rook":return "Key %s / exit %s" % ["held" if p.keyHeld else "open","reached" if p.exitReached else "open"] if int(p.phase)==0 else "CONNECT > REVISE\nChoose one exit; decline one" if str(p.revision).is_empty() else "Chosen exit held %d/60" % mini(60,int(p.exitHold)) if int(p.phase)==1 else "Shared stopping cues %d/2" % mini(2,int(p.sharedCues))
 		_:return "One return / one stop %d/3" % mini(3,int(p.valTask)) if int(p.phase)==0 else "Own ideals rejected %d/3\nShared space %d/90" % [p.rejected.size(),mini(90,int(p.sharedTicks))] if int(p.phase)==1 else "REVISE the reserved seats\nOpen passage %d/90" % mini(90,int(p.seatsHold)) if int(p.phase)==2 else "Ordinary stopping cues %d/2\nThen choose an ending" % mini(2,int(p.finalCues))
