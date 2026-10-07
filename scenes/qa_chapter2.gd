@@ -6,13 +6,11 @@ func run(main: Node) -> bool:
 	if "--qa-map-only" in OS.get_cmdline_user_args():
 		_assert(game.state.room=="N01" and game.state.flags.get("chapter2_complete",false),"Continue resumes the earned full Chapter 2 autosave")
 		await _press("menu");await _choose("Campus map")
-		_assert(int(game.mode)==13 and game.campus_map.selected==2,"Map selects current Norlin district")
-		await _capture("09-norlin-map");await _press("move_down")
-		_assert(game.campus_map.selected==3,"Map keyboard navigates to Engineering")
-		var click:=InputEventMouseButton.new();click.button_index=MOUSE_BUTTON_LEFT;click.pressed=true;click.position=Vector2(150,324)
-		game.get_viewport().push_input(click,true);await _frame();click=click.duplicate();click.pressed=false;game.get_viewport().push_input(click,true);await _frame()
-		_assert(game.campus_map.rooms_mode and game.campus_map.room_buttons.size()==5,"Mouse Rooms view lists all five Engineering rooms")
-		await _press("confirm");await _capture("10-engineering-doors");await _press("cancel");await _press("cancel")
+		_assert(int(game.mode)==13 and game.campus_map.selected_room=="N01","Map selects the current room, Norlin steps")
+		await _capture("09-norlin-map");await _press("move_right")
+		_assert(game.campus_map.selected_room!="N01","Map keyboard moves to a neighbouring room")
+		await _press("confirm");_assert(game.campus_map.selected_room=="N01","Confirm returns the map cursor to the current room")
+		await _capture("10-map-cursor");await _press("cancel");await _press("cancel")
 		_assert(int(game.mode)==WORLD and not game.pause_context,"Map closes back to exploration")
 		_log("FAIL" if failed else "PASS Chapter 2 map-only follow-up using earned unchanged save");_write_trace();return not failed
 	_assert(game.state.room=="F06" and game.state.flags.get("chapter1_complete",false),"Continue imports the earned Chapter 1 completion save")

@@ -233,6 +233,10 @@ func _ready() -> void:
 	ui.add_child(campus_map)
 	campus_map.configure(self)
 	campus_map.hide()
+	var minimap: NativeMinimapView = NativeMinimapView.new()
+	minimap.setup(self, false)
+	minimap.position = Vector2(8, 62); minimap.z_index = 40
+	ui.add_child(minimap)
 	vfx = CombatVFX.new()
 	vfx.z_index = 300
 	add_child(vfx)
@@ -765,6 +769,7 @@ func living_speakers() -> Array[String]:
 func interact(object: Dictionary) -> void:
 	audio.combat("pick")
 	NativeLinkedOutMenu.met(self, object)
+	NativeMinimap.talked(self, object)
 	if NativeMoveIn.handle(self, object): return
 	if NativeJakerson.handle(self,object):return
 	if object.kind == "keepsake":
