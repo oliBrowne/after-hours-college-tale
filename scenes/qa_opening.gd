@@ -43,6 +43,7 @@ func run(main: Node) -> bool:
 	if "--qa-reload-claim" in OS.get_cmdline_user_args(): return await _reload_claim()
 	await _capture("00-title")
 	await _choose("Begin the evening")
+	await _movein()
 	await _settle()
 	if game.jakerson_ui: await _choose("I'll find my way")
 	_assert(not game.state.flags.get("imani_joined", false) and not game.state.flags.get("cal_joined", false), "Solo Jules at opening")
@@ -227,6 +228,70 @@ func _load_before_cal() -> void:
 	_assert(same, "Save/load preserves member IDs, HP, stats and supply counts")
 	await _capture("04-duo-save-load")
 
+## Move-in day with the ordinary inputs: Jakerson introduces himself, Jules reads a few things, walks the hall
+## down to the lobby, wins the practice spar peacefully, makes the bet and four years go by (ends on the
+## evening's greeting).
+func _movein() -> void:
+	if failed: return
+	for _i: int in range(600):
+		if int(game.mode) != INTRO: break
+		await _press()
+	_assert(str(game.state.room) == "D01" and bool(game.state.flags.get("movein_active", false)), "A new game opens on move-in day in room 214")
+	await _quiet()
+	_assert(bool(game.state.flags.get("movein_met", false)) and not NativeRoomScenes.busy() and int(game.mode) == WORLD, "Jakerson introduces himself, then Jules has control")
+	await _capture("00-movein-room")
+	await _object("jules_bed"); await _settle()
+	await _object("jakerson"); await _settle()
+	await _door("hallway", "D02")
+	await _quiet()
+	_assert(bool(game.state.flags.get("movein_ahead", false)), "Jakerson goes ahead to the lobby once Jules is in the hall")
+	await _object("floormate_208"); await _settle()
+	await _object("floormate_lounge"); await _settle()
+	await _capture("00-movein-hall")
+	await _door("stairs_lobby", "D03")
+	await _quiet()
+	await _object("front_doors"); await _settle()
+	_assert(str(game.state.room) == "D03" and bool(game.state.flags.get("movein_active", false)), "The front doors keep Jules in the lobby until the bet is made")
+	await _object("jakerson_lobby"); await _settle()
+	_assert(str(game.caption).begins_with("Jakerson / a friendly spar"), "Jakerson offers the practice spar at the ping-pong table")
+	await _choose("Sure, show me")
+	await _spar()
+	_assert(game.state.flags.get("jakerson_resolution", "") == "peaceful", "Dorm spar ends with RELEASE")
+	_assert(str(game.caption).begins_with("Jakerson / loser buys the boba"), "The bet follows the spar")
+	await _choose("Deal. I'm ordering taro")
+	await _settle()
+	_assert(bool(game.state.flags.get("movein_done", false)) and not bool(game.state.flags.get("movein_active", false)) and game.state.flags.get("movein_boba", "") == "taro", "Move-in day ends with the bet")
+
+## The spar with ordinary menu input: answer every coaching line, follow its advice.
+func _spar() -> void:
+	var start: int = ticks
+	var coached: int = 0
+	while not failed and int(game.mode) != RESULT:
+		if ticks - start > 9000: _assert(false, "Spar did not resolve"); break
+		match int(game.mode):
+			DIALOGUE:
+				coached += 1
+				if not captures.has("coach-%d" % int(game.battle.get("coached", 0))):
+					captures["coach-%d" % int(game.battle.get("coached", 0))] = true; await _capture("04-coach-%d" % int(game.battle.get("coached", 0)))
+				await _settle()
+			BATTLE:
+				_release()
+				if str(game.caption) == "Review party plan": await _choose("Commit turn")
+				elif str(game.caption).contains("Choose an action"): await _choose("CONNECT")
+				elif str(game.caption).begins_with("Connect"):
+					var labels: Array = game.menu_options.map(func(o: Dictionary) -> String: return str(o.label))
+					if labels.any(func(l: String) -> bool: return l.begins_with("RELEASE")): await _choose("RELEASE")
+					elif int(game.battle.turn) == 0: await _choose("Ask what")
+					else: await _choose("Catch three")
+				else: _assert(false, "Unexpected spar menu " + str(game.caption))
+			DODGE:
+				await _defend_box("jakerson")
+			_:
+				_release(); await _frame()
+	_assert(coached >= 3, "Jakerson coached each turn (%d)" % coached)
+	await _capture("05-spar-result")
+	await _choose("Continue"); await _settle()
+
 func _definition(id: String) -> Dictionary:
 	for object: Dictionary in game.rooms[str(game.state.room)].objects:
 		if str(object.id) == id: return object
@@ -238,11 +303,13 @@ func _walk(point: Vector2, tolerance: float = 6.0) -> void:
 	var room: String = str(game.state.room)
 	var bounds: Array = game.rooms[room].walk_bounds
 	var grid: AStarGrid2D = AStarGrid2D.new()
-	grid.region = Rect2i(0, 0, 121, 69); grid.cell_size = Vector2(8, 8)
+	var dims: Array = game.rooms[room].get("dimensions", [960, 540])
+	var cols: int = maxi(121, ceili(float(dims[0]) / 8.0) + 1); var rows: int = maxi(69, ceili(float(dims[1]) / 8.0) + 1)
+	grid.region = Rect2i(0, 0, cols, rows); grid.cell_size = Vector2(8, 8)
 	grid.diagonal_mode = AStarGrid2D.DIAGONAL_MODE_NEVER; grid.update()
 	var walk: Rect2 = Rect2(float(bounds[0]), float(bounds[1]), float(bounds[2]), float(bounds[3]))
-	for y: int in range(69):
-		for x: int in range(121):
+	for y: int in range(rows):
+		for x: int in range(cols):
 			var at: Vector2 = Vector2(x * 8, y * 8)
 			var solid: bool = not walk.has_point(at)
 			for block: Dictionary in game.rooms[room].get("blocks", []):
@@ -275,6 +342,12 @@ func _object(id: String) -> void:
 	var raw: Array = object.get("hit_rect", [-24, -30, 48, 40])
 	var at := Vector2(object.x, object.y) + Vector2(raw[0] + raw[2] / 2.0, raw[1] + raw[3] / 2.0)
 	var screen: Vector2 = game.world.get_global_transform_with_canvas() * at
+	if not Rect2(10, 64, 620, 246).has_point(screen):
+		var route: PackedVector2Array = game.navigation.object_route(game.player.position, object)
+		_assert(not route.is_empty(), "Keyboard approach for initially offscreen " + id)
+		if failed: return
+		await _walk(route[-1], 8)
+		screen = game.world.get_global_transform_with_canvas() * at
 	var motion := InputEventMouseMotion.new()
 	motion.position = screen; motion.global_position = screen
 	game.get_viewport().push_input(motion, true)

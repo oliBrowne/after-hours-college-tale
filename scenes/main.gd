@@ -105,6 +105,9 @@ var pin_art: Node2D
 var scene_props: Array[Node2D] = []
 var intro_index: int = 0
 var intro_ticks: int = 0
+## The cards being shown and which one brings the world up: move-in day (none), or the evening.
+var intro_cards: Array = INTRO_CARDS
+var intro_arrival: int = 2
 var transition_ticks: int = 0
 var footsteps: float = 0.0
 var resolution_index: int = 0
@@ -395,7 +398,7 @@ func _physics_process(delta: float) -> void:
 			for light: Node in lighting.get_children(): light.energy = 0.55
 		if mode == Mode.INTRO:
 			ui_dirty = intro_ticks % 8 == 0
-			if intro_index == 2:
+			if intro_index == intro_arrival:
 				environment.set_arrival(minf(1.0, intro_ticks / 180.0))
 				if intro_ticks >= 70: player.art.play("idle_up")
 	if not pause_context and mode != Mode.PAUSE:
@@ -596,6 +599,7 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 	if id == "U07" and state.flags.has("claim_resolution"):
 		room_objects.append({"id":"mags_cleanup", "name":"Mags / intake desk", "x":725, "y":332, "kind":"talk", "sprite":"mags", "hit_rect":[-20,-48,40,54], "lines":[["Mags","One shelf at a time. Then I clock out.","warm"]]})
 	room_objects = NativeJakerson.room_objects(self, id, point, room_objects)
+	room_objects = NativeMoveIn.room_objects(self, id, room_objects)
 	for keepsake_id: String in PartyGrowth.KEEPSAKES:
 		var keepsake: Dictionary = PartyGrowth.KEEPSAKES[keepsake_id]
 		var holder: String = str(keepsake.member)
@@ -650,6 +654,7 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 			world.add_child(npc); world_npcs.append(npc)
 	NativeRoomScenes.reset()
 	NativeJakerson.on_enter(self, id)
+	NativeMoveIn.on_enter(self, id)
 	for source: Array in rooms[id].lights:
 		var pos := Vector2(source[0], source[1])
 		var light: PointLight2D = PointLight2D.new()
@@ -727,6 +732,7 @@ func living_speakers() -> Array[String]:
 
 func interact(object: Dictionary) -> void:
 	audio.combat("pick")
+	if NativeMoveIn.handle(self, object): return
 	if NativeJakerson.handle(self,object):return
 	if object.kind == "keepsake":
 		pick_up_keepsake(str(object.keepsake)); return
@@ -893,10 +899,19 @@ func has_continue() -> bool:
 	if FileAccess.file_exists(saves.base_path.path_join("auto.json")): return not qa
 	return not qa and not NativeCampaign.legacy_slot(self, "auto").has("error")
 
+## A new game opens on move-in day in Farrand Hall; skipping the cards goes straight to the evening.
 func new_game() -> void:
 	state = NativeState.fresh(state.settings)
 	notice = ""; notice_ticks = 0; growth_note = ""
 	boss_id = ""
+	intro_cards = NativeMoveIn.CARDS; intro_arrival = -1
+	enter_room(NativeMoveIn.START, NativeMoveIn.ENTRY, false)
+	world.visible = false; backdrop.visible = true
+	intro_index = 0; intro_ticks = 0; mode = Mode.INTRO; ui_dirty = true
+
+## "Four years later", then the Last Light evening on Broadway.
+func begin_evening() -> void:
+	intro_cards = NativeMoveIn.evening_cards(INTRO_CARDS); intro_arrival = intro_cards.size() - 1
 	enter_room("U01", Vector2(96, 258), false)
 	world.visible = false; backdrop.visible = true
 	intro_index = 0; intro_ticks = 0; mode = Mode.INTRO; ui_dirty = true
@@ -1840,14 +1855,14 @@ func render_ui() -> void:
 		panel(Rect2(20, 228, 252, 122))
 		render_options(Rect2(26, 234, 240, 115))
 	elif mode == Mode.INTRO:
-		var arrival: bool = intro_index == 2
+		var arrival: bool = intro_index == intro_arrival
 		var top: float = 12 if arrival else 211
 		panel(Rect2(28, top, 584, 128))
-		label(str(INTRO_CARDS[intro_index][0]), Rect2(44, top + 14, 552, 28), 18, AMBER)
-		var text: String = str(INTRO_CARDS[intro_index][1])
+		label(str(intro_cards[intro_index][0]), Rect2(44, top + 14, 552, 28), 18, AMBER)
+		var text: String = str(intro_cards[intro_index][1])
 		label(text.left(mini(text.length(), intro_ticks / 2)), Rect2(44, top + 53, 552, 58), 12)
 		var advance: Button = Button.new()
-		advance.text = binding_label("confirm") + (" / begin" if intro_index == 2 else " / continue")
+		advance.text = binding_label("confirm") + (" / begin" if intro_index == intro_cards.size() - 1 else " / continue")
 		advance.position = Vector2(390, top + 102); advance.size = Vector2(210, 23)
 		advance.add_theme_font_override("font", font); advance.add_theme_font_size_override("font_size", 12)
 		advance.add_theme_color_override("font_color", MINT)
@@ -1858,7 +1873,7 @@ func render_ui() -> void:
 		advance.pressed.connect(advance_intro)
 		ui.add_child(advance); text_nodes.append(advance)
 		var skip: Button = Button.new()
-		skip.text = binding_label("cancel") + " / skip arrival"
+		skip.text = binding_label("cancel") + (" / skip move-in day" if intro_arrival < 0 else " / skip arrival")
 		skip.position = Vector2(36, top + 102); skip.size = Vector2(288, 23)
 		skip.add_theme_font_override("font", font); skip.add_theme_font_size_override("font_size", 12)
 		skip.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
@@ -2231,18 +2246,19 @@ func object_label(object: Dictionary) -> String:
 
 func advance_intro() -> void:
 	if intro_ticks < 30: return
-	var full_ticks: int = str(INTRO_CARDS[intro_index][1]).length() * 2
-	if intro_index == 2: full_ticks = maxi(full_ticks, 180)
+	var full_ticks: int = str(intro_cards[intro_index][1]).length() * 2
+	if intro_index == intro_arrival: full_ticks = maxi(full_ticks, 180)
 	if intro_ticks < full_ticks:
 		intro_ticks = full_ticks; ui_dirty = true
 		return
 	intro_index += 1; intro_ticks = 0; ui_dirty = true
-	if intro_index == 2:
+	if intro_index == intro_arrival:
 		world.visible = true; backdrop.visible = false
 		environment.arrival_origin = player.position; environment.set_arrival(0.0)
 		player.facing = "up"; player.art.play("interact_up")
-	if intro_index >= 3:
-		finish_arrival(false)
+	if intro_index >= intro_cards.size():
+		if intro_arrival < 0: NativeMoveIn.begin(self)
+		else: finish_arrival(false)
 
 func finish_arrival(skip: bool) -> void:
 	enter_room("U01", Vector2(96, 258), false)

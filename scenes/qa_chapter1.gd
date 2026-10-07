@@ -16,7 +16,7 @@ func run(main: Node) -> bool:
 	await _choose("Settings")
 	if not game.state.settings.instant: await _choose("Instant dialogue:")
 	await _choose("Back");await _capture("00-title")
-	await _choose("Begin the evening");await _settle()
+	await _choose("Begin the evening");await _movein();await _settle()
 	if game.jakerson_ui:await _choose("I'll find my way")
 	_assert(not game.state.flags.get("imani_joined",false) and not game.state.flags.get("walt_joined",false),"Solo opening")
 	await _door("umc_path","U08");await _object("walt");await _settle()

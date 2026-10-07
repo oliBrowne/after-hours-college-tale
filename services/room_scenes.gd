@@ -20,6 +20,7 @@ extends RefCounted
 ##   ["wait", ticks]
 ##   ["leave", actor]                      a spawned actor walks off-screen through its last door
 ##   ["call", callable]                     runs callable(game) once
+## Lines may use {move}, {run} and {confirm} for the player's own key names.
 
 const WALK: float = 1.2
 const RUN: float = 2.6
@@ -32,6 +33,7 @@ static func reset() -> void:run = {}
 static func due(g: Node) -> String:
 	var f: Dictionary = g.state.flags
 	var room: String = str(g.state.room)
+	if room == NativeMoveIn.START and f.get("movein_active", false) and not f.get("scene_movein_meet", false): return "movein_meet"
 	if room == "U03" and not f.get("mixer_returned", false) and not f.get("scene_chip_todd", false): return "chip_todd"
 	# Not tied to its scene flag: it replays until Imani has joined, so it can never be lost.
 	if room == "U03" and f.get("mixer_returned", false) and not f.get("imani_joined", false): return "imani_booth"
@@ -46,6 +48,8 @@ static func steps(id: String) -> Array:
 	match id:
 		"imani_booth":
 			return NativeImaniJoin.steps()
+		"movein_meet":
+			return NativeMoveIn.steps()
 		"chip_todd":
 			# Chip bursts in from the Farrand gate to the president, then dashes back out.
 			return [["borrow", "todd", "todd"], ["spawn", "chip", "chip", Vector2(730, 385)],
@@ -198,6 +202,11 @@ static func _do(g: Node, s: Array) -> bool:
 			(s[1] as Callable).call(g)
 	return true
 
+## Key names the player actually uses: {move}, {run} and {confirm} in a line become their bindings.
+static func keys(g: Node, text: String) -> String:
+	if not "{" in text: return text
+	return text.replace("{move}", NativeJakerson.move_keys(g)).replace("{run}", NativeJakerson.key(g, "run")).replace("{confirm}", NativeJakerson.key(g, "confirm"))
+
 ## Drops lines from party members who haven't joined yet, and lines whose flag doesn't match.
 static func _lines(g: Node, lines: Array) -> Array:
 	var f: Dictionary = g.state.flags
@@ -205,6 +214,7 @@ static func _lines(g: Node, lines: Array) -> Array:
 	for line: Array in lines:
 		var who: String = str(line[0])
 		if who in ["Imani", "Walt", "Pip"] and not f.get(who.to_lower() + "_joined", false) and not run.actors.has(who.to_lower()): continue
+		line = line.duplicate(); line[1] = keys(g, str(line[1]))
 		if line.size() > 3:
 			var flag: String = str(line[3])
 			if flag.begins_with("!") == bool(f.get(flag.trim_prefix("!"), false)): continue

@@ -92,6 +92,7 @@ static func aftermath(game: Node, id: String) -> void:
 			game.dialogue([["Loudspeaker","If I stop being useful, they'll stop asking me to come.","concern"],["Jules","I never recorded that.","concern"],["Imani","The signal's going toward Norlin. We'll choose what we take with us.","neutral"]],func() -> void: f.aftermath_pending="";game.persist();game.resume_world()))
 static func objective(s: Dictionary) -> String:
 	var f: Dictionary=s.flags
+	if f.get("movein_active",false):return NativeMoveIn.OBJECTIVE
 	if f.get("chapter3_complete",false) and f.get("rook_confessed",false):return NativeFinalCampaign.objective(s)
 	if f.get("chapter2_complete",false):return NativeChapterThree.objective(s)
 	if f.get("chapter1_complete",false): return NativeChapterTwo.objective(s)

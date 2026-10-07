@@ -4,6 +4,7 @@ extends RefCounted
 ## marker (scenes/guide_marker.gd) points at that object, or at the door to take
 ## toward it, found through the door graph. An empty room means "search every room".
 const TARGETS: Dictionary = {
+	"Meet Jakerson / Farrand Hall lobby": ["D03", "jakerson_lobby"],
 	"Return Imani's mixer / club room": ["U04", "imani"],
 	"Head out through the atrium / the last bus": ["U03", "booth"],
 	"Follow the escaped voice / Walt under the bridge": ["U08", "walt"],
