@@ -301,7 +301,12 @@
         ]
       }
     ],
-    "fixed_blocks": []
+    "fixed_blocks": [],
+    "wander": {
+      "rf_cyclist": 3,
+      "rf_runner": 2,
+      "rf_business_major": 2
+    }
   },
   "U02": {
     "name": "UMC terrace / the doors are open",
@@ -2830,7 +2835,11 @@
         ]
       }
     ],
-    "fixed_blocks": []
+    "fixed_blocks": [],
+    "wander": {
+      "rf_cyclist": 3,
+      "rf_runner": 2
+    }
   },
   "F02": {
     "id": "F02",
@@ -3487,7 +3496,12 @@
         ]
       }
     ],
-    "fixed_blocks": []
+    "fixed_blocks": [],
+    "wander": {
+      "rf_hippie": 4,
+      "rf_runner": 1,
+      "rf_sunbeam": 1
+    }
   },
   "F05": {
     "id": "F05",
@@ -4252,7 +4266,12 @@
       120,
       460
     ],
-    "fixed_blocks": []
+    "fixed_blocks": [],
+    "wander": {
+      "rf_business_major": 3,
+      "rf_runner": 2,
+      "rf_cyclist": 1
+    }
   },
   "N02": {
     "name": "Checkout hall / borrowed futures",
@@ -5840,7 +5859,11 @@
       120,
       460
     ],
-    "fixed_blocks": []
+    "fixed_blocks": [],
+    "wander": {
+      "rf_cyclist": 3,
+      "rf_business_major": 2
+    }
   },
   "E02": {
     "name": "Shared workshop / Cal and Dev",
@@ -6861,7 +6884,11 @@
       120,
       460
     ],
-    "fixed_blocks": []
+    "fixed_blocks": [],
+    "wander": {
+      "rf_business_major": 3,
+      "rf_hippie": 1
+    }
   },
   "O02": {
     "name": "Notice hall / who gets to say no",

@@ -168,7 +168,7 @@ static func resolve_plan(before: Dictionary, commands: Array) -> Dictionary:
 
 ## Damage per enemy hit before defence. "" is the Flyerer. Opening bosses are
 ## gentle; each chapter's bosses hit harder as the party's story stats grow.
-const ENEMY_DAMAGE: Dictionary = {"": 8, "jakerson": 3, "walt": 8, "pinpal": 8, "claim": 8, "deion": 8, "chip": 14, "encore": 14, "cone": 14, "errata": 18, "loadbearer": 18, "eric": 18, "autocomplete": 18, "chad": 18, "todd": 20, "rook": 22, "val": 24, "jakerson_final": 12}
+const ENEMY_DAMAGE: Dictionary = {"": 8, "jakerson": 3, "walt": 8, "pinpal": 8, "claim": 8, "deion": 8, "chip": 14, "encore": 14, "cone": 14, "errata": 18, "loadbearer": 18, "eric": 18, "autocomplete": 18, "chad": 18, "todd": 20, "rook": 22, "val": 24, "jakerson_final": 12, "rf_cyclist": 7, "rf_runner": 7, "rf_hippie": 6, "rf_business_major": 7, "rf_sunbeam": 10}
 const PROMISE_OPENNESS: int = 45
 
 ## A boss is desperate once Openness reaches 50 or its HP falls to half, so the

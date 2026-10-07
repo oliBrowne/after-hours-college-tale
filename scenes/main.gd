@@ -500,6 +500,7 @@ func world_tick(delta: float) -> void:
 	state.x = player.position.x
 	state.y = player.position.y
 	NativeJakerson.world_step(self,moved)
+	if NativeRandomFights.step(self, moved): return
 	if pointer_goal != Vector2.INF:
 		pointer_stall = pointer_stall + 1 if moved < 0.05 and axis.length_squared() > 0 else 0
 		if pointer_stall > 60:
@@ -816,7 +817,7 @@ func party_menu() -> void:
 		var worn: String = PartyGrowth.equipped(state.flags, id)
 		options.append(option("%s HP %d/%d POW %d DEF %d / %s" % [id.capitalize(), int(member.hp), int(member.max), int(member.power), int(member.defence), PartyGrowth.KEEPSAKES[worn].name if not worn.is_empty() else "no keepsake"], func() -> void: cycle_keepsake(id)))
 	options.append(option("Back", pause_menu))
-	open_menu(Mode.MENU, "Party / choose someone to swap their keepsake", options)
+	open_menu(Mode.MENU, "Party / %schoose someone to swap their keepsake" % ("Buff Bucks %d / " % NativeRandomFights.bucks(state.flags) if state.flags.has("buff_bucks") else ""), options)
 
 func cycle_keepsake(member: String) -> void:
 	var owned: Array[String] = PartyGrowth.owned(state.flags, member)
@@ -1132,6 +1133,10 @@ func settings_menu() -> void:
 		state.settings.assist = 0.85 if float(state.settings.assist) == 1.0 else (0.7 if float(state.settings.assist) == 0.85 else 1.0)
 		_save_preferences()
 		settings_menu()))
+	if not settings_return_title and pause_mode == Mode.WORLD:
+		options.append(option("Wandering fights: %s" % ("Off" if bool(state.flags.get("wander_off", false)) else "On"), func() -> void:
+			state.flags.wander_off = not bool(state.flags.get("wander_off", false))
+			persist(); settings_menu()))
 	options.append(option("Remap keyboard", remap_menu))
 	options.append(option("Back", show_title if settings_return_title else pause_menu))
 	open_menu(Mode.MENU, "Settings / story outcomes stay the same", options)
@@ -1286,6 +1291,7 @@ func begin_battle() -> void:
 	battle.hp = ({"cone":100,"chad":70,"rook":240,"val":200}[boss_id]) if boss_id in NativeFinalEncounter.IDS else (240 if boss_id=="autocomplete" else 100) if boss_id in NativeChapterTwo.BOSSES else 30 if boss_id == "jakerson" else 150 if boss_id == "jakerson_final" else 76 if boss_id == "walt" else 220 if boss_id == "encore" else 190 if boss_id == "claim" else 70 if boss_id == "pinpal" else int(BossDirector.profile(boss_id).maxHp) if not boss_id.is_empty() else 48
 	foe.sprite_frames = NativeCastArt.frames(boss_id.trim_suffix("_final") if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "flyer")
 	foe.play("idle_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "idle")
+	if NativeRandomFights.is_fight(boss_id): NativeRandomFights.setup(self)
 	NativeCastArt.fit(foe, foe_height())
 	claim_art.set_pose("idle"); pin_art.set_pose("idle")
 	plan = []; actor = 0; target = 0; retreating = false; notice_ticks = 0
@@ -1310,7 +1316,7 @@ func begin_battle() -> void:
 	camera.position = Vector2(320, 180); camera.limit_right = 640; camera.limit_bottom = 360
 	hint = "Choose one action. Cancel revises your plan."
 	audio.play_music("")
-	audio.play_music(NativeSoundtrack.battle_cue(boss_id, "last-call" if boss_id=="rook" else "graduation" if boss_id=="val" else "boss-dark" if boss_id not in ["", "pinpal", "jakerson", "jakerson_final"] else "battle-rich"))
+	audio.play_music(NativeSoundtrack.battle_cue(boss_id, "last-call" if boss_id=="rook" else "graduation" if boss_id=="val" else "boss-dark" if boss_id not in ["", "pinpal", "jakerson", "jakerson_final"] and not NativeRandomFights.is_fight(boss_id) else "battle-rich"))
 	audio.ambient("")
 	if actor >= battle.party.size():
 		battle.outcome = "defeat"; defeat_menu(); return
@@ -1337,6 +1343,7 @@ func connect_menu() -> void:
 	names.errata=["Ask whose sentence it is", "Keep one sentence through three pauses", "Suggestions need consent"]
 	names.eric=["Ask what he's measuring", "Probe three test points", "The demo can ship as is"]
 	names.autocomplete=["Ask for the original voice", "Accept one useful suggestion", "Let the rest stay unwritten"]
+	if NativeRandomFights.is_fight(boss_id): names[boss_id] = NativeRandomFights.connect_labels(boss_id)
 	var lines: Array = names[boss_id]
 	hint = "A promise creates a real objective in the next defense."
 	var choices: Array = [option(str(lines[0]), func() -> void: queue_command({"actor": actor, "kind": "connect", "label": str(lines[0])})), option(str(lines[1]), func() -> void: queue_command({"actor": actor, "kind": "promise", "label": str(lines[1])}))]
@@ -1695,6 +1702,7 @@ func defeat_menu() -> void:
 	audio.effect("defeat")
 
 func finish_battle() -> void:
+	if NativeRandomFights.is_fight(boss_id): NativeRandomFights.finish(self); return
 	reset_pointer_controls()
 	var resolved_id: String = "flyer" if boss_id.is_empty() else boss_id
 	merge_party(BattleRules.recover(battle.party))
@@ -2028,7 +2036,7 @@ func command_summary(command: Dictionary) -> String:
 	return text
 
 func render_battle_ui() -> void:
-	var name: String = "FLYERER" if boss_id.is_empty() else "COACH PRIME" if boss_id == "deion" else "HOLD THE LIGHT" if boss_id == "walt" else "JAKERSON" if boss_id == "jakerson_final" else boss_id.to_upper()
+	var name: String = "FLYERER" if boss_id.is_empty() else "COACH PRIME" if boss_id == "deion" else "HOLD THE LIGHT" if boss_id == "walt" else "JAKERSON" if boss_id == "jakerson_final" else NativeRandomFights.name_of(boss_id).to_upper() if NativeRandomFights.is_fight(boss_id) else boss_id.to_upper()
 	# Foe card: name, then real meters instead of bare numbers.
 	panel(Rect2(392, 8, 236, 62))
 	label(name, Rect2(404, 13, 212, 16), 12, AMBER)
@@ -2111,7 +2119,7 @@ func render_battle_ui() -> void:
 		var heading: float = 16.0 if text_width(instruction) <= 156 else 34.0
 		label(instruction, Rect2(22, 173, 156, heading), 12, Color("e8837b") if pattern.get("audit", false) else AMBER)
 		fill(Rect2(22, 177 + heading, 152, 1), LINE)
-		label(str(pattern.get("hint", instructions[boss_id])), Rect2(22, 183 + heading, 156, 100 - heading), 12, CREAM)
+		label(str(pattern.get("hint", instructions.get(boss_id, ""))), Rect2(22, 183 + heading, 156, 100 - heading), 12, CREAM)
 		panel(Rect2(456, 166, 172, 120), MINT if battle.promise else LINE)
 		label("PROMISE" if battle.promise else "DEFEND", Rect2(466, 173, 152, 16), 12, MINT if battle.promise else MUTED)
 		fill(Rect2(466, 193, 152, 1), LINE)
@@ -2318,7 +2326,7 @@ func stage_dialogue() -> void:
 			if person.visible: person.art.play("interact_up")
 
 func _qa_smoke() -> void:
-	var route: Node = load("res://scenes/qa_jakerson.gd" if "--qa-jakerson" in OS.get_cmdline_user_args() else "res://scenes/qa_final.gd" if "--qa-final" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter3.gd" if "--qa-chapter3" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter2.gd" if "--qa-chapter2" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter1.gd" if "--qa-chapter1" in OS.get_cmdline_user_args() else "res://scenes/qa_review_controls.gd" if "--qa-review-ui" in OS.get_cmdline_user_args() else "res://scenes/qa_opening.gd").new()
+	var route: Node = load("res://scenes/qa_wander.gd" if "--qa-wander" in OS.get_cmdline_user_args() else "res://scenes/qa_jakerson.gd" if "--qa-jakerson" in OS.get_cmdline_user_args() else "res://scenes/qa_final.gd" if "--qa-final" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter3.gd" if "--qa-chapter3" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter2.gd" if "--qa-chapter2" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter1.gd" if "--qa-chapter1" in OS.get_cmdline_user_args() else "res://scenes/qa_review_controls.gd" if "--qa-review-ui" in OS.get_cmdline_user_args() else "res://scenes/qa_opening.gd").new()
 	add_child(route)
 	var passed: bool = await route.run(self)
 	if qa_record != null and not qa_record_finishing: qa_finish_record()
