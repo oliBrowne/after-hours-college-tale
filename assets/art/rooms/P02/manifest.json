@@ -1,0 +1,222 @@
+{
+ "background": "res://assets/art/rooms/P02/background.png",
+ "width": 640,
+ "occluders": [],
+ "props": {
+  "1": {
+   "texture": "res://assets/art/rooms/P02/prop-1.png",
+   "anchor": [
+    30,
+    42
+   ]
+  },
+  "2": {
+   "texture": "res://assets/art/rooms/P02/prop-2.png",
+   "anchor": [
+    39,
+    54
+   ]
+  },
+  "3": {
+   "texture": "res://assets/art/rooms/P02/prop-3.png",
+   "anchor": [
+    25,
+    24
+   ]
+  },
+  "4": {
+   "texture": "res://assets/art/rooms/P02/prop-4.png",
+   "anchor": [
+    23,
+    34
+   ]
+  },
+  "8": {
+   "texture": "res://assets/art/rooms/P02/prop-8.png",
+   "anchor": [
+    43,
+    40
+   ]
+  }
+ },
+ "label_only": [
+  0,
+  5,
+  6,
+  7
+ ],
+ "fauna": [],
+ "leaves": [],
+ "layers": [
+  {
+   "kind": "blink",
+   "pattern": "1111111111111111111111111111110101111111111111",
+   "rate": 9.0,
+   "rects": [
+    [
+     143,
+     19,
+     7,
+     10,
+     "1e3a30",
+     0.7
+    ]
+   ]
+  },
+  {
+   "kind": "twinkle",
+   "points": [
+    [
+     288,
+     86,
+     "f2ecdc",
+     1
+    ],
+    [
+     300,
+     86,
+     "f2ecdc",
+     1
+    ],
+    [
+     312,
+     86,
+     "f2ecdc",
+     1
+    ]
+   ],
+   "rate": 1.8,
+   "min": 0.6
+  },
+  {
+   "kind": "particles",
+   "style": "dust",
+   "count": 6,
+   "rect": [
+    286,
+    88,
+    28,
+    30
+   ],
+   "speed": [
+    0,
+    -4
+   ],
+   "color": "f6d68a"
+  }
+ ],
+ "battle": {
+  "far": "res://assets/art/rooms/P02/battle-far.png",
+  "layers": [
+   {
+    "kind": "blink",
+    "pattern": "1111111111111111111111111111110101111111111111",
+    "rate": 9.0,
+    "rects": [
+     [
+      96,
+      3,
+      5,
+      10,
+      "1e3a30",
+      0.7
+     ]
+    ]
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      306,
+      25,
+      "c8c8e8",
+      1
+     ],
+     [
+      313,
+      30,
+      "c8c8e8",
+      1
+     ],
+     [
+      320,
+      35,
+      "c8c8e8",
+      1
+     ],
+     [
+      327,
+      29,
+      "c8c8e8",
+      1
+     ],
+     [
+      334,
+      34,
+      "c8c8e8",
+      1
+     ]
+    ],
+    "rate": 1.5,
+    "min": 0.0
+   },
+   {
+    "kind": "twinkle",
+    "points": [
+     [
+      200,
+      67,
+      "f2ecdc",
+      1
+     ],
+     [
+      212,
+      67,
+      "f2ecdc",
+      1
+     ],
+     [
+      224,
+      67,
+      "f2ecdc",
+      1
+     ]
+    ],
+    "rate": 1.8,
+    "min": 0.6
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 8,
+    "rect": [
+     198,
+     69,
+     28,
+     26
+    ],
+    "speed": [
+     0,
+     -4
+    ],
+    "color": "f6d68a"
+   },
+   {
+    "kind": "particles",
+    "style": "dust",
+    "count": 14,
+    "rect": [
+     200,
+     40,
+     240,
+     100
+    ],
+    "speed": [
+     1,
+     2
+    ],
+    "color": "fff0c4"
+   }
+  ]
+ }
+}

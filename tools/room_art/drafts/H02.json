@@ -1,0 +1,501 @@
+{
+ "id": "H02",
+ "name": "The Hill / house party",
+ "cue": "campus",
+ "dimensions": [
+  800,
+  480
+ ],
+ "walk_bounds": [
+  16,
+  160,
+  768,
+  296
+ ],
+ "entry": [
+  400,
+  420
+ ],
+ "arrivals": {
+  "H01": [
+   400,
+   420
+  ]
+ },
+ "npc_spots": [
+  [
+   60,
+   200
+  ],
+  [
+   200,
+   250
+  ],
+  [
+   330,
+   210
+  ],
+  [
+   360,
+   260
+  ],
+  [
+   450,
+   250
+  ],
+  [
+   540,
+   220
+  ],
+  [
+   620,
+   290
+  ],
+  [
+   730,
+   300
+  ],
+  [
+   300,
+   320
+  ],
+  [
+   160,
+   360
+  ],
+  [
+   320,
+   420
+  ],
+  [
+   480,
+   420
+  ],
+  [
+   520,
+   300
+  ],
+  [
+   700,
+   380
+  ],
+  [
+   760,
+   430
+  ],
+  [
+   60,
+   420
+  ],
+  [
+   180,
+   280
+  ],
+  [
+   600,
+   420
+  ],
+  [
+   420,
+   300
+  ],
+  [
+   250,
+   400
+  ]
+ ],
+ "blocks": [],
+ "fixed_blocks": [],
+ "placements": [
+  {
+   "kind": "threshold",
+   "x": 400,
+   "y": 462,
+   "w": 56,
+   "h": 30,
+   "depth": 0,
+   "object": "front_door",
+   "label": "FRONT DOOR",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "stairs",
+   "x": 96,
+   "y": 158,
+   "w": 80,
+   "h": 120,
+   "depth": 0,
+   "object": "stairs_up",
+   "label": "UPSTAIRS",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  },
+  {
+   "kind": "couch",
+   "x": 250,
+   "y": 206,
+   "w": 124,
+   "h": 46,
+   "depth": 18,
+   "object": "couch",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 236,
+   "y": 336,
+   "w": 124,
+   "h": 44,
+   "depth": 18,
+   "object": "pong_table",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 680,
+   "y": 238,
+   "w": 110,
+   "h": 50,
+   "depth": 18,
+   "object": "dj_booth",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "speaker",
+   "x": 610,
+   "y": 232,
+   "w": 30,
+   "h": 66,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "speaker",
+   "x": 752,
+   "y": 232,
+   "w": 30,
+   "h": 66,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 168,
+   "y": 212,
+   "w": 22,
+   "h": 64,
+   "depth": 6,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "bin",
+   "x": 488,
+   "y": 206,
+   "w": 26,
+   "h": 36,
+   "depth": 10,
+   "object": "trash_can",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "chair",
+   "x": 104,
+   "y": 300,
+   "w": 46,
+   "h": 42,
+   "depth": 14,
+   "object": "recliner",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 570,
+   "y": 336,
+   "w": 84,
+   "h": 36,
+   "depth": 14,
+   "object": "snack_table",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "beanbag",
+   "x": 130,
+   "y": 410,
+   "w": 42,
+   "h": 26,
+   "depth": 10,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "chairs",
+   "x": 740,
+   "y": 442,
+   "w": 56,
+   "h": 38,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "planter",
+   "x": 344,
+   "y": 200,
+   "w": 40,
+   "h": 52,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "front_door",
+   "name": "Front door / back out to College Ave",
+   "x": 400,
+   "y": 462,
+   "kind": "door",
+   "to": "H01",
+   "spawn": [
+    485,
+    256
+   ],
+   "requires": []
+  },
+  {
+   "id": "stairs_up",
+   "name": "Stairs / taped off",
+   "x": 96,
+   "y": 166,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Caution tape across the stairs and a cardboard sign: NO PARTY UPSTAIRS. Somebody added, in pen: OR DOWNSTAIRS?",
+   "note": "painted as a stair opening with a label pill; could become a locked door later",
+   "lines": [
+    [
+     "Jules",
+     "Caution tape across the stairs and a cardboard sign: NO PARTY UPSTAIRS. Somebody added, in pen: OR DOWNSTAIRS?",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "couch",
+   "name": "Leather couch",
+   "x": 250,
+   "y": 214,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A leather couch older than everyone in the house. It's warm. Don't ask why.",
+   "lines": [
+    [
+     "Jules",
+     "A leather couch older than everyone in the house. It's warm. Don't ask why.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "pong_table",
+   "name": "Pong table",
+   "x": 236,
+   "y": 346,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Two triangles of cups and a sign taped to the table: HOUSE RULES / NO ELBOWS / NO MERCY.",
+   "lines": [
+    [
+     "Jules",
+     "Two triangles of cups and a sign taped to the table: HOUSE RULES / NO ELBOWS / NO MERCY.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "dj_booth",
+   "name": "DJ table",
+   "x": 680,
+   "y": 246,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A laptop, a controller with half the stickers peeled off, and a setlist that just says LOUDER.",
+   "lines": [
+    [
+     "Jules",
+     "A laptop, a controller with half the stickers peeled off, and a setlist that just says LOUDER.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "dj",
+   "name": "The DJ",
+   "x": 680,
+   "y": 200,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot behind the DJ table (clear 50x60)"
+  },
+  {
+   "id": "mantel",
+   "name": "Mantel / the house letters",
+   "x": 418,
+   "y": 164,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "The letters over the mantel, two composite photos of the same haircut across twenty years, and a fireplace full of cups.",
+   "lines": [
+    [
+     "Jules",
+     "The letters over the mantel, two composite photos of the same haircut across twenty years, and a fireplace full of cups.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "kitchen",
+   "name": "Kitchen doorway",
+   "x": 538,
+   "y": 164,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "The kitchen is a solid wall of people. Somebody in there is making pancakes at midnight.",
+   "lines": [
+    [
+     "Jules",
+     "The kitchen is a solid wall of people. Somebody in there is making pancakes at midnight.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "trash_can",
+   "name": "Cup tower",
+   "x": 488,
+   "y": 214,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A tower of stacked cups growing out of the trash can. It has its own fans.",
+   "lines": [
+    [
+     "Jules",
+     "A tower of stacked cups growing out of the trash can. It has its own fans.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "snack_table",
+   "name": "Snack table",
+   "x": 570,
+   "y": 346,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Chips, three salsas and one last slice of pizza that nobody is brave enough to take.",
+   "lines": [
+    [
+     "Jules",
+     "Chips, three salsas and one last slice of pizza that nobody is brave enough to take.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "recliner",
+   "name": "Recliner",
+   "x": 104,
+   "y": 310,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A recliner stuck halfway back. A sticky note on it says RESERVED in three handwritings.",
+   "lines": [
+    [
+     "Jules",
+     "A recliner stuck halfway back. A sticky note on it says RESERVED in three handwritings.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "disco_ball",
+   "name": "Disco ball",
+   "x": 640,
+   "y": 300,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A disco ball hung from the ceiling fan. One mirror is missing, so it winks.",
+   "lines": [
+    [
+     "Jules",
+     "A disco ball hung from the ceiling fan. One mirror is missing, so it winks.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "tanner",
+   "name": "Tanner / the rush chair (mini-boss)",
+   "x": 400,
+   "y": 380,
+   "kind": "battle",
+   "requires": [],
+   "note": "Entrance lane: his brothers carry the couch in through the front door (400, 462) and set it down here; x 320..500, y 330..440 has nothing solid. The crowd npc_spots ring this space."
+  }
+ ]
+}

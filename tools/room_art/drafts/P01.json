@@ -1,0 +1,662 @@
+{
+ "id": "P01",
+ "name": "Pearl Street / the open office upstairs",
+ "cue": "campus",
+ "dimensions": [
+  960,
+  540
+ ],
+ "walk_bounds": [
+  20,
+  176,
+  920,
+  340
+ ],
+ "entry": [
+  62,
+  204
+ ],
+ "arrivals": {
+  "C01": [
+   62,
+   204
+  ],
+  "P02": [
+   880,
+   204
+  ]
+ },
+ "npc_spots": [
+  [
+   250,
+   300
+  ],
+  [
+   150,
+   392
+  ],
+  [
+   452,
+   352
+  ],
+  [
+   236,
+   516
+  ],
+  [
+   600,
+   500
+  ],
+  [
+   820,
+   452
+  ]
+ ],
+ "fixed_blocks": [],
+ "placements": [
+  {
+   "kind": "door",
+   "x": 62,
+   "y": 176,
+   "w": 40,
+   "h": 74,
+   "depth": 0,
+   "object": "stairs_down",
+   "label": "PEARL ST",
+   "anchor_offset": [
+    0,
+    16
+   ]
+  },
+  {
+   "kind": "door",
+   "x": 880,
+   "y": 176,
+   "w": 50,
+   "h": 76,
+   "depth": 0,
+   "object": "break_room",
+   "label": "BREAK ROOM",
+   "anchor_offset": [
+    0,
+    16
+   ]
+  },
+  {
+   "kind": "desk",
+   "x": 150,
+   "y": 270,
+   "w": 76,
+   "h": 58,
+   "depth": 16,
+   "object": "intern_desk",
+   "label": "",
+   "anchor_offset": [
+    0,
+    10
+   ]
+  },
+  {
+   "kind": "desk",
+   "x": 250,
+   "y": 270,
+   "w": 76,
+   "h": 58,
+   "depth": 16,
+   "object": "treadmill_desk",
+   "label": "",
+   "anchor_offset": [
+    0,
+    10
+   ]
+  },
+  {
+   "kind": "desk",
+   "x": 150,
+   "y": 362,
+   "w": 76,
+   "h": 58,
+   "depth": 16,
+   "object": "standing_desk",
+   "label": "",
+   "anchor_offset": [
+    0,
+    10
+   ]
+  },
+  {
+   "kind": "desk",
+   "x": 250,
+   "y": 362,
+   "w": 76,
+   "h": 58,
+   "depth": 16,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    10
+   ]
+  },
+  {
+   "kind": "board",
+   "x": 404,
+   "y": 332,
+   "w": 64,
+   "h": 66,
+   "depth": 10,
+   "object": "rolling_whiteboard",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 520,
+   "y": 462,
+   "w": 120,
+   "h": 46,
+   "depth": 20,
+   "object": "ping_pong",
+   "label": "",
+   "anchor_offset": [
+    0,
+    10
+   ]
+  },
+  {
+   "kind": "bench",
+   "x": 700,
+   "y": 412,
+   "w": 124,
+   "h": 38,
+   "depth": 16,
+   "object": "pitch_sofa",
+   "label": "",
+   "anchor_offset": [
+    0,
+    10
+   ]
+  },
+  {
+   "kind": "sign",
+   "x": 834,
+   "y": 290,
+   "w": 40,
+   "h": 58,
+   "depth": 10,
+   "object": "sales_gong",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  },
+  {
+   "kind": "planter",
+   "x": 572,
+   "y": 214,
+   "w": 34,
+   "h": 64,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "planter",
+   "x": 42,
+   "y": 470,
+   "w": 34,
+   "h": 52,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 200,
+   "y": 300,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 700,
+   "y": 236,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 520,
+   "y": 430,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 880,
+   "y": 214,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 236,
+   "y": 476,
+   "w": 150,
+   "h": 42,
+   "depth": 18,
+   "object": "hot_desk",
+   "label": "",
+   "anchor_offset": [
+    0,
+    10
+   ]
+  },
+  {
+   "kind": "bicycle",
+   "x": 870,
+   "y": 398,
+   "w": 60,
+   "h": 42,
+   "depth": 10,
+   "object": "road_bike",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  },
+  {
+   "kind": "boxes",
+   "x": 900,
+   "y": 500,
+   "w": 40,
+   "h": 40,
+   "depth": 14,
+   "object": "swag_boxes",
+   "label": "",
+   "anchor_offset": [
+    0,
+    8
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "stairs_down",
+   "name": "Stairs / down to Pearl Street",
+   "x": 62,
+   "y": 192,
+   "kind": "door",
+   "to": "C01",
+   "spawn": [
+    80,
+    470
+   ],
+   "requires": [],
+   "note": "PLACEHOLDER: the C01 draft has no Pearl Street exit yet. Suggest a threshold on C01's west edge below the Hill exit, e.g. 'PEARL ST' at (34, 470), arriving at [80, 470]; its spawn back here is [62, 204]."
+  },
+  {
+   "id": "break_room",
+   "name": "Break room",
+   "x": 880,
+   "y": 192,
+   "kind": "door",
+   "to": "P02",
+   "spawn": [
+    64,
+    184
+   ],
+   "requires": []
+  },
+  {
+   "id": "intern_desk",
+   "name": "Your desk / WELCOME, INTERN",
+   "x": 150,
+   "y": 280,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A sticky note says WELCOME, INTERN! in three colours. The laptop is older than the company.",
+   "lines": [
+    [
+     "Jules",
+     "A sticky note says WELCOME, INTERN! in three colours. The laptop is older than the company.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "treadmill_desk",
+   "name": "Treadmill desk",
+   "x": 250,
+   "y": 280,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A treadmill under a standing desk. The display says 11.2 MILES. Nobody has ever seen it on.",
+   "lines": [
+    [
+     "Jules",
+     "A treadmill under a standing desk. The display says 11.2 MILES. Nobody has ever seen it on.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "standing_desk",
+   "name": "Three-monitor desk",
+   "x": 150,
+   "y": 372,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Three monitors: a dashboard, a dashboard about the dashboard, and a fish tank screensaver.",
+   "lines": [
+    [
+     "Jules",
+     "Three monitors: a dashboard, a dashboard about the dashboard, and a fish tank screensaver.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "rolling_whiteboard",
+   "name": "Rolling whiteboard",
+   "x": 404,
+   "y": 340,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "MVP, then ???, then IPO. Somebody has circled the ??? four times.",
+   "lines": [
+    [
+     "Jules",
+     "MVP, then ???, then IPO. Somebody has circled the ??? four times.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "ping_pong",
+   "name": "Ping-pong table",
+   "x": 520,
+   "y": 472,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "The net sags in the middle. A sign taped to it says BALLS ARE A BENEFIT.",
+   "lines": [
+    [
+     "Jules",
+     "The net sags in the middle. A sign taped to it says BALLS ARE A BENEFIT.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "pitch_sofa",
+   "name": "Sofa facing the screen",
+   "x": 700,
+   "y": 422,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Front row for the pitch. The cushions have been sat in by a lot of people who were asked to stay late.",
+   "lines": [
+    [
+     "Jules",
+     "Front row for the pitch. The cushions have been sat in by a lot of people who were asked to stay late.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "sales_gong",
+   "name": "The sales gong",
+   "x": 834,
+   "y": 298,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "RING WHEN WE CLOSE A DEAL. The mallet still has the price tag on.",
+   "lines": [
+    [
+     "Jules",
+     "RING WHEN WE CLOSE A DEAL. The mallet still has the price tag on.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "neon_logo",
+   "name": "DISRUPTR / in pink neon",
+   "x": 520,
+   "y": 186,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "DISRUPTR, in pink neon. The R buzzes like it has an opinion.",
+   "lines": [
+    [
+     "Jules",
+     "DISRUPTR, in pink neon. The R buzzes like it has an opinion.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "pitch_screen",
+   "name": "The pitch deck / slide 41 of 112",
+   "x": 700,
+   "y": 186,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Slide 41 of 112. A line that goes up and to the right, forever, with no numbers on it.",
+   "lines": [
+    [
+     "Jules",
+     "Slide 41 of 112. A line that goes up and to the right, forever, with no numbers on it.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "whiteboard_wall",
+   "name": "Whiteboard wall",
+   "x": 440,
+   "y": 186,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Arrows, boxes, a sketch of a scooter with wings. Someone wrote DO NOT ERASE and then erased half of it.",
+   "lines": [
+    [
+     "Jules",
+     "Arrows, boxes, a sketch of a scooter with wings. Someone wrote DO NOT ERASE and then erased half of it.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "pearl_window",
+   "name": "Window over Pearl Street",
+   "x": 252,
+   "y": 186,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Pearl Street from upstairs: lights in the trees, a busker packing up, and the Flatirons gone dark behind everything.",
+   "lines": [
+    [
+     "Jules",
+     "Pearl Street from upstairs: lights in the trees, a busker packing up, and the Flatirons gone dark behind everything.",
+     "warm"
+    ]
+   ]
+  },
+  {
+   "id": "vest_hooks",
+   "name": "Fleece vests on hooks",
+   "x": 926,
+   "y": 186,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Three identical fleece vests with name tags. One just says KYLE (SPARE).",
+   "lines": [
+    [
+     "Jules",
+     "Three identical fleece vests with name tags. One just says KYLE (SPARE).",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "scooter_marks",
+   "name": "Tyre marks on the floor",
+   "x": 610,
+   "y": 300,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Black scuffs curve right across the floorboards and end at a power strip labelled KYLE. DO NOT UNPLUG.",
+   "lines": [
+    [
+     "Jules",
+     "Black scuffs curve right across the floorboards and end at a power strip labelled KYLE. DO NOT UNPLUG.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "hot_desk",
+   "name": "Hot desks",
+   "x": 236,
+   "y": 486,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "HOT DESKS: FIRST COME, FIRST SERVED. A laptop and a jacket have been saving one seat since Tuesday.",
+   "lines": [
+    [
+     "Jules",
+     "HOT DESKS: FIRST COME, FIRST SERVED. A laptop and a jacket have been saving one seat since Tuesday.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "road_bike",
+   "name": "A road bike on a stand",
+   "x": 870,
+   "y": 406,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A carbon road bike that costs more than my car, parked indoors like a sculpture. The tag on the bars says KYLE'S (THE OTHER ONE).",
+   "lines": [
+    [
+     "Jules",
+     "A carbon road bike that costs more than my car, parked indoors like a sculpture. The tag on the bars says KYLE'S (THE OTHER ONE).",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "swag_boxes",
+   "name": "Boxes marked SWAG",
+   "x": 900,
+   "y": 508,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Hoodies with the logo printed upside down. Somebody has written FREE?? on the box and nobody has taken one.",
+   "lines": [
+    [
+     "Jules",
+     "Hoodies with the logo printed upside down. Somebody has written FREE?? on the box and nobody has taken one.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "move_fast",
+   "name": "MOVE FAST poster",
+   "x": 829,
+   "y": 186,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "MOVE FAST AND BREAK THINGS. Under it, smaller, in pen: (NOT THE TV AGAIN).",
+   "lines": [
+    [
+     "Jules",
+     "MOVE FAST AND BREAK THINGS. Under it, smaller, in pen: (NOT THE TV AGAIN).",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "kyle",
+   "name": "Kyle / founder, CEO, visionary",
+   "x": 700,
+   "y": 262,
+   "kind": "battle",
+   "sprite": "kyle",
+   "requires": [],
+   "note": "Mini-boss spot: floor kept clear about 140x90 around (700, 262) for kyle and his electric scooter, right under the projected pitch deck (screen at x 600-800). A gaffer-tape X marks the spot and his charger cable runs to the wall outlet at x 768."
+  },
+  {
+   "id": "coworker_desk",
+   "name": "Coworker / headphones on",
+   "x": 250,
+   "y": 300,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot in front of the treadmill desk"
+  },
+  {
+   "id": "coworker_hotdesk",
+   "name": "Coworker / at the hot desks",
+   "x": 300,
+   "y": 512,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot in front of the hot-desk table"
+  },
+  {
+   "id": "coworker_board",
+   "name": "Coworker / at the whiteboard",
+   "x": 452,
+   "y": 352,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot beside the rolling whiteboard"
+  }
+ ]
+}

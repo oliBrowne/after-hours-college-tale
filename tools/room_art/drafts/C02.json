@@ -1,0 +1,469 @@
+{
+ "id": "C02",
+ "name": "CU Book Store / open late",
+ "cue": "umc",
+ "dimensions": [
+  800,
+  480
+ ],
+ "walk_bounds": [
+  20,
+  150,
+  760,
+  300
+ ],
+ "entry": [
+  400,
+  410
+ ],
+ "blocks": [],
+ "fixed_blocks": [],
+ "npc_spots": [
+  [
+   300,
+   200
+  ],
+  [
+   520,
+   196
+  ],
+  [
+   250,
+   420
+  ],
+  [
+   600,
+   330
+  ],
+  [
+   380,
+   230
+  ]
+ ],
+ "placements": [
+  {
+   "kind": "threshold",
+   "x": 400,
+   "y": 446,
+   "w": 64,
+   "h": 30,
+   "depth": 0,
+   "object": "court_exit",
+   "label": "FOUNTAIN COURT",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "shelf",
+   "x": 140,
+   "y": 262,
+   "w": 170,
+   "h": 78,
+   "depth": 22,
+   "object": "textbook_aisle",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "shelf",
+   "x": 140,
+   "y": 376,
+   "w": 170,
+   "h": 62,
+   "depth": 20,
+   "object": "used_books",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 340,
+   "y": 304,
+   "w": 104,
+   "h": 36,
+   "depth": 18,
+   "object": "tee_table",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "rack",
+   "x": 494,
+   "y": 340,
+   "w": 66,
+   "h": 62,
+   "depth": 18,
+   "object": "hoodie_rack",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "bin",
+   "x": 424,
+   "y": 214,
+   "w": 50,
+   "h": 38,
+   "depth": 14,
+   "object": "plush_bin",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "desk",
+   "x": 650,
+   "y": 262,
+   "w": 164,
+   "h": 54,
+   "depth": 24,
+   "object": "register",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "rack",
+   "x": 748,
+   "y": 352,
+   "w": 32,
+   "h": 62,
+   "depth": 10,
+   "object": "sticker_spinner",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "sign",
+   "x": 568,
+   "y": 424,
+   "w": 50,
+   "h": 48,
+   "depth": 8,
+   "object": "buyback_sign",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 140,
+   "y": 206,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 400,
+   "y": 262,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 650,
+   "y": 226,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "bin",
+   "x": 312,
+   "y": 418,
+   "w": 58,
+   "h": 34,
+   "depth": 14,
+   "object": "bargain_bin",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "court_exit",
+   "name": "Out to the Fountain Court",
+   "x": 400,
+   "y": 446,
+   "kind": "door",
+   "to": "C01",
+   "spawn": [
+    860,
+    234
+   ],
+   "requires": [],
+   "note": "spawn = just below the book_store door (860, 212) in the C01 draft (its arrivals.C02)"
+  },
+  {
+   "id": "textbook_wall",
+   "name": "TEXTBOOKS / the back wall",
+   "x": 120,
+   "y": 160,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Forty new copies of the same calculus book, and one used copy with somebody's answers already in it.",
+   "lines": [
+    [
+     "Jules",
+     "Forty new copies of the same calculus book, and one used copy with somebody's answers already in it.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "textbook_aisle",
+   "name": "AISLE 1 / required reading",
+   "x": 140,
+   "y": 272,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Every course on campus, shrink-wrapped. The access codes cost extra.",
+   "lines": [
+    [
+     "Jules",
+     "Every course on campus, shrink-wrapped. The access codes cost extra.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "used_books",
+   "name": "AISLE 2 / used books",
+   "x": 140,
+   "y": 386,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "USED. Highlighted in four colours by four people who all stopped at chapter three.",
+   "lines": [
+    [
+     "Jules",
+     "USED. Highlighted in four colours by four people who all stopped at chapter three.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "gear_wall",
+   "name": "Buffs gear wall",
+   "x": 405,
+   "y": 160,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Hoodies in black and gold, BUFFS across every chest in case anyone forgets where they are.",
+   "lines": [
+    [
+     "Jules",
+     "Hoodies in black and gold, BUFFS across every chest in case anyone forgets where they are.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "tee_table",
+   "name": "Folded tees",
+   "x": 340,
+   "y": 314,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Perfect stacks. Somebody refolds them every time anyone breathes nearby.",
+   "lines": [
+    [
+     "Jules",
+     "Perfect stacks. Somebody refolds them every time anyone breathes nearby.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "hoodie_rack",
+   "name": "Hoodie rack",
+   "x": 494,
+   "y": 350,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Every size but mine.",
+   "lines": [
+    [
+     "Jules",
+     "Every size but mine.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "plush_bin",
+   "name": "Bin of plush Ralphies",
+   "x": 424,
+   "y": 224,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A bin of plush buffaloes. One has been put back upside down, which feels personal.",
+   "lines": [
+    [
+     "Jules",
+     "A bin of plush buffaloes. One has been put back upside down, which feels personal.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "register",
+   "name": "Checkout / register",
+   "x": 650,
+   "y": 272,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "The customer screen says $0.00 and THANK YOU, GO BUFFS. The receipt roll is nearly out.",
+   "lines": [
+    [
+     "Jules",
+     "The customer screen says $0.00 and THANK YOU, GO BUFFS. The receipt roll is nearly out.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "cashier",
+   "name": "Cashier / closing shift",
+   "x": 650,
+   "y": 212,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot behind the counter"
+  },
+  {
+   "id": "sticker_spinner",
+   "name": "Sticker spinner",
+   "x": 748,
+   "y": 362,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Stickers, postcards and a magnet shaped like the Flatirons. The spinner squeaks on every turn.",
+   "lines": [
+    [
+     "Jules",
+     "Stickers, postcards and a magnet shaped like the Flatirons. The spinner squeaks on every turn.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "buyback_sign",
+   "name": "SELL YOUR BOOKS",
+   "x": 568,
+   "y": 434,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "TEXTBOOK BUYBACK. They pay a little for what cost a lot.",
+   "lines": [
+    [
+     "Jules",
+     "TEXTBOOK BUYBACK. They pay a little for what cost a lot.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "bargain_bin",
+   "name": "BARGAIN BOOKS $1",
+   "x": 312,
+   "y": 428,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Everything a dollar: a 2009 guide to the internet, a cookbook for one, half a Spanish dictionary.",
+   "lines": [
+    [
+     "Jules",
+     "Everything a dollar: a 2009 guide to the internet, a cookbook for one, half a Spanish dictionary.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "staff_door",
+   "name": "STAFF ONLY",
+   "x": 744,
+   "y": 160,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "STAFF ONLY. Somewhere back there is every textbook nobody bought.",
+   "lines": [
+    [
+     "Jules",
+     "STAFF ONLY. Somewhere back there is every textbook nobody bought.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "store_hours",
+   "name": "Store hours",
+   "x": 704,
+   "y": 160,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "OPEN LATE THIS WEEK. Somebody added a sad face in pen.",
+   "lines": [
+    [
+     "Jules",
+     "OPEN LATE THIS WEEK. Somebody added a sad face in pen.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "shopper",
+   "name": "Shopper / at the gear wall",
+   "x": 300,
+   "y": 200,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot in front of the hoodie wall"
+  }
+ ]
+}
