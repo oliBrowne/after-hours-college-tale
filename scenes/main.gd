@@ -381,6 +381,7 @@ func _physics_process(delta: float) -> void:
 				if scenery is UMCEnvironment: scenery.reduced_motion = environment.reduced_motion; scenery.step(delta)
 				elif scenery is NativeBattleBackdrop: scenery.reduced_motion = environment.reduced_motion; scenery.step(delta)
 		vfx.step(delta)
+		NativeBattleJuice.step(bool(state.settings.reducedMotion))
 		claim_art.step(delta)
 		pin_art.step(delta)
 		for prop: Node2D in scene_props:
@@ -1242,7 +1243,7 @@ func begin_battle() -> void:
 		qa_record = AudioEffectRecord.new()
 		AudioServer.add_bus_effect(0, qa_record)
 		qa_record.set_recording_active(true)
-	feedback.clear(); vfx.clear(); hit_flash = 0
+	feedback.clear(); vfx.clear(); hit_flash = 0; NativeBattleJuice.clear()
 	refresh_growth()
 	battle = BattleRules.create_battle(state.party, state.inventory)
 	battle.sync = mini(100, int(battle.sync) + PartyGrowth.starting_sync(state.flags))
@@ -1512,6 +1513,7 @@ func start_phase() -> void:
 	dodge_goal = Vector2.INF; beat_defend = false
 	foe.play("interact_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "index", "eric", "cone", "empty_chair", "rook", "val", "jakerson", "jakerson_final"] else "tell")
 	claim_art.set_pose("tell"); pin_art.set_pose("tell")
+	NativeBattleJuice.windup(claim_art if boss_id == "claim" else pin_art if boss_id == "pinpal" else foe)
 	audio.combat("whistle" if boss_id == "deion" else "stamp" if boss_id == "todd" else "warning")
 	ui_dirty = true
 
@@ -1571,6 +1573,9 @@ func dodge_tick() -> void:
 		audio.combat("guard" if lost == 0 else "hit")
 		battle_sprites[target].modulate = Color("df807b")
 		battle_sprites[target].play("hit" if int(battle.party[target].hp) > 0 else "down")
+		if lost > 0:
+			NativeBattleJuice.flinch(battle_sprites[target], Vector2.LEFT, lost); NativeBattleJuice.flash(battle_sprites[target], 6)
+			NativeBattleJuice.kick([battle_scenery, foe, claim_art, pin_art] + battle_sprites, 1.0 if lost < 12 else 2.0, 8)
 		if int(battle.party[target].hp) <= 0:
 			target = 0
 			while target < 3 and int(battle.party[target].hp) <= 0: target += 1
@@ -2217,6 +2222,7 @@ func present_action() -> void:
 	var origin: Vector2 = battle_sprites[index].position - Vector2(0, 34)
 	if kind == "strike":
 		vfx.play("slash", origin, Vector2(480, 108)); audio.combat("swing")
+		NativeBattleJuice.lunge(battle_sprites[index])
 	else:
 		vfx.play("guard" if kind == "guard" else "heal" if kind in ["heal", "item", "warmth"] else "promise", origin, origin)
 		audio.combat("guard" if kind == "guard" else "shield" if kind == "shield" else "release" if kind == "release" else "pick")
@@ -2231,6 +2237,9 @@ func present_impact() -> void:
 		foe.modulate = Color("df8078"); claim_art.set_pose("hit"); pin_art.set_pose("hit")
 		foe.play("hit")
 		audio.combat("enemyhurt")
+		var struck: Node2D = claim_art if boss_id == "claim" else pin_art if boss_id == "pinpal" else foe
+		NativeBattleJuice.flinch(struck, Vector2.RIGHT, damage); NativeBattleJuice.flash(struck)
+		if damage >= 12: NativeBattleJuice.kick([battle_scenery, foe, claim_art, pin_art] + battle_sprites, 2.0, 10)
 	ui_dirty = true
 
 func stage_dialogue() -> void:
