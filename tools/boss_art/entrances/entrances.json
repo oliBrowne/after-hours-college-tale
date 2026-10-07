@@ -34,5 +34,53 @@
   ],
   "height": 80,
   "source_cell_used": "assets/art/eric-v1.png cell 0 (front, 76x88), redrawn with tools/eric_art/draw_eric.py's engine"
+ },
+ "walt": {
+  "size": [
+   124,
+   120
+  ],
+  "foot": [
+   54,
+   119
+  ],
+  "height": 80,
+  "source_cell_used": "walt cell 0 (party-battle-v2.png, party-battle-atlas-v2.json walt[0]; baked clean native-clean/88x83-49d218becddfec65.png)"
+ },
+ "chip": {
+  "size": [
+   124,
+   120
+  ],
+  "foot": [
+   73,
+   114
+  ],
+  "height": 80,
+  "source_cell_used": "chip cell 1 (support-world-v3.png, cast_art.gd BODY_REGIONS chip[1]; baked clean native-clean/77x81-b338f2f663e5a54b.png)"
+ },
+ "rook": {
+  "size": [
+   112,
+   124
+  ],
+  "foot": [
+   70,
+   120
+  ],
+  "height": 80,
+  "source_cell_used": "rook cell 1 (festival-cast-v1.png, expansion-atlas.json rook[1]; baked clean native-clean/73x89-5c946dd9b2fc88df.png)"
+ },
+ "jakerson": {
+  "size": [
+   64,
+   110
+  ],
+  "foot": [
+   31,
+   109
+  ],
+  "height": 80,
+  "source_cell_used": "jakerson cell 1 (jakerson-v1.png, jakerson-atlas.json cells[1], shrunk 466->80 exactly as NativePixelCast does; no baked clean version exists)"
  }
 }
