@@ -46,7 +46,7 @@ func walk(direction: Vector2, running: bool, delta: float) -> void:
 		art.animation = animation_name
 		art.pause()
 		art.frame = NativeWalkArt.frame_for(art.sprite_frames, art.animation, travelled, running)
-	else:
+	elif not (str(art.animation).begins_with("fidget") and art.is_playing()):
 		art.play("idle_" + facing)
 	if delta <= 0:
 		velocity = Vector2.ZERO
@@ -61,5 +61,5 @@ func follow(point: Vector2) -> void:
 		art.animation = "walk_" + facing
 		art.pause()
 		art.frame = NativeWalkArt.frame_for(art.sprite_frames, art.animation, travelled, false)
-	else:
+	elif not (str(art.animation).begins_with("fidget") and art.is_playing()):
 		art.play("idle_" + facing)

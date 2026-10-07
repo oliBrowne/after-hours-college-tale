@@ -4,20 +4,50 @@ extends RefCounted
 ## right (each on its own slow rhythm), and when Jules walks up they turn to face them. Only sprites
 ## with side poses take part; poses that tell a story (settled, down, interact) are left alone.
 ## A turn is held for at least HOLD seconds, so people don't flick back and forth.
+## Cast drawn with one-shot "fidget_<dir>" animations (fidget2_<dir>, ... for more) play one
+## now and then while nobody is close, each NPC on its own seeded rhythm.
 const NOTICE_RADIUS: float = 72.0
 const GLANCE: float = 1.6
 const HOLD: float = 1.2
+## Seconds between fidgets: at least FIDGET, plus up to FIDGET_SPREAD more per NPC.
+const FIDGET: float = 8.0
+const FIDGET_SPREAD: float = 12.0
 
 static func update(npc: AnimatedSprite2D, player: Vector2, time: float, reduced: bool) -> void:
 	var current: String = str(npc.animation)
-	if not current.begins_with("idle_"): return
 	var frames: SpriteFrames = npc.sprite_frames
+	if current.begins_with("fidget"):
+		if npc.is_playing(): return
+		npc.play("idle_" + current.get_slice("_", 1)); npc.set_meta("turned_at", time)
+		return
+	if not current.begins_with("idle_"): return
+	if fidget(npc, player, time, reduced): return
 	if not (frames.has_animation("idle_left") and frames.has_animation("idle_right") and frames.has_animation("idle_up")): return
 	var want: String = facing(npc, player, time, reduced)
 	if want == current: return
 	if time - float(npc.get_meta("turned_at", -INF)) < HOLD: return
 	npc.set_meta("turned_at", time)
 	npc.play(want)
+
+## Plays one of the NPC's fidgets for the way they face when it is due. True if one started.
+static func fidget(npc: AnimatedSprite2D, player: Vector2, time: float, reduced: bool) -> bool:
+	if reduced or (player - npc.position).length() < NOTICE_RADIUS: return false
+	var seed: int = absi(str(npc.get_meta("id", npc.get_instance_id())).hash()) % 97
+	if not npc.has_meta("fidget_at"): npc.set_meta("fidget_at", time + FIDGET * 0.5 + float(seed % 13))
+	if time < float(npc.get_meta("fidget_at")): return false
+	var direction: String = str(npc.animation).trim_prefix("idle_")
+	var choices: Array[String] = []
+	for name: StringName in npc.sprite_frames.get_animation_names():
+		if str(name).begins_with("fidget") and str(name).ends_with("_" + direction): choices.append(str(name))
+	var count: int = int(npc.get_meta("fidgets", 0))
+	npc.set_meta("fidgets", count + 1)
+	npc.set_meta("fidget_at", time + FIDGET + fposmod(float(seed * 7 + count * 31), FIDGET_SPREAD))
+	if choices.is_empty(): return false
+	choices.sort()
+	var chosen: String = choices[(seed + count) % choices.size()]
+	npc.sprite_frames.set_animation_loop(chosen, false)
+	npc.play(chosen)
+	return true
 
 static func facing(npc: AnimatedSprite2D, player: Vector2, time: float, reduced: bool) -> String:
 	var gap: Vector2 = player - npc.position
