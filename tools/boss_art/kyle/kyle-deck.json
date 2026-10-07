@@ -1,0 +1,14 @@
+{
+ "path": "kyle-deck.png",
+ "size": [
+  156,
+  100
+ ],
+ "anchor": [
+  44,
+  99
+ ],
+ "anchor_is": "Kyle's battle foot point (cells 0-5) in this image",
+ "z": "behind",
+ "battle_only": true
+}

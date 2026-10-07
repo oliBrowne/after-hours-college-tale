@@ -1,0 +1,78 @@
+{
+ "world_height": 52,
+ "battle_height": 82,
+ "cells": {
+  "sunbeam-world-0.png": {
+   "size": [
+    60,
+    56
+   ],
+   "foot": [
+    30,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 0
+  },
+  "sunbeam-world-1.png": {
+   "size": [
+    60,
+    56
+   ],
+   "foot": [
+    30,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 1
+  },
+  "sunbeam-world-2.png": {
+   "size": [
+    60,
+    56
+   ],
+   "foot": [
+    30,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 2
+  },
+  "sunbeam-world-3.png": {
+   "size": [
+    60,
+    56
+   ],
+   "foot": [
+    30,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 3
+  },
+  "sunbeam-world-4.png": {
+   "size": [
+    60,
+    56
+   ],
+   "foot": [
+    28,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 4
+  },
+  "sunbeam-world-5.png": {
+   "size": [
+    60,
+    56
+   ],
+   "foot": [
+    30,
+    55
+   ],
+   "height": 52,
+   "battle_cell": 5
+  }
+ }
+}

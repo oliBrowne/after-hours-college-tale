@@ -1,0 +1,14 @@
+{
+ "path": "sunbeam-bus.png",
+ "size": [
+  204,
+  124
+ ],
+ "anchor": [
+  96,
+  123
+ ],
+ "anchor_is": "Sunbeam's battle foot point (cells 0-5) in this image",
+ "z": "behind",
+ "battle_only": true
+}
