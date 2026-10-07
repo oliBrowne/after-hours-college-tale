@@ -154,14 +154,16 @@ func _test_side_quests() -> void:
 
 func _test_years() -> void:
 	var f: Dictionary = {}
-	_check(NativeYears.year(f) == 1 and NativeYears.season(f, "U01") == "fall", "Year one is freshman fall")
+	_check(NativeYears.year(f) == 1 and NativeYears.stage(f) == 1 and NativeYears.season(f, "U01") == "fall", "Stage one is freshman fall")
 	f.flyer_resolution = "peaceful"
-	_check(NativeYears.year(f) == 2 and NativeYears.season(f, "U03") == "winter", "The Flyerer ends freshman year")
+	_check(NativeYears.year(f) == 1 and NativeYears.stage(f) == 2 and NativeYears.season(f, "U03") == "winter", "The Flyerer starts the spring term, still freshman year")
 	f.booth_seen = true
-	_check(NativeYears.year(f) == 3 and NativeYears.season(f, "U08") == "spring", "The booth ends sophomore year")
+	_check(NativeYears.year(f) == 2 and NativeYears.season(f, "U08") == "fall", "The booth ends freshman year")
+	f.cal_key_received = true
+	_check(NativeYears.year(f) == 3 and NativeYears.season(f, "U07") == "winter", "Cal's key starts junior year")
 	f.claim_resolution = "peaceful"
 	_check(NativeYears.year(f) == 4 and NativeYears.season(f, "F01") == "winter", "Advisor Bev ends junior year")
 	_check(NativeYears.season({"dawn_talk_read": "x"}, "U01") == "spring", "Dawn is spring")
-	for y: int in [1, 2, 3, 4]: _check(NativeYears.CARDS.has(y) and not "—" in str(NativeYears.CARDS[y]), "Year %d has a card" % y)
+	for st: int in [1, 2, 3, 4, 5]: _check(NativeYears.CARDS.has(st) and NativeYears.SEASONS.has(st) and NativeYears.YEARS.has(st) and not "—" in str(NativeYears.CARDS[st]), "Stage %d has a card" % st)
 	var lines: Array = [["Imani", "hi", "warm"], ["Jules", "yo", "neutral"], ["Walt", "hm", "neutral"]]
 	_check(NativeYears.present(lines, {}).size() == 1 and NativeYears.present(lines, {"imani_joined": true}).size() == 2, "Unjoined friends' lines are dropped")
