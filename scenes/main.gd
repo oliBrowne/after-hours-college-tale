@@ -16,7 +16,7 @@ const LABEL_PAGE_TICKS: int = 150
 ## What each queued action does, shown under the action log while a turn resolves.
 const ACTION_HELP: Dictionary = {"strike": "A timed hit. Accuracy changes damage.", "connect": "Listening. OPEN rises as they open up.", "promise": "A promise: the next defense has a real objective.", "boundary": "A boundary: one smaller, honest task.", "guard": "Guarding: less damage, +12 SYNC.", "shield": "Hold the Light cancels one hit.", "heal": "Healing also revives a fallen ally.", "item": "A supply, used on resolution.", "warmth": "Share the Warmth: heal and guard.", "slow": "Half Time slows the next pattern.", "lantern": "Lantern Ward opens a shelter pocket.", "windbreak": "Windbreak shields one ally.", "brace": "Bracing for the next defense.", "release": "RELEASE: enough for tonight."}
 const ACTORS: Array[String] = ["jules", "imani", "walt"]
-const INTRO_CARDS: Array = [["BOULDER / LAST LIGHT", "The Flatirons keep the sunset a little longer than the streets."], ["JULES NAVARRO", "One borrowed mixer. One promise to return it. One last bus home."], ["9:12 PM / THE UMC", "The campus bus pulls away. Jules shifts the mixer and looks toward the UMC."]]
+const INTRO_CARDS: Array = [["BOULDER / FRESHMAN YEAR", "The Flatirons keep the sunset a little longer than the streets."], ["JULES NAVARRO", "One borrowed mixer. One promise to return it. One last bus home."], ["9:12 PM / THE UMC", "The campus bus pulls away. Jules shifts the mixer and looks toward the UMC."]]
 var mode: Mode = Mode.TITLE
 var state: Dictionary = NativeState.fresh()
 var rooms: Dictionary
@@ -113,6 +113,7 @@ var intro_index: int = 0
 var intro_ticks: int = 0
 ## The cards being shown and which one brings the world up: move-in day (none), or the evening.
 var intro_cards: Array = INTRO_CARDS
+var intro_after: Callable = Callable()
 var intro_arrival: int = 2
 var transition_ticks: int = 0
 var footsteps: float = 0.0
@@ -499,6 +500,7 @@ func world_tick(delta: float) -> void:
 	if NativeJakerson.cutscene_step(self): return
 	# Walk-in scenes: the people in a room play out a moment the first time Jules arrives.
 	if NativeRoomScenes.step(self): return
+	if NativeYears.step(self): return
 	var axis: Vector2 = Input.get_vector("move_left", "move_right", "move_up", "move_down")
 	if axis.length_squared() > 0:
 		pointer_goal = Vector2.INF; pointer_path.clear(); pointer_object = {}
@@ -564,7 +566,7 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 	set_cast_paused(false)
 	reset_pointer_controls()
 	# Move-in day is late-August fall; the night before graduation is a snowy one, and the dawn after it is spring.
-	state.flags.season="fall" if NativeMoveIn.active(self) else "spring" if str(state.flags.get("dawn_talk_read",""))!="" or id in ["M07","G01","G02"] else "winter"
+	state.flags.season=NativeYears.season(state.flags,id)
 	NativeCampusWorld.prepare(rooms[id],state.flags)
 	navigation.configure(rooms[id])
 	point = navigation.safe_point(point)
@@ -777,14 +779,9 @@ func interact(object: Dictionary) -> void:
 	if NativeSideQuests.handle(self, object): return
 	if object.kind == "save" and not str(object.id) in ["lamp", "farrand_lamp"]:
 		rest_menu(); return
-	if object.kind in ["battle", "challenge"] and not state.flags.get("walt_joined", false):
-		if not state.flags.get("imani_joined", false):
-			# The poster has its own line; everything else waits on the mixer.
-			if str(object.id) != "flyer":
-				dialogue([["Jules", "Not now. Imani's mixer comes first.", "neutral"]], resume_world); return
-		else:
-			dialogue([["Jules", "The voice went under Broadway. We should follow it to the underpass first.", "concern"]], resume_world)
-			return
+	if object.kind in ["battle", "challenge"] and not state.flags.get("walt_joined", false) and str(object.id) != "flyer":
+		var gate: String = "Not now. Imani's mixer comes first." if not state.flags.get("mixer_returned", false) else "The poster in the club room is still shouting. Settle it first." if not state.flags.has("flyer_resolution") else "Something is humming in the atrium. Check it first." if not state.flags.get("booth_seen", false) else "The voice went under Broadway. We should follow it to the underpass first."
+		dialogue([["Jules", gate, "neutral"]], resume_world); return
 	if object.kind == "door":
 		use_door(object); return
 	var discovery: Dictionary = NativeDiscoveries.scene(str(object.id), state, living_speakers())
@@ -816,11 +813,11 @@ func interact(object: Dictionary) -> void:
 			var key: String = str(object.id) + "_resolution"
 			if state.flags.has(key):
 				dialogue([["Jules", "We have already made room here.", "warm"]], resume_world); return
-			if object.id == "flyer" and not state.flags.get("imani_joined", false):
+			if object.id == "flyer" and not state.flags.get("mixer_returned", false):
 				dialogue([["Flyerer", "RETURN FIRST. RECRUIT LATER. RETURN FIRST!", "concern"]], resume_world); return
 			boss_id = "" if object.id == "flyer" else str(object.id)
 			var intro: Dictionary = {"flyer": [["Flyerer", "ONE PAGE! JUST ONE! THE CLUB CANNOT CLOSE IF NOBODY READS!", "concern"], ["Imani", "That poster was just a poster a minute ago. Now it has opinions. We should probably discuss that.", "concern"], ["Jules", "We can read one invitation. Or make enough room to walk past.", "neutral"]], "pinpal": [["Pin Pal", "RETURN SERVICE! RETURN SERVICE!", "warm"], ["Walt", "A bowling pin practicing returns. One ball at a time. I respect a clear job.", "warm"]], "claim": [["Advisor Bev", "HAVE YOU CHECKED YOUR DEGREE AUDIT, SWEETIE? TAKE A NUMBER. TAKE A FOLDER. EVERYTHING HERE HAS AN ADVISOR.", "concern"], ["Jules", "That glove looks like it is waving.", "concern"], ["Advisor Bev", "PAGE ONE OF THE FOUR-YEAR PLAN! ITEM 41, UNCLAIMED CREDIT! I HAVE SCHEDULED IT FOR SPRING OF NEVER.", "concern"], ["Imani", "Her desk plate says BEV. We can carry one thing, Bev. We cannot be the advisor of every forgotten thing.", "warm"]]}
-			dialogue(intro[str(object.id)], start_battle)
+			dialogue(NativeYears.present(intro[str(object.id)], state.flags), start_battle)
 		_:
 			if object.id == "squirrel": audio.combat("squirrel")
 			var contextual: Array = environment.context_lines(str(object.id), state.flags)
@@ -1810,7 +1807,11 @@ func show_aftermath(resolved_id: String) -> void:
 	boss_id = ""
 	enter_room(str(state.room), Vector2(float(state.x), float(state.y)), false)
 	var aftermath: Dictionary = {"flyer": [["Flyerer", "One reader. One page. We can close now.", "warm"], ["Imani", "We did not promise forever. And it worked.", "warm"], ["Imani", "Now the atrium booth. I want to know why it used my voice.", "concern"]] if peaceful else [["Imani", "The stand's bent. I've left a note by the hinge.", "concern"], ["Jules", "Then we check that voice in the atrium.", "neutral"]], "pinpal": [["Pin Pal", "RETURN RECEIVED. THANK YOU FOR PLAYING.", "warm"]] if peaceful else [["Walt", "The housing's cracked. Leave it switched off.", "concern"], ["Jules", "I'll put the ball on the rack.", "neutral"]], "claim": [["Advisor Bev", "ONE RETURN. ONE NOTE. THE REST OF THE FOUR-YEAR PLAN CAN WAIT UNTIL OFFICE HOURS, SWEETIE.", "warm"], ["Pip", "I am coming with you. I can point. That is a surprisingly useful glove skill.", "warm"], ["Advisor Bev", "PIP, SWEETIE: I HAVE MOVED YOU FROM 'UNCLAIMED' TO 'UNDECLARED.' IT IS THE BEST MAJOR.", "warm"], ["Jules", "The booth has a maker. We find them, then find a way home.", "warm"], ["Mags", "Mags, from the cart out front. I heard all of that. Leaving something unfinished on purpose is harder than it looks.", "warm"]] if peaceful else [["Mags", "Mags, from the cart out front. The ticket spool broke; I'll sort it. Leave the glove with me?", "concern"], ["Pip", "Actually, I would like to come with them.", "warm"], ["Jules", "Then we find who made that booth. Together.", "warm"]]}
-	dialogue(aftermath.get(resolved_id, [[resolved_id.capitalize(), "Good practice. Remember to rest.", "warm"]]), func() -> void:
+	var closing: Array = aftermath.get(resolved_id, [[resolved_id.capitalize(), "Good practice. Remember to rest.", "warm"]])
+	# Freshman year: Jules faces the Flyerer alone, so the closing lines are his.
+	if resolved_id == "flyer" and not state.flags.get("imani_joined", false):
+		closing = [["Flyerer", "One reader. One page. We can close now.", "warm"], ["Jules", "Nobody ever listens to a poster. Maybe that was the whole point.", "warm"], ["Jules", "Mixer's back where it belongs. Now, what is that humming in the atrium?", "neutral"]] if peaceful else [["Jules", "The stand's bent. I'll leave a note by the hinge.", "concern"], ["Jules", "Something is humming in the atrium. I should check it before the last bus.", "neutral"]]
+	dialogue(closing, func() -> void:
 		state.flags.aftermath_pending = ""
 		persist()
 		resume_world())
@@ -2442,7 +2443,10 @@ func advance_intro() -> void:
 		environment.arrival_origin = player.position; environment.set_arrival(0.0)
 		player.facing = "up"; player.art.play("interact_up")
 	if intro_index >= intro_cards.size():
-		if intro_arrival < 0: NativeMoveIn.begin(self)
+		if intro_after.is_valid():
+			var after: Callable = intro_after
+			intro_after = Callable(); after.call()
+		elif intro_arrival < 0: NativeMoveIn.begin(self)
 		else: finish_arrival(false)
 
 func finish_arrival(skip: bool) -> void:

@@ -28,9 +28,7 @@ static func active(g: Node) -> bool:return bool(g.state.flags.get("movein_active
 
 ## What the evening's intro cards say after the dorm: "Four years later", then the usual three.
 static func evening_cards(intro: Array) -> Array:
-	var cards: Array = [LATER]
-	cards.append_array(intro)
-	return cards
+	return intro.duplicate()
 
 ## The world appears and Jakerson's introduction plays (a walk-in scene, see NativeRoomScenes).
 static func begin(g: Node) -> void:

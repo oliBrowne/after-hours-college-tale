@@ -47,10 +47,10 @@ static func next_place(g: Node) -> String:
 static func greeting(g: Node) -> void:
 	g.state.flags.jakerson_seen=true;g.state.flags.intro_seen=true;g.persist()
 	if g.state.flags.get("movein_done",false):
-		# Four years after move-in day: he knows exactly who this is.
+		# A few weeks after move-in day: he knows exactly who this is.
 		say(g,[["Jules","Eight minutes until the last bus. Mixer back to Imani, then home. One small promise.","neutral"],
 			["Jakerson","Jules! Is that Imani's mixer? She's been texting everyone about it since dinner.","warm"],
-			["Jakerson","I'm heading to the UMC anyway. Rule forty-one: nobody walks alone on the last night.","warm"],
+			["Jakerson","I'm heading to the UMC anyway. Rule forty-one: nobody walks alone after dark.","warm"],
 			["Jules","We got to forty-one?","neutral"],
 			["Jakerson","I kept adding them. Also... the campus is being weird tonight. My laptop keeps printing the same line. ONE MORE MINUTE.","concern"],
 			["Jakerson","Come on, I'll walk you.","warm"]],func() -> void:offer(g));return

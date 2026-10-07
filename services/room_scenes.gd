@@ -39,7 +39,7 @@ static func due(g: Node) -> String:
 	if room == NativeMoveIn.START and f.get("movein_active", false) and not f.get("scene_movein_meet", false): return "movein_meet"
 	if room == "U03" and not f.get("mixer_returned", false) and not f.get("scene_chip_todd", false): return "chip_todd"
 	# Not tied to its scene flag: it replays until Imani has joined, so it can never be lost.
-	if room == "U03" and f.get("mixer_returned", false) and not f.get("imani_joined", false): return "imani_booth"
+	if room == "U03" and f.get("mixer_returned", false) and f.has("flyer_resolution") and not f.get("imani_joined", false): return "imani_booth"
 	if room == "N01" and f.get("chapter1_complete", false) and not f.get("library_pass", false) and not f.get("scene_nell_pencil", false): return "nell_pencil"
 	if room == "H01" and f.get("chapter1_complete", false) and not f.has("tanner_resolution") and not f.get("scene_tanner_couch", false): return "tanner_couch"
 	if room == "E01" and not f.has("eric_resolution") and not f.get("scene_eric_lobby", false): return "eric_lobby"

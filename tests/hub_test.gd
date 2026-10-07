@@ -13,6 +13,7 @@ func _init() -> void:
 	_test_shops()
 	_test_side_bosses()
 	_test_side_quests()
+	_test_years()
 	print("Hub: %d checks, %d failures" % [checks, failures])
 	quit(0 if failures == 0 else 1)
 
@@ -150,3 +151,17 @@ func _test_side_quests() -> void:
 	_check(not "—" in text, "No em-dashes in quest text")
 	var f: Dictionary = {"chapter1_complete": true}
 	_check(NativeRoomScenes.steps("tanner_couch").size() > 5, "The couch scene has steps")
+
+func _test_years() -> void:
+	var f: Dictionary = {}
+	_check(NativeYears.year(f) == 1 and NativeYears.season(f, "U01") == "fall", "Year one is freshman fall")
+	f.flyer_resolution = "peaceful"
+	_check(NativeYears.year(f) == 2 and NativeYears.season(f, "U03") == "winter", "The Flyerer ends freshman year")
+	f.booth_seen = true
+	_check(NativeYears.year(f) == 3 and NativeYears.season(f, "U08") == "spring", "The booth ends sophomore year")
+	f.claim_resolution = "peaceful"
+	_check(NativeYears.year(f) == 4 and NativeYears.season(f, "F01") == "winter", "Advisor Bev ends junior year")
+	_check(NativeYears.season({"dawn_talk_read": "x"}, "U01") == "spring", "Dawn is spring")
+	for y: int in [1, 2, 3, 4]: _check(NativeYears.CARDS.has(y) and not "—" in str(NativeYears.CARDS[y]), "Year %d has a card" % y)
+	var lines: Array = [["Imani", "hi", "warm"], ["Jules", "yo", "neutral"], ["Walt", "hm", "neutral"]]
+	_check(NativeYears.present(lines, {}).size() == 1 and NativeYears.present(lines, {"imani_joined": true}).size() == 2, "Unjoined friends' lines are dropped")

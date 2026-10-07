@@ -22,7 +22,8 @@ static func complete_mixer(g: Node, response: String) -> void:
 ## Imani in the club room after the mixer is back, before the atrium.
 static func talk(g: Node) -> bool:
 	if not g.state.flags.get("mixer_returned", false) or g.state.flags.get("imani_joined", false): return false
-	g.dialogue([["Imani", "Bus! Go! I have forty cables and one nervous song to untangle.", "warm"]], g.resume_world)
+	var line: String = "Bus! Go! I have forty cables and one nervous song to untangle." if not g.state.flags.has("flyer_resolution") else "Something in the atrium keeps humming my name. Check it out. I'll be right behind you."
+	g.dialogue([["Imani", line, "warm"]], g.resume_world)
 	return true
 
 ## The booth scene, played by NativeRoomScenes the first time Jules is back in the atrium with
