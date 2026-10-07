@@ -61,7 +61,12 @@ func run(main: Node) -> bool:
 	await _settle()
 	_assert(NativeJakerson.guide(game)=="terrace" and int(game.mode)==WORLD and str(game.state.room)=="U02","On the terrace, no second spar: the dorm already taught it")
 	_assert(game.state.inventory==inventory,"The walk and spar cost no supplies")
-	for _i: int in range(120):await _frame()
+	# With no spar to re-enter the room, he walks to his spot by the medallion; wait for him there.
+	for _i: int in range(600):
+		var jakerson: AnimatedSprite2D=NativeJakerson.npc(game)
+		if jakerson!=null and not jakerson.has_meta("goal"):break
+		await _frame()
+	for _i: int in range(60):await _frame()
 	await _capture("06-terrace-after")
 	await _object("jakerson");await _settle()
 	_assert(str(game.caption).begins_with("Jakerson / one thing"),"Terrace Jakerson opens the help menu")

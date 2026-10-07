@@ -54,7 +54,7 @@ static func steps() -> Array:
 			["Jules", "Only twice?", "neutral"],
 			["Jakerson", "Three is for emergencies and pizza. Rule two: look around before you ask me where anything is. {move} to walk, hold {run} to run.", "warm"],
 			["Jakerson", "Walk up to anything and press {confirm} to look at it or talk to it. To use a door, stand on it and press {confirm}.", "warm"],
-			["Jakerson", "Rule three: floor meeting is in the lobby at seven, and I need a witness for something first.", "warm"],
+			["Jakerson", "Rule three: floor meeting is in the lobby at nine, and I need a witness for something first.", "warm"],
 			["Jules", "A witness?", "concern"],
 			["Jakerson", "You'll see. Unpack, poke around, then come find me downstairs. Hallway door, then the stairs.", "warm"]]],
 		["walk", [["jakerson", Vector2(470, 272), walk]]], ["face", "jakerson", "jules"],
@@ -92,7 +92,7 @@ static func handle(g: Node, object: Dictionary) -> bool:
 	if id == "jakerson_lobby":
 		challenge(g); return true
 	if id == "front_doors" and active(g):
-		say(g, [["Jules", "Campus can wait until tomorrow. Orientation starts at nine, and there's a witness waiting for me by the ping-pong table.", "neutral"]])
+		say(g, [["Jules", "Campus can wait until tomorrow. Right now there's a roommate by the ping-pong table who needs a witness.", "neutral"]])
 		return true
 	if id == "floormate_208":
 		say(g, [["Eli", "Careful, bike parts. I'm Eli, 208. I fix bikes in the doorway because the hallway has better light.", "warm"],

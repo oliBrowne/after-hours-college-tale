@@ -364,7 +364,7 @@ func _object(id: String) -> void:
 	while game.pointer_goal != Vector2.INF and int(game.mode) == WORLD and not failed:
 		await _frame()
 		if ticks - start > 1800: _assert(false, "Production pointer route stuck at " + str(game.player.position) + " for " + id)
-	_assert(int(game.mode) != WORLD or object.kind == "door", "Production pointer interacts with " + id)
+	_assert(int(game.mode) != WORLD or object.kind == "door", "Production pointer interacts with " + id + " (player " + str(game.player.position) + ", notice \"" + str(game.notice) + "\")")
 
 ## Let story scenes that start on their own (Imani in the atrium, Jakerson's
 ## drop-in lessons) play out with ordinary presses before the next action.
