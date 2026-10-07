@@ -8,7 +8,7 @@ extends RefCounted
 ## A boss connects only after a PEACEFUL ending; a forceful one leaves a "viewed your profile"
 ## post and no request. Scene characters (roommates, Cal, Dev) just need to have been met.
 ## Stats: max (all three members), power, defence (all members), sync (SYNC at battle start, once).
-## Budget at full network: about +44 max HP, +4 power, +2 defence, +20 SYNC.
+## Budget at full network: about +44 max HP, +5 power, +3 defence, +20 SYNC.
 const PEOPLE: Array = [
 	{"id": "imani", "name": "Imani Bell", "headline": "Founder, Sound Check. Open to mixers.", "skill": "Sound Checks", "stat": "sync", "amount": 5, "flag": "imani_joined"},
 	{"id": "walt", "name": "Walt", "headline": "The Bridge Keeper. Keeps one light on.", "skill": "Keeping the Lantern Lit", "stat": "max", "amount": 4, "flag": "walt_resolution", "need": "peaceful"},
@@ -30,6 +30,8 @@ const PEOPLE: Array = [
 	{"id": "todd", "name": "Todd Saliman", "headline": "President. Reads every form.", "skill": "Informed Consent", "stat": "max", "amount": 4, "flag": "todd_resolution", "need": "peaceful"},
 	{"id": "cone", "name": "Captain Lance", "headline": "Captain, Flatirons Peloton. On your left.", "skill": "Cadence", "stat": "sync", "amount": 5, "flag": "cone_resolution", "need": "peaceful"},
 	{"id": "rook", "name": "Rook", "headline": "Night Marshal. Master of keys.", "skill": "Opening Doors", "stat": "max", "amount": 4, "flag": "rook_resolution", "need": "peaceful"},
+	{"id": "tanner", "name": "Tanner", "headline": "Rush chair. 8 AM person, as of last night.", "skill": "Showing Up Early", "stat": "defence", "amount": 1, "flag": "tanner_resolution", "need": "peaceful"},
+	{"id": "kyle", "name": "Kyle", "headline": "Founder, CEO, Visionary. Ask me anything. Finally.", "skill": "Asking the Question", "stat": "power", "amount": 1, "flag": "kyle_resolution", "need": "peaceful"},
 	{"id": "chad", "name": "Chad", "headline": "Networking Legend. Coffee chat?", "skill": "Small Talk", "stat": "max", "amount": 4, "flag": "chad_resolution", "need": "peaceful"},
 ]
 const STAT_TEXT: Dictionary = {"max": "+%d max HP", "power": "+%d power", "defence": "+%d defence", "sync": "+%d SYNC at battle start"}

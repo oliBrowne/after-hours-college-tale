@@ -52,7 +52,10 @@ static func portrait(speaker: String,expression: int) -> Texture2D:
 	var fitted: Texture2D=NativePixelCast.portrait(raw)
 	if fitted!=null:textures[key]=fitted
 	return fitted
+## Speakers that wear one of the encounter characters' own portraits (the people on the Hill, the court and the paths).
+const ENCOUNTER_SPEAKERS: Dictionary = {"Tanner": "tanner", "Kyle": "kyle", "Drummer": "drummer", "Frisbee kid": "frisbee", "Volunteer": "advisor_mini", "Philosophy major": "philosophy_major", "Hippie": "hippie", "Business major": "business_major", "Professor": "professor", "Engineering major": "engineering_major", "Cyclist": "cyclist", "Athlete": "athlete", "Runner": "runner", "Commuter Cyclist": "cyclist", "Altitude Runner": "runner", "Hacky-Sack Hippie": "hippie", "Business Major": "business_major", "Sunbeam": "sunbeam"}
 static func source_portrait(speaker: String, expression: int) -> Texture2D:
+	if ENCOUNTER_SPEAKERS.has(speaker) and NativeBossArt.drawn(str(ENCOUNTER_SPEAKERS[speaker])):return NativeBossArt.portrait(str(ENCOUNTER_SPEAKERS[speaker]),expression)
 	if speaker=="Jakerson":return NativeJakersonArt.portrait(expression)
 	if speaker=="Professor Eric":return NativeEricArt.portrait(expression)
 	if speaker=="VAL" and NativeBossArt.drawn("val"):return NativeBossArt.portrait("val",expression)
@@ -137,6 +140,7 @@ static func frames(id: String) -> SpriteFrames:
 
 static func world_height(id: String) -> float:
 	if id=="autocomplete":return NativeBossArt.world_height(id) if NativeBossArt.drawn(id) else 56.0
+	if NativeBossArt.encounter_cast(id):return NativeBossArt.world_height(id)
 	if id=="errata":return NativeBossArt.world_height("ta") if NativeBossArt.drawn("ta") else 56.0
 	return float({"jules":52,"imani":50,"walt":52,"cal":52,"mags":54,"mara":52,"eli":54,"nell":50,"dev":52,"eric":46,"val_small":34,"rook":56,"jakerson":60,"flyer":64,"pip":36,"pinpal":76,"claim":88}.get(id,56))
 static func fit(sprite: AnimatedSprite2D,height: float) -> void:

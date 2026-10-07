@@ -409,6 +409,21 @@
           ]
         ],
         "requires": []
+      },
+      {
+        "id": "fountain_steps",
+        "name": "Steps down to the Fountain Court",
+        "x": 596,
+        "y": 250,
+        "kind": "door",
+        "to": "C01",
+        "spawn": [
+          1100,
+          238
+        ],
+        "requires": [
+          "flyer_resolution"
+        ]
       }
     ],
     "id": "U02",
@@ -572,6 +587,20 @@
         "depth": 8,
         "object": null,
         "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 596,
+        "y": 250,
+        "w": 40,
+        "h": 30,
+        "depth": 0,
+        "object": "fountain_steps",
+        "label": "COURT >",
         "anchor_offset": [
           0,
           0
@@ -10845,14 +10874,12 @@
         "name": "Front doors / out to campus",
         "x": 262,
         "y": 176,
-        "kind": "inspect",
+        "kind": "door",
         "requires": [],
-        "lines": [
-          [
-            "Jules",
-            "Campus can wait until tomorrow.",
-            "neutral"
-          ]
+        "to": "C01",
+        "spawn": [
+          1770,
+          234
         ]
       },
       {
@@ -11102,6 +11129,4127 @@
           [
             "Jakerson",
             "Witness duty. Over here!",
+            "warm"
+          ]
+        ]
+      }
+    ]
+  },
+  "C01": {
+    "id": "C01",
+    "name": "Fountain Court / everyone passes through",
+    "cue": "campus",
+    "dimensions": [
+      1920,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      212,
+      1880,
+      300
+    ],
+    "entry": [
+      1100,
+      420
+    ],
+    "blocks": [],
+    "fixed_blocks": [],
+    "placements": [
+      {
+        "kind": "door",
+        "x": 860,
+        "y": 212,
+        "w": 52,
+        "h": 72,
+        "depth": 0,
+        "object": "book_store",
+        "label": "BOOK STORE",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "door",
+        "x": 1100,
+        "y": 216,
+        "w": 56,
+        "h": 76,
+        "depth": 0,
+        "object": "umc_doors",
+        "label": "UMC",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "door",
+        "x": 1340,
+        "y": 212,
+        "w": 52,
+        "h": 72,
+        "depth": 0,
+        "object": "career_center",
+        "label": "CAREER CENTER",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "door",
+        "x": 1770,
+        "y": 212,
+        "w": 50,
+        "h": 72,
+        "depth": 0,
+        "object": "farrand_hall",
+        "label": "FARRAND HALL",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 34,
+        "y": 392,
+        "w": 40,
+        "h": 30,
+        "depth": 0,
+        "object": "hill",
+        "label": "< THE HILL",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 590,
+        "y": 228,
+        "w": 46,
+        "h": 18,
+        "depth": 0,
+        "object": "macky",
+        "label": "MACKY",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 684,
+        "y": 228,
+        "w": 46,
+        "h": 18,
+        "depth": 0,
+        "object": "old_main",
+        "label": "OLD MAIN",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 1550,
+        "y": 228,
+        "w": 56,
+        "h": 18,
+        "depth": 0,
+        "object": "norlin",
+        "label": "NORLIN",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 1886,
+        "y": 400,
+        "w": 40,
+        "h": 30,
+        "depth": 0,
+        "object": "farrand_field",
+        "label": "FARRAND FIELD >",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 1540,
+        "y": 508,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "engineering",
+        "label": "ENGINEERING",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "fountain",
+        "x": 1100,
+        "y": 366,
+        "w": 300,
+        "h": 84,
+        "depth": 62,
+        "object": "fountain_plaque",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "truck",
+        "x": 106,
+        "y": 240,
+        "w": 140,
+        "h": 100,
+        "depth": 22,
+        "object": "truck_chile",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "truck",
+        "x": 272,
+        "y": 240,
+        "w": 140,
+        "h": 100,
+        "depth": 22,
+        "object": "truck_dumplings",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "truck",
+        "x": 438,
+        "y": 240,
+        "w": 140,
+        "h": 100,
+        "depth": 22,
+        "object": "truck_waffles",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "cart",
+        "x": 1446,
+        "y": 340,
+        "w": 72,
+        "h": 74,
+        "depth": 18,
+        "object": "coffee_cart",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "sign",
+        "x": 540,
+        "y": 300,
+        "w": 56,
+        "h": 58,
+        "depth": 8,
+        "object": "campus_map",
+        "label": "CAMPUS MAP",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "kiosk",
+        "x": 1664,
+        "y": 332,
+        "w": 36,
+        "h": 72,
+        "depth": 14,
+        "object": "event_kiosk",
+        "label": "UMC EVENTS",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 176,
+        "y": 336,
+        "w": 110,
+        "h": 30,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 386,
+        "y": 352,
+        "w": 110,
+        "h": 30,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 925,
+        "y": 452,
+        "w": 96,
+        "h": 34,
+        "depth": 14,
+        "object": "fountain_bench",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 1275,
+        "y": 452,
+        "w": 96,
+        "h": 34,
+        "depth": 14,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 776,
+        "y": 256,
+        "w": 18,
+        "h": 62,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 1424,
+        "y": 256,
+        "w": 18,
+        "h": 62,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 922,
+        "y": 308,
+        "w": 18,
+        "h": 62,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 1278,
+        "y": 308,
+        "w": 18,
+        "h": 62,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 604,
+        "y": 432,
+        "w": 18,
+        "h": 62,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 1602,
+        "y": 432,
+        "w": 18,
+        "h": 62,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 1842,
+        "y": 300,
+        "w": 18,
+        "h": 62,
+        "depth": 8,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "rack",
+        "x": 1690,
+        "y": 250,
+        "w": 84,
+        "h": 34,
+        "depth": 10,
+        "object": "bike_rack",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tree",
+        "x": 252,
+        "y": 480,
+        "w": 70,
+        "h": 120,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tree",
+        "x": 1732,
+        "y": 488,
+        "w": 60,
+        "h": 130,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bins",
+        "x": 532,
+        "y": 248,
+        "w": 40,
+        "h": 30,
+        "depth": 10,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "sign",
+        "x": 70,
+        "y": 302,
+        "w": 66,
+        "h": 50,
+        "depth": 8,
+        "object": "truck_sign",
+        "label": "TRUCKS",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 520,
+        "y": 344,
+        "w": 70,
+        "h": 44,
+        "depth": 18,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 34,
+        "y": 470,
+        "w": 40,
+        "h": 30,
+        "depth": 0,
+        "object": "pearl_st",
+        "label": "< PEARL ST",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "book_store",
+        "name": "CU Book Store",
+        "x": 860,
+        "y": 212,
+        "kind": "door",
+        "to": "C02",
+        "spawn": [
+          400,
+          410
+        ],
+        "requires": []
+      },
+      {
+        "id": "umc_doors",
+        "name": "Into the UMC atrium",
+        "x": 1100,
+        "y": 216,
+        "kind": "door",
+        "to": "U03",
+        "spawn": [
+          360,
+          420
+        ],
+        "requires": []
+      },
+      {
+        "id": "career_center",
+        "name": "Career Center",
+        "x": 1340,
+        "y": 212,
+        "kind": "door",
+        "to": "C03",
+        "spawn": [
+          400,
+          410
+        ],
+        "requires": []
+      },
+      {
+        "id": "farrand_hall",
+        "name": "Farrand Hall (the dorms)",
+        "x": 1770,
+        "y": 212,
+        "kind": "door",
+        "to": "D03",
+        "spawn": [
+          262,
+          204
+        ],
+        "requires": []
+      },
+      {
+        "id": "hill",
+        "name": "Across Broadway to the Hill",
+        "x": 34,
+        "y": 392,
+        "kind": "door",
+        "to": "H01",
+        "spawn": [
+          880,
+          340
+        ],
+        "requires": [
+          "chapter1_complete"
+        ]
+      },
+      {
+        "id": "macky",
+        "name": "North path to Macky",
+        "x": 590,
+        "y": 228,
+        "kind": "door",
+        "to": "M01",
+        "spawn": [
+          120,
+          460
+        ],
+        "requires": [
+          "chapter3_complete",
+          "rook_confessed"
+        ]
+      },
+      {
+        "id": "old_main",
+        "name": "North path to Old Main",
+        "x": 684,
+        "y": 228,
+        "kind": "door",
+        "to": "O01",
+        "spawn": [
+          120,
+          445
+        ],
+        "requires": [
+          "chapter2_complete"
+        ]
+      },
+      {
+        "id": "norlin",
+        "name": "Path to Norlin Quad",
+        "x": 1550,
+        "y": 228,
+        "kind": "door",
+        "to": "N01",
+        "spawn": [
+          120,
+          300
+        ],
+        "requires": [
+          "chapter1_complete"
+        ]
+      },
+      {
+        "id": "farrand_field",
+        "name": "East to Farrand Field",
+        "x": 1886,
+        "y": 400,
+        "kind": "door",
+        "to": "F01",
+        "spawn": [
+          120,
+          400
+        ],
+        "requires": [
+          "claim_resolution",
+          "walt_joined"
+        ]
+      },
+      {
+        "id": "engineering",
+        "name": "South walk to Engineering",
+        "x": 1540,
+        "y": 508,
+        "kind": "door",
+        "to": "E01",
+        "spawn": [
+          105,
+          440
+        ],
+        "requires": [
+          "library_pass"
+        ]
+      },
+      {
+        "id": "fountain_plaque",
+        "name": "Dalton Trumbo Fountain Court",
+        "x": 1100,
+        "y": 378,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A bronze plaque on the rim: DALTON TRUMBO FOUNTAIN COURT. The jets keep going whether anyone watches or not.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "truck_chile",
+        "name": "Green chile truck",
+        "x": 106,
+        "y": 262,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "GREEN CHILE. Smells like roasting peppers and a deadline.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "truck_dumplings",
+        "name": "Dumpling truck",
+        "x": 272,
+        "y": 262,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "DUMPLINGS. Steam rolls out of the hatch into the cold.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "truck_waffles",
+        "name": "Waffle truck",
+        "x": 438,
+        "y": 262,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "WAFFLES. The menu is mostly toppings and optimism.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "coffee_cart",
+        "name": "Coffee cart",
+        "x": 1446,
+        "y": 352,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A coffee cart under a striped umbrella. Open late, for reasons.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "campus_map",
+        "name": "Campus map",
+        "x": 540,
+        "y": 312,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "YOU ARE HERE. Every path on campus starts at this fountain, apparently.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "event_kiosk",
+        "name": "UMC events column",
+        "x": 1664,
+        "y": 344,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Posters three deep: club fair, a cappella, a career fair nobody feels ready for.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "bike_rack",
+        "name": "Bike rack",
+        "x": 1690,
+        "y": 262,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Bikes locked to everything, including one locked to another bike.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "truck_sign",
+        "name": "Sandwich board",
+        "x": 70,
+        "y": 314,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "TRUCKS / OPEN LATE / CASH OR CARD. Somebody drew a chile pepper on it.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "chalk_welcome",
+        "name": "Chalk on the paving",
+        "x": 748,
+        "y": 452,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Someone chalked WELCOME HOME, BUFFS in four colours.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "fountain_bench",
+        "name": "Fountain bench / save",
+        "x": 925,
+        "y": 466,
+        "kind": "save",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A bench facing the fountain. A good place to stop.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "pearl_st",
+        "name": "Down Pearl Street / the open office",
+        "x": 34,
+        "y": 470,
+        "kind": "door",
+        "to": "P01",
+        "spawn": [
+          62,
+          204
+        ],
+        "requires": [
+          "chapter2_complete"
+        ]
+      },
+      {
+        "id": "court_drummer",
+        "x": 110,
+        "y": 420,
+        "requires": [],
+        "name": "Drummer / bucket set",
+        "kind": "talk",
+        "sprite": "drummer",
+        "lines": [
+          [
+            "Drummer",
+            "Bucket, lid, cooler. That's a full kit if you believe in it. The dumpling truck tips me in dumplings.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Does that pay?",
+            "neutral"
+          ],
+          [
+            "Drummer",
+            "In dumplings. Which, honestly, is a better currency than Buff Bucks. Don't tell the Book Store.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "court_frisbee",
+        "x": 300,
+        "y": 410,
+        "requires": [],
+        "name": "Frisbee kid",
+        "kind": "talk",
+        "sprite": "frisbee",
+        "lines": [
+          [
+            "Frisbee kid",
+            "Heads up! ...Okay, that one's in the fountain. The fountain is basically a frisbee archive at this point.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Do you ever get them back?",
+            "neutral"
+          ],
+          [
+            "Frisbee kid",
+            "In May, when facilities drains it. It's like Christmas, but wetter.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "court_volunteer",
+        "x": 470,
+        "y": 420,
+        "requires": [],
+        "name": "Orientation volunteer",
+        "kind": "talk",
+        "sprite": "advisor_mini",
+        "lines": [
+          [
+            "Volunteer",
+            "Welcome to campus! If you're lost, the answer is usually 'the other building.'",
+            "warm"
+          ],
+          [
+            "Jules",
+            "I've been here four years.",
+            "neutral"
+          ],
+          [
+            "Volunteer",
+            "Then you should know it by now. Still the other building, though.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "court_philosopher",
+        "x": 690,
+        "y": 300,
+        "requires": [],
+        "name": "Philosophy major",
+        "kind": "talk",
+        "sprite": "philosophy_major",
+        "lines": [
+          [
+            "Philosophy major",
+            "If a bench is empty and nobody sits on it, is it still a bench?",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "Yes?",
+            "neutral"
+          ],
+          [
+            "Philosophy major",
+            "See, that's the kind of answer that gets you a B. I respect it.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "court_hippie",
+        "x": 620,
+        "y": 360,
+        "requires": [],
+        "name": "Hacky-sack hippie",
+        "kind": "talk",
+        "sprite": "hippie",
+        "lines": [
+          [
+            "Hippie",
+            "It's a circle of two right now. We're recruiting. The sack doesn't judge.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Where's the other person?",
+            "neutral"
+          ],
+          [
+            "Hippie",
+            "Bathroom. Long-term bathroom. We believe in him.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "court_networker",
+        "x": 960,
+        "y": 262,
+        "requires": [],
+        "name": "Business major",
+        "kind": "talk",
+        "sprite": "business_major",
+        "lines": [
+          [
+            "Business major",
+            "Do you have a LinkedOut? I'll connect with anyone. It's a numbers game and I'm losing.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "How many connections do you have?",
+            "neutral"
+          ],
+          [
+            "Business major",
+            "Four thousand. Zero of them know my middle name. I'm working on it.",
+            "concern"
+          ]
+        ]
+      },
+      {
+        "id": "court_professor",
+        "x": 1180,
+        "y": 410,
+        "requires": [],
+        "name": "Professor / office hours",
+        "kind": "talk",
+        "sprite": "professor",
+        "lines": [
+          [
+            "Professor",
+            "Office hours moved outdoors. It's a trend. Nobody comes, but the fountain is lovely.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Is that a syllabus on your bench?",
+            "neutral"
+          ],
+          [
+            "Professor",
+            "It's the syllabus. It's also lunch. We're a very efficient department.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "court_engineer",
+        "x": 1380,
+        "y": 280,
+        "requires": [],
+        "name": "Engineering major / in line",
+        "kind": "talk",
+        "sprite": "engineering_major",
+        "lines": [
+          [
+            "Engineering major",
+            "Four exams this week and a cold brew. I'd say the cold brew is winning.",
+            "concern"
+          ],
+          [
+            "Jules",
+            "How long is the line?",
+            "neutral"
+          ],
+          [
+            "Engineering major",
+            "Long enough to finish a problem set. I did. It's wrong, but it's finished.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "court_cyclist",
+        "x": 1560,
+        "y": 300,
+        "requires": [],
+        "name": "Cyclist / locking up",
+        "kind": "talk",
+        "sprite": "cyclist",
+        "lines": [
+          [
+            "Cyclist",
+            "Three locks, one chain, and I forgot my keys. Technically it's very secure.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Technically?",
+            "neutral"
+          ],
+          [
+            "Cyclist",
+            "It's in a very secure relationship with the bike rack. I'll be here a while.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "court_athlete",
+        "x": 1700,
+        "y": 400,
+        "requires": [],
+        "name": "Athlete / stretching",
+        "kind": "talk",
+        "sprite": "athlete",
+        "lines": [
+          [
+            "Athlete",
+            "Stretching is ninety percent of the workout and nobody believes me.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "What's the other ten percent?",
+            "neutral"
+          ],
+          [
+            "Athlete",
+            "Telling people about the stretching.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "court_runner",
+        "x": 1820,
+        "y": 470,
+        "requires": [],
+        "name": "Runner / catching breath",
+        "kind": "talk",
+        "sprite": "runner",
+        "lines": [
+          [
+            "Runner",
+            "Altitude. It gets you. Four years in and I still gasp at the fountain.",
+            "concern"
+          ],
+          [
+            "Jules",
+            "You could walk.",
+            "neutral"
+          ],
+          [
+            "Runner",
+            "I could. I won't. Don't ask me why. I don't have breath for it.",
+            "warm"
+          ]
+        ]
+      }
+    ],
+    "wander": {
+      "rf_cyclist": 2,
+      "rf_runner": 2,
+      "rf_hippie": 1,
+      "rf_business_major": 2
+    }
+  },
+  "C02": {
+    "id": "C02",
+    "name": "CU Book Store / open late",
+    "cue": "umc",
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      150,
+      760,
+      300
+    ],
+    "entry": [
+      400,
+      410
+    ],
+    "blocks": [],
+    "fixed_blocks": [],
+    "placements": [
+      {
+        "kind": "threshold",
+        "x": 400,
+        "y": 446,
+        "w": 64,
+        "h": 30,
+        "depth": 0,
+        "object": "court_exit",
+        "label": "FOUNTAIN COURT",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "shelf",
+        "x": 140,
+        "y": 262,
+        "w": 170,
+        "h": 78,
+        "depth": 22,
+        "object": "textbook_aisle",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "shelf",
+        "x": 140,
+        "y": 376,
+        "w": 170,
+        "h": 62,
+        "depth": 20,
+        "object": "used_books",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 340,
+        "y": 304,
+        "w": 104,
+        "h": 36,
+        "depth": 18,
+        "object": "tee_table",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "rack",
+        "x": 494,
+        "y": 340,
+        "w": 66,
+        "h": 62,
+        "depth": 18,
+        "object": "hoodie_rack",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bin",
+        "x": 424,
+        "y": 214,
+        "w": 50,
+        "h": 38,
+        "depth": 14,
+        "object": "plush_bin",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "desk",
+        "x": 650,
+        "y": 262,
+        "w": 164,
+        "h": 54,
+        "depth": 24,
+        "object": "register",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "rack",
+        "x": 748,
+        "y": 352,
+        "w": 32,
+        "h": 62,
+        "depth": 10,
+        "object": "sticker_spinner",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "sign",
+        "x": 568,
+        "y": 424,
+        "w": 50,
+        "h": 48,
+        "depth": 8,
+        "object": "buyback_sign",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 140,
+        "y": 206,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 400,
+        "y": 262,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 650,
+        "y": 226,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bin",
+        "x": 312,
+        "y": 418,
+        "w": 58,
+        "h": 34,
+        "depth": 14,
+        "object": "bargain_bin",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "court_exit",
+        "name": "Out to the Fountain Court",
+        "x": 400,
+        "y": 446,
+        "kind": "door",
+        "to": "C01",
+        "spawn": [
+          860,
+          234
+        ],
+        "requires": []
+      },
+      {
+        "id": "textbook_wall",
+        "name": "TEXTBOOKS / the back wall",
+        "x": 120,
+        "y": 160,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Forty new copies of the same calculus book, and one used copy with somebody's answers already in it.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "textbook_aisle",
+        "name": "AISLE 1 / required reading",
+        "x": 140,
+        "y": 272,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Every course on campus, shrink-wrapped. The access codes cost extra.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "used_books",
+        "name": "AISLE 2 / used books",
+        "x": 140,
+        "y": 386,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "USED. Highlighted in four colours by four people who all stopped at chapter three.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "gear_wall",
+        "name": "Buffs gear wall",
+        "x": 405,
+        "y": 160,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Hoodies in black and gold, BUFFS across every chest in case anyone forgets where they are.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "tee_table",
+        "name": "Folded tees",
+        "x": 340,
+        "y": 314,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Perfect stacks. Somebody refolds them every time anyone breathes nearby.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "hoodie_rack",
+        "name": "Hoodie rack",
+        "x": 494,
+        "y": 350,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Every size but mine.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "plush_bin",
+        "name": "Bin of plush Ralphies",
+        "x": 424,
+        "y": 224,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A bin of plush buffaloes. One has been put back upside down, which feels personal.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "register",
+        "name": "Checkout / register",
+        "x": 650,
+        "y": 272,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "The customer screen says $0.00 and THANK YOU, GO BUFFS. The receipt roll is nearly out.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "cashier",
+        "name": "Cashier / closing shift",
+        "x": 650,
+        "y": 212,
+        "kind": "talk",
+        "requires": [],
+        "sprite": "philosophy_major",
+        "lines": [
+          [
+            "Cashier",
+            "Cash, card, or Buff Bucks. Yes, Buff Bucks. Someone in accounting thought it would be fun.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Does it work?",
+            "neutral"
+          ],
+          [
+            "Cashier",
+            "It works great. Nobody has ever been able to explain the exchange rate. Browse the gear wall, then come to the register.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "sticker_spinner",
+        "name": "Sticker spinner",
+        "x": 748,
+        "y": 362,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Stickers, postcards and a magnet shaped like the Flatirons. The spinner squeaks on every turn.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "buyback_sign",
+        "name": "SELL YOUR BOOKS",
+        "x": 568,
+        "y": 434,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "TEXTBOOK BUYBACK. They pay a little for what cost a lot.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "bargain_bin",
+        "name": "BARGAIN BOOKS $1",
+        "x": 312,
+        "y": 428,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Everything a dollar: a 2009 guide to the internet, a cookbook for one, half a Spanish dictionary.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "staff_door",
+        "name": "STAFF ONLY",
+        "x": 744,
+        "y": 160,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "STAFF ONLY. Somewhere back there is every textbook nobody bought.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "store_hours",
+        "name": "Store hours",
+        "x": 704,
+        "y": 160,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "OPEN LATE THIS WEEK. Somebody added a sad face in pen.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "shopper",
+        "name": "Shopper / at the gear wall",
+        "x": 300,
+        "y": 200,
+        "kind": "talk",
+        "requires": [],
+        "sprite": "athlete",
+        "lines": [
+          [
+            "Shopper",
+            "I came in for one pen. I'm leaving with a hoodie, a plush buffalo and a sticker that says WORLD'S OKAYEST STUDENT.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "That's a lot for a pen.",
+            "neutral"
+          ],
+          [
+            "Shopper",
+            "The pen was twelve dollars. The sticker was a bargain.",
+            "warm"
+          ]
+        ]
+      }
+    ]
+  },
+  "C03": {
+    "id": "C03",
+    "name": "Career Center / walk-ins welcome",
+    "cue": "umc",
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      20,
+      150,
+      760,
+      300
+    ],
+    "entry": [
+      400,
+      410
+    ],
+    "blocks": [],
+    "fixed_blocks": [],
+    "placements": [
+      {
+        "kind": "threshold",
+        "x": 400,
+        "y": 446,
+        "w": 64,
+        "h": 30,
+        "depth": 0,
+        "object": "court_exit",
+        "label": "FOUNTAIN COURT",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "desk",
+        "x": 140,
+        "y": 248,
+        "w": 132,
+        "h": 52,
+        "depth": 22,
+        "object": "advisor_desk",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 108,
+        "y": 300,
+        "w": 28,
+        "h": 34,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "seats",
+        "x": 172,
+        "y": 300,
+        "w": 28,
+        "h": 34,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "kiosk",
+        "x": 400,
+        "y": 262,
+        "w": 42,
+        "h": 78,
+        "depth": 14,
+        "object": "linkedout_kiosk",
+        "label": "LINKEDOUT",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 650,
+        "y": 264,
+        "w": 154,
+        "h": 46,
+        "depth": 22,
+        "object": "fair_table",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 640,
+        "y": 412,
+        "w": 98,
+        "h": 36,
+        "depth": 16,
+        "object": "waiting_chairs",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 42,
+        "y": 196,
+        "w": 36,
+        "h": 58,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "cooler",
+        "x": 292,
+        "y": 190,
+        "w": 22,
+        "h": 50,
+        "depth": 10,
+        "object": "water_cooler",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "sign",
+        "x": 236,
+        "y": 404,
+        "w": 50,
+        "h": 48,
+        "depth": 8,
+        "object": "walkin_sign",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 760,
+        "y": 196,
+        "w": 36,
+        "h": 58,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 140,
+        "y": 200,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 400,
+        "y": 236,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 650,
+        "y": 222,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 84,
+        "y": 404,
+        "w": 30,
+        "h": 64,
+        "depth": 8,
+        "object": "headshot_light",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 500,
+        "y": 344,
+        "w": 34,
+        "h": 52,
+        "depth": 12,
+        "object": "name_tags",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "court_exit",
+        "name": "Out to the Fountain Court",
+        "x": 400,
+        "y": 446,
+        "kind": "door",
+        "to": "C01",
+        "spawn": [
+          1340,
+          234
+        ],
+        "requires": []
+      },
+      {
+        "id": "linkedout_kiosk",
+        "name": "LinkedOut kiosk",
+        "x": 400,
+        "y": 272,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A big touchscreen that says WELCOME BACK, JULES. It already knows me.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "advisor_desk",
+        "name": "Advisor's desk",
+        "x": 140,
+        "y": 258,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A nameplate, a bowl of mints and a four-year plan with year four still blank.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "advisor",
+        "name": "Career advisor / walk-in hours",
+        "x": 140,
+        "y": 202,
+        "kind": "talk",
+        "requires": [],
+        "sprite": "advisor_mini",
+        "lines": [
+          [
+            "Career advisor",
+            "Walk-ins are welcome! Resumes, interviews, panic. We do all three before noon.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "I'm graduating tomorrow.",
+            "neutral"
+          ],
+          [
+            "Career advisor",
+            "Then you're right on time. The best time to worry about a career is the night before the ceremony. Try the LinkedOut kiosk.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "fair_table",
+        "name": "Career fair table",
+        "x": 650,
+        "y": 274,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "PEAKLINE IS HIRING. Free pens, free stress balls, no salary listed.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "recruiter",
+        "name": "Recruiter / career fair table",
+        "x": 650,
+        "y": 212,
+        "kind": "talk",
+        "requires": [],
+        "sprite": "business_major",
+        "lines": [
+          [
+            "Recruiter",
+            "We're a family here. A family with a competitive benefits package and a ping-pong table.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "What does the company do?",
+            "neutral"
+          ],
+          [
+            "Recruiter",
+            "Synergy. Mostly synergy. Take a tote bag, it's the best thing we make.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "job_board",
+        "name": "JOBS board",
+        "x": 312,
+        "y": 160,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Internships, barista shifts, a lab that needs a volunteer, and a tear-off tab that says EXPERIENCE: 5 YEARS.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "events_screen",
+        "name": "Events screen",
+        "x": 432,
+        "y": 160,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "The screen cycles: CAREER FAIR TONIGHT, UPDATE YOUR PROFILE, RESUME REVIEW. Then it starts again.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "brochures",
+        "name": "Brochure rack",
+        "x": 530,
+        "y": 160,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "RESUMES. INTERVIEWS. MAJORS. Somebody took every copy of WHAT NOW?",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "advisor_window",
+        "name": "Window",
+        "x": 80,
+        "y": 160,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Campus at night. Every window still lit belongs to somebody writing a cover letter.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "water_cooler",
+        "name": "Water cooler",
+        "x": 292,
+        "y": 200,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A paper cone of water. The most free thing in this room.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "headshot_light",
+        "name": "FREE HEADSHOTS",
+        "x": 112,
+        "y": 410,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A ring light and a strip of tape on the carpet. Stand on the X. Look employable.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "name_tags",
+        "name": "Name tags",
+        "x": 500,
+        "y": 354,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "HELLO MY NAME IS. Somebody has written ASPIRING and nothing else.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "walkin_sign",
+        "name": "RESUME REVIEW sign",
+        "x": 236,
+        "y": 414,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "RESUME REVIEW / WALK-INS. Bring a resume, or bring a feeling.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "waiting_chairs",
+        "name": "Waiting chairs / rest and save",
+        "x": 640,
+        "y": 420,
+        "kind": "save",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A good place to stop.",
+            "neutral"
+          ]
+        ]
+      }
+    ]
+  },
+  "H01": {
+    "id": "H01",
+    "name": "The Hill / frat row on College Ave",
+    "cue": "campus",
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      16,
+      240,
+      928,
+      272
+    ],
+    "entry": [
+      880,
+      340
+    ],
+    "blocks": [],
+    "fixed_blocks": [],
+    "placements": [
+      {
+        "kind": "door",
+        "x": 485,
+        "y": 240,
+        "w": 52,
+        "h": 116,
+        "depth": 0,
+        "object": "party_door",
+        "label": "HOUSE PARTY",
+        "anchor_offset": [
+          0,
+          10
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 930,
+        "y": 340,
+        "w": 40,
+        "h": 30,
+        "depth": 0,
+        "object": "hill_return",
+        "label": "CAMPUS >",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "couch",
+        "x": 236,
+        "y": 302,
+        "w": 100,
+        "h": 40,
+        "depth": 16,
+        "object": "lawn_couch",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 170,
+        "y": 366,
+        "w": 22,
+        "h": 66,
+        "depth": 6,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 622,
+        "y": 366,
+        "w": 22,
+        "h": 66,
+        "depth": 6,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "tree",
+        "x": 318,
+        "y": 364,
+        "w": 110,
+        "h": 150,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "car",
+        "x": 800,
+        "y": 414,
+        "w": 136,
+        "h": 52,
+        "depth": 22,
+        "object": "parked_car",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "sign",
+        "x": 924,
+        "y": 366,
+        "w": 52,
+        "h": 88,
+        "depth": 6,
+        "object": "street_sign",
+        "label": "COLLEGE AVE",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "sign",
+        "x": 586,
+        "y": 292,
+        "w": 40,
+        "h": 36,
+        "depth": 4,
+        "object": "yard_sign",
+        "label": "NO PARKING ON LAWN",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "hydrant",
+        "x": 548,
+        "y": 368,
+        "w": 14,
+        "h": 20,
+        "depth": 6,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "cornhole",
+        "x": 104,
+        "y": 300,
+        "w": 74,
+        "h": 18,
+        "depth": 8,
+        "object": "cornhole",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bin",
+        "x": 418,
+        "y": 370,
+        "w": 24,
+        "h": 34,
+        "depth": 8,
+        "object": "recycling_bin",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "car",
+        "x": 112,
+        "y": 414,
+        "w": 128,
+        "h": 50,
+        "depth": 22,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "party_door",
+        "name": "Front door / the party",
+        "x": 485,
+        "y": 250,
+        "kind": "door",
+        "to": "H02",
+        "spawn": [
+          400,
+          420
+        ],
+        "requires": []
+      },
+      {
+        "id": "hill_return",
+        "name": "Down College Ave to campus",
+        "x": 930,
+        "y": 340,
+        "kind": "door",
+        "to": "C01",
+        "spawn": [
+          74,
+          392
+        ],
+        "requires": []
+      },
+      {
+        "id": "lawn_couch",
+        "name": "Couch on the lawn",
+        "x": 236,
+        "y": 312,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A plaid couch on the lawn, facing the street like it has front-row tickets. The middle cushion is missing.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "house_a",
+        "name": "Brick house / GAMMA THETA XI",
+        "x": 160,
+        "y": 248,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Brass letters, porch light on, blinds down. This house is having a quiet night, loudly.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "party_banner",
+        "name": "Bedsheet banner",
+        "x": 430,
+        "y": 248,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A bedsheet banner: RUSH WEEK / ALL WELCOME. The paint dripped. Nobody minded.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "porch_roof",
+        "name": "Porch roof / lawn chairs and a flamingo",
+        "x": 560,
+        "y": 248,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Two lawn chairs and a plastic flamingo on the porch roof. The flamingo has the best seat on the Hill.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "house_c",
+        "name": "Tudor house / PHI XI PI",
+        "x": 786,
+        "y": 248,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Two pumpkins on the steps. One has the house letters carved in. One letter is just a hole.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "yard_sign",
+        "name": "NO PARKING ON LAWN",
+        "x": 586,
+        "y": 300,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "NO PARKING ON LAWN. Underneath, smaller: COUCHES OK.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "cornhole",
+        "name": "Cornhole boards",
+        "x": 104,
+        "y": 306,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Three bean bags, all short. The game was abandoned at 20 to 19.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "recycling_bin",
+        "name": "Recycling bin",
+        "x": 418,
+        "y": 376,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "The recycling bin is mostly red cups, stacked like a trophy.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "scooter",
+        "name": "Scooter on its side",
+        "x": 694,
+        "y": 340,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A rental scooter lying on the sidewalk. It has seen things tonight.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "parked_car",
+        "name": "Parked hatchback",
+        "x": 800,
+        "y": 420,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A hatchback with a parking ticket and a CU parking sticker from three years ago.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "street_sign",
+        "name": "COLLEGE AVE",
+        "x": 924,
+        "y": 372,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "COLLEGE AVE. Downhill is campus. Uphill is every bad idea in Boulder.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "tanner",
+        "name": "Tanner / the rush chair",
+        "x": 470,
+        "y": 446,
+        "kind": "talk",
+        "sprite": "tanner",
+        "requires": [],
+        "lines": [
+          [
+            "Tanner",
+            "Bro. BRO. Rush week never ends.",
+            "warm"
+          ],
+          [
+            "Tanner",
+            "...I'm kidding. I'm asleep by ten now. Come by anytime, we have a couch.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "hill_hippie",
+        "x": 130,
+        "y": 340,
+        "requires": [],
+        "name": "Cornhole player",
+        "kind": "talk",
+        "sprite": "hippie",
+        "lines": [
+          [
+            "Cornhole player",
+            "Cornhole is a gentle sport. Unless the porch is shouting, then it's a contact sport.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Who's winning?",
+            "neutral"
+          ],
+          [
+            "Cornhole player",
+            "The bag in the tree. It's been up there since September.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "hill_philosopher",
+        "x": 300,
+        "y": 336,
+        "requires": [],
+        "name": "Philosophy major / on the curb",
+        "kind": "talk",
+        "sprite": "philosophy_major",
+        "lines": [
+          [
+            "Philosophy major",
+            "House parties are just networking with louder music. I'm collecting data.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "How's the data?",
+            "neutral"
+          ],
+          [
+            "Philosophy major",
+            "Inconclusive. Somebody handed me a cup and I accepted it as a data point.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "hill_runner",
+        "x": 760,
+        "y": 340,
+        "requires": [],
+        "name": "Runner / jogging in place",
+        "kind": "talk",
+        "sprite": "runner",
+        "lines": [
+          [
+            "Runner",
+            "Hills are a mental thing. This one's just a hill. This is just a street. Oh no, I'm panting.",
+            "concern"
+          ],
+          [
+            "Jules",
+            "Maybe sit on the couch?",
+            "neutral"
+          ],
+          [
+            "Runner",
+            "Is it bolted down? I don't trust it. It might be a fraternity couch.",
+            "concern"
+          ]
+        ]
+      }
+    ],
+    "wander": {
+      "rf_hippie": 2,
+      "rf_business_major": 2,
+      "rf_runner": 1
+    }
+  },
+  "H02": {
+    "id": "H02",
+    "name": "The Hill / house party",
+    "cue": "campus",
+    "dimensions": [
+      800,
+      480
+    ],
+    "walk_bounds": [
+      16,
+      160,
+      768,
+      296
+    ],
+    "entry": [
+      400,
+      420
+    ],
+    "blocks": [],
+    "fixed_blocks": [],
+    "placements": [
+      {
+        "kind": "threshold",
+        "x": 400,
+        "y": 462,
+        "w": 56,
+        "h": 30,
+        "depth": 0,
+        "object": "front_door",
+        "label": "FRONT DOOR",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "stairs",
+        "x": 96,
+        "y": 158,
+        "w": 80,
+        "h": 120,
+        "depth": 0,
+        "object": "stairs_up",
+        "label": "UPSTAIRS",
+        "anchor_offset": [
+          0,
+          8
+        ]
+      },
+      {
+        "kind": "couch",
+        "x": 250,
+        "y": 206,
+        "w": 124,
+        "h": 46,
+        "depth": 18,
+        "object": "couch",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 236,
+        "y": 336,
+        "w": 124,
+        "h": 44,
+        "depth": 18,
+        "object": "pong_table",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 680,
+        "y": 238,
+        "w": 110,
+        "h": 50,
+        "depth": 18,
+        "object": "dj_booth",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "speaker",
+        "x": 610,
+        "y": 232,
+        "w": 30,
+        "h": 66,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "speaker",
+        "x": 752,
+        "y": 232,
+        "w": 30,
+        "h": 66,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 168,
+        "y": 212,
+        "w": 22,
+        "h": 64,
+        "depth": 6,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "bin",
+        "x": 488,
+        "y": 206,
+        "w": 26,
+        "h": 36,
+        "depth": 10,
+        "object": "trash_can",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "chair",
+        "x": 104,
+        "y": 300,
+        "w": 46,
+        "h": 42,
+        "depth": 14,
+        "object": "recliner",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 570,
+        "y": 336,
+        "w": 84,
+        "h": 36,
+        "depth": 14,
+        "object": "snack_table",
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "beanbag",
+        "x": 130,
+        "y": 410,
+        "w": 42,
+        "h": 26,
+        "depth": 10,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "chairs",
+        "x": 740,
+        "y": 442,
+        "w": 56,
+        "h": 38,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 344,
+        "y": 200,
+        "w": 40,
+        "h": 52,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "front_door",
+        "name": "Front door / back out to College Ave",
+        "x": 400,
+        "y": 462,
+        "kind": "door",
+        "to": "H01",
+        "spawn": [
+          485,
+          256
+        ],
+        "requires": []
+      },
+      {
+        "id": "stairs_up",
+        "name": "Stairs / taped off",
+        "x": 96,
+        "y": 166,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Caution tape across the stairs and a cardboard sign: NO PARTY UPSTAIRS. Somebody added, in pen: OR DOWNSTAIRS?",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "couch",
+        "name": "Leather couch",
+        "x": 250,
+        "y": 214,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A leather couch older than everyone in the house. It's warm. Don't ask why.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "pong_table",
+        "name": "Pong table",
+        "x": 236,
+        "y": 346,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Two triangles of cups and a sign taped to the table: HOUSE RULES / NO ELBOWS / NO MERCY.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "dj_booth",
+        "name": "DJ table",
+        "x": 680,
+        "y": 246,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A laptop, a controller with half the stickers peeled off, and a setlist that just says LOUDER.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "dj",
+        "name": "The DJ",
+        "x": 680,
+        "y": 200,
+        "kind": "talk",
+        "requires": [],
+        "sprite": "drummer",
+        "lines": [
+          [
+            "DJ",
+            "Requests? I only have three songs and one of them is the airhorn.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Which one is the airhorn?",
+            "neutral"
+          ],
+          [
+            "DJ",
+            "All three, depending on the mood.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "mantel",
+        "name": "Mantel / the house letters",
+        "x": 418,
+        "y": 164,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "The letters over the mantel, two composite photos of the same haircut across twenty years, and a fireplace full of cups.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "kitchen",
+        "name": "Kitchen doorway",
+        "x": 538,
+        "y": 164,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "The kitchen is a solid wall of people. Somebody in there is making pancakes at midnight.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "trash_can",
+        "name": "Cup tower",
+        "x": 488,
+        "y": 214,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A tower of stacked cups growing out of the trash can. It has its own fans.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "snack_table",
+        "name": "Snack table",
+        "x": 570,
+        "y": 346,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Chips, three salsas and one last slice of pizza that nobody is brave enough to take.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "recliner",
+        "name": "Recliner",
+        "x": 104,
+        "y": 310,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A recliner stuck halfway back. A sticky note on it says RESERVED in three handwritings.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "disco_ball",
+        "name": "Disco ball",
+        "x": 640,
+        "y": 300,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A disco ball hung from the ceiling fan. One mirror is missing, so it winks.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "party_philosopher",
+        "x": 260,
+        "y": 250,
+        "requires": [],
+        "name": "Partygoer / on the couch",
+        "kind": "talk",
+        "sprite": "philosophy_major",
+        "lines": [
+          [
+            "Partygoer",
+            "I came for the free pizza. I stayed for the existential dread of the disco ball.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "It's just a disco ball.",
+            "neutral"
+          ],
+          [
+            "Partygoer",
+            "That's exactly what a disco ball would say.",
+            "concern"
+          ]
+        ]
+      },
+      {
+        "id": "party_engineer",
+        "x": 540,
+        "y": 380,
+        "requires": [],
+        "name": "Partygoer / at the snack table",
+        "kind": "talk",
+        "sprite": "engineering_major",
+        "lines": [
+          [
+            "Partygoer",
+            "The cup tower is holding. I've been checking load paths for twenty minutes.",
+            "neutral"
+          ],
+          [
+            "Jules",
+            "Is it going to fall?",
+            "neutral"
+          ],
+          [
+            "Partygoer",
+            "Not if nobody breathes. So, yes. Eventually.",
+            "concern"
+          ]
+        ]
+      }
+    ]
+  },
+  "P01": {
+    "id": "P01",
+    "name": "Pearl Street / the open office upstairs",
+    "cue": "campus",
+    "dimensions": [
+      960,
+      540
+    ],
+    "walk_bounds": [
+      20,
+      176,
+      920,
+      340
+    ],
+    "entry": [
+      62,
+      204
+    ],
+    "fixed_blocks": [],
+    "placements": [
+      {
+        "kind": "door",
+        "x": 62,
+        "y": 176,
+        "w": 40,
+        "h": 74,
+        "depth": 0,
+        "object": "stairs_down",
+        "label": "PEARL ST",
+        "anchor_offset": [
+          0,
+          16
+        ]
+      },
+      {
+        "kind": "door",
+        "x": 880,
+        "y": 176,
+        "w": 50,
+        "h": 76,
+        "depth": 0,
+        "object": "break_room",
+        "label": "BREAK ROOM",
+        "anchor_offset": [
+          0,
+          16
+        ]
+      },
+      {
+        "kind": "desk",
+        "x": 150,
+        "y": 270,
+        "w": 76,
+        "h": 58,
+        "depth": 16,
+        "object": "intern_desk",
+        "label": "",
+        "anchor_offset": [
+          0,
+          10
+        ]
+      },
+      {
+        "kind": "desk",
+        "x": 250,
+        "y": 270,
+        "w": 76,
+        "h": 58,
+        "depth": 16,
+        "object": "treadmill_desk",
+        "label": "",
+        "anchor_offset": [
+          0,
+          10
+        ]
+      },
+      {
+        "kind": "desk",
+        "x": 150,
+        "y": 362,
+        "w": 76,
+        "h": 58,
+        "depth": 16,
+        "object": "standing_desk",
+        "label": "",
+        "anchor_offset": [
+          0,
+          10
+        ]
+      },
+      {
+        "kind": "desk",
+        "x": 250,
+        "y": 362,
+        "w": 76,
+        "h": 58,
+        "depth": 16,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          10
+        ]
+      },
+      {
+        "kind": "board",
+        "x": 404,
+        "y": 332,
+        "w": 64,
+        "h": 66,
+        "depth": 10,
+        "object": "rolling_whiteboard",
+        "label": "",
+        "anchor_offset": [
+          0,
+          8
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 520,
+        "y": 462,
+        "w": 120,
+        "h": 46,
+        "depth": 20,
+        "object": "ping_pong",
+        "label": "",
+        "anchor_offset": [
+          0,
+          10
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 700,
+        "y": 412,
+        "w": 124,
+        "h": 38,
+        "depth": 16,
+        "object": "pitch_sofa",
+        "label": "",
+        "anchor_offset": [
+          0,
+          10
+        ]
+      },
+      {
+        "kind": "sign",
+        "x": 834,
+        "y": 290,
+        "w": 40,
+        "h": 58,
+        "depth": 10,
+        "object": "sales_gong",
+        "label": "",
+        "anchor_offset": [
+          0,
+          8
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 572,
+        "y": 214,
+        "w": 34,
+        "h": 64,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "planter",
+        "x": 42,
+        "y": 470,
+        "w": 34,
+        "h": 52,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 200,
+        "y": 300,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 700,
+        "y": 236,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 520,
+        "y": 430,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 880,
+        "y": 214,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 236,
+        "y": 476,
+        "w": 150,
+        "h": 42,
+        "depth": 18,
+        "object": "hot_desk",
+        "label": "",
+        "anchor_offset": [
+          0,
+          10
+        ]
+      },
+      {
+        "kind": "bicycle",
+        "x": 870,
+        "y": 398,
+        "w": 60,
+        "h": 42,
+        "depth": 10,
+        "object": "road_bike",
+        "label": "",
+        "anchor_offset": [
+          0,
+          8
+        ]
+      },
+      {
+        "kind": "boxes",
+        "x": 900,
+        "y": 500,
+        "w": 40,
+        "h": 40,
+        "depth": 14,
+        "object": "swag_boxes",
+        "label": "",
+        "anchor_offset": [
+          0,
+          8
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "stairs_down",
+        "name": "Stairs / down to Pearl Street",
+        "x": 62,
+        "y": 192,
+        "kind": "door",
+        "to": "C01",
+        "spawn": [
+          80,
+          470
+        ],
+        "requires": []
+      },
+      {
+        "id": "break_room",
+        "name": "Break room",
+        "x": 880,
+        "y": 192,
+        "kind": "door",
+        "to": "P02",
+        "spawn": [
+          64,
+          184
+        ],
+        "requires": []
+      },
+      {
+        "id": "intern_desk",
+        "name": "Your desk / WELCOME, INTERN",
+        "x": 150,
+        "y": 280,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A sticky note says WELCOME, INTERN! in three colours. The laptop is older than the company.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "treadmill_desk",
+        "name": "Treadmill desk",
+        "x": 250,
+        "y": 280,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A treadmill under a standing desk. The display says 11.2 MILES. Nobody has ever seen it on.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "standing_desk",
+        "name": "Three-monitor desk",
+        "x": 150,
+        "y": 372,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Three monitors: a dashboard, a dashboard about the dashboard, and a fish tank screensaver.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "rolling_whiteboard",
+        "name": "Rolling whiteboard",
+        "x": 404,
+        "y": 340,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "MVP, then ???, then IPO. Somebody has circled the ??? four times.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "ping_pong",
+        "name": "Ping-pong table",
+        "x": 520,
+        "y": 472,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "The net sags in the middle. A sign taped to it says BALLS ARE A BENEFIT.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "pitch_sofa",
+        "name": "Sofa facing the screen",
+        "x": 700,
+        "y": 422,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Front row for the pitch. The cushions have been sat in by a lot of people who were asked to stay late.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "sales_gong",
+        "name": "The sales gong",
+        "x": 834,
+        "y": 298,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "RING WHEN WE CLOSE A DEAL. The mallet still has the price tag on.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "neon_logo",
+        "name": "DISRUPTR / in pink neon",
+        "x": 520,
+        "y": 186,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "DISRUPTR, in pink neon. The R buzzes like it has an opinion.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "pitch_screen",
+        "name": "The pitch deck / slide 41 of 112",
+        "x": 700,
+        "y": 186,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Slide 41 of 112. A line that goes up and to the right, forever, with no numbers on it.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "whiteboard_wall",
+        "name": "Whiteboard wall",
+        "x": 440,
+        "y": 186,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Arrows, boxes, a sketch of a scooter with wings. Someone wrote DO NOT ERASE and then erased half of it.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "pearl_window",
+        "name": "Window over Pearl Street",
+        "x": 252,
+        "y": 186,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Pearl Street from upstairs: lights in the trees, a busker packing up, and the Flatirons gone dark behind everything.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "vest_hooks",
+        "name": "Fleece vests on hooks",
+        "x": 926,
+        "y": 186,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Three identical fleece vests with name tags. One just says KYLE (SPARE).",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "scooter_marks",
+        "name": "Tyre marks on the floor",
+        "x": 610,
+        "y": 300,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Black scuffs curve right across the floorboards and end at a power strip labelled KYLE. DO NOT UNPLUG.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "hot_desk",
+        "name": "Hot desks",
+        "x": 236,
+        "y": 486,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "HOT DESKS: FIRST COME, FIRST SERVED. A laptop and a jacket have been saving one seat since Tuesday.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "road_bike",
+        "name": "A road bike on a stand",
+        "x": 870,
+        "y": 406,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "A carbon road bike that costs more than my car, parked indoors like a sculpture. The tag on the bars says KYLE'S (THE OTHER ONE).",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "swag_boxes",
+        "name": "Boxes marked SWAG",
+        "x": 900,
+        "y": 508,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Hoodies with the logo printed upside down. Somebody has written FREE?? on the box and nobody has taken one.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "move_fast",
+        "name": "MOVE FAST poster",
+        "x": 829,
+        "y": 186,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "MOVE FAST AND BREAK THINGS. Under it, smaller, in pen: (NOT THE TV AGAIN).",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "coworker_desk",
+        "name": "Coworker / headphones on",
+        "x": 250,
+        "y": 300,
+        "kind": "talk",
+        "requires": [],
+        "sprite": "engineering_major",
+        "lines": [
+          [
+            "Coworker",
+            "Shh. Standup in forty minutes. It's a 'quick' standup. It runs ninety.",
+            "concern"
+          ],
+          [
+            "Jules",
+            "What are you working on?",
+            "neutral"
+          ],
+          [
+            "Coworker",
+            "A bug that only happens when Kyle looks at it.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "coworker_hotdesk",
+        "name": "Coworker / at the hot desks",
+        "x": 300,
+        "y": 512,
+        "kind": "talk",
+        "requires": [],
+        "sprite": "philosophy_major",
+        "lines": [
+          [
+            "Coworker",
+            "My business card says 'Wizard.' I didn't pick it. It was a vote.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "What do you actually do?",
+            "neutral"
+          ],
+          [
+            "Coworker",
+            "Mostly attend things. It's a very flexible kind of wizardry.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "coworker_board",
+        "name": "Coworker / at the whiteboard",
+        "x": 452,
+        "y": 352,
+        "kind": "talk",
+        "requires": [],
+        "sprite": "advisor_mini",
+        "lines": [
+          [
+            "Coworker",
+            "We're pivoting. Again. This is the whiteboard for the pivot that comes after the pivot.",
+            "concern"
+          ],
+          [
+            "Jules",
+            "What are we pivoting to?",
+            "neutral"
+          ],
+          [
+            "Coworker",
+            "Pivots. We're a pivot company now. Don't tell the investors it's circular.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "kyle",
+        "name": "Kyle / founder, CEO, visionary",
+        "x": 700,
+        "y": 262,
+        "kind": "talk",
+        "sprite": "kyle",
+        "requires": [],
+        "lines": [
+          [
+            "Kyle",
+            "We're like a family here.",
+            "warm"
+          ],
+          [
+            "Kyle",
+            "...A family that's worked out what the product does. I wrote it on a sticky note. It's on the fridge.",
+            "warm"
+          ]
+        ]
+      }
+    ]
+  },
+  "P02": {
+    "id": "P02",
+    "name": "Pearl Street / the break room",
+    "cue": "campus",
+    "dimensions": [
+      640,
+      360
+    ],
+    "walk_bounds": [
+      20,
+      152,
+      600,
+      188
+    ],
+    "entry": [
+      64,
+      184
+    ],
+    "fixed_blocks": [],
+    "placements": [
+      {
+        "kind": "door",
+        "x": 64,
+        "y": 152,
+        "w": 46,
+        "h": 74,
+        "depth": 0,
+        "object": "office_door",
+        "label": "OFFICE",
+        "anchor_offset": [
+          0,
+          16
+        ]
+      },
+      {
+        "kind": "bench",
+        "x": 176,
+        "y": 300,
+        "w": 54,
+        "h": 40,
+        "depth": 12,
+        "object": "beanbag",
+        "label": "",
+        "anchor_offset": [
+          0,
+          8
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 420,
+        "y": 262,
+        "w": 72,
+        "h": 52,
+        "depth": 14,
+        "object": "high_top",
+        "label": "",
+        "anchor_offset": [
+          0,
+          8
+        ]
+      },
+      {
+        "kind": "crate",
+        "x": 598,
+        "y": 182,
+        "w": 44,
+        "h": 22,
+        "depth": 12,
+        "object": "dog_bed",
+        "label": "",
+        "anchor_offset": [
+          0,
+          8
+        ]
+      },
+      {
+        "kind": "crate",
+        "x": 262,
+        "y": 186,
+        "w": 40,
+        "h": 32,
+        "depth": 12,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 176,
+        "y": 266,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 330,
+        "y": 186,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "lamp",
+        "x": 500,
+        "y": 192,
+        "w": 8,
+        "h": 6,
+        "depth": 0,
+        "object": null,
+        "label": "",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "table",
+        "x": 360,
+        "y": 332,
+        "w": 70,
+        "h": 38,
+        "depth": 14,
+        "object": "foosball",
+        "label": "",
+        "anchor_offset": [
+          0,
+          8
+        ]
+      }
+    ],
+    "objects": [
+      {
+        "id": "office_door",
+        "name": "Back to the open office",
+        "x": 64,
+        "y": 168,
+        "kind": "door",
+        "to": "P01",
+        "spawn": [
+          880,
+          204
+        ],
+        "requires": []
+      },
+      {
+        "id": "snack_wall",
+        "name": "The snack wall",
+        "x": 140,
+        "y": 162,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Eleven kinds of almonds, four kinds of jerky, a whole bin of something called PROTEIN DUST. Not one sandwich.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "kombucha_tap",
+        "name": "Kombucha on tap",
+        "x": 300,
+        "y": 162,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Three taps: GINGER, HIBISCUS, and one with tape over it that says KYLE'S SCOBY. DO NOT.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "sticker_fridge",
+        "name": "The sticker fridge",
+        "x": 372,
+        "y": 162,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Stickers on top of stickers: a mountain, a ski hill, three startups that don't exist any more. The fridge is holding them up.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "espresso",
+        "name": "Espresso machine",
+        "x": 524,
+        "y": 162,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "It cost more than a semester. The screen says DESCALE ME, and has for a while.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "bins",
+        "name": "Four bins",
+        "x": 584,
+        "y": 162,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "COMPOST, RECYCLE, LANDFILL, and a fourth bin labelled EQUITY. It's empty.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "beanbag",
+        "name": "The beanbag / rest and save",
+        "x": 176,
+        "y": 308,
+        "kind": "save",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "You sink in a little too far. Nobody will find you here for a while. A good place to stop.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "sink",
+        "name": "Sink / a note",
+        "x": 436,
+        "y": 162,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "WASH YOUR OWN MUG. Underneath, in different handwriting: KYLE. Underneath that: ESPECIALLY KYLE.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "back_window",
+        "name": "Back window",
+        "x": 474,
+        "y": 162,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Over the alley and the rooftops, the Flatirons are black against the last of the sky.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "high_top",
+        "name": "High-top table",
+        "x": 420,
+        "y": 270,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "Two stools, one laptop sticker per square inch, and a mug that says WORLD'S OKAYEST FOUNDER.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "foosball",
+        "name": "Foosball table",
+        "x": 360,
+        "y": 340,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "One of the blue goalies has been superglued facing the wrong way. Nobody will say who did it.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "dog_bed",
+        "name": "The office dog",
+        "x": 598,
+        "y": 190,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "The office dog is asleep. His bed says SEED ROUND. Nobody wakes him for stand-up.",
+            "warm"
+          ]
+        ]
+      },
+      {
+        "id": "vibes_neon",
+        "name": "Neon / GOOD VIBES",
+        "x": 206,
+        "y": 162,
+        "kind": "inspect",
+        "requires": [],
+        "lines": [
+          [
+            "Jules",
+            "GOOD VIBES, in mint neon. The O flickers on the hour.",
+            "neutral"
+          ]
+        ]
+      },
+      {
+        "id": "coworker_tap",
+        "name": "Coworker / pouring a kombucha",
+        "x": 300,
+        "y": 196,
+        "kind": "talk",
+        "requires": [],
+        "sprite": "athlete",
+        "lines": [
+          [
+            "Coworker",
+            "Kombucha's free. It's also, I think, alive. Don't make eye contact.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Is it supposed to hum?",
+            "neutral"
+          ],
+          [
+            "Coworker",
+            "That's just the fridge. The kombucha is the one that's breathing.",
+            "concern"
+          ]
+        ]
+      },
+      {
+        "id": "coworker_hightop",
+        "name": "Coworker / at the high-top",
+        "x": 470,
+        "y": 284,
+        "kind": "talk",
+        "requires": [],
+        "sprite": "frisbee",
+        "lines": [
+          [
+            "Coworker",
+            "Foosball is how we hold performance reviews. I'm down four to nothing, so, promotion pending.",
+            "warm"
+          ],
+          [
+            "Jules",
+            "Who are you playing?",
+            "neutral"
+          ],
+          [
+            "Coworker",
+            "The dog. He doesn't cheat. He also doesn't play.",
             "warm"
           ]
         ]

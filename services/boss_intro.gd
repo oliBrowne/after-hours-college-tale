@@ -26,6 +26,8 @@ const CARDS: Dictionary = {
 	"chad": ["NETWORKING LEGEND", "CHAD", "Let's circle back. Coffee chat? Coffee chat.", "7fb2e8"],
 	"rook": ["NIGHT MARSHAL", "ROOK", "LAST CALL. No one leaves until everyone is accounted for.", "a68db8"],
 	"val": ["VP OF TALENT ACQUISITION", "VAL", "WHERE DO YOU SEE YOURSELF IN FIVE YEARS?", "e8837b"],
+	"tanner": ["RUSH CHAIR OF THE HILL", "TANNER", "Bro. BRO. Rush week never ends.", "b07fd6"],
+	"kyle": ["FOUNDER, CEO, VISIONARY", "KYLE", "We're like a family here.", "f08fc0"],
 }
 ## What a boss says back the first time in a fight someone asks it something with CONNECT.
 const ANSWERS: Dictionary = {
@@ -46,6 +48,8 @@ const ANSWERS: Dictionary = {
 	"chad": ["Chad", "...Honestly? A friend who doesn't need anything from me. Wild, right? Let's circle back on that."],
 	"rook": ["Rook", "One shift. One exit. And somebody to tell me when it ends."],
 	"val": ["VAL", "WHO'S HIRING? ...I AM. I THINK. SOMEONE TOLD ME TO FILL EVERY SEAT, AND I NEVER ASKED WHO."],
+	"tanner": ["Tanner", "...The bid is a couch, a group chat with nine hundred messages, and people who'd notice if I wasn't around. Don't tell the brothers I said that."],
+	"kyle": ["Kyle", "Customers! ...Right now it's me, my mom, and a man named Dennis who signed up by accident. Dennis is very loyal."],
 }
 const FULL: int = 150
 const SHORT: int = 80

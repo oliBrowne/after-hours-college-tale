@@ -19,6 +19,8 @@ static var metadata: Dictionary={}
 static var textures: Dictionary={}
 static var animations: Dictionary={}
 static func art_id(id: String) -> String:return ART_ALIAS.get(id,id)
+## Encounter characters (drawn from their own sheets) that stand in rooms as ordinary people; the older cast keeps its own loaders.
+static func encounter_cast(id: String) -> bool:return WORLD_HEIGHT.has(id) and drawn(id) and not id in NativeCastArt.IDS
 static func sheet(id: String) -> String:return "res://assets/art/%s-v1.png"%id
 static func atlas(id: String) -> String:return "res://assets/art/%s-atlas.json"%id
 static func drawn(id: String) -> bool:return ResourceLoader.exists(sheet(id)) and FileAccess.file_exists(atlas(id))

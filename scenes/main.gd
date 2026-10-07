@@ -628,7 +628,7 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 	for keepsake_id: String in PartyGrowth.KEEPSAKES:
 		var keepsake: Dictionary = PartyGrowth.KEEPSAKES[keepsake_id]
 		var holder: String = str(keepsake.member)
-		if keepsake.room != id or PartyGrowth.found(state.flags, keepsake_id) or (holder != "jules" and not state.flags.get(holder + "_joined", false)): continue
+		if bool(keepsake.get("shop", false)) or keepsake.room != id or PartyGrowth.found(state.flags, keepsake_id) or (holder != "jules" and not state.flags.get(holder + "_joined", false)): continue
 		room_objects.append({"id":"keepsake_" + keepsake_id, "keepsake":keepsake_id, "name":str(keepsake.name) + " / pick up", "x":keepsake.x, "y":keepsake.y, "kind":"keepsake", "hit_rect":[-16,-22,32,30]})
 	for object: Dictionary in room_objects:
 		if object.id in ["imani", "walt"] and state.flags.get(str(object.id) + "_joined", false): continue
@@ -655,8 +655,9 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 			var npc: AnimatedSprite2D = AnimatedSprite2D.new()
 			var asset: String = "flyerer" if object.sprite == "flyer" else str(object.sprite).replace("-", "_") if str(object.sprite).begins_with("npc-") else str(object.sprite) + "_world"
 			var art_id: String=str(object.sprite).trim_prefix("npc-").replace("-","_")
-			var upgraded: bool=art_id in NativeCastArt.IDS or art_id in ["flyer","imani","eric"]
-			npc.sprite_frames = NativePartyArt.frames(art_id) if art_id in ["walt","imani"] else NativeCastArt.frames(art_id) if upgraded else load("res://resources/art_%s.tres" % asset)
+			var encounter: bool=NativeBossArt.encounter_cast(art_id)
+			var upgraded: bool=art_id in NativeCastArt.IDS or art_id in ["flyer","imani","eric"] or encounter
+			npc.sprite_frames = NativePartyArt.frames(art_id) if art_id in ["walt","imani"] else NativeBossArt.frames(art_id) if encounter else NativeCastArt.frames(art_id) if upgraded else load("res://resources/art_%s.tres" % asset)
 			if seated_frames(object, npc): art_id += "_seated"; upgraded = false
 			npc.centered = false
 			npc.offset = Vector2(-16, -48)
@@ -765,6 +766,10 @@ func interact(object: Dictionary) -> void:
 	if object.kind == "keepsake":
 		pick_up_keepsake(str(object.keepsake)); return
 	if NativeCampaign.handle(self, object): return
+	if NativeSideBosses.handle(self, object): return
+	if NativeShops.handle(self, object): return
+	if object.kind == "save" and not str(object.id) in ["lamp", "farrand_lamp"]:
+		rest_menu(); return
 	if object.kind in ["battle", "challenge"] and not state.flags.get("walt_joined", false):
 		if not state.flags.get("imani_joined", false):
 			# The poster has its own line; everything else waits on the mixer.
@@ -799,9 +804,7 @@ func interact(object: Dictionary) -> void:
 			else:
 				dialogue([["Booth", "Jules Navarro. Tomorrow you will wish you had stayed.", "concern"], ["Jules", "That was my voice. I did not record that.", "concern"], ["Imani", "The booth is not connected to the mixer. It is connected to the floor.", "concern"], ["Jules", "Then we find out who is down there. One real answer. Not our entire future.", "warm"]], func() -> void: state.flags.booth_seen = true; persist(); resume_world())
 		"lamp", "farrand_lamp":
-			for member: Dictionary in state.party: member.hp = member.max
-			audio.effect("save")
-			open_menu(Mode.MENU, "Warm light / rest and save", [option("Save slot 1", func() -> void: manual_save("slot1")), option("Save slot 2", func() -> void: manual_save("slot2")), option("Save slot 3", func() -> void: manual_save("slot3")), option("Back", resume_world)])
+			rest_menu()
 		"flyer", "pinpal", "claim":
 			var key: String = str(object.id) + "_resolution"
 			if state.flags.has(key):
@@ -815,6 +818,12 @@ func interact(object: Dictionary) -> void:
 			if object.id == "squirrel": audio.combat("squirrel")
 			var contextual: Array = environment.context_lines(str(object.id), state.flags)
 			dialogue(contextual if not contextual.is_empty() else object.get("lines", [["Jules", "Something unfinished.", "neutral"]]), resume_world)
+
+## A lamp, a bench or a beanbag: the party rests to full and the player can save.
+func rest_menu() -> void:
+	for member: Dictionary in state.party: member.hp = member.max
+	audio.effect("save")
+	open_menu(Mode.MENU, "Warm light / rest and save", [option("Save slot 1", func() -> void: manual_save("slot1")), option("Save slot 2", func() -> void: manual_save("slot2")), option("Save slot 3", func() -> void: manual_save("slot3")), option("Back", resume_world)])
 
 func pick_up_keepsake(id: String) -> void:
 	var keepsake: Dictionary = PartyGrowth.KEEPSAKES[id]
@@ -1337,6 +1346,7 @@ func begin_battle() -> void:
 	foe.sprite_frames = NativeCastArt.frames(boss_id.trim_suffix("_final") if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "flyer")
 	foe.play("idle_down" if boss_id in ["chip", "deion", "todd", "walt", "encore", "errata", "autocomplete", "eric", "cone", "chad", "rook", "val", "jakerson", "jakerson_final"] else "idle")
 	if NativeRandomFights.is_fight(boss_id): NativeRandomFights.setup(self)
+	elif NativeSideBosses.is_boss(boss_id): NativeSideBosses.setup(self)
 	NativeCastArt.fit(foe, foe_height())
 	claim_art.set_pose("idle"); pin_art.set_pose("idle")
 	plan = []; actor = 0; target = 0; retreating = false; notice_ticks = 0
@@ -1389,6 +1399,7 @@ func connect_menu() -> void:
 	names.eric=["Ask what he's measuring", "Probe three test points", "The demo can ship as is"]
 	names.autocomplete=["Ask for the original voice", "Accept one useful suggestion", "Let the rest stay unwritten"]
 	if NativeRandomFights.is_fight(boss_id): names[boss_id] = NativeRandomFights.connect_labels(boss_id)
+	if NativeSideBosses.is_boss(boss_id): names[boss_id] = NativeSideBosses.connect_labels(boss_id)
 	var lines: Array = names[boss_id]
 	hint = "A promise creates a real objective in the next defense."
 	var choices: Array = [option(str(lines[0]), func() -> void: queue_command({"actor": actor, "kind": "connect", "label": str(lines[0])})), option(str(lines[1]), func() -> void: queue_command({"actor": actor, "kind": "promise", "label": str(lines[1])}))]
@@ -1768,6 +1779,7 @@ func finish_battle() -> void:
 	open_menu(Mode.RESULT, "A promise kept" if peaceful else "The way is clear", [option("Continue", func() -> void: show_aftermath(resolved_id))])
 
 func show_aftermath(resolved_id: String) -> void:
+	if NativeSideBosses.is_boss(resolved_id): NativeSideBosses.aftermath(self, resolved_id); return
 	if resolved_id in NativeFinalCampaign.AFTERMATHS:NativeFinalCampaign.aftermath(self,resolved_id);return
 	if resolved_id == "jakerson": NativeJakerson.after_spar(self); return
 	if resolved_id == "jakerson_final": NativeJakerson.after_final(self); return
@@ -2381,7 +2393,7 @@ func use_door(object: Dictionary) -> void:
 	for required: String in object.get("requires", []):
 		if not state.flags.get(required, false):
 			player.position += Vector2(0, 12)
-			message(str({"cal_key_received":"Ask Cal for the service key on the repair landing.", "walt_joined":"Find Walt in the underpass under Broadway first.", "claim_resolution":"Follow the voice into lost property first.", "chip_resolution":"Meet Chip on the audience lawn first.", "volunteers_released":"Finish one task with the volunteers in the tent.", "imani_performance":"Let Imani choose her song backstage.", "chapter1_complete":"Finish ENCORE on Farrand main stage.", "library_pass":"Speak to Nell at the checkout desk.", "stacks_shifted":"Turn the crank in the moving stacks.", "bookmark_found":"Pick up the bookmark in the reading room.", "errata_resolution":"Settle Gwen the Red in the moving stacks.", "dev_met":"Speak to Dev in the workshop.", "bridge_ready":"After Professor Eric's test, return to Dev to install the bridge.", "autocomplete_resolution":"Bring the source reel back to AUTOCOMPLETE.", "playback_heard":"Listen to the reel in the playback room.", "chapter2_complete":"Hear the full reel in Norlin playback.", "notice_limits":"Read the notices in Old Main hall.", "booth_origin":"Read the original directory in the empty office.","rook_confessed":"Hear Rook in Old Main courtyard.","chapter3_complete":"Complete Todd\'s audit in Old Main.","attendees_freed":"Give the cloakroom guests a choice.","music_ready":"Let Imani finish the score in the orchestra pit.","rook_resolution":"Finish Rook\'s last shift on the balcony.","val_resolution":"Choose an ending on the graduation stage.","dawn_talk_read":"Talk with the party at the dawn exit."}.get(required, "Return the mixer, then help the living invitation.")))
+			message(str({"flyer_resolution":"Settle the poster in the club room first.","cal_key_received":"Ask Cal for the service key on the repair landing.", "walt_joined":"Find Walt in the underpass under Broadway first.", "claim_resolution":"Follow the voice into lost property first.", "chip_resolution":"Meet Chip on the audience lawn first.", "volunteers_released":"Finish one task with the volunteers in the tent.", "imani_performance":"Let Imani choose her song backstage.", "chapter1_complete":"Finish ENCORE on Farrand main stage.", "library_pass":"Speak to Nell at the checkout desk.", "stacks_shifted":"Turn the crank in the moving stacks.", "bookmark_found":"Pick up the bookmark in the reading room.", "errata_resolution":"Settle Gwen the Red in the moving stacks.", "dev_met":"Speak to Dev in the workshop.", "bridge_ready":"After Professor Eric's test, return to Dev to install the bridge.", "autocomplete_resolution":"Bring the source reel back to AUTOCOMPLETE.", "playback_heard":"Listen to the reel in the playback room.", "chapter2_complete":"Hear the full reel in Norlin playback.", "notice_limits":"Read the notices in Old Main hall.", "booth_origin":"Read the original directory in the empty office.","rook_confessed":"Hear Rook in Old Main courtyard.","chapter3_complete":"Complete Todd\'s audit in Old Main.","attendees_freed":"Give the cloakroom guests a choice.","music_ready":"Let Imani finish the score in the orchestra pit.","rook_resolution":"Finish Rook\'s last shift on the balcony.","val_resolution":"Choose an ending on the graduation stage.","dawn_talk_read":"Talk with the party at the dawn exit."}.get(required, "Return the mixer, then help the living invitation.")))
 			return
 	if object.to == "U05" and not state.flags.get("booth_seen", false):
 		message("Imani points to the NEXT YEAR booth. Check that voice first."); return
