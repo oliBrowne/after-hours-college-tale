@@ -2519,7 +2519,7 @@ func dialogue_side_top(talkers: Array) -> bool:
 	return dialogue_top
 
 func _qa_smoke() -> void:
-	var route: Node = load("res://scenes/qa_wander.gd" if "--qa-wander" in OS.get_cmdline_user_args() else "res://scenes/qa_jakerson.gd" if "--qa-jakerson" in OS.get_cmdline_user_args() else "res://scenes/qa_final.gd" if "--qa-final" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter3.gd" if "--qa-chapter3" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter2.gd" if "--qa-chapter2" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter1.gd" if "--qa-chapter1" in OS.get_cmdline_user_args() else "res://scenes/qa_review_controls.gd" if "--qa-review-ui" in OS.get_cmdline_user_args() else "res://scenes/qa_opening.gd").new()
+	var route: Node = load("res://scenes/qa_hub.gd" if "--qa-hub" in OS.get_cmdline_user_args() else "res://scenes/qa_wander.gd" if "--qa-wander" in OS.get_cmdline_user_args() else "res://scenes/qa_jakerson.gd" if "--qa-jakerson" in OS.get_cmdline_user_args() else "res://scenes/qa_final.gd" if "--qa-final" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter3.gd" if "--qa-chapter3" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter2.gd" if "--qa-chapter2" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter1.gd" if "--qa-chapter1" in OS.get_cmdline_user_args() else "res://scenes/qa_review_controls.gd" if "--qa-review-ui" in OS.get_cmdline_user_args() else "res://scenes/qa_opening.gd").new()
 	add_child(route)
 	var passed: bool = await route.run(self)
 	if qa_record != null and not qa_record_finishing: qa_finish_record()

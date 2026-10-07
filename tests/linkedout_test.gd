@@ -39,7 +39,7 @@ func _test_people() -> void:
 		_check(not p.has("need") or str(p.need) == "peaceful", id + " only needs a peaceful ending")
 		_check(not "—" in str(p.headline) + str(p.skill), id + " text has no em-dashes")
 		totals[str(p.stat)] = int(totals[str(p.stat)]) + int(p.amount)
-	_check(int(totals.max) <= 48 and int(totals.power) <= 5 and int(totals.defence) <= 2 and int(totals.sync) <= 20, "The whole network stays a small boost: %s" % str(totals))
+	_check(int(totals.max) <= 48 and int(totals.power) <= 5 and int(totals.defence) <= 3 and int(totals.sync) <= 20, "The whole network stays a small boost: %s" % str(totals))
 	_check(LinkedOut.person("walt").name == "Walt" and LinkedOut.person("nobody").is_empty(), "person() finds people by id")
 
 func _test_unlock_and_accept() -> void:

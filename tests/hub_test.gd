@@ -58,7 +58,8 @@ func _test_rooms() -> void:
 				_check(float(at[0]) >= float(wb[0]) - 4.0 and float(at[0]) <= float(wb[0]) + float(wb[2]) + 4.0 and float(at[1]) >= float(wb[1]) - 4.0 and float(at[1]) <= float(wb[1]) + float(wb[3]) + 4.0, id + "/" + str(o.id) + " spawn " + str(at) + " is walkable in " + str(o.to))
 	for id: String in NEW_ROOMS:
 		for o: Dictionary in all[id].objects:
-			if str(o.kind) == "door": _check(back.has(str(o.to) + ">" + id), id + " to " + str(o.to) + " has a door back")
+			# The UMC atrium has no door onto the court itself: its way out to the court is the terrace (U02).
+			if str(o.kind) == "door": _check(back.has(str(o.to) + ">" + id) or (str(o.to) == "U03" and back.has("U02>" + id)), id + " to " + str(o.to) + " has a door back")
 	for id: String in ["C01", "H01"]:
 		_check(all[id].has("wander") and not all[id].wander.is_empty(), id + " rolls wandering fights")
 	_check(str(all.D03.objects.filter(func(o: Dictionary) -> bool: return str(o.id) == "front_doors")[0].to) == "C01", "The dorm's front doors open onto the court")

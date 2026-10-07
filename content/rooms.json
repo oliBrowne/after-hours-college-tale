@@ -2748,6 +2748,19 @@
         "kind": "battle",
         "lines": [],
         "sprite": "npc-cone"
+      },
+      {
+        "id": "court_path",
+        "name": "Path to the Fountain Court",
+        "x": 60,
+        "y": 280,
+        "kind": "door",
+        "to": "C01",
+        "spawn": [
+          1846,
+          400
+        ],
+        "requires": []
       }
     ],
     "placements": [
@@ -2858,6 +2871,20 @@
         "depth": 0,
         "object": "food",
         "label": "Food court path",
+        "anchor_offset": [
+          0,
+          0
+        ]
+      },
+      {
+        "kind": "threshold",
+        "x": 60,
+        "y": 280,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "court_path",
+        "label": "< FOUNTAIN COURT",
         "anchor_offset": [
           0,
           0
@@ -4085,6 +4112,19 @@
         "requires": [
           "chapter2_complete"
         ]
+      },
+      {
+        "id": "court_path",
+        "name": "Path to the Fountain Court",
+        "x": 70,
+        "y": 335,
+        "kind": "door",
+        "to": "C01",
+        "spawn": [
+          1550,
+          248
+        ],
+        "requires": []
       }
     ],
     "placements": [
@@ -4279,6 +4319,20 @@
         ],
         "base_x": 760,
         "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 70,
+        "y": 335,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "court_path",
+        "label": "< FOUNTAIN COURT",
+        "anchor_offset": [
+          0,
+          0
+        ]
       }
     ],
     "dimensions": [
@@ -5726,6 +5780,19 @@
             "neutral"
           ]
         ]
+      },
+      {
+        "id": "court_path",
+        "name": "Path to the Fountain Court",
+        "x": 75,
+        "y": 300,
+        "kind": "door",
+        "to": "C01",
+        "spawn": [
+          1540,
+          486
+        ],
+        "requires": []
       }
     ],
     "placements": [
@@ -5872,6 +5939,20 @@
         ],
         "base_x": 870,
         "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 300,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "court_path",
+        "label": "< FOUNTAIN COURT",
+        "anchor_offset": [
+          0,
+          0
+        ]
       }
     ],
     "dimensions": [
@@ -6751,6 +6832,19 @@
           "chapter3_complete",
           "rook_confessed"
         ]
+      },
+      {
+        "id": "court_path",
+        "name": "Path to the Fountain Court",
+        "x": 75,
+        "y": 340,
+        "kind": "door",
+        "to": "C01",
+        "spawn": [
+          684,
+          248
+        ],
+        "requires": []
       }
     ],
     "placements": [
@@ -6897,6 +6991,20 @@
         ],
         "base_x": 865,
         "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 340,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "court_path",
+        "label": "< FOUNTAIN COURT",
+        "anchor_offset": [
+          0,
+          0
+        ]
       }
     ],
     "dimensions": [
@@ -7670,6 +7778,19 @@
             "warm"
           ]
         ]
+      },
+      {
+        "id": "court_path",
+        "name": "Path to the Fountain Court",
+        "x": 75,
+        "y": 340,
+        "kind": "door",
+        "to": "C01",
+        "spawn": [
+          590,
+          248
+        ],
+        "requires": []
       }
     ],
     "placements": [
@@ -7800,6 +7921,20 @@
         ],
         "base_x": 865,
         "shift_x": 0
+      },
+      {
+        "kind": "threshold",
+        "x": 75,
+        "y": 340,
+        "w": 62,
+        "h": 18,
+        "depth": 0,
+        "object": "court_path",
+        "label": "< FOUNTAIN COURT",
+        "anchor_offset": [
+          0,
+          0
+        ]
       }
     ],
     "dimensions": [
