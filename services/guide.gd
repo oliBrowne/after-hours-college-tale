@@ -27,7 +27,7 @@ const TARGETS: Dictionary = {
 	"Probe the test points / Professor Eric on the test floor": ["E03", "eric"],
 	"Install the bridge with Dev / shared workshop": ["E02", "dev"],
 	"Recover the source reel / upstairs control booth": ["E05", "source_reel"],
-	"Return the source / INDEX in Norlin's closed archive": ["N06", "index"],
+	"Return the source / AUTOCOMPLETE in Norlin's closed archive": ["N06", "autocomplete"],
 	"Hear the full source / playback room through the archive": ["N07", "playback"],
 	"Read the changing notices / Old Main notice hall": ["O02", "notice_limits"],
 	"Find VAL's first instruction / Old Main empty office": ["O03", "origin_directory"],

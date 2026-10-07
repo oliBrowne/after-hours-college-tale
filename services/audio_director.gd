@@ -32,7 +32,7 @@ const DIALOGUE_REUSE: Dictionary = {
 	"nell":{"family":"mags","pitch":1.1,"gain":0.85},
 	"dev":{"family":"cal","pitch":1.2,"gain":0.85},
 	"errata":{"family":"flyer","pitch":1.2,"gain":0.8,"mechanical":true},
-	"index":{"family":"flyer","pitch":0.62,"gain":0.85,"mechanical":true},
+	"autocomplete":{"family":"flyer","pitch":0.62,"gain":0.85,"mechanical":true},
 	"loadbearer":{"family":"flyer","pitch":0.78,"gain":0.85,"mechanical":true},
 	"eric":{"family":"flyer","pitch":1.0,"gain":0.85},
 	"walt": {"family":"cal", "pitch":0.78, "gain":0.85},
