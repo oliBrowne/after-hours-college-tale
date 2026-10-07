@@ -374,7 +374,7 @@ func _object(id: String) -> void:
 func _quiet() -> void:
 	var calm: int = 0
 	while calm < 4 and not failed:
-		if int(game.mode) == DIALOGUE: await _settle(); calm = 0
+		if int(game.mode) == DIALOGUE or int(game.mode) == INTRO: await _settle(); calm = 0
 		elif NativeJakerson.busy() or NativeRoomScenes.busy() or int(game.transition_ticks) > 0: _release(); await _frame(); calm = 0
 		else: await _frame(); calm += 1
 

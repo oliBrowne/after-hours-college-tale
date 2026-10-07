@@ -79,11 +79,35 @@ func run(main: Node) -> bool:
 	_assert(str(game.state.room)=="C01" and str(game.notice).contains("ENCORE"),"The Hill waits for chapter one: "+str(game.notice))
 	f.chapter1_complete=true
 	await _door("hill","H01")
+	await _quiet()
+	_assert(bool(f.get("scene_tanner_couch",false)) and not NativeRoomScenes.busy() and int(game.mode)==WORLD,"The couch walk-in plays out and hands control back")
+	_assert(game.world_npcs.any(func(n: AnimatedSprite2D) -> bool:return str(n.get_meta("id",""))=="tanner" and n.visible),"Tanner is standing on the Hill after the couch lands")
 	await _capture("04-the-hill")
 	await _object("hill_philosopher");await _settle()
 	await _door("party_door","H02")
 	await _capture("05-house-party")
+	_assert(NativeSideQuests.guests.size()==NativeSideQuests.GUESTS.size(),"Four guests patrol the party")
 	await _object("dj");await _settle()
+	# Bump a guest: a quick wandering fight, then the casserole in the kitchen.
+	NativeSideQuests.armed=true
+	for _i: int in range(game.grace_ticks+10):await _frame()
+	var guest: Node2D=NativeSideQuests.guests[0]
+	game.player.position=guest.position
+	for _i: int in range(4):await _frame()
+	_assert(int(game.mode)==DIALOGUE,"Bumping a guest starts a fight line")
+	var bumped: String=""
+	for key: String in NativeRandomFights.FIGHTS:
+		if NativeRandomFights.name_of(key)==str(game.dialogue_lines[game.line_index][0]):bumped=key
+	_assert(bumped=="rf_hippie","The bump is that guest's fight: "+bumped)
+	await _settle()
+	before=NativeRandomFights.bucks(f)
+	await _wander_fight(bumped,true)
+	_assert(NativeRandomFights.bucks(f)>before and str(game.state.room)=="H02","The fight paid Buff Bucks and left Jules in the party")
+	NativeSideQuests.armed=false
+	before=NativeRandomFights.bucks(f)
+	await _object("kitchen");await _settle()
+	_assert(bool(f.get("party_casserole",false)) and NativeRandomFights.bucks(f)==before+NativeSideQuests.CASSEROLE_PAY,"The casserole pays in the kitchen")
+	_assert(NativeSideQuests.guests.is_empty(),"The patrol is gone once the casserole is taken")
 	await _door("front_door","H01")
 	if DodgeBox.handles("tanner"):
 		before=NativeRandomFights.bucks(f)
@@ -105,6 +129,8 @@ func run(main: Node) -> bool:
 	await _door("pearl_st","P01")
 	await _capture("06-open-office")
 	await _object("coworker_board");await _settle()
+	await _object("intern_desk");await _settle()
+	_assert(int(game.mode)==WORLD and not f.has("task_coffee"),"The intern desk waits for Kyle's meeting")
 	if DodgeBox.handles("kyle"):
 		before=NativeRandomFights.bucks(f)
 		await _object("kyle");await _settle()
@@ -114,6 +140,29 @@ func run(main: Node) -> bool:
 		_assert(not LinkedOut.pending(f).any(func(p: Dictionary)->bool:return str(p.id)=="kyle") and LinkedOut.viewed_only(f).any(func(p: Dictionary)->bool:return str(p.id)=="kyle"),"Kyle only views the profile after a forceful ending")
 	else:
 		_log("SKIP Kyle's fight: no dodge script yet")
+	await _object("intern_desk");await _quiet()
+	_assert(int(game.mode)==MENU and str(game.caption).begins_with("Intern desk"),"The desk lists the tasks: "+str(game.caption))
+	await _choose("Friday demo");await _quiet()
+	_assert(str(game.caption).contains("Friday is for"),"The demo is locked until the first two")
+	before=NativeRandomFights.bucks(f)
+	await _choose("Coffee run");await _settle()
+	await _choose("Drip, regular");await _settle()
+	_assert(int(game.mode)==MENU and str(game.caption).begins_with("Coffee run / cup 1"),"A wrong cup restarts the order: "+str(game.caption))
+	for cup: String in NativeSideQuests.ORDER:await _choose(cup)
+	await _settle()
+	_assert(bool(f.get("task_coffee",false)) and NativeRandomFights.bucks(f)==before+30,"The coffee run pays 30")
+	for move: String in ["Reply","React","Mute","React","Mute"]:
+		if move=="Reply":
+			await _choose("Clear the Slack storm");await _settle()
+		await _choose(move)
+	await _settle()
+	_assert(bool(f.get("task_slack",false)),"The Slack storm clears")
+	await _choose("Friday demo");await _settle()
+	for pick: String in ["The problem a real user actually has","The working feature","A question: what would you change?"]:await _choose(pick)
+	await _settle()
+	_assert(bool(f.get("task_demo",false)) and bool(f.get("intern_complete",false)),"The demo lands and the internship is complete")
+	_assert(NativeSaveService.validate_state(game.state),"The state still saves after the tasks")
+	await _choose("Back");await _quiet()
 	await _door("break_room","P02")
 	await _object("beanbag");await _quiet()
 	_assert(int(game.mode)==MENU and str(game.caption).begins_with("Warm light"),"The beanbag is a rest and save spot")

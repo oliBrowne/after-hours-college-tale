@@ -44,7 +44,7 @@ static func handle(game: Node, object: Dictionary) -> bool:
 	if id=="walt":
 		if f.get("walt_joined",false): return false
 		if f.has("walt_resolution"): aftermath(game,"walt");return true
-		if not f.get("imani_joined",false):
+		if not f.get("booth_seen",false):
 			if f.get("walt_met",false):
 				game.dialogue([["Walt","Still here. The porch is open, the bus is not.","warm"],["Walt","Go on, return the thing in your bag. I'll keep the light on.","neutral"]],game.resume_world);return true
 			game.dialogue([["Walt","Mind the cardboard. It's my front porch.","neutral"],["Jules","Sorry. I'm just cutting through to the UMC.","neutral"],["Walt","Everybody does. Fastest way under Broadway, as long as you don't look at anyone.","neutral"],["Jules","I'm looking. Are you all right down here?","concern"],["Walt","Dry, mostly. I'm Walt. I fix radios for the shops on the Hill, when they remember to pay.","warm"],["Walt","That one's been odd all night. Every station it finds plays the same student voice. Saying a name.","concern"],["Jules","Whose name?","concern"],["Walt","Couldn't tell you. It kept saying it would rather have stayed. Go on, return whatever's in that bag.","neutral"],["Walt","If the voice gets louder, you know where my porch is.","warm"]],func() -> void: f.walt_met=true;game.persist();game.resume_world());return true
@@ -104,10 +104,10 @@ static func objective(s: Dictionary) -> String:
 	if f.get("chapter2_complete",false):return NativeChapterThree.objective(s)
 	if f.get("chapter1_complete",false): return NativeChapterTwo.objective(s)
 	if not f.get("mixer_returned",false): return "Return Imani's mixer / club room"
-	if not f.get("imani_joined",false): return "Head out through the atrium / the last bus"
-	if not f.get("walt_joined",false): return "Follow the escaped voice / Walt under the bridge"
 	if not f.has("flyer_resolution"): return "Read one living invitation / club room"
+	if not f.get("imani_joined",false): return "Back through the atrium / something is humming"
 	if not f.get("booth_seen",false): return "Investigate the atrium voice booth"
+	if not f.get("walt_joined",false): return "Follow the escaped voice / Walt under the bridge"
 	if not f.get("cal_key_received",false): return "Ask Cal for the service key / repair landing"
 	if not f.has("claim_resolution"): return "Follow the signal / lost property"
 	if not str(s.room).begins_with("F"): return "Farrand / east gate in the UMC atrium"
