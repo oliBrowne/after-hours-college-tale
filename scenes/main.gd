@@ -560,6 +560,8 @@ func enter_room(id: String, point: Vector2, save_now: bool = true) -> void:
 	jakerson_ui=false
 	set_cast_paused(false)
 	reset_pointer_controls()
+	# Move-in day is late-August fall; the night before graduation is a snowy one, and the dawn after it is spring.
+	state.flags.season="fall" if NativeMoveIn.active(self) else "spring" if str(state.flags.get("dawn_talk_read",""))!="" or id in ["M07","G01","G02"] else "winter"
 	NativeCampusWorld.prepare(rooms[id],state.flags)
 	navigation.configure(rooms[id])
 	point = navigation.safe_point(point)
