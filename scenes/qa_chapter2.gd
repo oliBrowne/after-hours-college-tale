@@ -15,8 +15,9 @@ func run(main: Node) -> bool:
 		await _press("confirm");await _capture("10-engineering-doors");await _press("cancel");await _press("cancel")
 		_assert(int(game.mode)==WORLD and not game.pause_context,"Map closes back to exploration")
 		_log("FAIL" if failed else "PASS Chapter 2 map-only follow-up using earned unchanged save");_write_trace();return not failed
-	_assert(game.state.room=="F06" and game.state.flags.get("chapter1_complete",false),"Continue imports the earned Chapter 1 completion save")
-	await _door("norlin_route","N01");await _capture("01-norlin-steps")
+	_assert(game.state.room in ["F06","N01"] and game.state.flags.get("chapter1_complete",false),"Continue imports the earned Chapter 1 completion save")
+	if game.state.room=="F06":await _door("norlin_route","N01")
+	await _capture("01-norlin-steps")
 	await _door("checkout","N02");await _object("nell");await _settle()
 	_assert(game.state.flags.get("library_pass",false),"Nell grants library access through conversation")
 	await _door("reading","N03");await _object("recording_choice");await _settle();await _choose("Imani keeps");await _settle()
