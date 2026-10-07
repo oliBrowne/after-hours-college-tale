@@ -1,0 +1,2232 @@
+{
+ "_doc": "Per-room hints for build_seasons.py. materials: [material, regex on the traced painter chain], first match wins (unlabelled specks take the material they lie on). regions: shapes (rect/poly/ellipse) that set a material, optionally only on pixels of given materials (from), hue range (hue, smin, vmin), lightness (lmin, lmax), label regex, or below a skyline (invert: above it). winter: lanes (shapes) or lane_label (regex) = shovelled paths through snow-covered paving; bank = plowed-road snow bank width; mountain {dim, slope, thr, line}; ledges false turns off snow on wall courses. spring.beds: [cx, cy, rx, ry, colour] tulip beds. tree_spots: [x, y, r] where leaf litter gathers. props / occluders: which sprites get variants ({crop: true} = cut from the season's background). battle: {} for colour-based overlays (battles.py), horizon, dim, mountains [y0, y1, lmax] in the far image, skip.",
+ "U01": {
+  "materials": [
+   [
+    "sky",
+    "^fill$"
+   ],
+   [
+    "road",
+    "^asphalt"
+   ],
+   [
+    "paving",
+    "^sidewalk"
+   ],
+   [
+    "structure",
+    "storefront"
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "road",
+    "rect": [
+     0,
+     118,
+     66,
+     242
+    ],
+    "from": [
+     "other"
+    ]
+   },
+   {
+    "mat": "paving",
+    "rect": [
+     70,
+     150,
+     570,
+     210
+    ],
+    "from": [
+     "other"
+    ]
+   },
+   {
+    "mat": "mountain",
+    "rect": [
+     0,
+     40,
+     640,
+     80
+    ],
+    "from": [
+     "sky"
+    ],
+    "skyline": {
+     "lmax": 0.42
+    }
+   },
+   {
+    "mat": "structure",
+    "rect": [
+     340,
+     60,
+     32,
+     90
+    ],
+    "from": [
+     "other"
+    ]
+   }
+  ],
+  "tree_spots": [
+   [
+    590,
+    168,
+    70
+   ]
+  ],
+  "winter": {
+   "paving": 0.7,
+   "road": 0.18,
+   "banks": [
+    {
+     "rect": [
+      70,
+      150,
+      570,
+      12
+     ]
+    },
+    {
+     "rect": [
+      0,
+      118,
+      14,
+      242
+     ]
+    },
+    {
+     "rect": [
+      56,
+      118,
+      12,
+      242
+     ]
+    }
+   ],
+   "lanes": [
+    {
+     "rect": [
+      70,
+      160,
+      570,
+      24
+     ]
+    },
+    {
+     "rect": [
+      296,
+      180,
+      46,
+      180
+     ]
+    }
+   ]
+  },
+  "fall": {
+   "litter": 0.02,
+   "pave_litter": 0.025,
+   "pave_edge": 0.12
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {},
+   "1": {},
+   "2": {},
+   "3": {},
+   "4": {},
+   "5": {},
+   "7": {},
+   "8": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "9": {}
+  },
+  "battle": {}
+ },
+ "N01": {
+  "materials": [
+   [
+    "sky",
+    "^sky"
+   ],
+   [
+    "distant",
+    "far_campus"
+   ],
+   [
+    "roof",
+    "roof_tiles"
+   ],
+   [
+    "lawn",
+    "^lawn"
+   ],
+   [
+    "paving",
+    "crazy_paving|book_medallion|^kerb|stone_steps"
+   ],
+   [
+    "flowerbed",
+    "tree_pit"
+   ],
+   [
+    "shrub",
+    "shrub"
+   ],
+   [
+    "lamp",
+    "plinth_lamp"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [],
+  "tree_spots": [
+   [
+    160,
+    260,
+    60
+   ],
+   [
+    815,
+    285,
+    60
+   ]
+  ],
+  "winter": {
+   "paving": 0.7,
+   "lanes": [
+    {
+     "rect": [
+      394,
+      140,
+      40,
+      340
+     ]
+    },
+    {
+     "rect": [
+      0,
+      446,
+      700,
+      24
+     ]
+    },
+    {
+     "rect": [
+      300,
+      186,
+      420,
+      18
+     ]
+    }
+   ]
+  },
+  "fall": {
+   "litter": 0.03,
+   "pave_litter": 0.02,
+   "pave_edge": 0.1
+  },
+  "spring": {
+   "beds": [
+    [
+     180,
+     420,
+     26,
+     8,
+     1
+    ],
+    [
+     790,
+     390,
+     26,
+     8,
+     4
+    ]
+   ]
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {},
+   "1": {},
+   "2": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "3": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "4": {},
+   "5": {}
+  },
+  "battle": {
+   "mountains": [
+    38,
+    100,
+    0.4
+   ],
+   "dim": 0.74
+  }
+ },
+ "M07": {
+  "materials": [
+   [
+    "sky",
+    "dawn_sky|lenticular|cirrus"
+   ],
+   [
+    "mountain",
+    "far_range|skyline\\|array"
+   ],
+   [
+    "pine",
+    "spruce|forest_ridge"
+   ],
+   [
+    "distant",
+    "campus_morning"
+   ],
+   [
+    "shrub",
+    "shrub"
+   ],
+   [
+    "lawn",
+    "floor>lawn"
+   ],
+   [
+    "litter",
+    "^details$"
+   ],
+   [
+    "paving",
+    "crazy_paving|kerb|sun_medallion|footprints|^floor$"
+   ],
+   [
+    "lamp",
+    "lantern_head"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "sky",
+    "rect": [
+     0,
+     0,
+     960,
+     100
+    ],
+    "from": [
+     "mountain"
+    ],
+    "skyline": {
+     "lmax": 0.5
+    },
+    "invert": true
+   },
+   {
+    "mat": "treeline",
+    "rect": [
+     0,
+     100,
+     960,
+     22
+    ],
+    "from": [
+     "distant"
+    ],
+    "hue": [
+     30,
+     150
+    ],
+    "smin": 0.25
+   },
+   {
+    "mat": "treeline",
+    "rect": [
+     0,
+     104,
+     960,
+     18
+    ],
+    "from": [
+     "distant"
+    ],
+    "hue": [
+     0,
+     50
+    ],
+    "smin": 0.45,
+    "vmin": 0.45
+   },
+   {
+    "mat": "roof",
+    "rect": [
+     0,
+     80,
+     960,
+     26
+    ],
+    "from": [
+     "distant"
+    ],
+    "hue": [
+     0,
+     28
+    ],
+    "smin": 0.4
+   },
+   {
+    "mat": "structure",
+    "rect": [
+     0,
+     505,
+     960,
+     35
+    ],
+    "from": [
+     "litter"
+    ]
+   }
+  ],
+  "tree_spots": [
+   [
+    185,
+    250,
+    60
+   ],
+   [
+    755,
+    280,
+    60
+   ]
+  ],
+  "winter": {
+   "paving": 0.7,
+   "lanes": [
+    {
+     "rect": [
+      482,
+      140,
+      34,
+      236
+     ]
+    },
+    {
+     "poly": [
+      [
+       0,
+       446
+      ],
+      [
+       150,
+       434
+      ],
+      [
+       300,
+       410
+      ],
+      [
+       340,
+       402
+      ],
+      [
+       660,
+       402
+      ],
+      [
+       700,
+       410
+      ],
+      [
+       810,
+       434
+      ],
+      [
+       960,
+       446
+      ],
+      [
+       960,
+       472
+      ],
+      [
+       810,
+       462
+      ],
+      [
+       700,
+       436
+      ],
+      [
+       660,
+       430
+      ],
+      [
+       340,
+       430
+      ],
+      [
+       300,
+       436
+      ],
+      [
+       150,
+       462
+      ],
+      [
+       0,
+       472
+      ]
+     ]
+    }
+   ]
+  },
+  "fall": {
+   "litter": 0.03
+  },
+  "spring": {
+   "beds": [
+    [
+     300,
+     200,
+     26,
+     8,
+     0
+    ],
+    [
+     690,
+     215,
+     26,
+     8,
+     2
+    ]
+   ]
+  },
+  "occluders": {
+   "skyline.png": {
+    "crop": true
+   }
+  },
+  "battle": {},
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "1": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "2": {},
+   "3": {},
+   "4": {}
+  }
+ },
+ "G01": {
+  "materials": [
+   [
+    "sky",
+    "morning_sky|cirrus"
+   ],
+   [
+    "mountain",
+    "sky_and_mountains\\|array|far_range"
+   ],
+   [
+    "pine",
+    "forest_ridge"
+   ],
+   [
+    "keep",
+    "stadium>stands|runner|end_zone_words|paint_line|scoreboard|stand_banner|program_flat|press_box"
+   ],
+   [
+    "lawn",
+    "floor>turf"
+   ],
+   [
+    "litter",
+    "confetti|floor_details"
+   ],
+   [
+    "paving",
+    "tile_path"
+   ],
+   [
+    "shrub",
+    "flower_pot|flower_urn"
+   ],
+   [
+    "lamp",
+    "light_tower"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "sky",
+    "rect": [
+     290,
+     15,
+     370,
+     90
+    ],
+    "from": [
+     "mountain"
+    ],
+    "skyline": {
+     "lmax": 0.55
+    },
+    "invert": true
+   }
+  ],
+  "winter": {
+   "paving": 0.55,
+   "lanes": [
+    {
+     "rect": [
+      0,
+      500,
+      960,
+      14
+     ]
+    }
+   ]
+  },
+  "fall": {
+   "litter": 0.012,
+   "pave_litter": 0.02
+  },
+  "spring": {},
+  "battle": {
+   "mountains": [
+    2,
+    70,
+    0.75
+   ],
+   "dim": 1.0
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {},
+   "1": {},
+   "2": {},
+   "3": {},
+   "4": {},
+   "5": {},
+   "6": {},
+   "7": {},
+   "10": {}
+  }
+ },
+ "O01": {
+  "materials": [
+   [
+    "sky",
+    "night_sky"
+   ],
+   [
+    "distant",
+    "far_campus"
+   ],
+   [
+    "roof",
+    "slate_roof|dormer|cresting"
+   ],
+   [
+    "tree",
+    "garden_walls\\|array"
+   ],
+   [
+    "lawn",
+    "^lawn"
+   ],
+   [
+    "paving",
+    "herringbone|flag_path|soldier_band|^kerb|stone_steps|medallion|luminaria"
+   ],
+   [
+    "shrub",
+    "shrub"
+   ],
+   [
+    "lamp",
+    "wall_lantern"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "paving",
+    "rect": [
+     0,
+     140,
+     960,
+     385
+    ],
+    "from": [
+     "other"
+    ]
+   }
+  ],
+  "tree_spots": [
+   [
+    230,
+    300,
+    60
+   ],
+   [
+    700,
+    300,
+    60
+   ]
+  ],
+  "trees": {
+   "behind": [
+    "sky"
+   ]
+  },
+  "winter": {
+   "paving": 0.7,
+   "lanes": [
+    {
+     "rect": [
+      430,
+      150,
+      40,
+      300
+     ]
+    },
+    {
+     "rect": [
+      0,
+      446,
+      960,
+      30
+     ]
+    },
+    {
+     "rect": [
+      310,
+      140,
+      280,
+      24
+     ]
+    }
+   ]
+  },
+  "fall": {
+   "litter": 0.025,
+   "pave_litter": 0.02
+  },
+  "spring": {
+   "beds": [
+    [
+     150,
+     330,
+     30,
+     8,
+     2
+    ],
+    [
+     820,
+     330,
+     30,
+     8,
+     0
+    ]
+   ]
+  },
+  "battle": {
+   "horizon": 112,
+   "dim": 0.74
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "1": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "2": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "3": {},
+   "4": {},
+   "5": {}
+  }
+ },
+ "M01": {
+  "materials": [
+   [
+    "sky",
+    "night_sky_m|dawn_sky_m|dawn_clouds"
+   ],
+   [
+    "mountain",
+    "flatirons_m"
+   ],
+   [
+    "treeline",
+    "treeline_m"
+   ],
+   [
+    "roof",
+    "roof_tiles"
+   ],
+   [
+    "shrub",
+    "shrub|ivy"
+   ],
+   [
+    "lawn",
+    "ground>lawn"
+   ],
+   [
+    "litter",
+    "paint>litter"
+   ],
+   [
+    "paving",
+    "ground|stone_steps|flag_path"
+   ],
+   [
+    "keep",
+    "reservation|stakes|uplights"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "lawn",
+    "rect": [
+     0,
+     140,
+     960,
+     380
+    ],
+    "from": [
+     "paving"
+    ],
+    "hue": [
+     60,
+     180
+    ],
+    "smin": 0.18
+   }
+  ],
+  "tree_spots": [
+   [
+    150,
+    260,
+    60
+   ],
+   [
+    810,
+    280,
+    60
+   ]
+  ],
+  "dawn_seasons": [
+   "winter",
+   "fall",
+   "spring"
+  ],
+  "winter": {
+   "paving": 0.7,
+   "lanes": [
+    {
+     "rect": [
+      470,
+      180,
+      40,
+      340
+     ]
+    },
+    {
+     "rect": [
+      400,
+      140,
+      180,
+      40
+     ]
+    }
+   ],
+   "mountain": {
+    "dim": 0.35,
+    "slope": 0.3,
+    "thr": 0.72,
+    "line": 2
+   }
+  },
+  "fall": {
+   "litter": 0.025
+  },
+  "spring": {
+   "beds": [
+    [
+     120,
+     330,
+     24,
+     7,
+     2
+    ],
+    [
+     860,
+     420,
+     24,
+     7,
+     0
+    ]
+   ]
+  },
+  "battle": {
+   "dim": 0.74
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "1": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "2": {},
+   "3": {},
+   "4": {}
+  }
+ },
+ "U02": {
+  "materials": [
+   [
+    "sky",
+    "^fill$"
+   ],
+   [
+    "tree",
+    "^array$"
+   ],
+   [
+    "roof",
+    "roof_tiles"
+   ],
+   [
+    "paving",
+    "flagstones|steps"
+   ],
+   [
+    "shrub",
+    "shrub|grass_tuft"
+   ],
+   [
+    "lamp",
+    "lantern"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "mountain",
+    "rect": [
+     0,
+     30,
+     640,
+     75
+    ],
+    "from": [
+     "sky"
+    ],
+    "skyline": {
+     "lmax": 0.42
+    }
+   },
+   {
+    "mat": "pine",
+    "rect": [
+     540,
+     0,
+     100,
+     130
+    ],
+    "from": [
+     "tree"
+    ],
+    "hue": [
+     70,
+     220
+    ]
+   },
+   {
+    "mat": "paving",
+    "rect": [
+     260,
+     170,
+     120,
+     40
+    ],
+    "from": [
+     "other"
+    ]
+   }
+  ],
+  "tree_spots": [
+   [
+    40,
+    120,
+    50
+   ],
+   [
+    600,
+    120,
+    40
+   ]
+  ],
+  "trees": {
+   "behind": [
+    "sky"
+   ]
+  },
+  "winter": {
+   "paving": 0.7,
+   "lanes": [
+    {
+     "rect": [
+      296,
+      150,
+      46,
+      180
+     ]
+    },
+    {
+     "rect": [
+      0,
+      214,
+      640,
+      26
+     ]
+    }
+   ]
+  },
+  "fall": {
+   "litter": 0.02,
+   "pave_litter": 0.02
+  },
+  "spring": {},
+  "battle": {
+   "dim": 0.74
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "2": {},
+   "3": {},
+   "4": {},
+   "5": {},
+   "6": {},
+   "7": {}
+  }
+ },
+ "U08": {
+  "materials": [
+   [
+    "sky",
+    "night_sky"
+   ],
+   [
+    "tree",
+    "street_level\\|array|tree_mass"
+   ],
+   [
+    "road",
+    "paint_bridge>put_rgb|worn_line|tar_snake"
+   ],
+   [
+    "paving",
+    "street_level>put_rgb|paint_floor|camp_floor"
+   ],
+   [
+    "shrub",
+    "shrub"
+   ],
+   [
+    "lamp",
+    "lamp_post|wall_light"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "roof",
+    "rect": [
+     528,
+     0,
+     112,
+     8
+    ],
+    "from": [
+     "structure"
+    ],
+    "hue": [
+     0,
+     30
+    ],
+    "smin": 0.3
+   },
+   {
+    "mat": "pine",
+    "rect": [
+     210,
+     0,
+     90,
+     75
+    ],
+    "from": [
+     "tree"
+    ],
+    "hue": [
+     70,
+     220
+    ]
+   }
+  ],
+  "tree_spots": [
+   [
+    160,
+    60,
+    40
+   ],
+   [
+    250,
+    60,
+    40
+   ]
+  ],
+  "trees": {
+   "behind": [
+    "sky"
+   ]
+  },
+  "winter": {
+   "paving": 0.7,
+   "bank": 3,
+   "lanes": [
+    {
+     "rect": [
+      0,
+      182,
+      372,
+      128
+     ]
+    },
+    {
+     "rect": [
+      500,
+      182,
+      140,
+      128
+     ]
+    },
+    {
+     "rect": [
+      0,
+      62,
+      372,
+      10
+     ]
+    }
+   ]
+  },
+  "fall": {
+   "litter": 0.02,
+   "pave_litter": 0.012
+  },
+  "spring": {},
+  "occluders": {
+   "deck.png": {
+    "crop": true
+   },
+   "front-rail.png": {
+    "crop": true
+   }
+  },
+  "battle": {
+   "dim": 0.74
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {},
+   "1": {},
+   "2": {},
+   "3": {},
+   "4": {}
+  }
+ },
+ "F01": {
+  "materials": [
+   [
+    "sky",
+    "^fill$|^paint$"
+   ],
+   [
+    "treeline",
+    "treeline_back"
+   ],
+   [
+    "roof",
+    "peaked_tent$|peaked_tent>roof|tent_roof"
+   ],
+   [
+    "lawn",
+    "lawn"
+   ],
+   [
+    "paving",
+    "mat_tile|mat_walkway|mat_path|trodden_patch|plywood_deck"
+   ],
+   [
+    "water",
+    "puddle"
+   ],
+   [
+    "shrub",
+    "far_hedge|shrub"
+   ],
+   [
+    "lamp",
+    "bulb|stage_lamp"
+   ],
+   [
+    "keep",
+    "led_screen|screen|confetti|picnic_blanket|spray_arrow|tape_arrow|rehearsal_marks|stage_banner|norlin_sign"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "mountain",
+    "rect": [
+     0,
+     15,
+     960,
+     75
+    ],
+    "from": [
+     "sky"
+    ],
+    "skyline": {
+     "lmax": 0.4
+    }
+   }
+  ],
+  "winter": {
+   "paving": 0.7,
+   "lane_label": "mat_tile|mat_walkway|mat_path"
+  },
+  "fall": {
+   "litter": 0.02,
+   "pave_litter": 0.015
+  },
+  "spring": {},
+  "battle": {},
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "1": {},
+   "2": {},
+   "3": {},
+   "4": {}
+  }
+ },
+ "F02": {
+  "materials": [
+   [
+    "sky",
+    "^fill$|^paint$"
+   ],
+   [
+    "treeline",
+    "treeline_back"
+   ],
+   [
+    "roof",
+    "peaked_tent$|peaked_tent>roof|tent_roof"
+   ],
+   [
+    "lawn",
+    "lawn"
+   ],
+   [
+    "paving",
+    "mat_tile|mat_walkway|mat_path|trodden_patch|plywood_deck"
+   ],
+   [
+    "water",
+    "puddle"
+   ],
+   [
+    "shrub",
+    "far_hedge|shrub"
+   ],
+   [
+    "lamp",
+    "bulb|stage_lamp"
+   ],
+   [
+    "keep",
+    "led_screen|screen|confetti|picnic_blanket|spray_arrow|tape_arrow|rehearsal_marks|stage_banner|norlin_sign"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "mountain",
+    "rect": [
+     0,
+     15,
+     960,
+     75
+    ],
+    "from": [
+     "sky"
+    ],
+    "skyline": {
+     "lmax": 0.4
+    }
+   }
+  ],
+  "winter": {
+   "paving": 0.7,
+   "lane_label": "mat_tile|mat_walkway|mat_path"
+  },
+  "fall": {
+   "litter": 0.02,
+   "pave_litter": 0.015
+  },
+  "spring": {},
+  "battle": {
+   "skip": [
+    "winter",
+    "fall",
+    "spring"
+   ]
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {},
+   "1": {},
+   "2": {},
+   "3": {},
+   "4": {},
+   "5": {}
+  }
+ },
+ "F04": {
+  "materials": [
+   [
+    "sky",
+    "^fill$|^paint$"
+   ],
+   [
+    "treeline",
+    "treeline_back"
+   ],
+   [
+    "roof",
+    "peaked_tent$|peaked_tent>roof|tent_roof"
+   ],
+   [
+    "lawn",
+    "lawn"
+   ],
+   [
+    "paving",
+    "mat_tile|mat_walkway|mat_path|trodden_patch|plywood_deck"
+   ],
+   [
+    "water",
+    "puddle"
+   ],
+   [
+    "shrub",
+    "far_hedge|shrub"
+   ],
+   [
+    "lamp",
+    "bulb|stage_lamp"
+   ],
+   [
+    "keep",
+    "led_screen|screen|confetti|picnic_blanket|spray_arrow|tape_arrow|rehearsal_marks|stage_banner|norlin_sign"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "mountain",
+    "rect": [
+     0,
+     15,
+     960,
+     75
+    ],
+    "from": [
+     "sky"
+    ],
+    "skyline": {
+     "lmax": 0.4
+    }
+   }
+  ],
+  "winter": {
+   "paving": 0.7,
+   "lane_label": "mat_tile|mat_walkway|mat_path"
+  },
+  "fall": {
+   "litter": 0.02,
+   "pave_litter": 0.015
+  },
+  "spring": {},
+  "battle": {},
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {},
+   "1": {},
+   "2": {},
+   "3": {},
+   "4": {},
+   "5": {},
+   "6": {}
+  }
+ },
+ "F06": {
+  "materials": [
+   [
+    "sky",
+    "^fill$|^paint$"
+   ],
+   [
+    "treeline",
+    "treeline_back"
+   ],
+   [
+    "roof",
+    "peaked_tent$|peaked_tent>roof|tent_roof"
+   ],
+   [
+    "lawn",
+    "lawn"
+   ],
+   [
+    "paving",
+    "mat_tile|mat_walkway|mat_path|trodden_patch|plywood_deck"
+   ],
+   [
+    "water",
+    "puddle"
+   ],
+   [
+    "shrub",
+    "far_hedge|shrub"
+   ],
+   [
+    "lamp",
+    "bulb|stage_lamp"
+   ],
+   [
+    "keep",
+    "led_screen|screen|confetti|picnic_blanket|spray_arrow|tape_arrow|rehearsal_marks|stage_banner|norlin_sign"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "mountain",
+    "rect": [
+     0,
+     15,
+     960,
+     75
+    ],
+    "from": [
+     "sky"
+    ],
+    "skyline": {
+     "lmax": 0.4
+    }
+   }
+  ],
+  "winter": {
+   "paving": 0.7,
+   "lane_label": "mat_tile|mat_walkway|mat_path"
+  },
+  "fall": {
+   "litter": 0.02,
+   "pave_litter": 0.015
+  },
+  "spring": {},
+  "battle": {},
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {},
+   "1": {},
+   "2": {},
+   "3": {},
+   "4": {},
+   "5": {}
+  }
+ },
+ "N05": {
+  "materials": [
+   [
+    "sky",
+    "night_sky|back>sky\\|array"
+   ],
+   [
+    "mountain",
+    "flatirons_night"
+   ],
+   [
+    "roof",
+    "roof_tiles|roof"
+   ],
+   [
+    "lawn",
+    "floor>lawn|grass_tuft"
+   ],
+   [
+    "paving",
+    "crazy_paving|gravel|kerb|stepping_stones|^floor$|floor>edges"
+   ],
+   [
+    "flowerbed",
+    "flower_bed|parterre"
+   ],
+   [
+    "shrub",
+    "shrub|borders"
+   ],
+   [
+    "lamp",
+    "festoon"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [],
+  "tree_spots": [
+   [
+    150,
+    230,
+    50
+   ],
+   [
+    640,
+    230,
+    50
+   ]
+  ],
+  "winter": {
+   "paving": 0.7,
+   "mountain": {
+    "dim": 0.35,
+    "slope": 0.3,
+    "thr": 0.7,
+    "line": 2
+   },
+   "lanes": [
+    {
+     "poly": [
+      [
+       0,
+       384
+      ],
+      [
+       150,
+       384
+      ],
+      [
+       230,
+       368
+      ],
+      [
+       330,
+       300
+      ],
+      [
+       400,
+       282
+      ],
+      [
+       440,
+       282
+      ],
+      [
+       520,
+       300
+      ],
+      [
+       700,
+       326
+      ],
+      [
+       700,
+       340
+      ],
+      [
+       520,
+       316
+      ],
+      [
+       470,
+       312
+      ],
+      [
+       540,
+       460
+      ],
+      [
+       515,
+       460
+      ],
+      [
+       440,
+       320
+      ],
+      [
+       400,
+       316
+      ],
+      [
+       340,
+       320
+      ],
+      [
+       240,
+       394
+      ],
+      [
+       150,
+       404
+      ],
+      [
+       0,
+       404
+      ]
+     ]
+    }
+   ]
+  },
+  "fall": {
+   "litter": 0.02
+  },
+  "spring": {},
+  "battle": {
+   "dim": 0.74
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "1": {
+    "materials": [
+     [
+      "tree",
+      "atlas_tree|^$|tree"
+     ]
+    ]
+   },
+   "2": {},
+   "3": {},
+   "4": {}
+  }
+ },
+ "E01": {
+  "materials": [
+   [
+    "sky",
+    "night_sky|night_clouds"
+   ],
+   [
+    "tree",
+    "atlas_tree|tree_mass"
+   ],
+   [
+    "road",
+    "paint_court>put_rgb|tar_snake|paint_court$"
+   ],
+   [
+    "keep",
+    "paint_markings"
+   ],
+   [
+    "keep",
+    "paint_markings$|worn_line"
+   ],
+   [
+    "water",
+    "puddle"
+   ],
+   [
+    "paving",
+    "paint_walk>put_rgb|paint_walk$"
+   ],
+   [
+    "shrub",
+    "shrub|grass_tuft"
+   ],
+   [
+    "lamp",
+    "lamp|light"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "lawn",
+    "rect": [
+     0,
+     380,
+     900,
+     160
+    ],
+    "from": [
+     "paving"
+    ],
+    "hue": [
+     60,
+     180
+    ],
+    "smin": 0.15
+   },
+   {
+    "mat": "water",
+    "rect": [
+     895,
+     0,
+     65,
+     540
+    ],
+    "from": [
+     "structure"
+    ],
+    "hue": [
+     180,
+     260
+    ],
+    "smin": 0.15
+   },
+   {
+    "mat": "roof",
+    "rect": [
+     290,
+     0,
+     670,
+     22
+    ],
+    "from": [
+     "structure"
+    ],
+    "hue": [
+     0,
+     30
+    ],
+    "smin": 0.35
+   }
+  ],
+  "tree_spots": [
+   [
+    40,
+    120,
+    40
+   ]
+  ],
+  "trees": {
+   "behind": [
+    "sky"
+   ]
+  },
+  "winter": {
+   "paving": 0.7,
+   "bank": 7,
+   "road_packed": 0.1,
+   "lanes": [
+    {
+     "rect": [
+      0,
+      436,
+      900,
+      40
+     ]
+    }
+   ],
+   "ledges": false
+  },
+  "fall": {
+   "litter": 0.02,
+   "pave_litter": 0.01
+  },
+  "spring": {},
+  "battle": {
+   "dim": 0.74
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {},
+   "1": {},
+   "2": {},
+   "3": {},
+   "4": {},
+   "5": {}
+  }
+ },
+ "G02": {
+  "materials": [
+   [
+    "sky",
+    "golden_sky|gold_cloud|sun_disc"
+   ],
+   [
+    "mountain",
+    "paint_view\\|array|far_hills"
+   ],
+   [
+    "tree",
+    "paint_view\\|paint_view\\|array"
+   ],
+   [
+    "treeline",
+    "crown_row"
+   ],
+   [
+    "distant",
+    "campus_hall"
+   ],
+   [
+    "paving",
+    "^fill$|paint_floor$|leaf_litter|tennis_ball"
+   ],
+   [
+    "lamp",
+    "light_tower"
+   ],
+   [
+    "keep",
+    "court_sign|small_sign|flip_score|draped_gown"
+   ],
+   [
+    "structure",
+    "."
+   ]
+  ],
+  "regions": [
+   {
+    "mat": "sky",
+    "rect": [
+     0,
+     0,
+     320,
+     110
+    ],
+    "from": [
+     "mountain"
+    ],
+    "skyline": {
+     "lmax": 0.55
+    },
+    "invert": true
+   },
+   {
+    "mat": "pine",
+    "rect": [
+     0,
+     15,
+     75,
+     115
+    ],
+    "from": [
+     "tree",
+     "mountain"
+    ],
+    "hue": [
+     70,
+     220
+    ],
+    "smin": 0.15
+   },
+   {
+    "mat": "roof",
+    "rect": [
+     340,
+     60,
+     250,
+     30
+    ],
+    "from": [
+     "distant"
+    ],
+    "hue": [
+     0,
+     30
+    ],
+    "smin": 0.35
+   },
+   {
+    "mat": "paving",
+    "rect": [
+     0,
+     170,
+     640,
+     190
+    ],
+    "from": [
+     "other",
+     "structure"
+    ],
+    "lmax": 0.0
+   }
+  ],
+  "trees": {
+   "behind": [
+    "sky",
+    "distant"
+   ]
+  },
+  "tree_spots": [
+   [
+    610,
+    170,
+    50
+   ]
+  ],
+  "winter": {
+   "paving": 0.7,
+   "lanes": [
+    {
+     "rect": [
+      186,
+      186,
+      288,
+      152
+     ]
+    }
+   ],
+   "mountain": {
+    "thr": 0.74,
+    "slope": 0.45
+   }
+  },
+  "fall": {
+   "litter": 0.02,
+   "pave_litter": 0.02
+  },
+  "spring": {},
+  "battle": {
+   "mountains": [
+    10,
+    90,
+    0.75
+   ],
+   "dim": 1.0
+  },
+  "props": {
+   "materials": [
+    [
+     "tree",
+     "atlas_tree"
+    ],
+    [
+     "shrub",
+     "shrub|grass_tuft|hedge|fountain_grass|planter\\|array|bush|flower|ivy"
+    ],
+    [
+     "structure",
+     "."
+    ]
+   ],
+   "0": {},
+   "1": {},
+   "2": {},
+   "3": {},
+   "5": {}
+  }
+ }
+}

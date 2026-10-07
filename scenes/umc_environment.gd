@@ -135,7 +135,7 @@ func _rebuild_foreground() -> void:
 			prop.use_art(NativeRoomArt.prop_art(room_id, index), NativeRoomArt.label_only(room_id, index))
 			owner.add_child(prop)
 			foreground_nodes.append(prop)
-		for piece: Node2D in NativeRoomArt.occluders(room_id):
+		for piece: Node2D in NativeRoomArt.occluders(room_id, room_flags):
 			owner.add_child(piece)
 			foreground_nodes.append(piece)
 		foreground_active = true

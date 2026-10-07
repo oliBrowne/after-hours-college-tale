@@ -43,7 +43,9 @@
     129
    ],
    "flag": "volunteers_released",
-   "flag_texture": "res://assets/art/rooms/F02/prop-0-released.png"
+   "flag_texture": "res://assets/art/rooms/F02/prop-0-released.png",
+   "texture_winter": "res://assets/art/rooms/F02/prop-0-winter.png",
+   "flag_texture_winter": "res://assets/art/rooms/F02/prop-0-released-winter.png"
   },
   "1": {
    "texture": "res://assets/art/rooms/F02/prop-1.png",
@@ -52,28 +54,33 @@
     56
    ],
    "flag": "volunteers_released",
-   "flag_texture": "res://assets/art/rooms/F02/prop-1-released.png"
+   "flag_texture": "res://assets/art/rooms/F02/prop-1-released.png",
+   "texture_winter": "res://assets/art/rooms/F02/prop-1-winter.png",
+   "flag_texture_winter": "res://assets/art/rooms/F02/prop-1-released-winter.png"
   },
   "2": {
    "texture": "res://assets/art/rooms/F02/prop-2.png",
    "anchor": [
     48,
     33
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/F02/prop-2-winter.png"
   },
   "3": {
    "texture": "res://assets/art/rooms/F02/prop-3.png",
    "anchor": [
     53,
     33
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/F02/prop-3-winter.png"
   },
   "4": {
    "texture": "res://assets/art/rooms/F02/prop-4.png",
    "anchor": [
     11,
     60
-   ]
+   ],
+   "texture_winter": "res://assets/art/rooms/F02/prop-4-winter.png"
   },
   "5": {
    "texture": "res://assets/art/rooms/F02/prop-5.png",
@@ -82,7 +89,9 @@
     45
    ],
    "flag": "volunteers_released",
-   "flag_texture": "res://assets/art/rooms/F02/prop-5-released.png"
+   "flag_texture": "res://assets/art/rooms/F02/prop-5-released.png",
+   "texture_winter": "res://assets/art/rooms/F02/prop-5-winter.png",
+   "flag_texture_winter": "res://assets/art/rooms/F02/prop-5-released-winter.png"
   }
  },
  "label_only": [],
@@ -928,5 +937,8 @@
     ]
    }
   ]
- }
+ },
+ "background_winter": "res://assets/art/rooms/F02/background-winter.png",
+ "background_fall": "res://assets/art/rooms/F02/background-fall.png",
+ "background_spring": "res://assets/art/rooms/F02/background-spring.png"
 }
