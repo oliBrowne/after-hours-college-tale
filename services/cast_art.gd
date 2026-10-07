@@ -55,9 +55,10 @@ static func portrait(speaker: String,expression: int) -> Texture2D:
 static func source_portrait(speaker: String, expression: int) -> Texture2D:
 	if speaker=="Jakerson":return NativeJakersonArt.portrait(expression)
 	if speaker=="Professor Eric":return NativeEricArt.portrait(expression)
+	if speaker=="VAL" and NativeBossArt.drawn("val"):return NativeBossArt.portrait("val",expression)
 	if speaker in ["VAL","Val","CONE COMMITTEE"]:return NativeFinalArt.portrait({"VAL":"val","Val":"val_small","CONE COMMITTEE":"cone"}[speaker],expression)
-	# Chad borrows Eli's look until the visuals lane draws him.
-	if speaker=="Chad":return source_portrait("Eli",expression)
+	# VAL (the VP) and Chad have their own sheets; Chad falls back to Eli's look without his.
+	if speaker=="Chad":return NativeBossArt.portrait("chad",expression) if NativeBossArt.drawn("chad") else source_portrait("Eli",expression)
 	if speaker in ["Nell","Dev","ERRATA","INDEX","LOADBEARER"]:return NativeChapterArt.portrait(speaker.to_lower(),expression)
 	if speaker in ["Walt", "ENCORE", "Rook"]: return NativeExpansionArt.portrait(speaker.to_lower(), expression)
 	var face: int = clampi(expression, 0, 3)
@@ -78,8 +79,9 @@ static func body(id: String, frame: int = 0) -> Texture2D:
 	if id in ["cal","mags","todd"]:return NativeCampusSupportArt.body(id,frame)
 	if id=="jakerson":return NativeJakersonArt.body(frame)
 	if id=="eric":return NativeEricArt.body(frame)
-	if id in ["cone","val","val_small"]:return NativeFinalArt.body(id,frame)
+	if id in ["val","chad"] and NativeBossArt.drawn(id):return NativeBossArt.body(id,frame)
 	if id=="chad":return body("eli",frame)
+	if id in ["cone","val","val_small"]:return NativeFinalArt.body(id,frame)
 	if id in NativeChapterTwo.BOSSES or id in ["nell","dev"]:return NativeChapterArt.body(id,frame)
 	if id in ["walt", "encore", "rook"]: return NativeExpansionArt.body(id, frame)
 	if not BODY_REGIONS.has(id): return null
@@ -103,6 +105,7 @@ static func frames(id: String) -> SpriteFrames:
 	if id=="walt":return NativePartyBattleArt.frames(id)
 	if id=="jakerson":return NativeJakersonArt.frames()
 	if id=="eric":return NativeEricArt.frames()
+	if id in ["val","chad"] and NativeBossArt.drawn(id):return NativeBossArt.frames(id)
 	if id in ["cone","val","val_small"]:return NativeFinalArt.frames(id)
 	if id=="chad":return frames("eli")
 	if id in NativeChapterTwo.BOSSES or id in ["nell","dev"]:return NativeChapterArt.frames(id)

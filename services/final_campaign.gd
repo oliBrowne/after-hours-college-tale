@@ -97,7 +97,7 @@ static func restore_checkpoint(g: Node) -> bool:
 	return true
 static func phase_dialogue(g: Node) -> void:
 	g.boss_stage=int(g.battle.val_stage)
-	g.foe.sprite_frames=NativeFinalArt.frames("val_small" if g.boss_stage==3 else "val");g.foe.play("idle_down");NativeCastArt.fit(g.foe,g.foe_height())
+	g.foe.sprite_frames=NativeCastArt.frames("val_small" if g.boss_stage==3 else "val");g.foe.play("idle_down");NativeCastArt.fit(g.foe,g.foe_height())
 	var lines: Array=[]
 	if g.boss_stage==1:lines=[["VAL","LET'S TALK FIVE YEARS OUT. JULES: NEVER MISSES A DEADLINE. IMANI: LOVED BY EVERY MANAGER. WALT: NEEDS NO TEAM.","concern"],["Jules","That's not a five-year plan. That's three people who never sleep.","neutral"],["Walt","Each of us can answer for ourselves on that one.","warm"]]
 	elif g.boss_stage==2:lines=[["VAL","WE HAVE MORE CANDIDATES. MANY MORE. EVERY SEAT ON THIS PANEL IS BOOKED.","concern"],["Imani","Booked for people who haven't even applied. The real ones can't reach the door.","neutral"],["Walt","Then cancel one side. An empty chair is allowed.","warm"]]

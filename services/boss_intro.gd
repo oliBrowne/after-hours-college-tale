@@ -156,8 +156,8 @@ func _exit() -> float:
 
 func _place() -> void:
 	var out: float = _exit()
-	boss.position = Vector2(lerpf(760.0, 470.0, _progress(2, 18)) + out * 300.0, 292.0)
-	hero.position = Vector2(lerpf(-80.0, 112.0, _progress(4, 18)) - out * 220.0, 300.0)
+	boss.position = Vector2(lerpf(760.0, 470.0, _progress(2, 18)) + out * 300.0, 252.0)
+	hero.position = Vector2(lerpf(-80.0, 112.0, _progress(4, 18)) - out * 220.0, 258.0)
 	boss.modulate.a = 1.0 - out; hero.modulate.a = 1.0 - out
 
 func _draw() -> void:
@@ -183,17 +183,17 @@ func _draw() -> void:
 	# The title banner, sliding in from the left.
 	var land: float = _progress(_land() - 8, 14)
 	var bx: float = (land - 1.0) * 420.0 - out * 420.0
-	var plate := PackedVector2Array([Vector2(bx, 206), Vector2(bx + 392, 206), Vector2(bx + 372, 274), Vector2(bx, 274)])
+	var plate := PackedVector2Array([Vector2(bx, 262), Vector2(bx + 392, 262), Vector2(bx + 372, 314), Vector2(bx, 314)])
 	draw_colored_polygon(plate, Color(INK, 0.94 * fade))
-	draw_line(Vector2(bx, 206), Vector2(bx + 392, 206), Color(accent, fade), 2.0)
-	draw_line(Vector2(bx, 274), Vector2(bx + 372, 274), Color(accent, fade), 2.0)
+	draw_line(Vector2(bx, 262), Vector2(bx + 392, 262), Color(accent, fade), 2.0)
+	draw_line(Vector2(bx, 314), Vector2(bx + 372, 314), Color(accent, fade), 2.0)
 	var font: Font = game.font
 	if font == null: return
-	draw_string(font, Vector2(bx + 22, 224), str(card[0]), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(accent, fade))
+	draw_string(font, Vector2(bx + 22, 277), str(card[0]), HORIZONTAL_ALIGNMENT_LEFT, -1, 12, Color(accent, fade))
 	var name_size: int = 24 if str(card[1]).length() * 12 <= 340 else 18
-	draw_string(font, Vector2(bx + 20, 256), str(card[1]), HORIZONTAL_ALIGNMENT_LEFT, -1, name_size, Color(CREAM, fade))
+	draw_string(font, Vector2(bx + 20, 305), str(card[1]), HORIZONTAL_ALIGNMENT_LEFT, -1, name_size, Color(CREAM, fade))
 	# The catchphrase strip along the bottom.
 	var quote: float = _progress(_land(), 12)
 	var line: String = "\"" + str(card[2]) + "\""
-	draw_rect(Rect2(0, 316, 640, 30), Color(INK, 0.9 * fade * quote))
-	draw_string(font, Vector2(20, 336), line, HORIZONTAL_ALIGNMENT_LEFT, 600, 12, Color(MINT, fade * quote))
+	draw_rect(Rect2(0, 318, 640, 30), Color(INK, 0.9 * fade * quote))
+	draw_string(font, Vector2(20, 338), line, HORIZONTAL_ALIGNMENT_LEFT, 600, 12, Color(MINT, fade * quote))
