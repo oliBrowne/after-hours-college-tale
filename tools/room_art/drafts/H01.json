@@ -1,0 +1,496 @@
+{
+ "id": "H01",
+ "name": "The Hill / frat row on College Ave",
+ "cue": "campus",
+ "dimensions": [
+  960,
+  540
+ ],
+ "walk_bounds": [
+  16,
+  240,
+  928,
+  272
+ ],
+ "entry": [
+  880,
+  340
+ ],
+ "arrivals": {
+  "C01": [
+   880,
+   340
+  ],
+  "H02": [
+   485,
+   256
+  ]
+ },
+ "c01_spawn_note": "C01's 'hill' object (threshold at 34, 392) should use spawn [880, 340] (just inside H01's east exit).",
+ "npc_spots": [
+  [
+   150,
+   262
+  ],
+  [
+   270,
+   252
+  ],
+  [
+   400,
+   262
+  ],
+  [
+   560,
+   256
+  ],
+  [
+   610,
+   300
+  ],
+  [
+   700,
+   270
+  ],
+  [
+   820,
+   262
+  ],
+  [
+   130,
+   340
+  ],
+  [
+   300,
+   336
+  ],
+  [
+   520,
+   336
+  ],
+  [
+   760,
+   340
+  ],
+  [
+   380,
+   300
+  ],
+  [
+   470,
+   300
+  ],
+  [
+   250,
+   440
+  ],
+  [
+   700,
+   460
+  ],
+  [
+   120,
+   470
+  ]
+ ],
+ "blocks": [],
+ "fixed_blocks": [],
+ "placements": [
+  {
+   "kind": "door",
+   "x": 485,
+   "y": 240,
+   "w": 52,
+   "h": 116,
+   "depth": 0,
+   "object": "party_door",
+   "label": "HOUSE PARTY",
+   "anchor_offset": [
+    0,
+    10
+   ]
+  },
+  {
+   "kind": "threshold",
+   "x": 930,
+   "y": 340,
+   "w": 40,
+   "h": 30,
+   "depth": 0,
+   "object": "hill_return",
+   "label": "CAMPUS >",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "couch",
+   "x": 236,
+   "y": 302,
+   "w": 100,
+   "h": 40,
+   "depth": 16,
+   "object": "lawn_couch",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 170,
+   "y": 366,
+   "w": 22,
+   "h": 66,
+   "depth": 6,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 622,
+   "y": 366,
+   "w": 22,
+   "h": 66,
+   "depth": 6,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "tree",
+   "x": 318,
+   "y": 364,
+   "w": 110,
+   "h": 150,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "car",
+   "x": 800,
+   "y": 414,
+   "w": 136,
+   "h": 52,
+   "depth": 22,
+   "object": "parked_car",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "sign",
+   "x": 924,
+   "y": 366,
+   "w": 52,
+   "h": 88,
+   "depth": 6,
+   "object": "street_sign",
+   "label": "COLLEGE AVE",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "sign",
+   "x": 586,
+   "y": 292,
+   "w": 40,
+   "h": 36,
+   "depth": 4,
+   "object": "yard_sign",
+   "label": "NO PARKING ON LAWN",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "hydrant",
+   "x": 548,
+   "y": 368,
+   "w": 14,
+   "h": 20,
+   "depth": 6,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "cornhole",
+   "x": 104,
+   "y": 300,
+   "w": 74,
+   "h": 18,
+   "depth": 8,
+   "object": "cornhole",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "bin",
+   "x": 418,
+   "y": 370,
+   "w": 24,
+   "h": 34,
+   "depth": 8,
+   "object": "recycling_bin",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "car",
+   "x": 112,
+   "y": 414,
+   "w": 128,
+   "h": 50,
+   "depth": 22,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "party_door",
+   "name": "Front door / the party",
+   "x": 485,
+   "y": 250,
+   "kind": "door",
+   "to": "H02",
+   "spawn": [
+    400,
+    420
+   ],
+   "requires": [],
+   "suggested": "The door is propped open with a shoe. The bass comes out before the light does."
+  },
+  {
+   "id": "hill_return",
+   "name": "Down College Ave to campus",
+   "x": 930,
+   "y": 340,
+   "kind": "door",
+   "to": "C01",
+   "spawn": [
+    74,
+    392
+   ],
+   "requires": []
+  },
+  {
+   "id": "lawn_couch",
+   "name": "Couch on the lawn",
+   "x": 236,
+   "y": 312,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A plaid couch on the lawn, facing the street like it has front-row tickets. The middle cushion is missing.",
+   "lines": [
+    [
+     "Jules",
+     "A plaid couch on the lawn, facing the street like it has front-row tickets. The middle cushion is missing.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "house_a",
+   "name": "Brick house / GAMMA THETA XI",
+   "x": 160,
+   "y": 248,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Brass letters, porch light on, blinds down. This house is having a quiet night, loudly.",
+   "lines": [
+    [
+     "Jules",
+     "Brass letters, porch light on, blinds down. This house is having a quiet night, loudly.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "party_banner",
+   "name": "Bedsheet banner",
+   "x": 430,
+   "y": 248,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A bedsheet banner: RUSH WEEK / ALL WELCOME. The paint dripped. Nobody minded.",
+   "lines": [
+    [
+     "Jules",
+     "A bedsheet banner: RUSH WEEK / ALL WELCOME. The paint dripped. Nobody minded.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "porch_roof",
+   "name": "Porch roof / lawn chairs and a flamingo",
+   "x": 560,
+   "y": 248,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Two lawn chairs and a plastic flamingo on the porch roof. The flamingo has the best seat on the Hill.",
+   "lines": [
+    [
+     "Jules",
+     "Two lawn chairs and a plastic flamingo on the porch roof. The flamingo has the best seat on the Hill.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "house_c",
+   "name": "Tudor house / PHI XI PI",
+   "x": 786,
+   "y": 248,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Two pumpkins on the steps. One has the house letters carved in. One letter is just a hole.",
+   "lines": [
+    [
+     "Jules",
+     "Two pumpkins on the steps. One has the house letters carved in. One letter is just a hole.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "yard_sign",
+   "name": "NO PARKING ON LAWN",
+   "x": 586,
+   "y": 300,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "NO PARKING ON LAWN. Underneath, smaller: COUCHES OK.",
+   "lines": [
+    [
+     "Jules",
+     "NO PARKING ON LAWN. Underneath, smaller: COUCHES OK.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "cornhole",
+   "name": "Cornhole boards",
+   "x": 104,
+   "y": 306,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Three bean bags, all short. The game was abandoned at 20 to 19.",
+   "lines": [
+    [
+     "Jules",
+     "Three bean bags, all short. The game was abandoned at 20 to 19.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "recycling_bin",
+   "name": "Recycling bin",
+   "x": 418,
+   "y": 376,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "The recycling bin is mostly red cups, stacked like a trophy.",
+   "lines": [
+    [
+     "Jules",
+     "The recycling bin is mostly red cups, stacked like a trophy.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "scooter",
+   "name": "Scooter on its side",
+   "x": 694,
+   "y": 340,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A rental scooter lying on the sidewalk. It has seen things tonight.",
+   "lines": [
+    [
+     "Jules",
+     "A rental scooter lying on the sidewalk. It has seen things tonight.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "parked_car",
+   "name": "Parked hatchback",
+   "x": 800,
+   "y": 420,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A hatchback with a parking ticket and a CU parking sticker from three years ago.",
+   "lines": [
+    [
+     "Jules",
+     "A hatchback with a parking ticket and a CU parking sticker from three years ago.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "street_sign",
+   "name": "COLLEGE AVE",
+   "x": 924,
+   "y": 372,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "COLLEGE AVE. Downhill is campus. Uphill is every bad idea in Boulder.",
+   "lines": [
+    [
+     "Jules",
+     "COLLEGE AVE. Downhill is campus. Uphill is every bad idea in Boulder.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "tanner",
+   "name": "Tanner / the rush chair (mini-boss)",
+   "x": 470,
+   "y": 446,
+   "kind": "battle",
+   "requires": [],
+   "note": "Clear stage for the couch entrance: the street from x 330 to 640, y 400 to 500 has nothing solid. His brothers carry the couch in from the west end of College Ave (x 20, y 450) and set it down here, facing the party house."
+  }
+ ]
+}

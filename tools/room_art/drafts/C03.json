@@ -1,0 +1,493 @@
+{
+ "id": "C03",
+ "name": "Career Center / walk-ins welcome",
+ "cue": "umc",
+ "dimensions": [
+  800,
+  480
+ ],
+ "walk_bounds": [
+  20,
+  150,
+  760,
+  300
+ ],
+ "entry": [
+  400,
+  410
+ ],
+ "blocks": [],
+ "fixed_blocks": [],
+ "npc_spots": [
+  [
+   300,
+   206
+  ],
+  [
+   520,
+   210
+  ],
+  [
+   470,
+   330
+  ],
+  [
+   250,
+   330
+  ],
+  [
+   560,
+   420
+  ],
+  [
+   740,
+   300
+  ]
+ ],
+ "placements": [
+  {
+   "kind": "threshold",
+   "x": 400,
+   "y": 446,
+   "w": 64,
+   "h": 30,
+   "depth": 0,
+   "object": "court_exit",
+   "label": "FOUNTAIN COURT",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "desk",
+   "x": 140,
+   "y": 248,
+   "w": 132,
+   "h": 52,
+   "depth": 22,
+   "object": "advisor_desk",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "seats",
+   "x": 108,
+   "y": 300,
+   "w": 28,
+   "h": 34,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "seats",
+   "x": 172,
+   "y": 300,
+   "w": 28,
+   "h": 34,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "kiosk",
+   "x": 400,
+   "y": 262,
+   "w": 42,
+   "h": 78,
+   "depth": 14,
+   "object": "linkedout_kiosk",
+   "label": "LINKEDOUT",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 650,
+   "y": 264,
+   "w": 154,
+   "h": 46,
+   "depth": 22,
+   "object": "fair_table",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "bench",
+   "x": 640,
+   "y": 412,
+   "w": 98,
+   "h": 36,
+   "depth": 16,
+   "object": "waiting_chairs",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "planter",
+   "x": 42,
+   "y": 196,
+   "w": 36,
+   "h": 58,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "cooler",
+   "x": 292,
+   "y": 190,
+   "w": 22,
+   "h": 50,
+   "depth": 10,
+   "object": "water_cooler",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "sign",
+   "x": 236,
+   "y": 404,
+   "w": 50,
+   "h": 48,
+   "depth": 8,
+   "object": "walkin_sign",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "planter",
+   "x": 760,
+   "y": 196,
+   "w": 36,
+   "h": 58,
+   "depth": 12,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 140,
+   "y": 200,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 400,
+   "y": 236,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 650,
+   "y": 222,
+   "w": 8,
+   "h": 6,
+   "depth": 0,
+   "object": null,
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "lamp",
+   "x": 84,
+   "y": 404,
+   "w": 30,
+   "h": 64,
+   "depth": 8,
+   "object": "headshot_light",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  },
+  {
+   "kind": "table",
+   "x": 500,
+   "y": 344,
+   "w": 34,
+   "h": 52,
+   "depth": 12,
+   "object": "name_tags",
+   "label": "",
+   "anchor_offset": [
+    0,
+    0
+   ]
+  }
+ ],
+ "objects": [
+  {
+   "id": "court_exit",
+   "name": "Out to the Fountain Court",
+   "x": 400,
+   "y": 446,
+   "kind": "door",
+   "to": "C01",
+   "spawn": [
+    1340,
+    234
+   ],
+   "requires": [],
+   "note": "spawn = just below the career_center door (1340, 212) in the C01 draft (its arrivals.C03)"
+  },
+  {
+   "id": "linkedout_kiosk",
+   "name": "LinkedOut kiosk",
+   "x": 400,
+   "y": 272,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "LINKEDOUT. 0 profile views, 99+ notifications. TAP TO BEGIN.",
+   "lines": [
+    [
+     "Jules",
+     "LINKEDOUT. 0 profile views, 99+ notifications. TAP TO BEGIN.",
+     "neutral"
+    ]
+   ],
+   "note": "gameplay: this opens the LinkedOut screen"
+  },
+  {
+   "id": "advisor_desk",
+   "name": "Advisor's desk",
+   "x": 140,
+   "y": 258,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A nameplate, a bowl of mints and a four-year plan with year four still blank.",
+   "lines": [
+    [
+     "Jules",
+     "A nameplate, a bowl of mints and a four-year plan with year four still blank.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "advisor",
+   "name": "Career advisor / walk-in hours",
+   "x": 140,
+   "y": 202,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot behind the desk"
+  },
+  {
+   "id": "fair_table",
+   "name": "Career fair table",
+   "x": 650,
+   "y": 274,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "PEAKLINE IS HIRING. Free pens, free stress balls, no salary listed.",
+   "lines": [
+    [
+     "Jules",
+     "PEAKLINE IS HIRING. Free pens, free stress balls, no salary listed.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "recruiter",
+   "name": "Recruiter / career fair table",
+   "x": 650,
+   "y": 212,
+   "kind": "talk",
+   "requires": [],
+   "note": "NPC spot behind the fair table"
+  },
+  {
+   "id": "job_board",
+   "name": "JOBS board",
+   "x": 312,
+   "y": 160,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Internships, barista shifts, a lab that needs a volunteer, and a tear-off tab that says EXPERIENCE: 5 YEARS.",
+   "lines": [
+    [
+     "Jules",
+     "Internships, barista shifts, a lab that needs a volunteer, and a tear-off tab that says EXPERIENCE: 5 YEARS.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "events_screen",
+   "name": "Events screen",
+   "x": 432,
+   "y": 160,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "The screen cycles: CAREER FAIR TONIGHT, UPDATE YOUR PROFILE, RESUME REVIEW. Then it starts again.",
+   "lines": [
+    [
+     "Jules",
+     "The screen cycles: CAREER FAIR TONIGHT, UPDATE YOUR PROFILE, RESUME REVIEW. Then it starts again.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "brochures",
+   "name": "Brochure rack",
+   "x": 530,
+   "y": 160,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "RESUMES. INTERVIEWS. MAJORS. Somebody took every copy of WHAT NOW?",
+   "lines": [
+    [
+     "Jules",
+     "RESUMES. INTERVIEWS. MAJORS. Somebody took every copy of WHAT NOW?",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "advisor_window",
+   "name": "Window",
+   "x": 80,
+   "y": 160,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "Campus at night. Every window still lit belongs to somebody writing a cover letter.",
+   "lines": [
+    [
+     "Jules",
+     "Campus at night. Every window still lit belongs to somebody writing a cover letter.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "water_cooler",
+   "name": "Water cooler",
+   "x": 292,
+   "y": 200,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A paper cone of water. The most free thing in this room.",
+   "lines": [
+    [
+     "Jules",
+     "A paper cone of water. The most free thing in this room.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "headshot_light",
+   "name": "FREE HEADSHOTS",
+   "x": 112,
+   "y": 410,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "A ring light and a strip of tape on the carpet. Stand on the X. Look employable.",
+   "lines": [
+    [
+     "Jules",
+     "A ring light and a strip of tape on the carpet. Stand on the X. Look employable.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "name_tags",
+   "name": "Name tags",
+   "x": 500,
+   "y": 354,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "HELLO MY NAME IS. Somebody has written ASPIRING and nothing else.",
+   "lines": [
+    [
+     "Jules",
+     "HELLO MY NAME IS. Somebody has written ASPIRING and nothing else.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "walkin_sign",
+   "name": "RESUME REVIEW sign",
+   "x": 236,
+   "y": 414,
+   "kind": "inspect",
+   "requires": [],
+   "suggested": "RESUME REVIEW / WALK-INS. Bring a resume, or bring a feeling.",
+   "lines": [
+    [
+     "Jules",
+     "RESUME REVIEW / WALK-INS. Bring a resume, or bring a feeling.",
+     "neutral"
+    ]
+   ]
+  },
+  {
+   "id": "waiting_chairs",
+   "name": "Waiting chairs / rest and save",
+   "x": 640,
+   "y": 420,
+   "kind": "save",
+   "requires": [],
+   "suggested": "Three chairs facing the door. A good place to stop and breathe."
+  }
+ ]
+}
