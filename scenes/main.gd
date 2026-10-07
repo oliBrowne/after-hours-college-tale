@@ -324,19 +324,15 @@ func _input(event: InputEvent) -> void:
 	if mode in [Mode.TITLE, Mode.MENU, Mode.BATTLE, Mode.RESULT, Mode.PAUSE]:
 		var command_grid: bool = mode == Mode.BATTLE and caption.contains("Choose an action") and menu_options.size() == 6
 		if event is InputEventMouseButton and event.pressed and event.button_index in [MOUSE_BUTTON_WHEEL_UP, MOUSE_BUTTON_WHEEL_DOWN]:
-			selection = clampi(selection + (1 if event.button_index == MOUSE_BUTTON_WHEEL_DOWN else -1), 0, maxi(0, menu_options.size() - 1))
-			ui_dirty = true
+			set_selection(clampi(selection + (1 if event.button_index == MOUSE_BUTTON_WHEEL_DOWN else -1), 0, maxi(0, menu_options.size() - 1)))
 		elif command_grid and (event.is_action_pressed("move_down") or event.is_action_pressed("move_up")):
 			# Two rows of three: up/down change row, wrapping into the next column so every command stays reachable.
 			var order: Array[int] = [0, 3, 1, 4, 2, 5]
-			selection = order[(order.find(selection) + (1 if event.is_action_pressed("move_down") else 5)) % 6]
-			ui_dirty = true
+			set_selection(order[(order.find(selection) + (1 if event.is_action_pressed("move_down") else 5)) % 6])
 		elif event.is_action_pressed("move_down") or event.is_action_pressed("move_right"):
-			selection = (selection + 1) % maxi(1, menu_options.size())
-			ui_dirty = true
+			set_selection((selection + 1) % maxi(1, menu_options.size()))
 		elif event.is_action_pressed("move_up") or event.is_action_pressed("move_left"):
-			selection = (selection - 1 + menu_options.size()) % maxi(1, menu_options.size())
-			ui_dirty = true
+			set_selection((selection - 1 + menu_options.size()) % maxi(1, menu_options.size()))
 		elif event.is_action_pressed("confirm"):
 			activate(selection)
 		elif event.is_action_pressed("cancel"):
@@ -1970,8 +1966,7 @@ func render_ui() -> void:
 		advance.text = binding_label("confirm") + (" / begin" if intro_index == intro_cards.size() - 1 else " / continue")
 		advance.position = Vector2(390, top + 102); advance.size = Vector2(210, 23)
 		advance.add_theme_font_override("font", font); advance.add_theme_font_size_override("font_size", 12)
-		advance.add_theme_color_override("font_color", MINT)
-		advance.add_theme_color_override("font_hover_color", Color.WHITE)
+		quiet_button(advance, MINT)
 		advance.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		advance.focus_mode = Control.FOCUS_NONE
 		advance.action_mode = BaseButton.ACTION_MODE_BUTTON_PRESS
@@ -1981,6 +1976,7 @@ func render_ui() -> void:
 		skip.text = binding_label("cancel") + (" / skip move-in day" if intro_arrival < 0 else " / skip arrival")
 		skip.position = Vector2(36, top + 102); skip.size = Vector2(288, 23)
 		skip.add_theme_font_override("font", font); skip.add_theme_font_size_override("font_size", 12)
+		quiet_button(skip, CREAM)
 		skip.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		skip.focus_mode = Control.FOCUS_NONE; skip.action_mode = BaseButton.ACTION_MODE_BUTTON_PRESS
 		skip.pressed.connect(func() -> void: finish_arrival(true))
@@ -2131,36 +2127,23 @@ func render_options(rect: Rect2) -> void:
 		thumb.mouse_filter = Control.MOUSE_FILTER_IGNORE; ui.add_child(thumb); text_nodes.append(thumb)
 	for i: int in range(first, mini(menu_options.size(), first + count)):
 		if mode == Mode.MENU and menu_options[i].label == "Back": continue
-		var chosen: bool = i == selection
 		var button: Button = Button.new()
 		button.set_meta("option_index", i)
+		button.set_meta("grid", grid); button.set_meta("reviewing", reviewing)
+		button.set_meta("scrolls", not grid and columns == 1 and menu_options.size() > rows)
 		button.text = str(menu_options[i].label).get_slice(" ", 0) if names_only else str(menu_options[i].label)
 		button.add_theme_font_override("font", font)
 		button.add_theme_font_size_override("font_size", 12)
-		button.add_theme_color_override("font_color", MUTED if menu_options[i].get("disabled", false) else INK if chosen else CREAM)
-		button.add_theme_color_override("font_hover_color", Color.WHITE)
 		button.clip_text = true
 		button.position = rect.position + (Vector2((i % 3) * (rect.size.x / 3), (i / 3) * 35) if grid else Vector2((i / per_column) * (rect.size.x / 2 + 4), (i % per_column) * 23) if columns == 2 else Vector2(0, (i - first) * 23))
 		var option_size: Vector2 = Vector2(rect.size.x / 3 - 8, 24 if reviewing else 30) if grid else Vector2(rect.size.x / 2 - 4, 22) if columns == 2 else Vector2(rect.size.x, 22)
 		button.size = option_size
 		button.alignment = HORIZONTAL_ALIGNMENT_CENTER if grid else HORIZONTAL_ALIGNMENT_LEFT
-		# Selected = solid amber with dark text; the rest stay quiet so one choice stands out.
-		var normal: StyleBoxFlat = StyleBoxFlat.new()
-		normal.bg_color = AMBER if chosen else Color(INK, 0.94) if grid else Color(0, 0, 0, 0)
-		normal.border_color = AMBER if chosen else LINE
-		normal.set_border_width_all(1 if grid or chosen else 0)
-		normal.set_corner_radius_all(3)
-		normal.anti_aliasing = false
-		normal.content_margin_left = 8; normal.content_margin_right = 8; normal.content_margin_top = 0; normal.content_margin_bottom = 0
-		button.add_theme_stylebox_override("normal", normal)
-		button.add_theme_stylebox_override("disabled", normal); button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
-		var hover: StyleBoxFlat = normal.duplicate()
-		hover.bg_color = Color("51425a") if not chosen else AMBER.lightened(0.15); hover.border_color = AMBER; hover.set_border_width_all(1)
-		button.add_theme_stylebox_override("hover", hover); button.add_theme_stylebox_override("pressed", hover)
+		style_option(button, i, i == selection, false)
 		button.mouse_default_cursor_shape = Control.CURSOR_POINTING_HAND
 		button.focus_mode = Control.FOCUS_NONE
 		button.mouse_entered.connect(func() -> void:
-			if pointer_mode: hover_index = i; update_command_help())
+			if pointer_mode: hover_index = i; set_selection(i); update_command_help())
 		button.mouse_exited.connect(func() -> void:
 			if hover_index == i: hover_index = -1; update_command_help())
 		button.pressed.connect(func() -> void: activate(i))
@@ -2168,6 +2151,58 @@ func render_options(rect: Rect2) -> void:
 		# Size again once the slim styleboxes apply; the default theme's cached minimum clamped it taller.
 		button.update_minimum_size()
 		button.size = option_size
+
+## A button whose look never changes with hover: the intro cards rebuild every few ticks,
+## and a hover style that vanished and returned each rebuild read as flashing.
+func quiet_button(button: Button, ink: Color) -> void:
+	var flat: StyleBoxFlat = StyleBoxFlat.new()
+	flat.bg_color = Color(INK, 0.85); flat.border_color = LINE
+	flat.set_border_width_all(1); flat.set_corner_radius_all(3); flat.anti_aliasing = false
+	flat.content_margin_left = 8; flat.content_margin_right = 8; flat.content_margin_top = 0; flat.content_margin_bottom = 0
+	for state_name: String in ["normal", "hover", "pressed", "disabled", "hover_pressed"]:
+		button.add_theme_stylebox_override(state_name, flat)
+	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	for colour_name: String in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color"]:
+		button.add_theme_color_override(colour_name, ink)
+	button.alignment = HORIZONTAL_ALIGNMENT_CENTER
+
+## One option button's look: the chosen row is solid amber with dark text, the rest stay quiet.
+## Hover moves the selection, so there is no separate hover colour to flash against it.
+func style_option(button: Button, i: int, chosen: bool, fade: bool) -> void:
+	var grid: bool = button.get_meta("grid", false)
+	var normal: StyleBoxFlat = StyleBoxFlat.new()
+	normal.bg_color = AMBER if chosen else Color(INK, 0.94) if grid else Color(0, 0, 0, 0)
+	normal.border_color = AMBER if chosen else LINE
+	normal.set_border_width_all(1 if grid or chosen else 0)
+	normal.set_corner_radius_all(3)
+	normal.anti_aliasing = false
+	normal.content_margin_left = 8; normal.content_margin_right = 8; normal.content_margin_top = 0; normal.content_margin_bottom = 0
+	for state_name: String in ["normal", "hover", "pressed", "disabled", "hover_pressed"]:
+		button.add_theme_stylebox_override(state_name, normal)
+	button.add_theme_stylebox_override("focus", StyleBoxEmpty.new())
+	var ink: Color = MUTED if menu_options[i].get("disabled", false) else INK if chosen else CREAM
+	for colour_name: String in ["font_color", "font_hover_color", "font_pressed_color", "font_hover_pressed_color", "font_disabled_color", "font_focus_color"]:
+		button.add_theme_color_override(colour_name, ink)
+	if chosen and fade:
+		var target: Color = normal.bg_color
+		normal.bg_color = Color(target, 0.3)
+		button.create_tween().tween_property(normal, "bg_color", target, 0.09)
+
+## Moves the highlight without rebuilding the whole screen (a rebuild flashed every row).
+func set_selection(index: int) -> void:
+	if index == selection or index < 0 or index >= menu_options.size(): return
+	var visible_now: bool = false
+	for button: Button in buttons:
+		if is_instance_valid(button) and int(button.get_meta("option_index", -1)) == index: visible_now = not button.get_meta("scrolls", false)
+	selection = index
+	if not visible_now or (pause_context and mode == Mode.MENU):
+		ui_dirty = true
+		return
+	for button: Button in buttons:
+		if not is_instance_valid(button): continue
+		var row: int = int(button.get_meta("option_index", -1))
+		style_option(button, row, row == index, row == index)
+	update_command_help()
 
 func command_summary(command: Dictionary) -> String:
 	var actor_name: String = str(battle.party[int(command.actor)].id).capitalize()
