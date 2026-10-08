@@ -154,7 +154,7 @@ def foot_at(phase, stride):
 		return stride * (1 - 4 * phase), 0, False
 	q = (phase - 0.5) * 2
 	step = int(round(q * 4)) % 4
-	lift = [0, 2, 3, 1][step]
+	lift = [0, 1, 2, 1][step]
 	# The swinging foot leads a pixel as it passes, so its toe shows beside the planted one.
 	return -stride + 2 * stride * q + (1 if step else 0), lift, step == 0
 
