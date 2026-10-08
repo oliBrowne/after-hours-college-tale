@@ -81,6 +81,7 @@ var foe_riders: Sprite2D
 var dodge_view: DodgeBoxView
 var phase_ticks: int = 0
 var timing_ticks: int = 0
+var combo_shown: bool = false
 var timing_index: int = 0
 var pending_battle: Dictionary = {}
 var resolution_ticks: int = 0
@@ -1558,17 +1559,32 @@ func commit_plan() -> void:
 	else:
 		for command: Dictionary in plan:
 			command.timing = 1.0 / 3.0
+			if command.kind == "strike": command.hits = Array([1.0 / 3.0]) if BattleRules.taps(str(battle.party[int(command.actor)].id)) == 1 else [1.0 / 3.0, 1.0 / 3.0]
 		resolve_plan()
 
 func finish_timing(missed: bool) -> void:
 	var strikes: Array = plan.filter(func(c: Dictionary) -> bool: return c.kind == "strike")
-	strikes[timing_index].timing = -1.0 if missed or timing_ticks > 54 else 1.0 - absf(float(timing_ticks) / 54.0 - 0.5) * (1.2 if int(strikes[timing_index].actor) == 0 and PartyGrowth.has_perk(state.flags, "moms_keychain") else 2.0)
-	audio.combat("perfect" if float(strikes[timing_index].timing) >= 0.85 else "pick")
-	timing_index += 1
+	var command: Dictionary = strikes[timing_index]
+	var member: String = str(battle.party[int(command.actor)].id)
+	var period: float = float(BattleRules.style(member).period)
+	var window: float = 1.2 if int(command.actor) == 0 and PartyGrowth.has_perk(state.flags, "moms_keychain") else 2.0
+	var t: float = -1.0 if missed or float(timing_ticks) > period else 1.0 - absf(float(timing_ticks) / period - 0.5) * window
+	if not command.has("hits"): command.hits = []
+	command.hits.append(t)
+	var crit: bool = t >= BattleRules.CRIT_AT
+	audio.combat("perfect" if t >= 0.85 else "pick")
+	if crit: NativeBattleJuice.kick([battle_scenery, foe, claim_art, pin_art] + battle_sprites, 3.0, 8)
 	timing_ticks = 0
+	input_lock = 2
+	if command.hits.size() < BattleRules.taps(member):
+		ui_dirty = true
+		return
+	var sum: float = 0.0
+	for h: float in command.hits: sum += h
+	command.timing = sum / float(command.hits.size())
+	timing_index += 1
 	if timing_index >= strikes.size():
 		resolve_plan()
-	input_lock = 2
 
 func resolve_plan() -> void:
 	pending_battle = BattleRules.resolve_plan(battle, plan)
@@ -1580,6 +1596,7 @@ func resolve_plan() -> void:
 	if boundary_active:
 		pending_battle.promise = true
 		pending_battle.openness = mini(100, int(pending_battle.openness) + (0 if boss_id == "claim" else 15))
+	combo_shown = false
 	mode = Mode.RESOLVE; resolution_ticks = 0; resolution_index = 0
 	shown_enemy_hp = int(battle.hp)
 	present_action(); ui_dirty = true
@@ -2306,12 +2323,25 @@ func render_battle_ui() -> void:
 	elif mode == Mode.TIMING:
 		panel(Rect2(12, 166, 616, 142))
 		var strikes: Array = plan.filter(func(c: Dictionary) -> bool: return c.kind == "strike")
-		var striker: String = str(battle.party[int(strikes[timing_index].actor)].id).capitalize()
-		label(striker + " / confirm when the light meets the centre", Rect2(26, 175, 584, 16), 12, AMBER)
+		var current: Dictionary = strikes[timing_index]
+		var striker_id: String = str(battle.party[int(current.actor)].id)
+		var period: float = float(BattleRules.style(striker_id).period)
+		var tap_count: int = BattleRules.taps(striker_id)
+		var done_taps: int = current.get("hits", []).size()
+		var prompt: String = {"jules": "confirm when the light meets the centre", "imani": "on the beat: tap %d of %d at the centre" % [done_taps + 1, tap_count], "walt": "wait for it: one slow, heavy swing"}.get(striker_id, "confirm when the light meets the centre")
+		label(striker_id.capitalize() + " / " + prompt, Rect2(26, 175, 584, 16), 12, AMBER)
 		fill(Rect2(26, 195, 588, 1), LINE)
 		fill(Rect2(80, 241, 480, 9), PLUM)
-		fill(Rect2(302, 235, 36, 21), AMBER)
-		fill(Rect2(80 + minf(1.0, timing_ticks / 54.0) * 480, 231, 3, 29), CREAM)
+		# Good zone, then the narrow perfect zone in the middle (a critical hit).
+		var window: float = 1.2 if int(current.actor) == 0 and PartyGrowth.has_perk(state.flags, "moms_keychain") else 2.0
+		var good: float = 480.0 * 0.4 / window
+		var perfect: float = 480.0 * (1.0 - BattleRules.CRIT_AT) / window * 2.0
+		fill(Rect2(320.0 - good / 2.0, 237, good, 17), Color("8a5a3a"))
+		fill(Rect2(320.0 - perfect / 2.0, 233, perfect, 25), AMBER)
+		label("CRIT", Rect2(320.0 - 18, 259, 40, 14), 12, AMBER)
+		for i: int in range(done_taps):
+			fill(Rect2(80 + i * 12, 262, 8, 8), MINT)
+		fill(Rect2(80 + minf(1.0, timing_ticks / period) * 480, 231, 3, 29), CREAM)
 	elif mode == Mode.RESOLVE:
 		# Keep the command panel at full height: who is acting, the whole turn's plan as a log
 		# (done / now / next) and what the current action does.
@@ -2538,7 +2568,8 @@ func present_action() -> void:
 func present_impact() -> void:
 	var command: Dictionary = plan[resolution_index]
 	if command.kind == "strike":
-		var damage: int = 1 if float(command.get("timing", 0)) < 0 else maxi(1, roundi(float(battle.party[int(command.actor)].power) * (0.8 + 0.6 * float(command.get("timing", 1.0 / 3.0))) - 1))
+		var result: Dictionary = BattleRules.strike_result(str(battle.party[int(command.actor)].id), int(battle.party[int(command.actor)].power), command, BattleRules.combo_for(plan))
+		var damage: int = int(result.damage)
 		shown_enemy_hp = maxi(int(pending_battle.hp), shown_enemy_hp - damage)
 		vfx.play("impact", Vector2(480, 105), Vector2(480, 105), damage)
 		foe.modulate = Color("df8078"); claim_art.set_pose("hit"); pin_art.set_pose("hit")
@@ -2547,6 +2578,14 @@ func present_impact() -> void:
 		var struck: Node2D = claim_art if boss_id == "claim" else pin_art if boss_id == "pinpal" else foe
 		NativeBattleJuice.flinch(struck, Vector2.RIGHT, damage); NativeBattleJuice.flash(struck)
 		if damage >= 12: NativeBattleJuice.kick([battle_scenery, foe, claim_art, pin_art] + battle_sprites, 2.0, 10)
+		if int(result.crits) > 0:
+			vfx.play("crit", Vector2(480, 105), Vector2(480, 105), 0, "CRIT!")
+			NativeBattleJuice.kick([battle_scenery, foe, claim_art, pin_art] + battle_sprites, 4.0, 14)
+			NativeBattleJuice.flash(struck, 12, Color("ffe9a8"))
+		var combo: float = BattleRules.combo_for(plan)
+		if combo > 1.0 and not combo_shown:
+			combo_shown = true
+			vfx.play("combo", Vector2(480, 105), Vector2(480, 130), 0, "COMBO x%.1f" % combo)
 	elif str(command.kind) in ["heal", "item", "warmth"]:
 		# Healing pops a green number over each ally it reached.
 		for i: int in range(mini(3, battle_sprites.size())):

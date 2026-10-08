@@ -11,6 +11,54 @@ static func create_battle(party: Array = [], inventory: Dictionary = {}) -> Dict
 	var supplies: Dictionary = {"granola": 2, "cocoa": 1, "thermos": 1} if inventory.is_empty() else inventory.duplicate(true)
 	return {"party": members, "hp": 48, "openness": 0, "sync": 20, "inventory": supplies, "guards": [false, false, false], "shield": false, "brace": false, "slow": false, "promise": false, "outcome": "active", "turn": 0}
 
+## Attack styles. Jules: one clean swing. Imani: two taps on the beat, lighter each. Walt: one slow,
+## heavy swing. `period` is the ticks the timing light takes to cross the bar.
+const STRIKE_STYLE: Dictionary = {
+	"jules": {"taps": 1, "mult": 1.0, "period": 54},
+	"imani": {"taps": 2, "mult": 0.62, "period": 44},
+	"walt": {"taps": 1, "mult": 1.3, "period": 72},
+}
+const CRIT_AT: float = 0.9
+const CRIT_MULT: float = 1.5
+const COMBO_STEP: float = 0.2
+
+static func style(member_id: String) -> Dictionary:
+	return STRIKE_STYLE.get(member_id, STRIKE_STYLE.jules)
+
+static func taps(member_id: String) -> int:
+	return int(style(member_id).taps)
+
+## The timings that count for a strike command (older commands carry one `timing`).
+static func hits_of(command: Dictionary) -> Array:
+	if command.has("hits"): return command.hits
+	return [float(command.get("timing", 1.0 / 3.0))]
+
+## How hard one strike lands: each tap's base damage times the style, a critical on a perfect tap,
+## and the turn's combo bonus. Returns {"damage", "crits"}.
+static func strike_result(member_id: String, power: int, command: Dictionary, combo: float = 1.0) -> Dictionary:
+	var total: int = 0
+	var crits: int = 0
+	var landed: bool = false
+	for t: float in hits_of(command):
+		if t < 0.0:
+			total += 1
+			continue
+		landed = true
+		var damage: int = maxi(1, roundi((float(power) * (0.8 + 0.6 * minf(1.0, t)) - 1.0) * float(style(member_id).mult)))
+		if t >= CRIT_AT:
+			damage = roundi(float(damage) * CRIT_MULT)
+			crits += 1
+		total += damage
+	if landed: total = maxi(1, roundi(float(total) * combo))
+	return {"damage": total, "crits": crits}
+
+## Teammates who all land a swing in the same turn hit harder: +20 percent each beyond the first.
+static func combo_for(commands: Array) -> float:
+	var landing: int = 0
+	for command: Dictionary in commands:
+		if str(command.kind) == "strike" and hits_of(command).any(func(t: float) -> bool: return t >= 0.0): landing += 1
+	return 1.0 + COMBO_STEP * float(maxi(0, landing - 1))
+
 static func _cost(command: Dictionary) -> int:
 	if command.has("joint"):
 		return 35
@@ -123,6 +171,7 @@ static func resolve_plan(before: Dictionary, commands: Array) -> Dictionary:
 	battle.promise = false
 	battle.ward = false; battle.windbreak_target = -1
 	battle.turn = int(battle.turn) + 1
+	var combo: float = combo_for(commands)
 	for command: Dictionary in _ordered(commands):
 		if battle.outcome != "active":
 			break
@@ -157,10 +206,8 @@ static func resolve_plan(before: Dictionary, commands: Array) -> Dictionary:
 				battle.outcome = "peaceful"
 				battle.promise = false
 			"strike":
-				var timing: float = float(command.get("timing", 1.0 / 3.0))
-				var power: int = int(battle.party[actor].power)
-				var damage: int = 1 if timing < 0.0 else maxi(1, roundi(power * (0.8 + 0.6 * minf(1.0, timing)) - 1.0))
-				battle.hp = maxi(0, int(battle.hp) - damage)
+				var result: Dictionary = strike_result(str(battle.party[actor].id), int(battle.party[actor].power), command, combo)
+				battle.hp = maxi(0, int(battle.hp) - int(result.damage))
 				if int(battle.hp) == 0:
 					battle.outcome = "forceful"
 					battle.promise = false
@@ -168,7 +215,7 @@ static func resolve_plan(before: Dictionary, commands: Array) -> Dictionary:
 
 ## Damage per enemy hit before defence. "" is the Flyerer. Opening bosses are
 ## gentle; each chapter's bosses hit harder as the party's story stats grow.
-const ENEMY_DAMAGE: Dictionary = {"": 8, "jakerson": 3, "walt": 8, "pinpal": 8, "claim": 8, "deion": 8, "chip": 14, "encore": 14, "cone": 14, "errata": 18, "loadbearer": 18, "eric": 18, "autocomplete": 18, "chad": 18, "todd": 20, "rook": 22, "val": 24, "jakerson_final": 12, "rf_cyclist": 7, "rf_runner": 7, "rf_hippie": 6, "rf_business_major": 7, "rf_sunbeam": 10, "tanner": 14, "kyle": 16}
+const ENEMY_DAMAGE: Dictionary = {"": 8, "jakerson": 3, "walt": 10, "pinpal": 10, "claim": 10, "deion": 10, "chip": 17, "encore": 17, "cone": 17, "errata": 22, "loadbearer": 22, "eric": 22, "autocomplete": 22, "chad": 22, "todd": 24, "rook": 26, "val": 28, "jakerson_final": 12, "rf_cyclist": 7, "rf_runner": 7, "rf_hippie": 6, "rf_business_major": 7, "rf_sunbeam": 10, "tanner": 14, "kyle": 16}
 const PROMISE_OPENNESS: int = 45
 
 ## A boss is desperate once Openness reaches 50 or its HP falls to half, so the

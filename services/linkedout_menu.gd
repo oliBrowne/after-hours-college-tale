@@ -78,6 +78,15 @@ static func open(g: Node) -> void:
 		options.append(g.option("Accept all", func() -> void:
 			for p: Dictionary in LinkedOut.pending(g.state.flags): LinkedOut.accept(g.state.flags, str(p.id))
 			changed(g, "Everyone accepted.")))
+	for p: Dictionary in pending:
+		var skip: String = str(p.id)
+		options.append(g.option("Ignore " + str(p.name), func() -> void:
+			LinkedOut.ignore(g.state.flags, skip)
+			changed(g, "Request from %s ignored." % str(LinkedOut.person(skip).name))))
+	if not LinkedOut.ignored(f).is_empty():
+		options.append(g.option("Restore ignored (%d)" % LinkedOut.ignored(f).size(), func() -> void:
+			for p: Dictionary in LinkedOut.ignored(g.state.flags): LinkedOut.restore(g.state.flags, str(p.id))
+			changed(g, "Ignored requests are back.")))
 	options.append(g.option("Profile feed", func() -> void:feed(g, 0)))
 	options.append(g.option("Back", g.pause_menu))
 	g.open_menu(g.Mode.MENU, LinkedOut.summary(f), options)
@@ -192,8 +201,12 @@ static func render(g: Node) -> void:
 	if g.caption.contains("\n"):
 		_feed_card(g, g.caption.split("\n")[1], g.caption.split("\n")[0])
 	else:
-		var focus: Dictionary = JULES if g.selection >= pending.size() else pending[g.selection]
-		_profile_card(g, focus, g.selection < pending.size())
+		# Menu order: Accept each, [Accept all], Ignore each, then the rest.
+		var n: int = pending.size()
+		var skip_at: int = n + (1 if n > 1 else 0)
+		var which: int = g.selection if g.selection < n else g.selection - skip_at if g.selection >= skip_at and g.selection < skip_at + n else -1
+		var focus: Dictionary = JULES if which < 0 else pending[which]
+		_profile_card(g, focus, which >= 0)
 
 static func _profile_card(g: Node, focus: Dictionary, requesting: bool) -> void:
 	var id: String = str(focus.id)

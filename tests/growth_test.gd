@@ -77,16 +77,16 @@ func _test_keepsakes() -> void:
 func _test_damage() -> void:
 	var battle: Dictionary = Rules.create_battle()
 	battle.max_hp = 48
-	_check(Rules.enemy_damage("walt", battle) == 8 and Rules.enemy_damage("", battle) == 8, "Opening bosses hit for 8")
-	_check(Rules.enemy_damage("encore", battle) == 14 and Rules.enemy_damage("autocomplete", battle) == 18 and Rules.enemy_damage("rook", battle) == 22 and Rules.enemy_damage("val", battle) == 24, "Later bosses hit harder")
-	_check(Rules.enemy_damage("val", battle, true) == 12, "Reduced incoming damage halves a hit")
+	_check(Rules.enemy_damage("walt", battle) == 10 and Rules.enemy_damage("", battle) == 8, "Opening bosses hit for 8 to 10")
+	_check(Rules.enemy_damage("encore", battle) == 17 and Rules.enemy_damage("autocomplete", battle) == 22 and Rules.enemy_damage("rook", battle) == 26 and Rules.enemy_damage("val", battle) == 28, "Later bosses hit harder")
+	_check(Rules.enemy_damage("val", battle, true) == 14, "Reduced incoming damage halves a hit")
 	battle.openness = 50
-	_check(Rules.desperate(battle) and Rules.enemy_damage("val", battle) == 30, "At 50 Openness a boss hits 25 percent harder")
+	_check(Rules.desperate(battle) and Rules.enemy_damage("val", battle) == 35, "At 50 Openness a boss hits 25 percent harder")
 	battle.openness = 0
 	battle.hp = 24
-	_check(Rules.desperate(battle) and Rules.enemy_damage("walt", battle) == 10, "At half HP a boss hits 25 percent harder")
+	_check(Rules.desperate(battle) and Rules.enemy_damage("walt", battle) == 13, "At half HP a boss hits 25 percent harder")
 	battle.eased = true
-	_check(Rules.enemy_damage("walt", battle) == 5, "A limit set with CONNECT eases the hit instead of the desperate bonus")
+	_check(Rules.enemy_damage("walt", battle) == 6, "A limit set with CONNECT eases the hit instead of the desperate bonus")
 	battle.eased = false
 	battle.hp = 25
 	_check(not Rules.desperate(battle), "Above half HP and under 50 Openness is not desperate")

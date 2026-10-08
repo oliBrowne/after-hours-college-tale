@@ -51,6 +51,19 @@ func _test_rules() -> void:
 	battle = Rules.create_battle()
 	_check(Rules.resolve_plan(battle, [{"actor": 0, "kind": "strike"}]).hp == 35, "Default timing gives 1.0 multiplier")
 	_check(Rules.resolve_plan(battle, [{"actor": 0, "kind": "strike", "timing": -1.0}]).hp == 47, "Missed timing deals one damage")
+	var jules_hit: Dictionary = Rules.strike_result("jules", 14, {"kind": "strike", "hits": [1.0]})
+	_check(int(jules_hit.crits) == 1 and int(jules_hit.damage) == 29, "A perfect Jules swing is a critical: " + str(jules_hit))
+	_check(int(Rules.strike_result("jules", 14, {"kind": "strike", "hits": [0.8]}).crits) == 0, "A good but not perfect swing is no critical")
+	var imani_hit: Dictionary = Rules.strike_result("imani", 10, {"kind": "strike", "hits": [1.0, 1.0]})
+	_check(int(imani_hit.crits) == 2 and int(imani_hit.damage) == 24, "Imani's two perfect beats both crit: " + str(imani_hit))
+	_check(int(Rules.strike_result("imani", 10, {"kind": "strike", "hits": [-1.0, 1.0]}).damage) == 13, "A missed beat is 1 damage, the other still counts")
+	_check(int(Rules.strike_result("walt", 12, {"kind": "strike", "hits": [0.5]}).damage) > int(Rules.strike_result("jules", 12, {"kind": "strike", "hits": [0.5]}).damage), "Walt hits heavier than Jules for the same timing")
+	_check(Rules.taps("imani") == 2 and Rules.taps("jules") == 1 and Rules.taps("walt") == 1, "Imani taps twice")
+	_check(is_equal_approx(Rules.combo_for([{"kind": "strike", "timing": 0.5}]), 1.0) and is_equal_approx(Rules.combo_for([{"kind": "strike", "timing": 0.5}, {"kind": "strike", "timing": 0.5}, {"kind": "strike", "timing": 0.5}]), 1.4) and is_equal_approx(Rules.combo_for([{"kind": "strike", "timing": 0.5}, {"kind": "strike", "timing": -1.0}]), 1.0), "Each extra landed striker adds 20 percent")
+	battle = Rules.create_battle()
+	var solo_hp: int = int(Rules.resolve_plan(battle, [{"actor": 0, "kind": "strike", "timing": 0.5}]).hp)
+	var duo_hp: int = int(Rules.resolve_plan(battle, [{"actor": 0, "kind": "strike", "timing": 0.5}, {"actor": 2, "kind": "strike", "timing": 0.5}]).hp)
+	_check(48 - duo_hp > (48 - solo_hp) + 5, "A team of two outdamages two separate swings")
 	battle.guards[0] = true
 	battle.brace = true
 	battle.shield = true
