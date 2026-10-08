@@ -22,6 +22,17 @@ const YEARS: Dictionary = {1: 1, 2: 1, 3: 2, 4: 3, 5: 4}
 static var for_state: Variant = null
 static var seen: int = 0
 
+## The four-year title cards ("FRESHMAN YEAR / FALL"), drawn full screen instead of in the story box.
+static func is_card(title: String) -> bool:
+	return title.begins_with("FRESHMAN YEAR") or title.begins_with("SOPHOMORE YEAR") or title.begins_with("JUNIOR YEAR") or title.begins_with("SENIOR YEAR")
+
+## Accent colour of a year card: red-gold in fall, ice blue in winter, blossom in spring, amber for the Last Light.
+static func card_colour(title: String) -> Color:
+	if title.contains("LAST LIGHT"): return Color("e8b45c")
+	if title.contains("WINTER") or title.contains("SPRING TERM"): return Color("9ab8e8")
+	if title.contains("SPRING"): return Color("f0a8c8")
+	return Color("e08a4a")
+
 static func stage(f: Dictionary) -> int:
 	if f.has("claim_resolution"): return 5
 	if f.get("cal_key_received", false): return 4

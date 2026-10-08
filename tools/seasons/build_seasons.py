@@ -323,7 +323,7 @@ def bare_limbs(sc, crown, keep, seed, conf):
     trow = xs[ys <= ys.min() + 1]
     tx0, tx1 = trow.min(), trow.max()
     roots = []
-    n_roots = conf.get("roots", 5)
+    n_roots = conf.get("roots", 6)
     fan = conf.get("fan", 1.05)
     for k in range(n_roots):
         f = (k + 0.5) / n_roots * 2 - 1                      # -1 (left) .. 1 (right)
@@ -365,14 +365,14 @@ def bare_limbs(sc, crown, keep, seed, conf):
         cv[tops_, :3] = S.SNOW[4]
         sc.snow |= tops_
         return new
-    segs = TR.oak_limbs(space, roots, seed=seed, depth=conf.get("depth", 6), spread=conf.get("spread", 0.46),
-                        fill=conf.get("fill", 0.8), shrink=conf.get("shrink", 0.72),
+    segs = TR.oak_limbs(space, roots, seed=seed, depth=conf.get("depth", 7), spread=conf.get("spread", 0.46),
+                        fill=conf.get("fill", 0.88), shrink=conf.get("shrink", 0.72),
                         wshrink=conf.get("wshrink", 0.72), first=conf.get("first", 0.5), rise=conf.get("rise", 0.03),
-                        curl=conf.get("curl", 0.14), fringe=conf.get("fringe", 2))
+                        curl=conf.get("curl", 0.14), fringe=conf.get("fringe", 4))
     wmap, amap = TR.draw_limbs((sc.H, sc.W), segs)
     # twig lace: short 1px twigs sprouting off the limbs, pointing away from the trunk, so the
     # old crown's outline still reads as a fine dark haze
-    lace = conf.get("lace", 0.05)
+    lace = conf.get("lace", 0.1)
     if lace > 0:
         ly, lx = np.nonzero(wmap > 0)
         pick = hash2(lx, ly, seed + 31) < lace
@@ -573,6 +573,9 @@ def winter_flowerbeds(sc, mask, seed):
     sc.snow |= mask
 
 
+FROZEN = ramp(["#9fb2da", "#c2d0ee", "#eef4ff"])
+
+
 def winter_water(sc, mask, seed):
     if not mask.any():
         return
@@ -586,6 +589,22 @@ def winter_water(sc, mask, seed):
     rim = ice & (d <= 1)
     cv[rim, :3] = S.SNOW[3]
     sc.snow |= rim
+    # Small pools (rain puddles) freeze solid: pale ice with a few bright streaks and a snowy rim,
+    # so they read as frozen puddles instead of dark holes in the snow.
+    labels, count = components(mask)
+    for k in range(1, count + 1):
+        pool = labels == k
+        if pool.sum() > 900:
+            continue
+        inner = distance(~pool, maxd=6)
+        cv[pool, :3] = FROZEN[0]
+        streak = pool & (value_noise(sc.H, sc.W, (2, 7), seed + 5 + k) > 0.55) & (inner >= 2)
+        cv[streak, :3] = FROZEN[1]
+        glint = pool & (value_noise(sc.H, sc.W, (1, 4), seed + 9 + k) > 0.86) & (inner >= 2)
+        cv[glint, :3] = FROZEN[2]
+        edge = pool & (inner <= 1)
+        cv[edge, :3] = S.SNOW[3]
+        sc.snow |= edge
 
 
 def warm_glow(sc, reach=4):

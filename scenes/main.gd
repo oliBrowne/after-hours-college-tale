@@ -236,7 +236,7 @@ func _ready() -> void:
 	campus_map.hide()
 	var minimap: NativeMinimapView = NativeMinimapView.new()
 	minimap.setup(self, false)
-	minimap.position = Vector2(8, 62); minimap.z_index = 40
+	minimap.position = Vector2(516, 34); minimap.z_index = 40; minimap.modulate = Color(1, 1, 1, 0.78)
 	ui.add_child(minimap)
 	vfx = CombatVFX.new()
 	vfx.z_index = 300
@@ -1967,12 +1967,29 @@ func render_ui() -> void:
 	elif mode == Mode.INTRO:
 		var arrival: bool = intro_index == intro_arrival
 		var top: float = 12 if arrival else 211
-		panel(Rect2(28, top, 584, 128))
-		label(str(intro_cards[intro_index][0]), Rect2(44, top + 14, 552, 28), 18, AMBER)
+		var card_title: String = str(intro_cards[intro_index][0])
 		var text: String = str(intro_cards[intro_index][1])
-		label(text.left(mini(text.length(), intro_ticks / 2)), Rect2(44, top + 53, 552, 58), 12)
+		var year_season: Color = NativeYears.card_colour(card_title)
+		if NativeYears.is_card(card_title):
+			# A year card owns the whole screen: tinted for the season, title centred between two rules.
+			var shown: String = text.left(mini(text.length(), intro_ticks / 2))
+			var rise: float = clampf(intro_ticks / 40.0, 0.0, 1.0)
+			fill(Rect2(0, 0, 640, 360), INK)
+			fill(Rect2(0, 0, 640, 360), Color(year_season, 0.10 * rise))
+			fill(Rect2(0, 330, 640, 30), Color(year_season, 0.06 * rise))
+			var parts: PackedStringArray = card_title.split(" / ")
+			var year_text: String = parts[0]
+			var term_text: String = parts[1] if parts.size() > 1 else ""
+			fill(Rect2(160, 118, 320, 1), Color(year_season, rise)); fill(Rect2(160, 205, 320, 1), Color(year_season, rise))
+			var big: Label = label(year_text, Rect2(80, 132, 480, 34), 24, Color(CREAM, rise)); big.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			var term: Label = label(term_text, Rect2(80, 170, 480, 20), 12, Color(year_season, rise)); term.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+			var sub: Label = label(shown, Rect2(120, 224, 400, 54), 12, MUTED); sub.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		else:
+			panel(Rect2(28, top, 584, 128))
+			label(card_title, Rect2(44, top + 14, 552, 28), 18, AMBER)
+			label(text.left(mini(text.length(), intro_ticks / 2)), Rect2(44, top + 53, 552, 58), 12)
 		var advance: Button = Button.new()
-		advance.text = binding_label("confirm") + (" / begin" if intro_index == intro_cards.size() - 1 else " / continue")
+		advance.text = binding_label("confirm") + (" / begin" if intro_index == intro_cards.size() - 1 and not NativeYears.is_card(card_title) else " / continue")
 		advance.position = Vector2(390, top + 102); advance.size = Vector2(210, 23)
 		advance.add_theme_font_override("font", font); advance.add_theme_font_size_override("font_size", 12)
 		quiet_button(advance, MINT)
@@ -1982,7 +1999,7 @@ func render_ui() -> void:
 		advance.pressed.connect(advance_intro)
 		ui.add_child(advance); text_nodes.append(advance)
 		var skip: Button = Button.new()
-		skip.text = binding_label("cancel") + (" / skip move-in day" if intro_arrival < 0 else " / skip arrival")
+		skip.text = binding_label("cancel") + (" / skip" if NativeYears.is_card(card_title) else " / skip move-in day" if intro_arrival < 0 else " / skip arrival")
 		skip.position = Vector2(36, top + 102); skip.size = Vector2(288, 23)
 		skip.add_theme_font_override("font", font); skip.add_theme_font_size_override("font_size", 12)
 		quiet_button(skip, CREAM)

@@ -193,6 +193,7 @@ def paint_floor(bg, reflections):
     # queue marks in front of the truck hatches
     for (qx, qy) in queue_marks_xy:
         queue_marks(bg, qx, qy, n=3, gap=12)
+    plaza_dressing(bg)
     # the Broadway crossing at the left edge, the path out to Farrand Field at the right edge
     from surfaces import asphalt
     asphalt(bg, 0, y0 - 6, 22, (y1 - y0) + 12, seed=9)
@@ -214,6 +215,47 @@ def paint_floor(bg, reflections):
             grass_tuft(bg, x, 520, 6, seed=x)
     for xx in (gap0 - 3, gap1):
         bg.rect(xx, 512, 3, H - 512, WALL[3]); bg.vline(xx, 512, H - 512, WALL[5])
+
+
+def plaza_dressing(bg):
+    """The big flagstone apron between the truck lane and the promenade was one flat field: brick
+    expansion bands, cast-iron manhole covers, oil stains where the trucks idle, hairline cracks,
+    chewing-gum dots and a hopscotch of painted bike-lane arrows, all kept clear of the paths."""
+    rng = np.random.default_rng(77)
+    y0, y1 = PROMENADE
+    top = BASE + 54
+    # brick expansion bands crossing the apron, with a sandstone edge
+    for bx in range(60, WEST[1] + 60, 150):
+        paver_poly(bg, [(bx, top), (bx + 9, top), (bx + 9, y0 - 2), (bx, y0 - 2)], seed=bx, brick=(9, 3), edge=False)
+        bg.rect(bx - 1, top, 1, y0 - 2 - top, C(SHADOW, 0.3))
+    # oil stains and tyre marks where the trucks idle
+    for (tx, _, _, facing) in TRUCKS:
+        for k in range(3):
+            ox = tx + int(rng.integers(-26, 26)); oy = 266 + int(rng.integers(-3, 14))
+            bg.ellipse(ox, oy, int(rng.integers(10, 22)), int(rng.integers(4, 8)), C(SHADOW, 0.28))
+        bg.rect(tx - 30, 286, 3, 22, C(SHADOW, 0.16)); bg.rect(tx + 22, 286, 3, 22, C(SHADOW, 0.16))
+    # cast-iron manhole covers
+    for (mx, my) in [(196, 330), (468, 334), (1180, 352), (704, 304)]:
+        bg.ellipse(mx - 9, my - 4, 18, 8, C(SHADOW, 0.6))
+        bg.ellipse(mx - 8, my - 4, 16, 7, "#3a3640")
+        for q in range(-6, 7, 3):
+            bg.line(mx + q, my - 2, mx + q - 1, my + 2, "#25222c")
+        bg.hline(mx - 7, my - 3, 14, "#5a5560")
+    # hairline cracks
+    for _ in range(26):
+        cx = int(rng.integers(20, WEST[1] - 20)); cy = int(rng.integers(top + 6, y0 - 8))
+        for _ in range(int(rng.integers(8, 20))):
+            bg.px(cx, cy, C(SHADOW, 0.4))
+            cx += int(rng.choice([-1, 1, 1])); cy += int(rng.choice([-1, 0, 1]))
+    # chewing gum and dropped confetti from the career fair
+    for _ in range(46):
+        gx = int(rng.integers(20, WEST[1] - 10)); gy = int(rng.integers(top, y0 - 4))
+        bg.px(gx, gy, C(rng.choice(["#2a2630", "#d8d0b8", "#d86a7a", "#e8b84a", "#6aaac8"]), 0.75))
+    # painted bike-lane arrows
+    for ax in (330, 600):
+        for k in range(3):
+            bg.hline(ax + k * 22, 336, 12, C("#e8dcb8", 0.5))
+            bg.poly([(ax + k * 22 + 12, 333), (ax + k * 22 + 17, 336), (ax + k * 22 + 12, 339)], C("#e8dcb8", 0.5))
 
 
 def court_inlay(bg):
