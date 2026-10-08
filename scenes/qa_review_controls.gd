@@ -29,16 +29,31 @@ func run(main: Node) -> bool:
 	var normal: Dictionary = game.state.duplicate(true)
 	await _press("menu"); await _choose("Return to title"); await _choose("Begin the evening")
 	await _press("cancel")
-	_assert(int(game.mode) == WORLD and game.state.flags == normal.flags and game.state.party == normal.party and game.state.inventory == normal.inventory, "Skip and complete arrival yield identical starting story/roster/supplies")
+	# Completing the cards starts move-in day in Farrand (freshman fall); skipping goes straight to the Broadway evening.
+	# Everything else about the starting story, roster and supplies must match.
+	var move_in_only: Array[String] = ["movein_active", "scene_movein_meet", "visited_U01", "intro_seen"]
+	var normal_flags: Dictionary = normal.flags.duplicate(); var skip_flags: Dictionary = game.state.flags.duplicate()
+	for key: String in move_in_only: normal_flags.erase(key); skip_flags.erase(key)
+	_assert(bool(normal.flags.get("movein_active", false)) and not game.state.flags.has("movein_active"), "Completing the cards starts move-in day; skipping does not")
+	_assert(int(game.mode) == WORLD and skip_flags == normal_flags and game.state.party == normal.party and game.state.inventory == normal.inventory, "Skip and complete arrival yield identical starting story/roster/supplies apart from move-in day")
 	# Explicit isolated battle fixture; subsequent selections use real menu inputs.
-	game.state.flags.imani_joined = true; game.state.flags.cal_joined = true
-	game.state.party[0].hp = 0; game.state.party[1].hp = 20
+	game.state.flags.imani_joined = true; game.state.flags.cal_joined = true; game.state.flags.walt_joined = true
+	game.state.party[0].hp = 0; game.state.party[1].hp = 45
 	game.enter_room("U07", Vector2(96, 258), false)
 	game.boss_id = "claim"; game.start_battle()
+	# Advisor Bev opens with her gym-leader card (BANNER mode) before the first command menu.
+	for _i: int in range(600):
+		if int(game.mode) != 14: break
+		await _press()
 	await _frame()
+	# The press that dismisses the card can also reach the first menu; undo anything it queued.
+	for _j: int in range(4):
+		if game.plan.is_empty(): break
+		await _press("cancel")
 	_assert(int(game.actor) == 1, "Fresh battle selects conscious Imani when Jules is down")
 	_check_party_poses("Initial fixture")
-	await _choose("GUARD"); await _choose("GUARD")
+	await _choose("GUARD")
+	await _choose("GUARD")
 	await _capture("controls-down-review")
 	await _choose("Clear plan")
 	_assert(int(game.actor) == 1 and game.plan.is_empty(), "Clear plan selects first conscious member")
@@ -75,7 +90,7 @@ func run(main: Node) -> bool:
 	await _choose("Clear plan")
 	await _choose("TALENT"); await _choose("Hold the Light")
 	await _choose("TALENT"); await _choose("Half Time")
-	await _choose("TALENT"); await _choose("Brace")
+	await _choose("TALENT"); await _choose("Lantern Ward")
 	_assert(int(game.actor) == 2 and game.plan.size() == 2 and not str(game.battle_error).is_empty(), "Unaffordable shared-resource action is rejected visibly")
 	await _capture("controls-invalid-resource")
 	_log("FAIL" if failed else "PASS native mouse intro and down/clear/undo/revive/mixed/joint/resource controls")

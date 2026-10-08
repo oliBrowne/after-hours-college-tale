@@ -60,23 +60,33 @@ func run(main: Node) -> bool:
 	await _choose("I can stay")
 	await _settle()
 	_assert(game.state.flags.get("mixer_returned", false) and not game.state.flags.get("imani_joined", false), "Mixer returned; Imani stays for sound check")
-	await _door("atrium", "U03")
-	await _quiet()
-	_assert(game.state.flags.get("imani_joined", false) and not game.state.flags.get("cal_joined", false), "Imani joins in the atrium; Cal still absent")
-	await _door("clubroom", "U04")
-	await _capture("02-duo-U04")
+	# Freshman year: Jules faces the Flyerer alone; Imani joins halfway through the year, in the atrium.
 	await _object("flyer")
 	await _fight("flyer")
-	_assert(game.state.flags.get("flyer_resolution", "") == "peaceful", "Flyerer peaceful resolution")
+	_assert(game.state.flags.get("flyer_resolution", "") == "peaceful" and not game.state.flags.get("imani_joined", false), "Flyerer peaceful resolution, Jules alone")
+	await _quiet()
 	await _door("atrium", "U03")
+	await _quiet()
+	_assert(game.state.flags.get("imani_joined", false) and not game.state.flags.get("walt_joined", false) and not game.state.flags.get("cal_joined", false), "Imani joins in the atrium; Walt and Cal still absent")
+	await _capture("02-duo-U03")
 	await _object("booth")
 	await _settle()
+	await _quiet()
 	_assert(game.state.flags.get("booth_seen", false), "Booth voice investigated")
+	# Sophomore year: Walt joins under the bridge.
+	await _door("terrace", "U02")
+	await _door("outdoor_return", "U08")
+	await _quiet()
+	await _object("walt")
+	await _fight_story("walt")
+	_assert(game.state.flags.get("walt_joined", false), "Walt joins after the lantern fight")
+	await _door("terrace_path", "U02")
+	await _door("main_entrance", "U03")
 	await _door("stairs", "U05")
 	await _load_before_cal()
 	await _object("cal")
 	await _settle()
-	_assert(game.state.flags.get("imani_joined", false) and game.state.flags.get("cal_joined", false), "Three-member roster recruited incrementally")
+	_assert(game.state.flags.get("imani_joined", false) and game.state.flags.get("walt_joined", false) and game.state.flags.get("cal_joined", false), "Full roster recruited incrementally (Imani, Walt, then Cal's key)")
 	await _capture("04-trio-U05")
 	if "--qa-discoveries" in OS.get_cmdline_user_args(): await _object("mags_checklist"); await _settle()
 	await _door("connection_stairs", "U06")
@@ -628,5 +638,60 @@ func _defend_box(id: String) -> void:
 	await _frame()
 	if choice.press:_event("confirm",false)
 	var key: String=id+"-"+str(p.get("patternId",""))+"-"+str(p.get("phase",0))
+	if not captures.has(key) and int(p.clock)>=180:
+		captures[key]=true;await _capture("defense-"+key)
+
+## Story-boss fight with ordinary menu input (Walt and later): peaceful CONNECT and GUARD, the boss's own promise.
+func _fight_story(id: String) -> void:
+	await _settle()
+	var start: int=ticks
+	var force_walt: bool=id=="walt" and "--qa-force-walt" in OS.get_cmdline_user_args()
+	while not failed and int(game.mode)!=RESULT:
+		if ticks-start>6200: _assert(false,"Boss timeout "+id);break
+		match int(game.mode):
+			BATTLE:
+				_release();_check_party_poses("Planning "+id)
+				if game.caption=="Review party plan": await _choose("Commit turn")
+				elif str(game.caption).contains("Choose an action"):
+					if force_walt: await _choose("STRIKE")
+					elif game.battle.party.slice(0,game.actor).all(func(m: Dictionary) -> bool:return int(m.hp)<=0): await _choose("CONNECT")
+					else: await _choose("GUARD")
+				elif str(game.caption).begins_with("Connect"):
+					var release: bool=game.menu_options.any(func(c: Dictionary) -> bool: return str(c.label).begins_with("RELEASE"))
+					if release: await _choose("RELEASE")
+					else: await _choose("Keep the light" if id=="walt" else "Follow three" if id=="chip" else "Answer two")
+				else: _assert(false,"Unexpected menu "+str(game.caption))
+			DODGE:
+				if not pause_checked and int(game.pattern.clock)>=80: await _pause_defense()
+				else: await _defend_story(id)
+			TIMING:
+				if game.timing_ticks>=27: await _press()
+				else: await _frame()
+			# A boss answering a CONNECT question.
+			DIALOGUE: await _settle()
+			_:
+				_release();await _frame()
+	_release()
+	if failed:return
+	_assert(game.battle.outcome==("forceful" if force_walt else "peaceful"),id+" expected outcome")
+	if id=="walt": _assert(not game.state.flags.get("walt_joined",false),"Recruitment waits for Walt's dialogue")
+	await _capture("boss-"+id+"-result")
+	await _choose("Continue");await _settle()
+func _defend_story(id: String) -> void:
+	if game.pattern.get("engine","")=="box":
+		await _defend_box(id);return
+	var p: Dictionary=game.pattern
+	var cursor:=Vector2(p.cursor.x,p.cursor.y)
+	var dest:=Vector2(128,62) if id=="walt" else Vector2(p.safeColumn,92)
+	var delta: Vector2=dest-cursor
+	if id=="chip":
+		_axis(Vector2(signf(delta.x) if absf(delta.x)>4 and int(p.lastInputX)==0 else 0,0))
+	else:
+		_axis(Vector2(signf(delta.x) if absf(delta.x)>2 else 0,signf(delta.y) if absf(delta.y)>2 else 0))
+	var confirm: bool=id=="walt" and cursor.distance_to(dest)<20 and int(p.clock)%28==0 or id=="encore" and p.cueOpen and cursor.distance_to(dest)<14
+	if confirm:_event("confirm",true)
+	await _frame()
+	if confirm:_event("confirm",false)
+	var key: String=id+"-phase-"+str(p.phase)
 	if not captures.has(key) and int(p.clock)>=180:
 		captures[key]=true;await _capture("defense-"+key)
