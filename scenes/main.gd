@@ -796,19 +796,19 @@ func interact(object: Dictionary) -> void:
 		return
 	if object.kind == "challenge":
 		if state.flags.has(str(object.id) + "_resolution"):
-			dialogue([["Chip" if object.id == "chip" else "Deion Sanders", "The rehearsal is finished. Let everyone rest.", "warm"]], resume_world)
+			dialogue([["Chip", "The rehearsal is finished. Let everyone rest.", "warm"]] if object.id == "chip" else [["Deion Sanders", "Clean handoff. Now take that break. You earned it.", "warm"]], resume_world)
 			return
 		dialogue(object.lines, func() -> void: open_menu(Mode.MENU, str(object.name), [option("Try the friendly challenge", func() -> void:
 			boss_id = str(object.id); start_battle()), option("Maybe later", resume_world)])); return
 	match str(object.id):
 		"imani":
 			if NativeImaniJoin.talk(self): return
-			dialogue([["Imani", "My mixer! You came back. I was beginning to write a song about betrayal.", "warm"], ["Jules", "Would the bag get a solo?", "warm"], ["Imani", "A terrible one. Listen, could you help with sound check, then chairs, then-", "warm"], ["Jules", "I promised Mom I would catch the last bus. One task. That was the deal.", "concern"], ["Imani", "Right. Sorry. I keep making the room louder so I do not have to hear how nervous I am.", "concern"]], resume_world, [option("I can stay for one sound check.", func() -> void: complete_mixer("candid")), option("Return it, but explain the deadline.", func() -> void: complete_mixer("boundary"))])
+			dialogue([["Imani", "My mixer! You came back. I was beginning to write a song about betrayal.", "warm"], ["Jules", "Would the bag get a solo?", "warm"], ["Imani", "A terrible one. Listen, could you help with sound check, then chairs, then-", "warm"], ["Jules", "I promised Mom I'd catch the last bus. One task. That was the deal.", "concern"], ["Imani", "Right. Sorry. I keep making the room louder so I don't have to hear how nervous I am.", "concern"]], resume_world, [option("I can stay for one sound check.", func() -> void: complete_mixer("candid")), option("Return it, but explain the deadline.", func() -> void: complete_mixer("boundary"))])
 		"booth":
 			if not state.flags.get("imani_joined", false):
-				dialogue([["Jules", "NEXT YEAR. Say who you will become. I do not have time to audition for tomorrow.", "concern"]], resume_world)
+				dialogue([["Jules", "NEXT YEAR. Say who you will become. I don't have time to audition for tomorrow.", "concern"]], resume_world)
 			else:
-				dialogue([["Booth", "Jules Navarro. Tomorrow you will wish you had stayed.", "concern"], ["Jules", "That was my voice. I did not record that.", "concern"], ["Imani", "The booth is not connected to the mixer. It is connected to the floor.", "concern"], ["Jules", "Then we find out who is down there. One real answer. Not our entire future.", "warm"]], func() -> void: state.flags.booth_seen = true; persist(); resume_world())
+				dialogue([["Booth", "Jules Navarro. Tomorrow you will wish you had stayed.", "concern"], ["Jules", "That was my voice. I didn't record that.", "concern"], ["Imani", "The booth isn't connected to the mixer. It's connected to the floor.", "concern"], ["Jules", "Then we find out who is down there. One real answer. Not our entire future.", "warm"]], func() -> void: state.flags.booth_seen = true; persist(); resume_world())
 		"lamp", "farrand_lamp":
 			rest_menu()
 		"flyer", "pinpal", "claim":
@@ -818,7 +818,7 @@ func interact(object: Dictionary) -> void:
 			if object.id == "flyer" and not state.flags.get("mixer_returned", false):
 				dialogue([["Flyerer", "RETURN FIRST. RECRUIT LATER. RETURN FIRST!", "concern"]], resume_world); return
 			boss_id = "" if object.id == "flyer" else str(object.id)
-			var intro: Dictionary = {"flyer": [["Flyerer", "ONE PAGE! JUST ONE! THE CLUB CANNOT CLOSE IF NOBODY READS!", "concern"], ["Imani", "That poster was just a poster a minute ago. Now it has opinions. We should probably discuss that.", "concern"], ["Jules", "We can read one invitation. Or make enough room to walk past.", "neutral"]], "pinpal": [["Pin Pal", "RETURN SERVICE! RETURN SERVICE!", "warm"], ["Walt", "A bowling pin practicing returns. One ball at a time. I respect a clear job.", "warm"]], "claim": [["Advisor Bev", "HAVE YOU CHECKED YOUR DEGREE AUDIT, SWEETIE? TAKE A NUMBER. TAKE A FOLDER. EVERYTHING HERE HAS AN ADVISOR.", "concern"], ["Jules", "That glove looks like it is waving.", "concern"], ["Advisor Bev", "PAGE ONE OF THE FOUR-YEAR PLAN! ITEM 41, UNCLAIMED CREDIT! I HAVE SCHEDULED IT FOR SPRING OF NEVER.", "concern"], ["Imani", "Her desk plate says BEV. We can carry one thing, Bev. We cannot be the advisor of every forgotten thing.", "warm"]]}
+			var intro: Dictionary = {"flyer": [["Flyerer", "ONE PAGE! JUST ONE! THE CLUB CANNOT CLOSE IF NOBODY READS!", "concern"], ["Imani", "That poster was just a poster a minute ago. Now it has opinions. We should probably discuss that.", "concern"], ["Jules", "I can read one invitation. Or make enough room to walk past.", "neutral"]], "pinpal": [["Pin Pal", "RETURN SERVICE! RETURN SERVICE!", "warm"], ["Walt", "A bowling pin practicing returns. One ball at a time. I respect a clear job.", "warm"]], "claim": [["Advisor Bev", "HAVE YOU CHECKED YOUR DEGREE AUDIT, SWEETIE? TAKE A NUMBER. TAKE A FOLDER. EVERYTHING HERE HAS AN ADVISOR.", "concern"], ["Jules", "That glove looks like it's waving.", "concern"], ["Advisor Bev", "PAGE ONE OF THE FOUR-YEAR PLAN! ITEM 41, UNCLAIMED CREDIT! I HAVE SCHEDULED IT FOR SPRING OF NEVER.", "concern"], ["Imani", "Her desk plate says BEV. We can carry one thing, Bev. We can't be the advisor of every forgotten thing.", "warm"]]}
 			dialogue(NativeYears.present(intro[str(object.id)], state.flags), start_battle)
 		_:
 			if object.id == "squirrel": audio.combat("squirrel")
@@ -1824,7 +1824,7 @@ func show_aftermath(resolved_id: String) -> void:
 	var peaceful: bool = str(state.flags.get(resolved_id + "_resolution", "")) == "peaceful"
 	boss_id = ""
 	enter_room(str(state.room), Vector2(float(state.x), float(state.y)), false)
-	var aftermath: Dictionary = {"flyer": [["Flyerer", "One reader. One page. We can close now.", "warm"], ["Imani", "We did not promise forever. And it worked.", "warm"], ["Imani", "Now the atrium booth. I want to know why it used my voice.", "concern"]] if peaceful else [["Imani", "The stand's bent. I've left a note by the hinge.", "concern"], ["Jules", "Then we check that voice in the atrium.", "neutral"]], "pinpal": [["Pin Pal", "RETURN RECEIVED. THANK YOU FOR PLAYING.", "warm"]] if peaceful else [["Walt", "The housing's cracked. Leave it switched off.", "concern"], ["Jules", "I'll put the ball on the rack.", "neutral"]], "claim": [["Advisor Bev", "ONE RETURN. ONE NOTE. THE REST OF THE FOUR-YEAR PLAN CAN WAIT UNTIL OFFICE HOURS, SWEETIE.", "warm"], ["Pip", "I am coming with you. I can point. That is a surprisingly useful glove skill.", "warm"], ["Advisor Bev", "PIP, SWEETIE: I HAVE MOVED YOU FROM 'UNCLAIMED' TO 'UNDECLARED.' IT IS THE BEST MAJOR.", "warm"], ["Jules", "The booth has a maker. We find them, then find a way home.", "warm"], ["Mags", "Mags, from the cart out front. I heard all of that. Leaving something unfinished on purpose is harder than it looks.", "warm"]] if peaceful else [["Mags", "Mags, from the cart out front. The ticket spool broke; I'll sort it. Leave the glove with me?", "concern"], ["Pip", "Actually, I would like to come with them.", "warm"], ["Jules", "Then we find who made that booth. Together.", "warm"]]}
+	var aftermath: Dictionary = {"flyer": [["Flyerer", "One reader. One page. We can close now.", "warm"], ["Imani", "We didn't promise forever. And it worked.", "warm"], ["Imani", "Now the atrium booth. I want to know why it used my voice.", "concern"]] if peaceful else [["Imani", "The stand's bent. I've left a note by the hinge.", "concern"], ["Jules", "Then we check that voice in the atrium.", "neutral"]], "pinpal": [["Pin Pal", "RETURN RECEIVED. THANK YOU FOR PLAYING.", "warm"]] if peaceful else [["Walt", "The housing's cracked. Leave it switched off.", "concern"], ["Jules", "I'll put the ball on the rack.", "neutral"]], "claim": [["Advisor Bev", "ONE RETURN. ONE NOTE. THE REST OF THE FOUR-YEAR PLAN CAN WAIT UNTIL OFFICE HOURS, SWEETIE.", "warm"], ["Pip", "I am coming with you. I can point. That is a surprisingly useful glove skill.", "warm"], ["Advisor Bev", "PIP, SWEETIE: I HAVE MOVED YOU FROM 'UNCLAIMED' TO 'UNDECLARED.' IT IS THE BEST MAJOR.", "warm"], ["Jules", "The booth has a maker. We find them, then find a way home.", "warm"], ["Mags", "I heard all of that from the hall. Leaving something unfinished on purpose is harder than it looks.", "warm"]] if peaceful else [["Mags", "Heard the crash from the hall. The ticket spool broke; I'll sort it. Leave the glove with me?", "concern"], ["Pip", "Actually, I would like to come with them.", "warm"], ["Jules", "Then we find who made that booth. Together.", "warm"]]}
 	var closing: Array = aftermath.get(resolved_id, [[resolved_id.capitalize(), "Good practice. Remember to rest.", "warm"]])
 	# Freshman year: Jules faces the Flyerer alone, so the closing lines are his.
 	if resolved_id == "flyer" and not state.flags.get("imani_joined", false):
@@ -2328,7 +2328,7 @@ func render_battle_ui() -> void:
 		var period: float = float(BattleRules.style(striker_id).period)
 		var tap_count: int = BattleRules.taps(striker_id)
 		var done_taps: int = current.get("hits", []).size()
-		var prompt: String = {"jules": "confirm when the light meets the centre", "imani": "on the beat: tap %d of %d at the centre" % [done_taps + 1, tap_count], "walt": "wait for it: one slow, heavy swing"}.get(striker_id, "confirm when the light meets the centre")
+		var prompt: String = {"jules": "confirm when the light meets the center", "imani": "on the beat: tap %d of %d at the centre" % [done_taps + 1, tap_count], "walt": "wait for it: one slow, heavy swing"}.get(striker_id, "confirm when the light meets the center")
 		label(striker_id.capitalize() + " / " + prompt, Rect2(26, 175, 584, 16), 12, AMBER)
 		fill(Rect2(26, 195, 588, 1), LINE)
 		fill(Rect2(80, 241, 480, 9), PLUM)

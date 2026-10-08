@@ -356,11 +356,11 @@
    "y": 280,
    "kind": "inspect",
    "requires": [],
-   "suggested": "A sticky note says WELCOME, INTERN! in three colours. The laptop is older than the company.",
+   "suggested": "A sticky note says WELCOME, INTERN! in three colors. The laptop is older than the company.",
    "lines": [
     [
      "Jules",
-     "A sticky note says WELCOME, INTERN! in three colours. The laptop is older than the company.",
+     "A sticky note says WELCOME, INTERN! in three colors. The laptop is older than the company.",
      "neutral"
     ]
    ]
@@ -543,16 +543,16 @@
   },
   {
    "id": "scooter_marks",
-   "name": "Tyre marks on the floor",
+   "name": "Tire marks on the floor",
    "x": 610,
    "y": 300,
    "kind": "inspect",
    "requires": [],
-   "suggested": "Black scuffs curve right across the floorboards and end at a power strip labelled KYLE. DO NOT UNPLUG.",
+   "suggested": "Black scuffs curve right across the floorboards and end at a power strip labeled KYLE. DO NOT UNPLUG.",
    "lines": [
     [
      "Jules",
-     "Black scuffs curve right across the floorboards and end at a power strip labelled KYLE. DO NOT UNPLUG.",
+     "Black scuffs curve right across the floorboards and end at a power strip labeled KYLE. DO NOT UNPLUG.",
      "neutral"
     ]
    ]

@@ -39,7 +39,7 @@
           ],
           [
             "Jules",
-            "Eight minutes to return one mixer. No extra favors. That is the plan.",
+            "Eight minutes to return one mixer. No extra favors. That's the plan.",
             "neutral"
           ]
         ],
@@ -75,7 +75,7 @@
           ],
           [
             "Jules",
-            "A mixer. I am not accepting the other thing.",
+            "A mixer. I'm not accepting the other thing.",
             "neutral"
           ],
           [
@@ -700,12 +700,12 @@
         "lines": [
           [
             "Todd Saliman",
-            "The finite-plan desk is in Old Main. This hall only has the directory.",
+            "Evening. Enjoy Last Light, and read the fine print on anything a flyer hands you.",
             "neutral"
           ],
           [
             "Jules",
-            "One building at a time.",
+            "Noted. One thing at a time.",
             "neutral"
           ]
         ],
@@ -2456,7 +2456,7 @@
         "lines": [
           [
             "Jules",
-            "A radio with its back off. Every tube is labelled in tiny careful handwriting.",
+            "A radio with its back off. Every tube is labeled in tiny, careful handwriting.",
             "neutral"
           ],
           [
@@ -7315,7 +7315,7 @@
       },
       {
         "id": "family_phone",
-        "name": "Jules phone / an unsent message",
+        "name": "Jules's phone / an unsent message",
         "x": 630,
         "y": 330,
         "kind": "inspect",
@@ -9948,7 +9948,7 @@
         "lines": [
           [
             "Jules",
-            "Mom packed a fan. Mom was right. It is ninety degrees in here.",
+            "Mom packed a fan. Mom was right. It's ninety degrees in here.",
             "neutral"
           ]
         ]
@@ -9978,7 +9978,7 @@
         "lines": [
           [
             "Jules",
-            "Cereal, apples and a magnet that says SERVE IT. Very organised.",
+            "Cereal, apples and a magnet that says SERVE IT. Very organized.",
             "neutral"
           ]
         ]
@@ -12072,7 +12072,7 @@
         "lines": [
           [
             "Jules",
-            "Someone chalked WELCOME HOME, BUFFS in four colours.",
+            "Someone chalked WELCOME HOME, BUFFS in four colors.",
             "neutral"
           ]
         ]
@@ -12175,12 +12175,12 @@
           ],
           [
             "Jules",
-            "I've been here four years.",
+            "I live here.",
             "neutral"
           ],
           [
             "Volunteer",
-            "Then you should know it by now. Still the other building, though.",
+            "Then you already know. It's always the other building.",
             "warm"
           ]
         ]
@@ -12659,7 +12659,7 @@
         "lines": [
           [
             "Jules",
-            "USED. Highlighted in four colours by four people who all stopped at chapter three.",
+            "USED. Highlighted in four colors by four people who all stopped at chapter three.",
             "neutral"
           ]
         ]
@@ -13174,12 +13174,12 @@
           ],
           [
             "Jules",
-            "I'm graduating tomorrow.",
+            "I don't have a plan yet.",
             "neutral"
           ],
           [
             "Career advisor",
-            "Then you're right on time. The best time to worry about a career is the night before the ceremony. Try the LinkedOut kiosk.",
+            "Then you're right on time. Most people find one the week before graduation. Try the LinkedOut kiosk.",
             "warm"
           ]
         ]
@@ -14650,7 +14650,7 @@
         "lines": [
           [
             "Jules",
-            "A sticky note says WELCOME, INTERN! in three colours. The laptop is older than the company.",
+            "A sticky note says WELCOME, INTERN! in three colors. The laptop is older than the company.",
             "neutral"
           ]
         ]
@@ -14822,7 +14822,7 @@
       },
       {
         "id": "scooter_marks",
-        "name": "Tyre marks on the floor",
+        "name": "Tire marks on the floor",
         "x": 610,
         "y": 300,
         "kind": "inspect",
@@ -14830,7 +14830,7 @@
         "lines": [
           [
             "Jules",
-            "Black scuffs curve right across the floorboards and end at a power strip labelled KYLE. DO NOT UNPLUG.",
+            "Black scuffs curve right across the floorboards and end at a power strip labeled KYLE. DO NOT UNPLUG.",
             "neutral"
           ]
         ]
@@ -15227,7 +15227,7 @@
         "lines": [
           [
             "Jules",
-            "COMPOST, RECYCLE, LANDFILL, and a fourth bin labelled EQUITY. It's empty.",
+            "COMPOST, RECYCLE, LANDFILL, and a fourth bin labeled EQUITY. It's empty.",
             "neutral"
           ]
         ]

@@ -78,7 +78,7 @@ const HINTS: Dictionary = {
 	"tassel": ["Stay under the pen's swing or cross behind it. Dodge drafts. Hold the way out.",
 		"Stay under the pen's swing; dodge drafts. Chairs hurt; CONNECT > REVISE opens a side."],
 	"strings": ["Cords drop where you stand and unplug at each stop. Confirm in the green cue."],
-	"closing_time": ["Cross a hand at its gap or through the hub. Confirm at the centre when it stops."],
+	"closing_time": ["Cross a hand at its gap or through the hub. Confirm at the center when it stops."],
 	"commencement": ["Badges fly; everyone heads home. Confirm at two stopping cues."],
 }
 const PIVOT: Vector2 = Vector2(0, -112)

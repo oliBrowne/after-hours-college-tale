@@ -50,7 +50,7 @@ static func setup(s: Dictionary) -> void:
 			s.sweeps = []
 		"crosstalk":
 			s.phaseName = "Crosstalk"
-			s.hint = "The aggressor fires down a red lane; its neighbours echo from both ends. Probe with Z."
+			s.hint = "The aggressor fires down a red lane; its neighbors echo from both ends. Probe with Z."
 			s.rule = "SPACE TRACES 3W APART"
 			s.events = []
 		"ground_bounce":

@@ -31,7 +31,7 @@ const KEEPSAKES: Dictionary = {
 }
 ## What each keepsake does besides its stat (read where the effect happens: main.gd and battle_rules.gd).
 const PERKS: Dictionary = {"bus_pass": "Blocks the first hit of each fight", "moms_keychain": "Wider STRIKE timing for Jules", "guitar_pick": "Close dodges on the beat give double SYNC", "earplugs": "Half Time costs 10 less SYNC", "lantern_wick": "Lantern Ward's safe pocket lasts longer", "thermos_lid": "Share the Warmth heals 12 more"}
-const STAT_TEXT: Dictionary = {"defence": "+%d defence", "power": "+%d power", "max": "+%d max HP", "sync": "+%d SYNC at battle start"}
+const STAT_TEXT: Dictionary = {"defence": "+%d defense", "power": "+%d power", "max": "+%d max HP", "sync": "+%d SYNC at battle start"}
 
 static func milestones(flags: Dictionary) -> int:
 	var count: int = 0

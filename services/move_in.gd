@@ -131,7 +131,7 @@ static func challenge(g: Node) -> void:
 		g.open_menu(g.Mode.MENU, "Jakerson / a friendly spar", [
 			g.option("Sure, show me.", func() -> void:NativeJakerson.begin_spar(g)),
 			g.option("Give me a minute.", func() -> void:
-				say(g, [["Jakerson", "Take your time. Rule five: I never leave a ping-pong table with unfinished business.", "warm"]], func() -> void:
+				say(g, [["Jakerson", "Take your time. Rule four: I never leave a ping-pong table with unfinished business.", "warm"]], func() -> void:
 					g.jakerson_ui = false; g.resume_world()))]))
 
 ## After the spar: the bet, then four years go by.
@@ -142,7 +142,7 @@ static func aftermath(g: Node, peaceful: bool) -> void:
 	lines.append_array([["Jakerson", "Okay, official roommate business. College is going to be a blur and I want one thing on the calendar.", "warm"],
 		["Jakerson", "Graduation day. One real match, you and me. Loser buys the boba.", "warm"],
 		["Jules", "That's four years from now.", "concern"],
-		["Jakerson", "Four years is plenty of time to get good at ping-pong. So? Do we have a deal?", "warm"]])
+		["Jakerson", "Four years is plenty of time to learn tennis. I'll even teach you. So? Do we have a deal?", "warm"]])
 	say(g, lines, func() -> void:
 		g.jakerson_ui = true
 		g.open_menu(g.Mode.MENU, "Jakerson / loser buys the boba", [
@@ -155,7 +155,7 @@ static func shake(g: Node, flavor: String) -> void:
 	g.state.flags.movein_boba = flavor
 	var reply: String = {"taro": "Taro. Brave. Disgusting, but brave.", "mango": "Mango. Safe, sweet and undefeated. Fine.",
 		"biggest": "The biggest cup. Oh, you're going to regret that. I'm putting it on the calendar."}[flavor]
-	say(g, [["Jakerson", reply, "warm"], ["Jakerson", "Shake on it. Rule six: a bet only counts if we both remember it.", "warm"],
+	say(g, [["Jakerson", reply, "warm"], ["Jakerson", "Shake on it. Rule five: a bet only counts if we both remember it.", "warm"],
 		["Jules", "Four years. I won't forget.", "warm"]], func() -> void:finish(g))
 
 static func finish(g: Node) -> void:

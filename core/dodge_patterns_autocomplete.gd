@@ -82,7 +82,7 @@ static func promise_complete(s: Dictionary) -> bool:
 	return bool(s.bookmarkDelivered)
 
 static func progress(s: Dictionary) -> String:
-	return "Suggestion kept / STOP reached" if s.bookmarkDelivered else "Take it to the STOP box\nConfirm to stop" if s.carryBookmark else "Accept the green suggestion\nConfirm at top centre"
+	return "Suggestion kept / STOP reached" if s.bookmarkDelivered else "Take it to the STOP box\nConfirm to stop" if s.carryBookmark else "Accept the green suggestion\nConfirm at top center"
 
 static func tick(s: Dictionary, t: int) -> void:
 	var stage: int = clampi(int(s.phase), 0, 2)

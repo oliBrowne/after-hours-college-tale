@@ -12,7 +12,7 @@ extends RefCounted
 const PEOPLE: Array = [
 	{"id": "imani", "name": "Imani Bell", "headline": "Founder, Sound Check. Open to mixers.", "skill": "Sound Checks", "stat": "sync", "amount": 5, "flag": "imani_joined"},
 	{"id": "walt", "name": "Walt", "headline": "The Bridge Keeper. Keeps one light on.", "skill": "Keeping the Lantern Lit", "stat": "max", "amount": 4, "flag": "walt_resolution", "need": "peaceful"},
-	{"id": "jakerson", "name": "Jakerson", "headline": "Tennis. Tutor. Roommate. Rule four: be on time.", "skill": "Patience", "stat": "max", "amount": 4, "flag": "movein_done"},
+	{"id": "jakerson", "name": "Jakerson", "headline": "Tennis. Tutor. Roommate. Rule forty-one: nobody walks alone.", "skill": "Patience", "stat": "max", "amount": 4, "flag": "movein_done"},
 	{"id": "eli", "name": "Eli", "headline": "Bike mechanic, Farrand Hall 208. First repair's free.", "skill": "Gear Ratios", "stat": "power", "amount": 1, "flag": "met_eli"},
 	{"id": "mara", "name": "Mara", "headline": "Painter. Medium: doors.", "skill": "Big Canvas Thinking", "stat": "max", "amount": 4, "flag": "met_mara"},
 	{"id": "nell", "name": "Nell", "headline": "Reader. Looking for the last pages.", "skill": "Close Reading", "stat": "sync", "amount": 5, "flag": "met_nell"},
@@ -34,7 +34,7 @@ const PEOPLE: Array = [
 	{"id": "kyle", "name": "Kyle", "headline": "Founder, CEO, Visionary. Ask me anything. Finally.", "skill": "Asking the Question", "stat": "power", "amount": 1, "flag": "kyle_resolution", "need": "peaceful"},
 	{"id": "chad", "name": "Chad", "headline": "Networking Legend. Coffee chat?", "skill": "Small Talk", "stat": "max", "amount": 4, "flag": "chad_resolution", "need": "peaceful"},
 ]
-const STAT_TEXT: Dictionary = {"max": "+%d max HP", "power": "+%d power", "defence": "+%d defence", "sync": "+%d SYNC at battle start"}
+const STAT_TEXT: Dictionary = {"max": "+%d max HP", "power": "+%d power", "defence": "+%d defense", "sync": "+%d SYNC at battle start"}
 
 static func person(id: String) -> Dictionary:
 	for p: Dictionary in PEOPLE:

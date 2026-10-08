@@ -44,7 +44,7 @@ static func setup(s: Dictionary) -> void:
 			s.spots = [Vector2(s.side * 62.0, -30.0), Vector2(s.side * 86.0, -22.0), Vector2(s.side * 44.0, -36.0)]
 		"tie_dye":
 			s.phaseName = "Tie-Dye"
-			s.hint = "Colour rings spread out slowly. Find each gap. Confirm on the glowing notes."
+			s.hint = "Color rings spread out slowly. Find each gap. Confirm on the glowing notes."
 			# All three notes sit on one ray from the middle, so one gap line serves them all.
 			var ray: Vector2 = Vector2.from_angle((0.28 if D.rand(s) < 0.5 else -0.28) + (0.0 if D.rand(s) < 0.5 else PI))
 			s.ray = ray

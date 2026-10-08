@@ -92,4 +92,4 @@ static func progress(p: Dictionary) -> String:
 	match str(p.encounterId):
 		"errata":return "Sentence pauses %d/3\nConfirm in green box" % int(p.sentencesKept)
 		"eric":return "Foundations lit %d/2\nConfirm before weight falls" % int(p.objectiveCount)
-		_:return "Suggestion kept / STOP reached" if p.bookmarkDelivered else "Take it to the STOP box\nConfirm to stop" if p.carryBookmark else "Accept the green suggestion\nConfirm at top centre"
+		_:return "Suggestion kept / STOP reached" if p.bookmarkDelivered else "Take it to the STOP box\nConfirm to stop" if p.carryBookmark else "Accept the green suggestion\nConfirm at top center"

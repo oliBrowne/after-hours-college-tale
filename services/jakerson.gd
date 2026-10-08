@@ -475,7 +475,7 @@ static func graduation(g: Node) -> void:
 	var place: String=("Folsom Field" if field else "Macky Auditorium")
 	var lines: Array=[["Loudspeaker","Four years later. "+place+", in daylight. Commencement.","neutral"],
 		["Loudspeaker","Jules Navarro.","warm"],
-		["Imani","WOOO! That's my bus buddy!","warm"],
+		["Imani","WOOO! That's my mixer courier!","warm"],
 		["Walt","I brought the lantern. It's daytime. It still felt right.","warm"],
 		["Loudspeaker","Jakerson. Computer science.","warm"],
 		["Jakerson","Four years ago you were running for a bus with somebody else's mixer.","warm"],
@@ -486,11 +486,11 @@ static func graduation(g: Node) -> void:
 		var order: String=NativeMoveIn.boba(f)
 		lines=[["Loudspeaker","Commencement. "+place+", in daylight.","neutral"],
 			["Loudspeaker","Jules Navarro.","warm"],
-			["Imani","WOOO! That's my bus buddy!","warm"],
+			["Imani","WOOO! That's my mixer courier!","warm"],
 			["Walt","I brought the lantern. It's daytime. It still felt right.","warm"],
 			["Loudspeaker","Jakerson. Computer science.","warm"],
-			["Jakerson","Four years ago you asked if I snored. Last night I walked you to the UMC like it was move-in day again.","warm"],
-			["Jules","You snore. And you only walked me so you wouldn't have to carry the mixer.","warm"],
+			["Jakerson","Four years ago you asked if I snored. A few weeks later I walked you to the UMC with somebody else's mixer.","warm"],
+			["Jules","You snore. And you made me fight you before I'd even returned it.","warm"],
 			["Jakerson","Details. Remember what we shook on in the lobby? One real match, you and me. Loser buys the boba"+(". I remember you're ordering "+order+"." if not order.is_empty() else "."),"warm"]]
 	if not field:
 		say(g,lines,func() -> void:rematch_offer(g));return

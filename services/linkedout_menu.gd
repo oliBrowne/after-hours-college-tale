@@ -21,11 +21,11 @@ const JULES: Dictionary = {"id": "jules", "name": "Jules Navarro", "headline": "
 const EDUCATION: String = "University of Colorado Boulder"
 const WORK: Dictionary = {
 	"jules": ["Campus radio, volunteer DJ (2025 - present)", "Sound crew, Fountain Court events (2024)"],
-	"imani": ["Founder, Sound Check (2025 - present)", "Sound tech, campus venues (2024)"],
+	"imani": ["Founder, Sound Check (freshman year - present)", "Sound tech, campus venues (2024)"],
 	"walt": ["Lantern keeper, Broadway underpass (since 1994)", "Night watch, Boulder Creek path (2011 - 2019)"],
-	"jakerson": ["Tennis coach, UMC courts (2023 - present)", "Roommate, Farrand Hall (2026)"],
+	"jakerson": ["Tennis club, CU Boulder (freshman year - present)", "Roommate, Farrand Hall (freshman year)"],
 	"eli": ["Bike mechanic, Farrand Hall 208 (2025 - present)", "Wheel truing, Boulder bike co-op (2023 - 2025)"],
-	"mara": ["Painter, Farrand laundry room murals (2025 - present)", "Set painter, campus theatre (2024)"],
+	"mara": ["Painter, Farrand laundry room murals (2025 - present)", "Set painter, campus theater (2024)"],
 	"nell": ["Reader, Norlin Library (2024 - present)", "Tutor, Writing Center (2023 - 2024)"],
 	"cal": ["Night-shift lead, Engineering (2024 - present)", "Lab tech, Engineering Center (2022 - 2024)"],
 	"dev": ["Engineer, bridge design studio (2025 - present)", "Drafting intern, civil lab (2024)"],
@@ -36,13 +36,13 @@ const WORK: Dictionary = {
 	"encore": ["Performer, final acts (2019 - present)", "Opening act, every season (2017 - 2019)"],
 	"errata": ["Teaching Assistant, Chem 1 (seventh year)", "Grader, Physics 1 (2019 - 2020)"],
 	"autocomplete": ["Language model, various products (2023 - present)", "Autocorrect, phone keyboard (2019 - 2023)"],
-	"eric": ["Professor, Electrical Engineering (2009 - present)", "Lecturer, signal integrity short courses"],
-	"deion": ["Coach, Prime Time Athletics (2018 - present)", "Mentor, Eastside Youth Program (2012 - 2018)"],
-	"todd": ["President's Office, administration (2021 - present)", "Budget office, university system (2014 - 2021)"],
+	"eric": ["Professor, Electrical Engineering, CU Boulder", "Author and teacher, signal integrity"],
+	"deion": ["Head Coach, Colorado Buffaloes football", "Head Coach, Jackson State football"],
+	"todd": ["President, University of Colorado system", "Budget and finance, University of Colorado system"],
 	"cone": ["Captain, Flatirons Peloton (2022 - present)", "Road racer, regional circuit (2016 - 2022)"],
 	"rook": ["Night Marshal, residence halls (2025 - present)", "Key control, Farrand Hall (2023 - 2025)"],
 	"tanner": ["Rush chair, Interfraternity Council (2026)", "Early shift, campus coffee cart (2025)"],
-	"kyle": ["Founder and CEO, Finally (2026)", "Visionary, Pearl Street office (2025)"],
+	"kyle": ["Founder and CEO, DISRUPTR (2026)", "Visionary, Pearl Street office (2025)"],
 	"chad": ["Networking, Gold Pass Consulting (2025 - present)", "Sales, Summit Ventures (2023 - 2025)"],
 }
 static var _avatars: Dictionary = {}
