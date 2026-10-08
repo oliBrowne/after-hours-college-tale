@@ -465,6 +465,9 @@ func _physics_process(delta: float) -> void:
 				finish_timing(true)
 		Mode.RESOLVE:
 			resolution_ticks += 1
+			if resolution_ticks == 10 and plan[resolution_index].kind == "strike" and str(battle.party[int(plan[resolution_index].actor)].id) == "imani":
+				vfx.play("impact", Vector2(480, 105), Vector2(480, 105), 0); audio.combat("swing")
+				NativeBattleJuice.flinch(foe, Vector2.RIGHT, 2)
 			if resolution_ticks % 46 == 20:
 				present_impact()
 				if shown_enemy_hp == 0 and pending_battle.get("outcome", "active") != "active" or plan[resolution_index].kind == "release" and pending_battle.get("outcome", "active") != "active":
@@ -2559,7 +2562,7 @@ func present_action() -> void:
 	var origin: Vector2 = battle_sprites[index].position - Vector2(0, 34)
 	if kind == "strike":
 		vfx.play("slash", origin, Vector2(480, 108)); audio.combat("swing")
-		NativeBattleJuice.lunge(battle_sprites[index])
+		NativeBattleJuice.strike(battle_sprites[index], str(battle.party[index].id))
 	else:
 		vfx.play("guard" if kind == "guard" else "heal" if kind in ["heal", "item", "warmth"] else "promise", origin, origin)
 		audio.combat("guard" if kind == "guard" else "shield" if kind == "shield" else "release" if kind == "release" else "pick")
@@ -2572,6 +2575,10 @@ func present_impact() -> void:
 		var damage: int = int(result.damage)
 		shown_enemy_hp = maxi(int(pending_battle.hp), shown_enemy_hp - damage)
 		vfx.play("impact", Vector2(480, 105), Vector2(480, 105), damage)
+		var striker: String = str(battle.party[int(command.actor)].id)
+		if striker == "walt":
+			vfx.play("crit", Vector2(470, 146), Vector2(470, 146), 0, "")
+			NativeBattleJuice.kick([battle_scenery, foe, claim_art, pin_art] + battle_sprites, 3.0, 12)
 		foe.modulate = Color("df8078"); claim_art.set_pose("hit"); pin_art.set_pose("hit")
 		foe.play("hit")
 		audio.combat("enemyhurt")
