@@ -6,15 +6,16 @@ var effects: Array[Dictionary] = []
 var font: Font = preload("res://assets/art/afterhours-font.fnt")
 var reduced_flashes: bool = false
 
-func play(kind: String, origin: Vector2, target: Vector2, damage: int = 0) -> void:
+func play(kind: String, origin: Vector2, target: Vector2, damage: int = 0, text: String = "") -> void:
 	var lifetime = 0.6
 	match kind:
 		"guard", "shield", "heal", "promise": lifetime = 0.8
 		"dissolve", "foe_dissolve": lifetime = 1.0
 		"hit", "impact": lifetime = 0.52
+		"crit", "combo": lifetime = 0.95
 	if effects.size() >= 32:
 		effects.pop_front()
-	effects.append({"kind":kind,"origin":origin,"target":target,"damage":damage,"age":0.0,"life":lifetime})
+	effects.append({"kind":kind,"origin":origin,"target":target,"damage":damage,"text":text,"age":0.0,"life":lifetime})
 	# The number gets its own, longer-lived pop so it can be read after the burst fades.
 	if damage > 0:
 		effects.append({"kind":"number","origin":origin,"target":target,"damage":damage,"heal":kind == "heal","age":0.0,"life":1.1})
@@ -102,6 +103,11 @@ func _draw() -> void:
 						_square(position,3,Color(cream if (x+y)%2==0 else gold,1-t))
 			"number":
 				pass
+			"crit", "combo":
+				if effect.kind == "crit":
+					_burst(target, t, gold, 20)
+					_ring(target, 8.0 + t * 34.0, Color(cream, 1.0 - t))
+				_text(effect, t, gold if effect.kind == "crit" else mint)
 			_:
 				_burst(target,t,mint,8)
 		if effect.kind=="number":_number(effect,t)
@@ -125,3 +131,15 @@ func _number(effect: Dictionary, t: float) -> void:
 		draw_string(font, base + nudge, label, HORIZONTAL_ALIGNMENT_LEFT, -1, size, ink)
 	draw_string(font, base, label, HORIZONTAL_ALIGNMENT_LEFT, -1, size, Color(fill, alpha))
 	draw_set_transform(Vector2.ZERO)
+
+## A short banner word ("CRIT!", "COMBO x1.4") that pops and rises above the target.
+func _text(effect: Dictionary, t: float, color: Color) -> void:
+	var label: String = str(effect.get("text", ""))
+	if label.is_empty(): return
+	var size: int = 16
+	var width: float = font.get_string_size(label, HORIZONTAL_ALIGNMENT_LEFT, -1, size).x
+	var at: Vector2 = Vector2(effect.target) + Vector2(-width / 2.0, -30.0 - 16.0 * minf(1.0, t / 0.5))
+	var alpha: float = 1.0 - clampf((t - 0.7) / 0.3, 0.0, 1.0)
+	for offset: Vector2 in [Vector2(-1, 0), Vector2(1, 0), Vector2(0, -1), Vector2(0, 1)]:
+		draw_string(font, (at + offset).round(), label, HORIZONTAL_ALIGNMENT_LEFT, -1, size, Color(Color("171a2b"), alpha))
+	draw_string(font, at.round(), label, HORIZONTAL_ALIGNMENT_LEFT, -1, size, Color(color, alpha))

@@ -54,7 +54,25 @@ static func accepted(flags: Dictionary) -> Array:
 	return PEOPLE.filter(func(p: Dictionary) -> bool: return accepted_id(flags, str(p.id)) and unlocked(flags, p))
 
 static func pending(flags: Dictionary) -> Array:
-	return PEOPLE.filter(func(p: Dictionary) -> bool: return unlocked(flags, p) and not accepted_id(flags, str(p.id)))
+	return PEOPLE.filter(func(p: Dictionary) -> bool: return unlocked(flags, p) and not accepted_id(flags, str(p.id)) and not ignored_id(flags, str(p.id)))
+
+static func ignored_id(flags: Dictionary, id: String) -> bool:
+	return str(flags.get("li_" + id, "")) == "no"
+
+## Requests the player turned down; they leave the list but can be restored.
+static func ignored(flags: Dictionary) -> Array:
+	return PEOPLE.filter(func(p: Dictionary) -> bool: return unlocked(flags, p) and ignored_id(flags, str(p.id)))
+
+static func ignore(flags: Dictionary, id: String) -> bool:
+	var p: Dictionary = person(id)
+	if p.is_empty() or not unlocked(flags, p) or accepted_id(flags, id): return false
+	flags["li_" + id] = "no"
+	return true
+
+static func restore(flags: Dictionary, id: String) -> bool:
+	if not ignored_id(flags, id): return false
+	flags.erase("li_" + id)
+	return true
 
 ## Bosses beaten the hard way: they looked at the profile and nothing else.
 static func viewed_only(flags: Dictionary) -> Array:

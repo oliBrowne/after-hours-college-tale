@@ -58,6 +58,9 @@ func _test_unlock_and_accept() -> void:
 	_check(LinkedOut.accept(f, "walt") and LinkedOut.accepted_id(f, "walt"), "Accepting works")
 	_check(not LinkedOut.accept(f, "walt"), "Accepting twice does nothing")
 	_check(LinkedOut.pending(f).size() == 2 and LinkedOut.accepted(f).size() == 1, "The request moves from pending to accepted")
+	_check(LinkedOut.ignore(f, "eli") and LinkedOut.pending(f).size() == 1 and LinkedOut.ignored(f).size() == 1, "Ignoring hides a request")
+	_check(not LinkedOut.accept(f, "walt") and not LinkedOut.ignore(f, "walt"), "An accepted connection cannot be ignored")
+	_check(LinkedOut.restore(f, "eli") and LinkedOut.pending(f).size() == 2, "Ignored requests can be restored")
 	f.li_chad = "yes"
 	_check(LinkedOut.accepted(f).size() == 1, "A forged acceptance without the meeting does not count")
 
