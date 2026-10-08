@@ -169,7 +169,9 @@ def side_cycle(actor, direction, source_frames):
 	PALETTES[actor] = pal
 	frames = []
 	for i in range(FRAMES):
-		upper, _ = source_frames[(i * len(source_frames)) // FRAMES]
+		# One steady torso for the whole cycle: the generated walk frames each redrew the head, hair
+		# and bag a pixel or two apart, which read as jitter once the legs were stepping properly.
+		upper, _ = source_frames[0]
 		near_p = i / FRAMES; far_p = ((i + FRAMES // 2) % FRAMES) / FRAMES
 		passing = i % (FRAMES // 2) == FRAMES // 4
 		bob = -1 if passing else 0
@@ -228,9 +230,15 @@ def front_cycle(actor, direction, source_frames):
 	idle, _ = load(actor, "idle_" + direction, 0)
 	rest = top_row(idle)
 	wide = sorted(spreads)[len(spreads) // 2]
+	first = source_frames[0][0]
+	seam = ground_row(first) - SIDE[actor]["hip"]
 	for (im, foot), spread in zip(source_frames, spreads):
+		# Head, hair and bag stay as drawn in the first frame; only the legs below the hip change.
+		steady = im.copy()
+		steady.paste((0, 0, 0, 0), (0, 0, im.width, seam))
+		steady.alpha_composite(first.crop((0, 0, im.width, seam)), (0, 0))
 		target = rest if spread > wide else rest - 1
-		frames.append(bobbed(im, target - top_row(im), 6))
+		frames.append(bobbed(steady, target - top_row(steady), 6))
 	return frames, source_frames[0][1]
 
 
