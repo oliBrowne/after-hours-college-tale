@@ -6,6 +6,12 @@ func _initialize() -> void: call_deferred("run")
 func check(ok: bool, message: String) -> void:
 	checks += 1
 	if not ok: failures += 1; print("FAIL ", message)
+## The season flag is derived from the story stage every time a room loads, so it is not part of what a save restores.
+func story_flags() -> Dictionary:
+	var flags: Dictionary = game.state.flags.duplicate()
+	flags.erase("season")
+	return flags
+
 func run() -> void:
 	var folder: String = OS.get_environment("AFTER_HOURS_FIXTURE")
 	if folder.is_empty(): quit(2); return
@@ -27,14 +33,14 @@ func run() -> void:
 	check(game.saves.save("slot1", old) == OK, "Older checkpoint fixture written")
 	game.load_save("slot1")
 	check(game.state.settings == preferred, "Loading retains current persisted accessibility/audio/bindings")
-	check(game.state.flags == old.flags and game.state.inventory == inventory, "Loading still restores gameplay data")
+	check(story_flags() == old.flags and game.state.inventory == inventory, "Loading still restores gameplay data")
 	check(InputMap.action_has_event("confirm", make_key(KEY_Q)), "Restored preferences configure current binding")
 	check(game.saves.export_file(folder.path_join("old-portable.json"), old) == OK, "Older portable fixture exported")
 	var imported: Dictionary = game.saves.import_file(folder.path_join("old-portable.json"))
 	check(not imported.has("error"), "Portable checkpoint validates")
 	game.restore_state(imported.state)
 	check(game.state.settings == preferred, "Import restoration retains current persisted preferences")
-	check(game.state.flags == old.flags and game.state.inventory == inventory, "Import restoration still restores gameplay")
+	check(story_flags() == old.flags and game.state.inventory == inventory, "Import restoration still restores gameplay")
 	var invalid: FileAccess = FileAccess.open(game.preferences_path, FileAccess.WRITE)
 	invalid.store_string('{"music":999}'); invalid.close()
 	game.restore_state(old.duplicate(true))
