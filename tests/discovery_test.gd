@@ -24,7 +24,7 @@ func run() -> void:
 	game.saves = NativeSaveService.new(folder.path_join("saves"))
 	root.add_child(game); game.set_physics_process(false)
 	game.state = NativeState.fresh()
-	game.state.flags = {"imani_joined":true, "cal_joined":true, "mixer_returned":true, "booth_seen":true}
+	game.state.flags = {"imani_joined":true, "walt_joined":true, "cal_joined":true, "mixer_returned":true, "booth_seen":true}
 	var inventory: Dictionary = game.state.inventory.duplicate(true)
 	var party: Array = game.state.party.duplicate(true)
 	for fixture: Array in [["U01","bike","discovery_bike_seen"],["U02","eli","discovery_eli_acknowledged"],["U04","stage","discovery_cuesheet_seen"],["U05","mags_checklist","discovery_mags_checklist_seen"],["U06","arcade_button","discovery_arcade_seen"],["U07","lost_labels","discovery_lostlabels_seen"]]:
