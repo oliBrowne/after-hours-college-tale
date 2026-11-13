@@ -1122,7 +1122,7 @@ func open_pause() -> void:
 
 func pause_menu() -> void:
 	var options: Array = [option("Resume", resume_pause)]
-	if pause_mode == Mode.WORLD: options.append_array([option("Campus map", open_map), option("Party / keepsakes", party_menu), option("LinkedOut" + NativeLinkedOutMenu.badge(state.flags), func() -> void: NativeLinkedOutMenu.open(self))])
+	if pause_mode == Mode.WORLD: options.append_array([option("Campus map", open_map), option("Party / keepsakes", party_menu), option("LinkedOut" + NativeLinkedOutMenu.badge(state.flags), func() -> void: NativeLinkedOutMenu.open(self)), option("Intern Insider" + NativeInternInsiderMenu.badge(state.flags), func() -> void: NativeInternInsiderMenu.open(self))])
 	options.append_array([option("Settings", settings_menu), option("Saves / import / export", func() -> void: save_menu(false)), option("Return to title", show_title)])
 	open_menu(Mode.PAUSE, "Paused", options)
 
