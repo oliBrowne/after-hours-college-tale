@@ -885,6 +885,7 @@ func resume_world() -> void:
 	mode = Mode.WORLD
 	refresh_growth()
 	NativeLinkedOutMenu.notify(self)
+	NativeInternInsiderMenu.notify(self)
 	for npc: AnimatedSprite2D in world_npcs:
 		var id: String = str(npc.get_meta("id", ""))
 		if str(npc.get_meta("art_id",id)) in NativeCastArt.IDS or id == "flyer": npc.play("settled" if state.flags.get(id + "_resolution", "") == "peaceful" else "down" if state.flags.has(id + "_resolution") else "idle_down")
@@ -2068,6 +2069,8 @@ func render_ui() -> void:
 			render_pause_screen()
 		elif mode == Mode.MENU and NativeLinkedOutMenu.is_profile(caption):
 			NativeLinkedOutMenu.render(self)
+		elif mode == Mode.MENU and NativeInternInsiderMenu.is_board(caption):
+			NativeInternInsiderMenu.render(self)
 		else:
 			# A framed box sized to its options. Story choices sit where the dialogue box was (bottom,
 			# or top when the speakers stand low); other menus hang from the top.
@@ -2645,7 +2648,7 @@ func dialogue_side_top(talkers: Array) -> bool:
 	return dialogue_top
 
 func _qa_smoke() -> void:
-	var route: Node = load("res://scenes/qa_hub.gd" if "--qa-hub" in OS.get_cmdline_user_args() else "res://scenes/qa_wander.gd" if "--qa-wander" in OS.get_cmdline_user_args() else "res://scenes/qa_jakerson.gd" if "--qa-jakerson" in OS.get_cmdline_user_args() else "res://scenes/qa_final.gd" if "--qa-final" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter3.gd" if "--qa-chapter3" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter2.gd" if "--qa-chapter2" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter1.gd" if "--qa-chapter1" in OS.get_cmdline_user_args() else "res://scenes/qa_review_controls.gd" if "--qa-review-ui" in OS.get_cmdline_user_args() else "res://scenes/qa_opening.gd").new()
+	var route: Node = load("res://scenes/qa_intern.gd" if "--qa-intern" in OS.get_cmdline_user_args() else "res://scenes/qa_hub.gd" if "--qa-hub" in OS.get_cmdline_user_args() else "res://scenes/qa_wander.gd" if "--qa-wander" in OS.get_cmdline_user_args() else "res://scenes/qa_jakerson.gd" if "--qa-jakerson" in OS.get_cmdline_user_args() else "res://scenes/qa_final.gd" if "--qa-final" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter3.gd" if "--qa-chapter3" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter2.gd" if "--qa-chapter2" in OS.get_cmdline_user_args() else "res://scenes/qa_chapter1.gd" if "--qa-chapter1" in OS.get_cmdline_user_args() else "res://scenes/qa_review_controls.gd" if "--qa-review-ui" in OS.get_cmdline_user_args() else "res://scenes/qa_opening.gd").new()
 	add_child(route)
 	var passed: bool = await route.run(self)
 	if qa_record != null and not qa_record_finishing: qa_finish_record()

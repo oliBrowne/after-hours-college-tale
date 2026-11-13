@@ -22,7 +22,18 @@ func _init() -> void:
 	f["chapter3_complete"] = true
 	_check(InternInsider.listed(f).size() == 3, "story flags unlock postings")
 	_check(NativeInternInsiderMenu.badge(f) == " (2 new)", "badge counts unread")
+	var g: Dictionary = {"buff_bucks": "5"}
+	_check(InternInsider.apply(g, "stage") == 0, "locked posting cannot be applied to")
+	_check(InternInsider.apply(g, "sound") == 10 and g.buff_bucks == "15", "Easy Apply pays 10 Buff Bucks")
+	_check(InternInsider.apply(g, "sound") == 0 and g.buff_bucks == "15", "applying twice pays nothing")
+	_check(InternInsider.status(g, InternInsider.posting("sound")).begins_with("Application sent"), "under review before the story catches up")
+	g["imani_joined"] = true
+	_check(InternInsider.status(g, InternInsider.posting("sound")) == "Offer received", "Imani joining lands the sound offer")
+	_check(InternInsider.read_id(g, "sound") and InternInsider.mark_read(g, "sound") and g["ii_sound"] == "applied", "reading never downgrades an application")
+	var k: Dictionary = {"visited_P01": true}
+	_check(InternInsider.listed(k).any(func(p: Dictionary) -> bool: return p.id == "founder"), "visiting Kyle's office lists the DISRUPTR posting")
 	for p: Dictionary in InternInsider.POSTINGS:
+		_check(not str(p.logo).is_empty(), "posting %s has a logo" % str(p.id))
 		_check(not str(p.tip).is_empty() and not str(p.blurb).is_empty(), "posting %s has text" % str(p.id))
 		f["ii_" + str(p.id)] = "read"
 	var data: Dictionary = {"flags": f}
